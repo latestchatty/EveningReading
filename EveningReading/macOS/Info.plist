@@ -29,5 +29,7 @@
 		<string>replylines.ttf</string>
 		<string>tags.ttf</string>
 	</array>
+	<key>ATSApplicationFontsPath</key>
+	<string>.</string>
 </dict>
 </plist>
