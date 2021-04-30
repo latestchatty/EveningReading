@@ -20,7 +20,14 @@
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.social-networking</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>replylines.ttf</string>
+		<string>tags.ttf</string>
+	</array>
 </dict>
 </plist>

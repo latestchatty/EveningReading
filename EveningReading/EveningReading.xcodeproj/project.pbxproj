@@ -9,21 +9,94 @@
 /* Begin PBXBuildFile section */
 		833817922639AC18007A8B28 /* EveningReadingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8338177F2639AC17007A8B28 /* EveningReadingApp.swift */; };
 		833817932639AC18007A8B28 /* EveningReadingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8338177F2639AC17007A8B28 /* EveningReadingApp.swift */; };
-		833817942639AC18007A8B28 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833817802639AC17007A8B28 /* ContentView.swift */; };
-		833817952639AC18007A8B28 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833817802639AC17007A8B28 /* ContentView.swift */; };
+		833817942639AC18007A8B28 /* macOSContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833817802639AC17007A8B28 /* macOSContentView.swift */; };
+		833817952639AC18007A8B28 /* macOSContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833817802639AC17007A8B28 /* macOSContentView.swift */; };
 		833817962639AC18007A8B28 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 833817812639AC18007A8B28 /* Assets.xcassets */; };
 		833817972639AC18007A8B28 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 833817812639AC18007A8B28 /* Assets.xcassets */; };
+		833980A4263C41CF005614E8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 833980A3263C41CF005614E8 /* Assets.xcassets */; };
+		833980AB263C41CF005614E8 /* EveningReading Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 833980AA263C41CF005614E8 /* EveningReading Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		833980B0263C41CF005614E8 /* EveningReadingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833980AF263C41CF005614E8 /* EveningReadingApp.swift */; };
+		833980B2263C41CF005614E8 /* watchOSContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833980B1263C41CF005614E8 /* watchOSContentView.swift */; };
+		833980B4263C41CF005614E8 /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833980B3263C41CF005614E8 /* NotificationController.swift */; };
+		833980B6263C41CF005614E8 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833980B5263C41CF005614E8 /* NotificationView.swift */; };
+		833980BA263C41D0005614E8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 833980B9263C41D0005614E8 /* Assets.xcassets */; };
+		833980BD263C41D0005614E8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 833980BC263C41D0005614E8 /* Preview Assets.xcassets */; };
+		833980C2263C41D0005614E8 /* EveningReading.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 833980A1263C41CE005614E8 /* EveningReading.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		833980CE263C9137005614E8 /* iPhoneContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833980CD263C9137005614E8 /* iPhoneContentView.swift */; };
+		833980D0263C914D005614E8 /* iPadContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833980CF263C914D005614E8 /* iPadContentView.swift */; };
+		833980D6263C9C2D005614E8 /* replylines.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 833980D4263C9C2D005614E8 /* replylines.ttf */; };
+		833980D7263C9C2D005614E8 /* tags.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 833980D5263C9C2D005614E8 /* tags.ttf */; };
+		833980D8263C9D0A005614E8 /* replylines.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 833980D4263C9C2D005614E8 /* replylines.ttf */; };
+		833980D9263C9D0C005614E8 /* tags.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 833980D5263C9C2D005614E8 /* tags.ttf */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		833980AC263C41CF005614E8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8338177A2639AC17007A8B28 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 833980A9263C41CF005614E8;
+			remoteInfo = "EveningReading Extension";
+		};
+		833980C0263C41D0005614E8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8338177A2639AC17007A8B28 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 833980A0263C41CE005614E8;
+			remoteInfo = EveningReading;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		833980C3263C41D0005614E8 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				833980C2263C41D0005614E8 /* EveningReading.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		833980C6263C41D0005614E8 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				833980AB263C41CF005614E8 /* EveningReading Extension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		8338177F2639AC17007A8B28 /* EveningReadingApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EveningReadingApp.swift; sourceTree = "<group>"; };
-		833817802639AC17007A8B28 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		833817802639AC17007A8B28 /* macOSContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSContentView.swift; sourceTree = "<group>"; };
 		833817812639AC18007A8B28 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		833817862639AC18007A8B28 /* EveningReading.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EveningReading.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		833817892639AC18007A8B28 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8338178E2639AC18007A8B28 /* EveningReading.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EveningReading.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		833817902639AC18007A8B28 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		833817912639AC18007A8B28 /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
+		833980A1263C41CE005614E8 /* EveningReading.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EveningReading.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		833980A3263C41CF005614E8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		833980A5263C41CF005614E8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		833980AA263C41CF005614E8 /* EveningReading Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "EveningReading Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		833980AF263C41CF005614E8 /* EveningReadingApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EveningReadingApp.swift; sourceTree = "<group>"; };
+		833980B1263C41CF005614E8 /* watchOSContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = watchOSContentView.swift; sourceTree = "<group>"; };
+		833980B3263C41CF005614E8 /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
+		833980B5263C41CF005614E8 /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
+		833980B9263C41D0005614E8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		833980BC263C41D0005614E8 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		833980BE263C41D0005614E8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		833980BF263C41D0005614E8 /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
+		833980CD263C9137005614E8 /* iPhoneContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPhoneContentView.swift; sourceTree = "<group>"; };
+		833980CF263C914D005614E8 /* iPadContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadContentView.swift; sourceTree = "<group>"; };
+		833980D4263C9C2D005614E8 /* replylines.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = replylines.ttf; sourceTree = "<group>"; };
+		833980D5263C9C2D005614E8 /* tags.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = tags.ttf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,15 +114,27 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		833980A7263C41CF005614E8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		833817792639AC17007A8B28 = {
 			isa = PBXGroup;
 			children = (
+				833980D2263C9C0B005614E8 /* Resources */,
+				833980CC263C9115005614E8 /* iPhone */,
+				833980CB263C910B005614E8 /* iPad */,
 				8338177E2639AC17007A8B28 /* Shared */,
 				833817882639AC18007A8B28 /* iOS */,
 				8338178F2639AC18007A8B28 /* macOS */,
+				833980A2263C41CE005614E8 /* EveningReading */,
+				833980AE263C41CF005614E8 /* EveningReading Extension */,
 				833817872639AC18007A8B28 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -57,8 +142,8 @@
 		8338177E2639AC17007A8B28 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				833980D1263C9B3D005614E8 /* Controls */,
 				8338177F2639AC17007A8B28 /* EveningReadingApp.swift */,
-				833817802639AC17007A8B28 /* ContentView.swift */,
 				833817812639AC18007A8B28 /* Assets.xcassets */,
 			);
 			path = Shared;
@@ -69,6 +154,8 @@
 			children = (
 				833817862639AC18007A8B28 /* EveningReading.app */,
 				8338178E2639AC18007A8B28 /* EveningReading.app */,
+				833980A1263C41CE005614E8 /* EveningReading.app */,
+				833980AA263C41CF005614E8 /* EveningReading Extension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -84,10 +171,83 @@
 		8338178F2639AC18007A8B28 /* macOS */ = {
 			isa = PBXGroup;
 			children = (
+				833817802639AC17007A8B28 /* macOSContentView.swift */,
 				833817902639AC18007A8B28 /* Info.plist */,
 				833817912639AC18007A8B28 /* macOS.entitlements */,
 			);
 			path = macOS;
+			sourceTree = "<group>";
+		};
+		833980A2263C41CE005614E8 /* EveningReading */ = {
+			isa = PBXGroup;
+			children = (
+				833980A3263C41CF005614E8 /* Assets.xcassets */,
+				833980A5263C41CF005614E8 /* Info.plist */,
+			);
+			path = EveningReading;
+			sourceTree = "<group>";
+		};
+		833980AE263C41CF005614E8 /* EveningReading Extension */ = {
+			isa = PBXGroup;
+			children = (
+				833980AF263C41CF005614E8 /* EveningReadingApp.swift */,
+				833980B1263C41CF005614E8 /* watchOSContentView.swift */,
+				833980B3263C41CF005614E8 /* NotificationController.swift */,
+				833980B5263C41CF005614E8 /* NotificationView.swift */,
+				833980B9263C41D0005614E8 /* Assets.xcassets */,
+				833980BE263C41D0005614E8 /* Info.plist */,
+				833980BF263C41D0005614E8 /* PushNotificationPayload.apns */,
+				833980BB263C41D0005614E8 /* Preview Content */,
+			);
+			path = "EveningReading Extension";
+			sourceTree = "<group>";
+		};
+		833980BB263C41D0005614E8 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				833980BC263C41D0005614E8 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		833980CB263C910B005614E8 /* iPad */ = {
+			isa = PBXGroup;
+			children = (
+				833980CF263C914D005614E8 /* iPadContentView.swift */,
+			);
+			path = iPad;
+			sourceTree = "<group>";
+		};
+		833980CC263C9115005614E8 /* iPhone */ = {
+			isa = PBXGroup;
+			children = (
+				833980CD263C9137005614E8 /* iPhoneContentView.swift */,
+			);
+			path = iPhone;
+			sourceTree = "<group>";
+		};
+		833980D1263C9B3D005614E8 /* Controls */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controls;
+			sourceTree = "<group>";
+		};
+		833980D2263C9C0B005614E8 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				833980D3263C9C1B005614E8 /* Fonts */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		833980D3263C9C1B005614E8 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				833980D4263C9C2D005614E8 /* replylines.ttf */,
+				833980D5263C9C2D005614E8 /* tags.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -100,10 +260,12 @@
 				833817822639AC18007A8B28 /* Sources */,
 				833817832639AC18007A8B28 /* Frameworks */,
 				833817842639AC18007A8B28 /* Resources */,
+				833980C3263C41D0005614E8 /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				833980C1263C41D0005614E8 /* PBXTargetDependency */,
 			);
 			name = "EveningReading (iOS)";
 			productName = "EveningReading (iOS)";
@@ -127,6 +289,40 @@
 			productReference = 8338178E2639AC18007A8B28 /* EveningReading.app */;
 			productType = "com.apple.product-type.application";
 		};
+		833980A0263C41CE005614E8 /* EveningReading */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 833980CA263C41D0005614E8 /* Build configuration list for PBXNativeTarget "EveningReading" */;
+			buildPhases = (
+				8339809F263C41CE005614E8 /* Resources */,
+				833980C6263C41D0005614E8 /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				833980AD263C41CF005614E8 /* PBXTargetDependency */,
+			);
+			name = EveningReading;
+			productName = EveningReading;
+			productReference = 833980A1263C41CE005614E8 /* EveningReading.app */;
+			productType = "com.apple.product-type.application.watchapp2";
+		};
+		833980A9263C41CF005614E8 /* EveningReading Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 833980C9263C41D0005614E8 /* Build configuration list for PBXNativeTarget "EveningReading Extension" */;
+			buildPhases = (
+				833980A6263C41CF005614E8 /* Sources */,
+				833980A7263C41CF005614E8 /* Frameworks */,
+				833980A8263C41CF005614E8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "EveningReading Extension";
+			productName = "EveningReading Extension";
+			productReference = 833980AA263C41CF005614E8 /* EveningReading Extension.appex */;
+			productType = "com.apple.product-type.watchkit2-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -140,6 +336,12 @@
 						CreatedOnToolsVersion = 12.5;
 					};
 					8338178D2639AC18007A8B28 = {
+						CreatedOnToolsVersion = 12.5;
+					};
+					833980A0263C41CE005614E8 = {
+						CreatedOnToolsVersion = 12.5;
+					};
+					833980A9263C41CF005614E8 = {
 						CreatedOnToolsVersion = 12.5;
 					};
 				};
@@ -159,6 +361,8 @@
 			targets = (
 				833817852639AC18007A8B28 /* EveningReading (iOS) */,
 				8338178D2639AC18007A8B28 /* EveningReading (macOS) */,
+				833980A0263C41CE005614E8 /* EveningReading */,
+				833980A9263C41CF005614E8 /* EveningReading Extension */,
 			);
 		};
 /* End PBXProject section */
@@ -169,6 +373,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				833817962639AC18007A8B28 /* Assets.xcassets in Resources */,
+				833980D6263C9C2D005614E8 /* replylines.ttf in Resources */,
+				833980D7263C9C2D005614E8 /* tags.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -177,6 +383,25 @@
 			buildActionMask = 2147483647;
 			files = (
 				833817972639AC18007A8B28 /* Assets.xcassets in Resources */,
+				833980D8263C9D0A005614E8 /* replylines.ttf in Resources */,
+				833980D9263C9D0C005614E8 /* tags.ttf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8339809F263C41CE005614E8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				833980A4263C41CF005614E8 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		833980A8263C41CF005614E8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				833980BD263C41D0005614E8 /* Preview Assets.xcassets in Resources */,
+				833980BA263C41D0005614E8 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -187,7 +412,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				833817942639AC18007A8B28 /* ContentView.swift in Sources */,
+				833980D0263C914D005614E8 /* iPadContentView.swift in Sources */,
+				833817942639AC18007A8B28 /* macOSContentView.swift in Sources */,
+				833980CE263C9137005614E8 /* iPhoneContentView.swift in Sources */,
 				833817922639AC18007A8B28 /* EveningReadingApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -196,12 +423,36 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				833817952639AC18007A8B28 /* ContentView.swift in Sources */,
+				833817952639AC18007A8B28 /* macOSContentView.swift in Sources */,
 				833817932639AC18007A8B28 /* EveningReadingApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		833980A6263C41CF005614E8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				833980B4263C41CF005614E8 /* NotificationController.swift in Sources */,
+				833980B2263C41CF005614E8 /* watchOSContentView.swift in Sources */,
+				833980B0263C41CF005614E8 /* EveningReadingApp.swift in Sources */,
+				833980B6263C41CF005614E8 /* NotificationView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		833980AD263C41CF005614E8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 833980A9263C41CF005614E8 /* EveningReading Extension */;
+			targetProxy = 833980AC263C41CF005614E8 /* PBXContainerItemProxy */;
+		};
+		833980C1263C41D0005614E8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 833980A0263C41CE005614E8 /* EveningReading */;
+			targetProxy = 833980C0263C41D0005614E8 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		833817982639AC18007A8B28 /* Debug */ = {
@@ -329,7 +580,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.chrishodge.EveningReading;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chrishodge.eveningreading;
 				PRODUCT_NAME = EveningReading;
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.0;
@@ -351,7 +602,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.chrishodge.EveningReading;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chrishodge.eveningreading;
 				PRODUCT_NAME = EveningReading;
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.0;
@@ -377,7 +628,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.chrishodge.EveningReading;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chrishodge.eveningreading;
 				PRODUCT_NAME = EveningReading;
 				SDKROOT = macosx;
 				SWIFT_VERSION = 5.0;
@@ -401,10 +652,98 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.chrishodge.EveningReading;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chrishodge.eveningreading;
 				PRODUCT_NAME = EveningReading;
 				SDKROOT = macosx;
 				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		833980C4263C41D0005614E8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = U3SY428MXR;
+				IBSC_MODULE = EveningReading_Extension;
+				INFOPLIST_FILE = EveningReading/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chrishodge.eveningreading.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 7.4;
+			};
+			name = Debug;
+		};
+		833980C5263C41D0005614E8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = U3SY428MXR;
+				IBSC_MODULE = EveningReading_Extension;
+				INFOPLIST_FILE = EveningReading/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chrishodge.eveningreading.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 7.4;
+			};
+			name = Release;
+		};
+		833980C7263C41D0005614E8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"EveningReading Extension/Preview Content\"";
+				DEVELOPMENT_TEAM = U3SY428MXR;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = "EveningReading Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.chrishodge.eveningreading.watchkitapp.watchkitextension;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 7.4;
+			};
+			name = Debug;
+		};
+		833980C8263C41D0005614E8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"EveningReading Extension/Preview Content\"";
+				DEVELOPMENT_TEAM = U3SY428MXR;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = "EveningReading Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.chrishodge.eveningreading.watchkitapp.watchkitextension;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 7.4;
 			};
 			name = Release;
 		};
@@ -434,6 +773,24 @@
 			buildConfigurations = (
 				8338179E2639AC18007A8B28 /* Debug */,
 				8338179F2639AC18007A8B28 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		833980C9263C41D0005614E8 /* Build configuration list for PBXNativeTarget "EveningReading Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				833980C7263C41D0005614E8 /* Debug */,
+				833980C8263C41D0005614E8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		833980CA263C41D0005614E8 /* Build configuration list for PBXNativeTarget "EveningReading" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				833980C4263C41D0005614E8 /* Debug */,
+				833980C5263C41D0005614E8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -11,7 +11,15 @@ import SwiftUI
 struct EveningReadingApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            #if os(iOS)
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                iPadContentView()
+            } else {
+                iPhoneContentView()
+            }
+            #else
+                macOSContentView()
+            #endif
         }
     }
 }
