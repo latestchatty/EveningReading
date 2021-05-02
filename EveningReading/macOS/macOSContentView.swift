@@ -7,10 +7,12 @@
 
 import SwiftUI
 
+#if os(OSX)
 struct macOSWindowSize {
     let minWidth : CGFloat = 800
     let minHeight : CGFloat = 600
 }
+#endif
 
 struct macOSContentView: View {
     var body: some View {

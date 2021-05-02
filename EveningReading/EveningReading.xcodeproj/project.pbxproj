@@ -28,6 +28,8 @@
 		833980D7263C9C2D005614E8 /* tags.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 833980D5263C9C2D005614E8 /* tags.ttf */; };
 		833980D8263C9D0A005614E8 /* replylines.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 833980D4263C9C2D005614E8 /* replylines.ttf */; };
 		833980D9263C9D0C005614E8 /* tags.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 833980D5263C9C2D005614E8 /* tags.ttf */; };
+		833980DF263CAB93005614E8 /* AppSessionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833980DE263CAB93005614E8 /* AppSessionStore.swift */; };
+		833980E0263CAB93005614E8 /* AppSessionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833980DE263CAB93005614E8 /* AppSessionStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,6 +99,7 @@
 		833980CF263C914D005614E8 /* iPadContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadContentView.swift; sourceTree = "<group>"; };
 		833980D4263C9C2D005614E8 /* replylines.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = replylines.ttf; sourceTree = "<group>"; };
 		833980D5263C9C2D005614E8 /* tags.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = tags.ttf; sourceTree = "<group>"; };
+		833980DE263CAB93005614E8 /* AppSessionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSessionStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +145,7 @@
 		8338177E2639AC17007A8B28 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				833980DD263CAB7D005614E8 /* Stores */,
 				833980D1263C9B3D005614E8 /* Controls */,
 				8338177F2639AC17007A8B28 /* EveningReadingApp.swift */,
 				833817812639AC18007A8B28 /* Assets.xcassets */,
@@ -236,6 +240,7 @@
 		833980D2263C9C0B005614E8 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				833980E1263CAC7A005614E8 /* Data */,
 				833980D3263C9C1B005614E8 /* Fonts */,
 			);
 			path = Resources;
@@ -248,6 +253,21 @@
 				833980D5263C9C2D005614E8 /* tags.ttf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		833980DD263CAB7D005614E8 /* Stores */ = {
+			isa = PBXGroup;
+			children = (
+				833980DE263CAB93005614E8 /* AppSessionStore.swift */,
+			);
+			path = Stores;
+			sourceTree = "<group>";
+		};
+		833980E1263CAC7A005614E8 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -415,6 +435,7 @@
 				833980D0263C914D005614E8 /* iPadContentView.swift in Sources */,
 				833817942639AC18007A8B28 /* macOSContentView.swift in Sources */,
 				833980CE263C9137005614E8 /* iPhoneContentView.swift in Sources */,
+				833980DF263CAB93005614E8 /* AppSessionStore.swift in Sources */,
 				833817922639AC18007A8B28 /* EveningReadingApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -424,6 +445,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				833817952639AC18007A8B28 /* macOSContentView.swift in Sources */,
+				833980E0263CAB93005614E8 /* AppSessionStore.swift in Sources */,
 				833817932639AC18007A8B28 /* EveningReadingApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
