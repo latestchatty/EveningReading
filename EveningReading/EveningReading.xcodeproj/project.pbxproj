@@ -50,7 +50,6 @@
 		8339811A263F26CA005614E8 /* PreviewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83398119263F26CA005614E8 /* PreviewService.swift */; };
 		8339811B263F26CA005614E8 /* PreviewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83398119263F26CA005614E8 /* PreviewService.swift */; };
 		8339811E263F288D005614E8 /* ArticleCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339811D263F288D005614E8 /* ArticleCard.swift */; };
-		8339811F263F288D005614E8 /* ArticleCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339811D263F288D005614E8 /* ArticleCard.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -600,7 +599,6 @@
 				83398118263F250E005614E8 /* ArticleService.swift in Sources */,
 				8339811B263F26CA005614E8 /* PreviewService.swift in Sources */,
 				83398112263F1794005614E8 /* DateExtensions.swift in Sources */,
-				8339811F263F288D005614E8 /* ArticleCard.swift in Sources */,
 				833980E0263CAB93005614E8 /* AppSessionStore.swift in Sources */,
 				8339810F263F1028005614E8 /* StringExtensions.swift in Sources */,
 				83398107263F0D38005614E8 /* ChatService.swift in Sources */,
