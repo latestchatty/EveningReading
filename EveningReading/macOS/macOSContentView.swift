@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  macOSContentView.swift
 //  Shared
 //
 //  Created by Chris Hodge on 4/28/21.
@@ -25,7 +25,7 @@ struct macOSContentView: View {
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct macOSContentView_Previews: PreviewProvider {
     static var previews: some View {
         macOSContentView()
     }

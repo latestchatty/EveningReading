@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct iPadContentView: View {
+    @EnvironmentObject var appSessionStore: AppSessionStore
     var body: some View {
         Text("Evening Reading iPadOS")
     }
