@@ -1,0 +1,101 @@
+//
+//  SearchView.swift
+//  EveningReading
+//
+//  Created by Chris Hodge on 5/2/21.
+//
+
+import SwiftUI
+
+struct SearchView: View {
+    @Binding public var populateTerms: String
+    @Binding public var populateAuthor: String
+    @Binding public var populateParent: String
+    @State var terms = ""
+    @State var author = ""
+    @State var parent = ""
+    @State var clearCriteria = true
+    
+    func searchAppear() {
+        if self.populateTerms != "" {
+            self.terms = self.populateTerms
+        }
+        if self.populateAuthor != "" {
+            self.author = self.populateAuthor
+        }
+        if self.populateParent != "" {
+            self.parent = self.populateParent
+        }
+    }
+    
+    func searchDisappear() {
+        if self.clearCriteria {
+            self.terms = ""
+            self.author = ""
+            self.parent = ""
+        }
+    }
+    
+    func search() {
+    }
+        
+    var body: some View {
+        VStack {
+            HStack(alignment: .center) {
+                Text("Terms")
+                    .frame(width: 80)
+                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 15, trailing: 0))
+                TextField("", text: self.$terms)
+                    .padding(10)
+                    .background(Color("SearchField"))
+                    .cornerRadius(4.0)
+                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 15, trailing: 0))
+            }.padding(.top, 10)
+
+            HStack(alignment: .center) {
+                Text("Author")
+                    .frame(width: 80)
+                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 15, trailing: 0))
+                TextField("", text: self.$author)
+                    .padding(10)
+                    .background(Color("SearchField"))
+                    .cornerRadius(4.0)
+                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 15, trailing: 0))
+            }
+            
+            HStack(alignment: .center) {
+                Text("Parent")
+                    .frame(width: 80)
+                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 15, trailing: 0))
+                TextField("", text: self.$parent)
+                    .padding(10)
+                    .background(Color("SearchField"))
+                    .cornerRadius(4.0)
+                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 15, trailing: 0))
+            }.padding(.bottom, 5)
+            
+            Button(action: self.search) {
+                HStack(alignment: .center) {
+                    Spacer()
+                    Text("Search").foregroundColor(Color.primary).bold()
+                    Spacer()
+                }
+            }.padding(EdgeInsets(top: 15, leading: 15, bottom: 15, trailing: 15)).background(Color("SearchButton")).cornerRadius(4.0)
+            
+            Spacer()
+        }
+        .frame(maxWidth: .infinity)
+        .padding()
+        .background(Color("PrimaryBackground").frame(height: 2600).offset(y: -80))
+        .edgesIgnoringSafeArea(.bottom)
+        .navigationViewStyle(StackNavigationViewStyle())
+        .navigationBarTitle("Search", displayMode: .inline)
+        .navigationBarItems(leading: Spacer().frame(width: 16, height: 16))
+    }
+}
+
+struct SearchView_Previews: PreviewProvider {
+    static var previews: some View {
+        SearchView(populateTerms: .constant(""), populateAuthor: .constant(""), populateParent: .constant(""))
+    }
+}

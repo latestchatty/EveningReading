@@ -1,5 +1,5 @@
 //
-//  HomeButton.swift
+//  iPhoneHomeButton.swift
 //  EveningReading
 //
 //  Created by Chris Hodge on 5/2/21.
@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-struct HomeButton: View {
+struct iPhoneHomeButton: View {
     @Environment(\.colorScheme) var colorScheme
-    var title: String
-    var imageName: String
-    var buttonBackground: Color
+    @Binding var title: String
+    @Binding var imageName: String
+    @Binding var buttonBackground: Color
 
     var body: some View {
         VStack {
@@ -38,8 +38,8 @@ struct HomeButton: View {
     }
 }
 
-struct HomeButton_Previews: PreviewProvider {
+struct iPhoneHomeButton_Previews: PreviewProvider {
     static var previews: some View {
-        HomeButton(title: "Chat", imageName: "glyphicons-basic-238-chat-message", buttonBackground: Color("HomeButtonChat"))
+        iPhoneHomeButton(title: .constant("Chat"), imageName: .constant("glyphicons-basic-238-chat-message"), buttonBackground: .constant(Color("HomeButtonChat")))
     }
 }

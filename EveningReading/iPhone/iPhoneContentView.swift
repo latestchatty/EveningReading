@@ -17,20 +17,20 @@ struct iPhoneContentView: View {
         }
     
     var body: some View {
-        NavigationView {
+        NavigationView {            
             ScrollView {
                 VStack {
-                    HomeButtons()
+                    iPhoneHomeButtons()
                     TrendingView()
-                    ArticlesView()
+                    iPhoneArticlesView()
                 }
                 .background(Color("PrimaryBackground").frame(height: 2600).offset(y: -80))
             }
+            .edgesIgnoringSafeArea(.bottom)
             .navigationBarTitle("Evening Reading")
             .navigationBarHidden(false)
             .navigationBarBackButtonHidden(true)
-            .edgesIgnoringSafeArea(.bottom)
-            .navigationBarItems(trailing: SettingsButton())
+            .navigationBarItems(trailing: iPhoneHomeNavigation())
         }
         .navigationViewStyle(StackNavigationViewStyle())
         .accentColor(colorScheme == .dark ? Color.white : Color(UIColor.systemBlue))

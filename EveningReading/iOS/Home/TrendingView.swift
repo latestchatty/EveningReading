@@ -10,7 +10,7 @@ import SwiftUI
 struct TrendingView: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
 
-    func navigateTo(_ goToDestination: inout Bool) {
+    private func navigateTo(_ goToDestination: inout Bool) {
         appSessionStore.resetNavigation()
         goToDestination = true
     }
@@ -21,6 +21,14 @@ struct TrendingView: View {
             return Array(chatData.threads.prefix(4))
         }
         return Array(chatData.threads.prefix(4))
+    }
+    
+    private func rotationAmount() -> CGFloat {
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            return 60
+        } else {
+            return 30
+        }
     }
     
     var body: some View {
@@ -45,7 +53,7 @@ struct TrendingView: View {
                         ForEach(filteredThreads(), id: \.threadId) { thread in
                             GeometryReader { geometry in
                                 TrendingCard(thread: .constant(thread))
-                                .rotation3DEffect(Angle(degrees: Double((geometry.frame(in: .global).minX - 30) / -30)), axis: (x: 0, y: 10, z: 0))
+                                .rotation3DEffect(Angle(degrees: Double((geometry.frame(in: .global).minX - rotationAmount()) / (rotationAmount() * -1))), axis: (x: 0, y: 10, z: 0))
                                 .background(Color.clear)
                             }
                             .frame(width: 246, height: 360)
@@ -54,7 +62,8 @@ struct TrendingView: View {
                     }.padding(40)
                     Spacer()
                 }
-                .frame(width: UIScreen.main.bounds.width, height: 480)
+                .frame(maxWidth: .infinity)
+                .frame(height: 480)
                 Spacer()
             }
             .padding(.top, -20)

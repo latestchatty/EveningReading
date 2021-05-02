@@ -1,5 +1,5 @@
 //
-//  ArticlesView.swift
+//  iPhoneArticlesView.swift
 //  EveningReading
 //
 //  Created by Chris Hodge on 5/2/21.
@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct ArticlesView: View {
+struct iPhoneArticlesView: View {
     @State var articles: [Article] = [Article]()
-        
+    
     private func fetchArticles() {
         if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
         {
@@ -49,6 +49,7 @@ struct ArticlesView: View {
                 }
                 .frame(height: 220)
             }
+            .padding(.top, -30)
         }
         .onAppear() {
             fetchArticles()
@@ -56,8 +57,8 @@ struct ArticlesView: View {
     }
 }
 
-struct ArticlesView_Previews: PreviewProvider {
+struct iPhoneArticlesView_Previews: PreviewProvider {
     static var previews: some View {
-        ArticlesView()
+        iPhoneArticlesView()
     }
 }
