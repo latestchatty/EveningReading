@@ -17,11 +17,6 @@ struct macOSWindowSize {
 struct macOSContentView: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
         
-    private func navigateTo(_ goToDestination: inout Bool) {
-        appSessionStore.resetNavigation()
-        goToDestination = true
-    }
-    
     var body: some View {
         HStack() {
             NavigationView {
@@ -30,34 +25,7 @@ struct macOSContentView: View {
                         .font(.caption2)
                         .foregroundColor(Color("macOSSidebarHeader"))
                         .bold()
-                    
-                    VStack (alignment: .leading, spacing: 10) {
-                        macOSSidebarButton(text: .constant("Chat"), imageName: .constant("text.bubble"), selected: $appSessionStore.showingChatView)
-                            .onTapGesture(count: 1) {
-                                navigateTo(&appSessionStore.showingChatView)
-                            }
-                        
-                        macOSSidebarButton(text: .constant("Inbox"), imageName: .constant("envelope.open"), selected: $appSessionStore.showingInboxView)
-                            .onTapGesture(count: 1) {
-                                navigateTo(&appSessionStore.showingInboxView)
-                            }
-                        
-                        macOSSidebarButton(text: .constant("Search"), imageName: .constant("magnifyingglass"), selected: $appSessionStore.showingSearchView)
-                            .onTapGesture(count: 1) {
-                                navigateTo(&appSessionStore.showingSearchView)
-                            }
-                        
-                        macOSSidebarButton(text: .constant("Tags"), imageName: .constant("tag"), selected: $appSessionStore.showingTagsView)
-                            .onTapGesture(count: 1) {
-                                navigateTo(&appSessionStore.showingTagsView)
-                            }
-                        
-                        macOSSidebarButton(text: .constant("Settings"), imageName: .constant("gear"), selected: $appSessionStore.showingSettingsView)
-                            .onTapGesture(count: 1) {
-                                navigateTo(&appSessionStore.showingSettingsView)
-                            }
-                    }
-                    
+                    macOSSidebarButtons()
                 }
                 .listStyle(SidebarListStyle())
                 .navigationTitle("Explore")
@@ -87,6 +55,7 @@ struct macOSContentView: View {
                 } else {
                     EmptyView()
                 }
+                
             }
         }
         .frame(minWidth: macOSWindowSize().minWidth, minHeight: macOSWindowSize().minHeight)

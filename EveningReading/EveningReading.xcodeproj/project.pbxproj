@@ -73,6 +73,8 @@
 		8339816526404049005614E8 /* macOSSidebarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339816326404049005614E8 /* macOSSidebarButton.swift */; };
 		833981682640439F005614E8 /* macOSSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833981672640439F005614E8 /* macOSSettingsView.swift */; };
 		833981692640439F005614E8 /* macOSSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833981672640439F005614E8 /* macOSSettingsView.swift */; };
+		8339816B26404F59005614E8 /* macOSSidebarButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339816A26404F59005614E8 /* macOSSidebarButtons.swift */; };
+		8339816C26404F59005614E8 /* macOSSidebarButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339816A26404F59005614E8 /* macOSSidebarButtons.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -174,6 +176,7 @@
 		8339815E26403F08005614E8 /* macOSTagsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSTagsView.swift; sourceTree = "<group>"; };
 		8339816326404049005614E8 /* macOSSidebarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSSidebarButton.swift; sourceTree = "<group>"; };
 		833981672640439F005614E8 /* macOSSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSSettingsView.swift; sourceTree = "<group>"; };
+		8339816A26404F59005614E8 /* macOSSidebarButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSSidebarButtons.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -507,6 +510,7 @@
 			isa = PBXGroup;
 			children = (
 				8339816326404049005614E8 /* macOSSidebarButton.swift */,
+				8339816A26404F59005614E8 /* macOSSidebarButtons.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -704,6 +708,7 @@
 				833980DF263CAB93005614E8 /* AppSessionStore.swift in Sources */,
 				833981682640439F005614E8 /* macOSSettingsView.swift in Sources */,
 				83398135263F324C005614E8 /* PreferencesView.swift in Sources */,
+				8339816B26404F59005614E8 /* macOSSidebarButtons.swift in Sources */,
 				8339811E263F288D005614E8 /* ArticleCard.swift in Sources */,
 				83398143263F526A005614E8 /* iPadHomeButtons.swift in Sources */,
 				833980EB263F07DC005614E8 /* iPhoneHomeButton.swift in Sources */,
@@ -724,6 +729,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8339816C26404F59005614E8 /* macOSSidebarButtons.swift in Sources */,
 				833817952639AC18007A8B28 /* macOSContentView.swift in Sources */,
 				83398118263F250E005614E8 /* ArticleService.swift in Sources */,
 				8339811B263F26CA005614E8 /* PreviewService.swift in Sources */,
