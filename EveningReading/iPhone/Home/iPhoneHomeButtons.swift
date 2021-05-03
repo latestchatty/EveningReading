@@ -41,6 +41,35 @@ struct iPhoneHomeButtons: View {
             }
             .padding(.horizontal, 15)
             Spacer()
+            
+            // Home Screen Navigation
+            VStack {
+                // go to chat
+                NavigationLink(destination: ChatView(), isActive: $appSessionStore.showingChatView) {
+                    Spacer().frame(width: 0, height: 0)
+                }
+                
+                // go to inbox
+                NavigationLink(destination: InboxView(), isActive: $appSessionStore.showingInboxView) {
+                    Spacer().frame(width: 0, height: 0)
+                }
+                
+                // go to search
+                NavigationLink(destination: SearchView(populateTerms: .constant(""), populateAuthor: .constant(""), populateParent: .constant("")), isActive: $appSessionStore.showingSearchView) {
+                    Spacer().frame(width: 0, height: 0)
+                }
+                
+                // go to tags
+                NavigationLink(destination: TagsView(), isActive: $appSessionStore.showingTagsView) {
+                    Spacer().frame(width: 0, height: 0)
+                }
+                
+                // go to settings
+                NavigationLink(destination: SettingsView(), isActive: $appSessionStore.showingSettingsView) {
+                    Spacer().frame(width: 0, height: 0)
+                }
+            }
+            
         }
     }
 }

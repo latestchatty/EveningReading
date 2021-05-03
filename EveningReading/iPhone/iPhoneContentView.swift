@@ -30,7 +30,7 @@ struct iPhoneContentView: View {
             .navigationBarTitle("Evening Reading")
             .navigationBarHidden(false)
             .navigationBarBackButtonHidden(true)
-            .navigationBarItems(trailing: iPhoneHomeNavigation())
+            .navigationBarItems(trailing: SettingsButton())
         }
         .navigationViewStyle(StackNavigationViewStyle())
         .accentColor(colorScheme == .dark ? Color.white : Color(UIColor.systemBlue))

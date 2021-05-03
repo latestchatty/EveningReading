@@ -23,6 +23,7 @@ struct EveningReadingApp: App {
             }
             #else
                 macOSContentView()
+                    .environmentObject(appSessionStore)
             #endif
         }
     }

@@ -26,7 +26,7 @@ struct iPadContentView: View {
             .navigationBarTitle("Evening Reading")
             .navigationBarHidden(false)
             .navigationBarBackButtonHidden(true)
-            .navigationBarItems(trailing: iPadHomeNavigation())
+            .navigationBarItems(trailing: SettingsButton())
         }
         .navigationViewStyle(StackNavigationViewStyle())
         .accentColor(colorScheme == .dark ? Color.white : Color(UIColor.systemBlue))
