@@ -29,24 +29,35 @@ struct macOSContentView: View {
                     Text("Evening Reading")
                         .font(.caption2)
                         .foregroundColor(Color("macOSSidebarHeader"))
-                        .bold()                    
-                    Group{
-                        NavigationLink(destination: macOSChatView()) {
-                            Label("Chat", systemImage: "text.bubble")
-                        }
-                        NavigationLink(destination: macOSInboxView()) {
-                            Label("Inbox", systemImage: "envelope.open")
-                        }
-                        NavigationLink(destination: macOSSearchView()) {
-                            Label("Search", systemImage: "magnifyingglass")
-                        }
-                        NavigationLink(destination: macOSTagsView()) {
-                            Label("Tags", systemImage: "tag")
-                        }
-                        NavigationLink(destination: macOSSettingsView()) {
-                            Label("Settings", systemImage: "gear")
-                        }
+                        .bold()
+                    
+                    VStack (alignment: .leading, spacing: 10) {
+                        macOSSidebarButton(text: .constant("Chat"), imageName: .constant("text.bubble"), selected: $appSessionStore.showingChatView)
+                            .onTapGesture(count: 1) {
+                                navigateTo(&appSessionStore.showingChatView)
+                            }
+                        
+                        macOSSidebarButton(text: .constant("Inbox"), imageName: .constant("envelope.open"), selected: $appSessionStore.showingInboxView)
+                            .onTapGesture(count: 1) {
+                                navigateTo(&appSessionStore.showingInboxView)
+                            }
+                        
+                        macOSSidebarButton(text: .constant("Search"), imageName: .constant("magnifyingglass"), selected: $appSessionStore.showingSearchView)
+                            .onTapGesture(count: 1) {
+                                navigateTo(&appSessionStore.showingSearchView)
+                            }
+                        
+                        macOSSidebarButton(text: .constant("Tags"), imageName: .constant("tag"), selected: $appSessionStore.showingTagsView)
+                            .onTapGesture(count: 1) {
+                                navigateTo(&appSessionStore.showingTagsView)
+                            }
+                        
+                        macOSSidebarButton(text: .constant("Settings"), imageName: .constant("gear"), selected: $appSessionStore.showingSettingsView)
+                            .onTapGesture(count: 1) {
+                                navigateTo(&appSessionStore.showingSettingsView)
+                            }
                     }
+                    
                 }
                 .listStyle(SidebarListStyle())
                 .navigationTitle("Explore")
@@ -62,12 +73,27 @@ struct macOSContentView: View {
                     }
                 }
                 
-                //Default View on Mac
-                macOSChatView()
+                // Content
+                if appSessionStore.showingChatView {
+                    macOSChatView()
+                } else if appSessionStore.showingInboxView {
+                    macOSInboxView()
+                } else if appSessionStore.showingSearchView {
+                    macOSSearchView()
+                } else if appSessionStore.showingTagsView {
+                    macOSTagsView()
+                } else if appSessionStore.showingSettingsView {
+                    macOSSettingsView()
+                } else {
+                    EmptyView()
+                }
             }
         }
         .frame(minWidth: macOSWindowSize().minWidth, minHeight: macOSWindowSize().minHeight)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .onAppear() {
+            appSessionStore.showingChatView = true
+        }
     }
 }
 

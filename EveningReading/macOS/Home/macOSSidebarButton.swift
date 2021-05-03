@@ -19,7 +19,7 @@ struct macOSSidebarButton: View {
                     .padding(.leading, 5)
                 Spacer()
             }
-            .frame(height: 24)
+            .frame(minHeight: 24)
             .frame(maxWidth: .infinity)
             .background(self.selected ? Color("macOSSidebarHighlight") : Color.clear)
             .cornerRadius(5)
