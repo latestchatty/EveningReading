@@ -15,6 +15,7 @@ class AppSessionStore : ObservableObject {
     @Published var showingTagsView = false
     @Published var showingSettingsView = false
     
+    // Preferences
     @Published var displayPostAuthor: Bool = true {
         didSet {
             let defaults = UserDefaults.standard
@@ -31,6 +32,14 @@ class AppSessionStore : ObservableObject {
         didSet {
             let defaults = UserDefaults.standard
             defaults.set(threadNavigation, forKey: "ThreadNavigation")
+        }
+    }
+    
+    // Collapsed
+    @Published var collapsedThreads: [Int] = [0] {
+        didSet {
+            let defaults = UserDefaults.standard
+            defaults.set(collapsedThreads, forKey: "CollapsedThreads")
         }
     }
     

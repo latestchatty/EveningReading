@@ -24,7 +24,7 @@ struct ChatView: View {
             RefreshableScrollView(height: 70, refreshing: self.$chatStore.loadingChat, scrollTarget: self.$chatStore.scrollTargetChat, scrollTargetTop: self.$chatStore.scrollTargetChatTop) {
                 
                 ForEach(filteredThreads(), id: \.threadId) { thread in
-                    ChatRow(threadId: .constant(thread.threadId))
+                    ThreadRow(threadId: .constant(thread.threadId))
                         .environmentObject(AppSessionStore())
                         .environmentObject(ChatStore(service: ChatService()))
                 }

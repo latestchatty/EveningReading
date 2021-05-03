@@ -77,9 +77,9 @@
 		8339817B264062BB005614E8 /* RoundedCornersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339817A264062BB005614E8 /* RoundedCornersView.swift */; };
 		8339817C264062BB005614E8 /* RoundedCornersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339817A264062BB005614E8 /* RoundedCornersView.swift */; };
 		8339817E264063E8005614E8 /* ThreadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339817D264063E8005614E8 /* ThreadView.swift */; };
-		8339818126406402005614E8 /* ChatRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339818026406402005614E8 /* ChatRow.swift */; };
-		8339818426406814005614E8 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339818326406814005614E8 /* Globals.swift */; };
-		8339818526406814005614E8 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339818326406814005614E8 /* Globals.swift */; };
+		8339818126406402005614E8 /* ThreadRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339818026406402005614E8 /* ThreadRow.swift */; };
+		8339818426406814005614E8 /* ShackGlobals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339818326406814005614E8 /* ShackGlobals.swift */; };
+		8339818526406814005614E8 /* ShackGlobals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339818326406814005614E8 /* ShackGlobals.swift */; };
 		8339818826406F0B005614E8 /* TimeRemainingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339818726406F0B005614E8 /* TimeRemainingIndicator.swift */; };
 		8339818926406F0B005614E8 /* TimeRemainingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339818726406F0B005614E8 /* TimeRemainingIndicator.swift */; };
 /* End PBXBuildFile section */
@@ -189,8 +189,8 @@
 		8339817626405B4D005614E8 /* iPadChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadChatView.swift; sourceTree = "<group>"; };
 		8339817A264062BB005614E8 /* RoundedCornersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCornersView.swift; sourceTree = "<group>"; };
 		8339817D264063E8005614E8 /* ThreadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadView.swift; sourceTree = "<group>"; };
-		8339818026406402005614E8 /* ChatRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRow.swift; sourceTree = "<group>"; };
-		8339818326406814005614E8 /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
+		8339818026406402005614E8 /* ThreadRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadRow.swift; sourceTree = "<group>"; };
+		8339818326406814005614E8 /* ShackGlobals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShackGlobals.swift; sourceTree = "<group>"; };
 		8339818726406F0B005614E8 /* TimeRemainingIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeRemainingIndicator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -402,8 +402,8 @@
 			isa = PBXGroup;
 			children = (
 				83398129263F2E60005614E8 /* ChatView.swift */,
+				8339818026406402005614E8 /* ThreadRow.swift */,
 				8339817D264063E8005614E8 /* ThreadView.swift */,
-				8339818026406402005614E8 /* ChatRow.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -557,7 +557,7 @@
 		83398171264058CD005614E8 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				8339818326406814005614E8 /* Globals.swift */,
+				8339818326406814005614E8 /* ShackGlobals.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -793,8 +793,8 @@
 				833817922639AC18007A8B28 /* EveningReadingApp.swift in Sources */,
 				8339812E263F2F5A005614E8 /* ArticleView.swift in Sources */,
 				83398111263F1794005614E8 /* DateExtensions.swift in Sources */,
-				8339818126406402005614E8 /* ChatRow.swift in Sources */,
-				8339818426406814005614E8 /* Globals.swift in Sources */,
+				8339818126406402005614E8 /* ThreadRow.swift in Sources */,
+				8339818426406814005614E8 /* ShackGlobals.swift in Sources */,
 				83398132263F2F7C005614E8 /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -818,7 +818,7 @@
 				833980E0263CAB93005614E8 /* AppSessionStore.swift in Sources */,
 				8339816026403F08005614E8 /* macOSTagsView.swift in Sources */,
 				833981692640439F005614E8 /* macOSSettingsView.swift in Sources */,
-				8339818526406814005614E8 /* Globals.swift in Sources */,
+				8339818526406814005614E8 /* ShackGlobals.swift in Sources */,
 				8339810F263F1028005614E8 /* StringExtensions.swift in Sources */,
 				83398107263F0D38005614E8 /* ChatService.swift in Sources */,
 				83398155263F69E0005614E8 /* macOSChatView.swift in Sources */,
