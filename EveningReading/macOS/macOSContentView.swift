@@ -7,15 +7,14 @@
 
 import SwiftUI
 
-#if os(OSX)
 struct macOSWindowSize {
     let minWidth : CGFloat = 800
     let minHeight : CGFloat = 600
 }
-#endif
 
 struct macOSContentView: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var chatStore: ChatStore
         
     var body: some View {
         HStack() {
@@ -70,5 +69,6 @@ struct macOSContentView_Previews: PreviewProvider {
     static var previews: some View {
         macOSContentView()
             .environmentObject(AppSessionStore())
+            .environmentObject(ChatStore(service: ChatService()))
     }
 }

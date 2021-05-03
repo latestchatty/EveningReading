@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct macOSChatView: View {
+    @EnvironmentObject var chatStore: ChatStore
+    
     var body: some View {
         VStack {
             Text("Chat View")
@@ -20,5 +22,6 @@ struct macOSChatView: View {
 struct macOSChatView_Previews: PreviewProvider {
     static var previews: some View {
         macOSChatView()
+            .environmentObject(ChatStore(service: ChatService()))
     }
 }

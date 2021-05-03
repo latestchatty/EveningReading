@@ -43,7 +43,7 @@ struct iPadHomeButtons: View {
             // Home Screen Navigation
             VStack {
                 // go to chat
-                NavigationLink(destination: ChatView(), isActive: $appSessionStore.showingChatView) {
+                NavigationLink(destination: iPadChatView(), isActive: $appSessionStore.showingChatView) {
                     Spacer().frame(width: 0, height: 0)
                 }
                 

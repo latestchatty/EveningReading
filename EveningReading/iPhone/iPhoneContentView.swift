@@ -10,6 +10,7 @@ import SwiftUI
 struct iPhoneContentView: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var chatStore: ChatStore
     
     func navigateTo(_ goToDestination: inout Bool) {
             appSessionStore.resetNavigation()
@@ -22,7 +23,9 @@ struct iPhoneContentView: View {
                 VStack {
                     iPhoneHomeButtons()
                     TrendingView()
+                        .offset(y: -40)
                     iPhoneArticlesView()
+                        .offset(y: -40)
                 }
                 .background(Color("PrimaryBackground").frame(height: 2600).offset(y: -80))
             }
@@ -43,5 +46,6 @@ struct iPhoneContentView_Previews: PreviewProvider {
         iPhoneContentView()
             .environment(\.colorScheme, .dark)
             .environmentObject(AppSessionStore())
+            .environmentObject(ChatStore(service: ChatService()))
     }
 }

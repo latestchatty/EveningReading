@@ -10,6 +10,7 @@ import SwiftUI
 struct iPadContentView: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var chatStore: ChatStore
     var body: some View {
         NavigationView {
             ScrollViewReader { scrollProxy in
@@ -40,5 +41,6 @@ struct iPadContentView_Previews: PreviewProvider {
             .previewDevice(PreviewDevice(rawValue: "iPad (8th generation)"))
             .environment(\.colorScheme, .dark)
             .environmentObject(AppSessionStore())
+            .environmentObject(ChatStore(service: ChatService()))
     }
 }

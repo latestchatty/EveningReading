@@ -63,18 +63,25 @@
 		83398150263F6427005614E8 /* ArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339814F263F6427005614E8 /* ArrayExtensions.swift */; };
 		83398151263F6427005614E8 /* ArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339814F263F6427005614E8 /* ArrayExtensions.swift */; };
 		83398155263F69E0005614E8 /* macOSChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83398153263F69E0005614E8 /* macOSChatView.swift */; };
-		83398158263F6BB1005614E8 /* macOSInboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83398157263F6BB1005614E8 /* macOSInboxView.swift */; };
 		83398159263F6BB1005614E8 /* macOSInboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83398157263F6BB1005614E8 /* macOSInboxView.swift */; };
-		8339815C263F6FC4005614E8 /* macOSSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339815B263F6FC4005614E8 /* macOSSearchView.swift */; };
 		8339815D263F6FC4005614E8 /* macOSSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339815B263F6FC4005614E8 /* macOSSearchView.swift */; };
-		8339815F26403F08005614E8 /* macOSTagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339815E26403F08005614E8 /* macOSTagsView.swift */; };
 		8339816026403F08005614E8 /* macOSTagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339815E26403F08005614E8 /* macOSTagsView.swift */; };
-		8339816426404049005614E8 /* macOSSidebarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339816326404049005614E8 /* macOSSidebarButton.swift */; };
 		8339816526404049005614E8 /* macOSSidebarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339816326404049005614E8 /* macOSSidebarButton.swift */; };
 		833981682640439F005614E8 /* macOSSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833981672640439F005614E8 /* macOSSettingsView.swift */; };
 		833981692640439F005614E8 /* macOSSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833981672640439F005614E8 /* macOSSettingsView.swift */; };
-		8339816B26404F59005614E8 /* macOSSidebarButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339816A26404F59005614E8 /* macOSSidebarButtons.swift */; };
 		8339816C26404F59005614E8 /* macOSSidebarButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339816A26404F59005614E8 /* macOSSidebarButtons.swift */; };
+		8339816F26405899005614E8 /* RefreshableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339816E26405899005614E8 /* RefreshableScrollView.swift */; };
+		8339817026405899005614E8 /* RefreshableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339816E26405899005614E8 /* RefreshableScrollView.swift */; };
+		83398173264058D9005614E8 /* Haptic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83398172264058D9005614E8 /* Haptic.swift */; };
+		8339817726405B4D005614E8 /* iPadChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339817626405B4D005614E8 /* iPadChatView.swift */; };
+		8339817B264062BB005614E8 /* RoundedCornersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339817A264062BB005614E8 /* RoundedCornersView.swift */; };
+		8339817C264062BB005614E8 /* RoundedCornersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339817A264062BB005614E8 /* RoundedCornersView.swift */; };
+		8339817E264063E8005614E8 /* ThreadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339817D264063E8005614E8 /* ThreadView.swift */; };
+		8339818126406402005614E8 /* ChatRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339818026406402005614E8 /* ChatRow.swift */; };
+		8339818426406814005614E8 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339818326406814005614E8 /* Globals.swift */; };
+		8339818526406814005614E8 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339818326406814005614E8 /* Globals.swift */; };
+		8339818826406F0B005614E8 /* TimeRemainingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339818726406F0B005614E8 /* TimeRemainingIndicator.swift */; };
+		8339818926406F0B005614E8 /* TimeRemainingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339818726406F0B005614E8 /* TimeRemainingIndicator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -177,6 +184,14 @@
 		8339816326404049005614E8 /* macOSSidebarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSSidebarButton.swift; sourceTree = "<group>"; };
 		833981672640439F005614E8 /* macOSSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSSettingsView.swift; sourceTree = "<group>"; };
 		8339816A26404F59005614E8 /* macOSSidebarButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSSidebarButtons.swift; sourceTree = "<group>"; };
+		8339816E26405899005614E8 /* RefreshableScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshableScrollView.swift; sourceTree = "<group>"; };
+		83398172264058D9005614E8 /* Haptic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptic.swift; sourceTree = "<group>"; };
+		8339817626405B4D005614E8 /* iPadChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadChatView.swift; sourceTree = "<group>"; };
+		8339817A264062BB005614E8 /* RoundedCornersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCornersView.swift; sourceTree = "<group>"; };
+		8339817D264063E8005614E8 /* ThreadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadView.swift; sourceTree = "<group>"; };
+		8339818026406402005614E8 /* ChatRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRow.swift; sourceTree = "<group>"; };
+		8339818326406814005614E8 /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
+		8339818726406F0B005614E8 /* TimeRemainingIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeRemainingIndicator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -222,10 +237,11 @@
 		8338177E2639AC17007A8B28 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				833980D1263C9B3D005614E8 /* Controls */,
 				8339810C263F1000005614E8 /* Extensions */,
 				83398104263F0D24005614E8 /* Services */,
 				833980DD263CAB7D005614E8 /* Stores */,
-				833980D1263C9B3D005614E8 /* Controls */,
+				83398171264058CD005614E8 /* Utilities */,
 				8338177F2639AC17007A8B28 /* EveningReadingApp.swift */,
 				833817812639AC18007A8B28 /* Assets.xcassets */,
 			);
@@ -248,6 +264,7 @@
 			children = (
 				8339813D263F47B6005614E8 /* Home */,
 				83398130263F2F63005614E8 /* Settings */,
+				8339818A264070E9005614E8 /* Utilities */,
 				833817892639AC18007A8B28 /* Info.plist */,
 			);
 			path = iOS;
@@ -305,6 +322,7 @@
 			isa = PBXGroup;
 			children = (
 				8339813E263F5210005614E8 /* Home */,
+				8339817526405B3D005614E8 /* Chat */,
 				83398148263F5A04005614E8 /* Inbox */,
 				833980CF263C914D005614E8 /* iPadContentView.swift */,
 			);
@@ -328,6 +346,9 @@
 		833980D1263C9B3D005614E8 /* Controls */ = {
 			isa = PBXGroup;
 			children = (
+				8339818626406F04005614E8 /* TimeRemainingIndicator */,
+				83398179264062AB005614E8 /* RoundedCornersView */,
+				8339816D2640588B005614E8 /* RefreshableScrollView */,
 			);
 			path = Controls;
 			sourceTree = "<group>";
@@ -381,6 +402,8 @@
 			isa = PBXGroup;
 			children = (
 				83398129263F2E60005614E8 /* ChatView.swift */,
+				8339817D264063E8005614E8 /* ThreadView.swift */,
+				8339818026406402005614E8 /* ChatRow.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -521,6 +544,54 @@
 				833981672640439F005614E8 /* macOSSettingsView.swift */,
 			);
 			path = Settings;
+			sourceTree = "<group>";
+		};
+		8339816D2640588B005614E8 /* RefreshableScrollView */ = {
+			isa = PBXGroup;
+			children = (
+				8339816E26405899005614E8 /* RefreshableScrollView.swift */,
+			);
+			path = RefreshableScrollView;
+			sourceTree = "<group>";
+		};
+		83398171264058CD005614E8 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				8339818326406814005614E8 /* Globals.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		8339817526405B3D005614E8 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				8339817626405B4D005614E8 /* iPadChatView.swift */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
+		83398179264062AB005614E8 /* RoundedCornersView */ = {
+			isa = PBXGroup;
+			children = (
+				8339817A264062BB005614E8 /* RoundedCornersView.swift */,
+			);
+			path = RoundedCornersView;
+			sourceTree = "<group>";
+		};
+		8339818626406F04005614E8 /* TimeRemainingIndicator */ = {
+			isa = PBXGroup;
+			children = (
+				8339818726406F0B005614E8 /* TimeRemainingIndicator.swift */,
+			);
+			path = TimeRemainingIndicator;
+			sourceTree = "<group>";
+		};
+		8339818A264070E9005614E8 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				83398172264058D9005614E8 /* Haptic.swift */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -689,26 +760,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8339817726405B4D005614E8 /* iPadChatView.swift in Sources */,
 				8339810E263F1028005614E8 /* StringExtensions.swift in Sources */,
 				8339810A263F0F7A005614E8 /* TrendingCard.swift in Sources */,
 				83398140263F525F005614E8 /* iPadHomeButton.swift in Sources */,
 				833980D0263C914D005614E8 /* iPadContentView.swift in Sources */,
-				8339815C263F6FC4005614E8 /* macOSSearchView.swift in Sources */,
 				8339811A263F26CA005614E8 /* PreviewService.swift in Sources */,
 				833980F2263F08C1005614E8 /* SettingsButton.swift in Sources */,
+				83398173264058D9005614E8 /* Haptic.swift in Sources */,
 				833980CE263C9137005614E8 /* iPhoneContentView.swift in Sources */,
 				83398127263F2E59005614E8 /* InboxView.swift in Sources */,
 				83398121263F2E39005614E8 /* TagsView.swift in Sources */,
 				83398106263F0D38005614E8 /* ChatService.swift in Sources */,
+				8339817E264063E8005614E8 /* ThreadView.swift in Sources */,
+				8339818826406F0B005614E8 /* TimeRemainingIndicator.swift in Sources */,
 				833980FC263F0AF3005614E8 /* iPhoneArticlesView.swift in Sources */,
 				833980F5263F0958005614E8 /* TrendingView.swift in Sources */,
-				8339815F26403F08005614E8 /* macOSTagsView.swift in Sources */,
+				8339816F26405899005614E8 /* RefreshableScrollView.swift in Sources */,
 				83398124263F2E4E005614E8 /* SearchView.swift in Sources */,
 				8339812A263F2E60005614E8 /* ChatView.swift in Sources */,
 				833980DF263CAB93005614E8 /* AppSessionStore.swift in Sources */,
 				833981682640439F005614E8 /* macOSSettingsView.swift in Sources */,
 				83398135263F324C005614E8 /* PreferencesView.swift in Sources */,
-				8339816B26404F59005614E8 /* macOSSidebarButtons.swift in Sources */,
 				8339811E263F288D005614E8 /* ArticleCard.swift in Sources */,
 				83398143263F526A005614E8 /* iPadHomeButtons.swift in Sources */,
 				833980EB263F07DC005614E8 /* iPhoneHomeButton.swift in Sources */,
@@ -716,11 +789,12 @@
 				83398117263F250E005614E8 /* ArticleService.swift in Sources */,
 				833980EF263F0874005614E8 /* iPhoneHomeButtons.swift in Sources */,
 				83398150263F6427005614E8 /* ArrayExtensions.swift in Sources */,
+				8339817B264062BB005614E8 /* RoundedCornersView.swift in Sources */,
 				833817922639AC18007A8B28 /* EveningReadingApp.swift in Sources */,
 				8339812E263F2F5A005614E8 /* ArticleView.swift in Sources */,
-				8339816426404049005614E8 /* macOSSidebarButton.swift in Sources */,
-				83398158263F6BB1005614E8 /* macOSInboxView.swift in Sources */,
 				83398111263F1794005614E8 /* DateExtensions.swift in Sources */,
+				8339818126406402005614E8 /* ChatRow.swift in Sources */,
+				8339818426406814005614E8 /* Globals.swift in Sources */,
 				83398132263F2F7C005614E8 /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -731,16 +805,20 @@
 			files = (
 				8339816C26404F59005614E8 /* macOSSidebarButtons.swift in Sources */,
 				833817952639AC18007A8B28 /* macOSContentView.swift in Sources */,
+				8339817026405899005614E8 /* RefreshableScrollView.swift in Sources */,
+				8339817C264062BB005614E8 /* RoundedCornersView.swift in Sources */,
 				83398118263F250E005614E8 /* ArticleService.swift in Sources */,
 				8339811B263F26CA005614E8 /* PreviewService.swift in Sources */,
 				83398159263F6BB1005614E8 /* macOSInboxView.swift in Sources */,
 				8339815D263F6FC4005614E8 /* macOSSearchView.swift in Sources */,
+				8339818926406F0B005614E8 /* TimeRemainingIndicator.swift in Sources */,
 				83398112263F1794005614E8 /* DateExtensions.swift in Sources */,
 				8339816526404049005614E8 /* macOSSidebarButton.swift in Sources */,
 				83398151263F6427005614E8 /* ArrayExtensions.swift in Sources */,
 				833980E0263CAB93005614E8 /* AppSessionStore.swift in Sources */,
 				8339816026403F08005614E8 /* macOSTagsView.swift in Sources */,
 				833981692640439F005614E8 /* macOSSettingsView.swift in Sources */,
+				8339818526406814005614E8 /* Globals.swift in Sources */,
 				8339810F263F1028005614E8 /* StringExtensions.swift in Sources */,
 				83398107263F0D38005614E8 /* ChatService.swift in Sources */,
 				83398155263F69E0005614E8 /* macOSChatView.swift in Sources */,
