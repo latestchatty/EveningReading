@@ -40,7 +40,7 @@ struct AuthorNameView: View {
         #endif
         #if os(OSX)
         Text("\(self.name)")
-            .font(.footnote)
+            .font(.body)
             .bold()
             .foregroundColor(Color(NSColor.systemOrange))
             .lineLimit(1)

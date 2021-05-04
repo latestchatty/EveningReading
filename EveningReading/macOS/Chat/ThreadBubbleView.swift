@@ -65,41 +65,49 @@ struct ThreadBubbleView: View {
 
     var body: some View {
         VStack (alignment: .leading) {
+            
             ThreadCategoryColor[self.rootPostCategory].frame(height: 5)
+            
             HStack {
                 AuthorNameView(name: self.$rootPostAuthor)
+                
                 ContributedView(contributed: self.$contributed)
+                
+                if self.hasLols {
+                    LolView(lols: self.$lols)
+                }
                 Spacer()
+                
                 TimeRemainingIndicator(percent: .constant(self.rootPostDate.getTimeRemaining()))
                     .frame(width: 10, height: 10)
+                
                 Text(self.rootPostDate.getTimeAgo())
                     .font(.body)
+                
                 Image(systemName: "eye.slash")
                     .imageScale(.large)
                     .onTapGesture(count: 1) {
                     }
+                
                 Image(systemName: "tag")
                     .imageScale(.large)
                     .onTapGesture(count: 1) {
                     }
+                
                 Image(systemName: "arrowshape.turn.up.left")
                     .imageScale(.large)
                     .onTapGesture(count: 1) {
                     }
             }
-            .padding(.init(top: 5, leading: 20, bottom: 5, trailing: 20))
-            if self.hasLols {
-                HStack {
-                    LolView(lols: self.$lols)
-                }
-                .padding(.init(top: 5, leading: 20, bottom: 5, trailing: 20))
-            }
-            VStack {
+            .padding(.leading, 20)
+            .padding(.trailing, 20)
+            
+            HStack {
                 Text("\(self.rootPostBody)")
                     .font(.body)
             }
-            .padding(.init(top: 0, leading: 20, bottom: 5, trailing: 20))
-            Spacer()
+            .padding(.init(top: 0, leading: 20, bottom: 15, trailing: 20))
+
         }
         .onAppear(perform: getThreadData)
         .frame(maxWidth: .infinity)

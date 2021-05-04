@@ -71,13 +71,6 @@ struct ThreadRow: View {
         }
     }
     
-    private func isAuthor() -> Bool {        
-        if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil && self.rootPostAuthor == "egestas" {
-            return true
-        }
-        return false
-    }
-    
     var body: some View {
         if !self.collapseThread {
             ZStack {
@@ -130,6 +123,8 @@ struct ThreadRow: View {
 
                             ContributedView(contributed: self.$contributed)
 
+                            Spacer()
+
                             LolView(lols: self.$lols)
 
                             ReplyCountView(replyCount: self.$replyCount)
@@ -158,7 +153,6 @@ struct ThreadRow: View {
                         .frame(maxWidth: .infinity)
                         .background(RoundedCornersView(color: (self.activeThreadId == self.threadId ? Color("ChatBubbleSecondary") : Color("ChatBubblePrimary")), shadowColor: Color("ChatBubbleShadow"), tl: 0, tr: 10, bl: 10, br: 10))
                         .padding(.bottom, 5)
-                        
                     }
                     .onAppear(perform: getThreadData)
                     .padding(.horizontal, 10)

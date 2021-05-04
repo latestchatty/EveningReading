@@ -27,7 +27,6 @@ struct ContributedView: View {
                     .offset(x: 0, y: -1)
             #endif
         }
-        Spacer()
     }
 }
 

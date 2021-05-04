@@ -34,6 +34,7 @@ struct macOSContentView: View {
                 .navigationTitle("Evening Reading")
                 .frame(minWidth: 150, idealWidth: 250, maxWidth: 300)
                 .toolbar {
+                    // Collapse Sidebar
                     ToolbarItem(placement: .automatic) {
                         Button(action: {
                             NSApp.keyWindow?.firstResponder?.tryToPerform(#selector(NSSplitViewController.toggleSidebar(_:)), with: nil)
@@ -41,6 +42,7 @@ struct macOSContentView: View {
                             Image(systemName: "sidebar.left")
                         })
                     }
+                    // Toolbar Buttons
                     ToolbarItemGroup(placement: .navigation) {
                         if appSessionStore.showingChatView {
                             Button(action: {
