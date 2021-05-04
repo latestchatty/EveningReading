@@ -44,11 +44,21 @@ struct macOSContentView: View {
                     ToolbarItemGroup(placement: .navigation) {
                         if appSessionStore.showingChatView {
                             Button(action: {
+                                // refresh
+                            }, label: {
+                                Image(systemName: "arrow.counterclockwise")
+                            })
+                            Button(action: {
                                 // compose
                             }, label: {
                                 Image(systemName: "square.and.pencil")
                             })
                         } else if appSessionStore.showingInboxView {
+                            Button(action: {
+                                // refresh
+                            }, label: {
+                                Image(systemName: "arrow.counterclockwise")
+                            })
                             Button(action: {
                                 // compose
                             }, label: {
