@@ -39,4 +39,17 @@ extension Date {
         return 235.0 - CGFloat(percentWidth)
     }
     
+    func timeSince() -> String {
+        let formatter = DateComponentsFormatter()
+        formatter.unitsStyle = .brief
+        formatter.allowedUnits = [.year, .month, .day, .hour, .minute, .second]
+        formatter.zeroFormattingBehavior = .dropAll
+        formatter.maximumUnitCount = 1
+        let timeSinceValue = String(format: formatter.string(from: self, to: Date()) ?? "", locale: .current)
+                            .replacingOccurrences(of: "day", with: " day")
+                            .replacingOccurrences(of: "month", with: " month")
+                            .replacingOccurrences(of: "year", with: " year")
+        return timeSinceValue
+    }
+    
 }

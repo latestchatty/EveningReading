@@ -18,7 +18,7 @@ struct ThreadBubbleView: View {
     @State private var contributed: Bool = false
     @State private var replyCount: Int = 0
     @State private var rootPostBody: String = ""
-    @State private var postDate: String = "2020-08-14T21:05:00Z"
+    @State private var rootPostDate: String = "2020-08-14T21:05:00Z"
     @State private var hasLols: Bool = false
     @State private var lols = [String: Int]()
     @State private var lolTypeCount: Int = 0
@@ -68,7 +68,16 @@ struct ThreadBubbleView: View {
             ThreadCategoryColor[self.rootPostCategory].frame(height: 5)
             HStack {
                 AuthorNameView(name: self.$rootPostAuthor)
+                ContributedView(contributed: self.$contributed)
                 Spacer()
+                TimeRemainingIndicator(percent: .constant(self.rootPostDate.getTimeRemaining()))
+                    .frame(width: 10, height: 10)
+                Text(self.rootPostDate.getTimeAgo())
+                    .font(.body)
+                Image(systemName: "eye.slash")
+                    .imageScale(.large)
+                    .onTapGesture(count: 1) {
+                    }
                 Image(systemName: "tag")
                     .imageScale(.large)
                     .onTapGesture(count: 1) {
@@ -79,6 +88,12 @@ struct ThreadBubbleView: View {
                     }
             }
             .padding(.init(top: 5, leading: 20, bottom: 5, trailing: 20))
+            if self.hasLols {
+                HStack {
+                    LolView(lols: self.$lols)
+                }
+                .padding(.init(top: 5, leading: 20, bottom: 5, trailing: 20))
+            }
             VStack {
                 Text("\(self.rootPostBody)")
                     .font(.body)

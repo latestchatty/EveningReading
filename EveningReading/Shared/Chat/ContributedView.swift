@@ -18,7 +18,8 @@ struct ContributedView: View {
                     .foregroundColor(Color(UIColor.systemTeal))
                     .padding(.leading, 5)
                     .offset(x: 0, y: -1)
-            #else
+            #endif
+            #if os(OSX)
                 Image(systemName: "pencil")
                     .imageScale(.small)
                     .foregroundColor(Color(NSColor.systemTeal))

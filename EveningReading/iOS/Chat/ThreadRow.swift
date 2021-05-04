@@ -19,8 +19,8 @@ struct ThreadRow: View {
     @State private var rootPostAuthor: String = ""
     @State private var contributed: Bool = false
     @State private var replyCount: Int = 0
-    @State private var rootPostBody: String = ""
-    @State private var postDate: String = "2020-08-14T21:05:00Z"
+    @State private var rootPostBodyPreview: String = ""
+    @State private var rootPostDate: String = "2020-08-14T21:05:00Z"
     @State private var hasLols: Bool = false
     @State private var lols = [String: Int]()
     @State private var lolTypeCount: Int = 0
@@ -38,7 +38,7 @@ struct ThreadRow: View {
                 let rootPost = thread.posts.filter({ return $0.parentId == 0 }).first
                 self.rootPostCategory = rootPost?.category ?? "ontopic"
                 self.rootPostAuthor = rootPost?.author ?? ""
-                self.rootPostBody = rootPost?.body.getPreview ?? ""
+                self.rootPostBodyPreview = rootPost?.body.getPreview ?? ""
                 self.replyCount = thread.posts.count - 1
                 
                 for lol in rootPost?.lols ?? [ChatLols]() {
@@ -56,7 +56,7 @@ struct ThreadRow: View {
             let rootPost = thread.posts.filter({ return $0.parentId == 0 }).first
             self.rootPostCategory = rootPost?.category ?? "ontopic"
             self.rootPostAuthor = rootPost?.author ?? ""
-            self.rootPostBody = rootPost?.body.getPreview ?? ""
+            self.rootPostBodyPreview = rootPost?.body.getPreview ?? ""
             self.replyCount = thread.posts.count - 1
             
             for lol in rootPost?.lols ?? [ChatLols]() {
@@ -134,14 +134,14 @@ struct ThreadRow: View {
 
                             ReplyCountView(replyCount: self.$replyCount)
                             
-                            TimeRemainingIndicator(percent:  .constant(self.postDate.getTimeRemaining()))
+                            TimeRemainingIndicator(percent:  .constant(self.rootPostDate.getTimeRemaining()))
                                     .frame(width: 10, height: 10)
                         }
                         
                         // Post Preview
                         ZStack {
                             HStack (alignment: .top) {
-                                Text(rootPostBody)
+                                Text(rootPostBodyPreview)
                                     .font(.callout)
                                     .foregroundColor(Color(UIColor.label))
                                     .lineLimit(appSessionStore.abbreviateThreads ? 3 : 8)

@@ -318,6 +318,11 @@ extension String {
         return date.percentRemaining()
     }
     
+    func getTimeAgo() -> String {
+        let date = self.fromString()
+        return date.timeSince() + " ago"
+    }
+    
     var getPreview: String {
         var postPreview = self.replacingOccurrences(of: "<br />", with: " ")
         postPreview = postPreview.replacingOccurrences(of: "<span\\sclass=\"jt_spoiler\"\\sonclick=\"this.className\\s=\\s'';\">(.|\\n)*?<\\/span>", with: "______", options: .regularExpression, range: nil)
