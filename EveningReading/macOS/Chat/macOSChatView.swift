@@ -10,11 +10,31 @@ import SwiftUI
 struct macOSChatView: View {
     @EnvironmentObject var chatStore: ChatStore
     
-    var body: some View {
-        VStack {
-            Text("Chat View")
-            Text("[insert here]").padding()
+    private func filteredThreads() -> [ChatThread] {
+        if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
+        {
+            return Array(chatData.threads)
         }
+        return Array(chatData.threads)
+    }
+    
+    var body: some View {
+        ScrollView {
+            LazyVStack (alignment: .leading) {
+                ScrollViewReader { scrollProxy in
+                    VStack {
+                        Spacer().frame(maxWidth: .infinity).frame(height: 30)
+                    }.id(1)
+                    ForEach(filteredThreads(), id: \.threadId) { thread in
+                        ThreadBubbleView(threadId: .constant(thread.threadId))
+                    }
+                    VStack {
+                        Spacer().frame(maxWidth: .infinity).frame(height: 30)
+                    }.id(9999999999993)
+                }
+            }
+        }
+        .frame(maxHeight: .infinity)
         .navigationTitle("Chat")
     }
 }

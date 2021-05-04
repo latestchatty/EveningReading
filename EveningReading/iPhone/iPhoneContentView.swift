@@ -18,9 +18,7 @@ struct iPhoneContentView: View {
                 VStack {
                     iPhoneHomeButtons()
                     TrendingView()
-                        .offset(y: -40)
                     iPhoneArticlesView()
-                        .offset(y: -40)
                 }
                 .background(Color("PrimaryBackground").frame(height: 2600).offset(y: -80))
             }

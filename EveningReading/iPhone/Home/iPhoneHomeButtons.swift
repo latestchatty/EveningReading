@@ -18,6 +18,7 @@ struct iPhoneHomeButtons: View {
     var body: some View {
         VStack {
             Spacer().frame(height: 40)
+            
             HStack(alignment: .top) {
                 iPhoneHomeButton(title: .constant("Chat"), imageName: .constant("glyphicons-basic-238-chat-message"), buttonBackground: .constant(Color("HomeButtonChat")))
                 .onTapGesture(count: 1) {
@@ -40,33 +41,34 @@ struct iPhoneHomeButtons: View {
                 }
             }
             .padding(.horizontal, 15)
+            
             Spacer()
             
             // Home Screen Navigation
             VStack {
                 // go to chat
                 NavigationLink(destination: ChatView(), isActive: $appSessionStore.showingChatView) {
-                    Spacer().frame(width: 0, height: 0)
+                    EmptyView()
                 }
                 
                 // go to inbox
                 NavigationLink(destination: InboxView(), isActive: $appSessionStore.showingInboxView) {
-                    Spacer().frame(width: 0, height: 0)
+                    EmptyView()
                 }
                 
                 // go to search
                 NavigationLink(destination: SearchView(populateTerms: .constant(""), populateAuthor: .constant(""), populateParent: .constant("")), isActive: $appSessionStore.showingSearchView) {
-                    Spacer().frame(width: 0, height: 0)
+                    EmptyView()
                 }
                 
                 // go to tags
                 NavigationLink(destination: TagsView(), isActive: $appSessionStore.showingTagsView) {
-                    Spacer().frame(width: 0, height: 0)
+                    EmptyView()
                 }
                 
                 // go to settings
                 NavigationLink(destination: SettingsView(), isActive: $appSessionStore.showingSettingsView) {
-                    Spacer().frame(width: 0, height: 0)
+                    EmptyView()
                 }
             }
             

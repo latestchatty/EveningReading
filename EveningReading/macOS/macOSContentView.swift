@@ -16,6 +16,10 @@ struct macOSContentView: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var chatStore: ChatStore
         
+    @State private var showingChatView = false
+    
+    
+    
     var body: some View {
         HStack() {
             NavigationView {
@@ -27,16 +31,32 @@ struct macOSContentView: View {
                     SidebarButtons()
                 }
                 .listStyle(SidebarListStyle())
-                .navigationTitle("Explore")
+                .navigationTitle("Evening Reading")
                 .frame(minWidth: 150, idealWidth: 250, maxWidth: 300)
-                .toolbar{
-                    //Toggle Sidebar Button
-                    ToolbarItem(placement: .navigation){
+                .toolbar {
+                    ToolbarItem(placement: .automatic) {
                         Button(action: {
                             NSApp.keyWindow?.firstResponder?.tryToPerform(#selector(NSSplitViewController.toggleSidebar(_:)), with: nil)
                         }, label: {
                             Image(systemName: "sidebar.left")
                         })
+                    }
+                    ToolbarItemGroup(placement: .navigation) {
+                        if appSessionStore.showingChatView {
+                            Button(action: {
+                                // compose
+                            }, label: {
+                                Image(systemName: "square.and.pencil")
+                            })
+                        } else if appSessionStore.showingInboxView {
+                            Button(action: {
+                                // compose
+                            }, label: {
+                                Image(systemName: "square.and.pencil")
+                            })
+                        } else {
+                            EmptyView()
+                        }
                     }
                 }
                 

@@ -38,33 +38,34 @@ struct iPadHomeButtons: View {
                 .onTapGesture(count: 1) {
                     navigateTo(&appSessionStore.showingTagsView)
                 }
+            
             Spacer().frame(width: 20)
             
             // Home Screen Navigation
             VStack {
                 // go to chat
                 NavigationLink(destination: iPadChatView(), isActive: $appSessionStore.showingChatView) {
-                    Spacer().frame(width: 0, height: 0)
+                    EmptyView()
                 }
                 
                 // go to inbox
                 NavigationLink(destination: InboxView(), isActive: $appSessionStore.showingInboxView) {
-                    Spacer().frame(width: 0, height: 0)
+                    EmptyView()
                 }
                 
                 // go to search
                 NavigationLink(destination: SearchView(populateTerms: .constant(""), populateAuthor: .constant(""), populateParent: .constant("")), isActive: $appSessionStore.showingSearchView) {
-                    Spacer().frame(width: 0, height: 0)
+                    EmptyView()
                 }
                 
                 // go to tags
                 NavigationLink(destination: TagsView(), isActive: $appSessionStore.showingTagsView) {
-                    Spacer().frame(width: 0, height: 0)
+                    EmptyView()
                 }
                 
                 // go to settings
                 NavigationLink(destination: SettingsView(), isActive: $appSessionStore.showingSettingsView) {
-                    Spacer().frame(width: 0, height: 0)
+                    EmptyView()
                 }
             }
             

@@ -87,6 +87,8 @@
 		8339819226409D77005614E8 /* ContributedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339819126409D77005614E8 /* ContributedView.swift */; };
 		833981942640A232005614E8 /* LolView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833981932640A232005614E8 /* LolView.swift */; };
 		8339819A2640C7ED005614E8 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83398134263F324C005614E8 /* PreferencesView.swift */; };
+		8339819F26412A42005614E8 /* ThreadBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339819D264128B2005614E8 /* ThreadBubbleView.swift */; };
+		833981A326412FAC005614E8 /* AuthorNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339818E26409C94005614E8 /* AuthorNameView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -201,6 +203,7 @@
 		8339818E26409C94005614E8 /* AuthorNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorNameView.swift; sourceTree = "<group>"; };
 		8339819126409D77005614E8 /* ContributedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContributedView.swift; sourceTree = "<group>"; };
 		833981932640A232005614E8 /* LolView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LolView.swift; sourceTree = "<group>"; };
+		8339819D264128B2005614E8 /* ThreadBubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadBubbleView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -246,6 +249,7 @@
 		8338177E2639AC17007A8B28 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				833981A026412D2B005614E8 /* Chat */,
 				8339819C2640CA14005614E8 /* Settings */,
 				833980D1263C9B3D005614E8 /* Controls */,
 				8339810C263F1000005614E8 /* Extensions */,
@@ -509,6 +513,7 @@
 			isa = PBXGroup;
 			children = (
 				83398153263F69E0005614E8 /* macOSChatView.swift */,
+				8339819D264128B2005614E8 /* ThreadBubbleView.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -608,7 +613,6 @@
 				8339818026406402005614E8 /* ThreadRow.swift */,
 				8339817D264063E8005614E8 /* ThreadDetailView.swift */,
 				8339818B264098D5005614E8 /* ReplyCountView.swift */,
-				8339818E26409C94005614E8 /* AuthorNameView.swift */,
 				8339819126409D77005614E8 /* ContributedView.swift */,
 				833981932640A232005614E8 /* LolView.swift */,
 			);
@@ -621,6 +625,14 @@
 				83398134263F324C005614E8 /* PreferencesView.swift */,
 			);
 			path = Settings;
+			sourceTree = "<group>";
+		};
+		833981A026412D2B005614E8 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				8339818E26409C94005614E8 /* AuthorNameView.swift */,
+			);
+			path = Chat;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -840,12 +852,14 @@
 				833817952639AC18007A8B28 /* macOSContentView.swift in Sources */,
 				8339817026405899005614E8 /* RefreshableScrollView.swift in Sources */,
 				8339817C264062BB005614E8 /* RoundedCornersView.swift in Sources */,
+				833981A326412FAC005614E8 /* AuthorNameView.swift in Sources */,
 				83398118263F250E005614E8 /* ArticleService.swift in Sources */,
 				8339811B263F26CA005614E8 /* PreviewService.swift in Sources */,
 				83398159263F6BB1005614E8 /* macOSInboxView.swift in Sources */,
 				8339815D263F6FC4005614E8 /* macOSSearchView.swift in Sources */,
 				8339818926406F0B005614E8 /* TimeRemainingIndicator.swift in Sources */,
 				83398112263F1794005614E8 /* DateExtensions.swift in Sources */,
+				8339819F26412A42005614E8 /* ThreadBubbleView.swift in Sources */,
 				8339816526404049005614E8 /* SidebarButton.swift in Sources */,
 				83398151263F6427005614E8 /* ArrayExtensions.swift in Sources */,
 				833980E0263CAB93005614E8 /* AppSessionStore.swift in Sources */,
