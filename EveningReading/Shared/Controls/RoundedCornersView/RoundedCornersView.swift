@@ -10,7 +10,7 @@ import SwiftUI
 struct RoundedCornersView: View {
     @Environment(\.colorScheme) var colorScheme
     var color: Color = .blue
-    var shadowColor: Color = Color.white.opacity(0.25)
+    var shadowColor: Color = Color("ChatBubbleShadow")
     var tl: CGFloat = 0.0
     var tr: CGFloat = 0.0
     var bl: CGFloat = 0.0
@@ -46,6 +46,6 @@ struct RoundedCornersView: View {
 
 struct RoundedCornersView_Previews: PreviewProvider {
     static var previews: some View {
-        RoundedCornersView(color: Color("ChatBubblePrimary"), shadowColor: Color("ChatBubbleShadow"), tl: 0, tr: 10, bl: 10, br: 10)
+        RoundedCornersView(color: Color("ChatBubblePrimary"), tl: 0, tr: 10, bl: 10, br: 10)
     }
 }

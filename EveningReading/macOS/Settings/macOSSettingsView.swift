@@ -8,10 +8,23 @@
 import SwiftUI
 
 struct macOSSettingsView: View {
+    @EnvironmentObject var appSessionStore: AppSessionStore
+    
     var body: some View {
-        VStack {
-            Text("Settings View")
-            Text("[insert here]").padding()
+        VStack (alignment: .leading) {
+            Form {
+                Section(header: Text("PREFERENCES")) {
+                    PreferencesView()
+                        .environmentObject(AppSessionStore())
+                }
+            }
+            .padding(.leading, 20)
+            
+            Spacer()
+            
+            VStack {
+                Spacer().frame(maxWidth: .infinity).frame(height: 0)
+            }
         }
         .navigationTitle("Settings")
     }
@@ -20,5 +33,6 @@ struct macOSSettingsView: View {
 struct macOSSettingsView_Previews: PreviewProvider {
     static var previews: some View {
         macOSSettingsView()
+            .environmentObject(AppSessionStore())
     }
 }

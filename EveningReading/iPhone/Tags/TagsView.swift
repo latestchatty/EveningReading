@@ -10,7 +10,7 @@ import SwiftUI
 struct TagsView: View {
     var body: some View {
         LazyVStack {
-            Text("Tags View!")
+            Text("Tags View")
         }
         .background(Color("PrimaryBackground").frame(height: 2600).offset(y: -80))
         .edgesIgnoringSafeArea(.bottom)

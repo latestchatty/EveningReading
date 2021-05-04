@@ -76,12 +76,17 @@
 		8339817726405B4D005614E8 /* iPadChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339817626405B4D005614E8 /* iPadChatView.swift */; };
 		8339817B264062BB005614E8 /* RoundedCornersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339817A264062BB005614E8 /* RoundedCornersView.swift */; };
 		8339817C264062BB005614E8 /* RoundedCornersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339817A264062BB005614E8 /* RoundedCornersView.swift */; };
-		8339817E264063E8005614E8 /* ThreadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339817D264063E8005614E8 /* ThreadView.swift */; };
+		8339817E264063E8005614E8 /* ThreadDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339817D264063E8005614E8 /* ThreadDetailView.swift */; };
 		8339818126406402005614E8 /* ThreadRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339818026406402005614E8 /* ThreadRow.swift */; };
 		8339818426406814005614E8 /* ShackGlobals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339818326406814005614E8 /* ShackGlobals.swift */; };
 		8339818526406814005614E8 /* ShackGlobals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339818326406814005614E8 /* ShackGlobals.swift */; };
 		8339818826406F0B005614E8 /* TimeRemainingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339818726406F0B005614E8 /* TimeRemainingIndicator.swift */; };
 		8339818926406F0B005614E8 /* TimeRemainingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339818726406F0B005614E8 /* TimeRemainingIndicator.swift */; };
+		8339818C264098D5005614E8 /* ReplyCountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339818B264098D5005614E8 /* ReplyCountView.swift */; };
+		8339818F26409C94005614E8 /* AuthorNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339818E26409C94005614E8 /* AuthorNameView.swift */; };
+		8339819226409D77005614E8 /* ContributedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339819126409D77005614E8 /* ContributedView.swift */; };
+		833981942640A232005614E8 /* LolView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833981932640A232005614E8 /* LolView.swift */; };
+		8339819A2640C7ED005614E8 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83398134263F324C005614E8 /* PreferencesView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -188,10 +193,14 @@
 		83398172264058D9005614E8 /* Haptic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptic.swift; sourceTree = "<group>"; };
 		8339817626405B4D005614E8 /* iPadChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadChatView.swift; sourceTree = "<group>"; };
 		8339817A264062BB005614E8 /* RoundedCornersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCornersView.swift; sourceTree = "<group>"; };
-		8339817D264063E8005614E8 /* ThreadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadView.swift; sourceTree = "<group>"; };
+		8339817D264063E8005614E8 /* ThreadDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadDetailView.swift; sourceTree = "<group>"; };
 		8339818026406402005614E8 /* ThreadRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadRow.swift; sourceTree = "<group>"; };
 		8339818326406814005614E8 /* ShackGlobals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShackGlobals.swift; sourceTree = "<group>"; };
 		8339818726406F0B005614E8 /* TimeRemainingIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeRemainingIndicator.swift; sourceTree = "<group>"; };
+		8339818B264098D5005614E8 /* ReplyCountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyCountView.swift; sourceTree = "<group>"; };
+		8339818E26409C94005614E8 /* AuthorNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorNameView.swift; sourceTree = "<group>"; };
+		8339819126409D77005614E8 /* ContributedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContributedView.swift; sourceTree = "<group>"; };
+		833981932640A232005614E8 /* LolView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LolView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -237,6 +246,7 @@
 		8338177E2639AC17007A8B28 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				8339819C2640CA14005614E8 /* Settings */,
 				833980D1263C9B3D005614E8 /* Controls */,
 				8339810C263F1000005614E8 /* Extensions */,
 				83398104263F0D24005614E8 /* Services */,
@@ -263,6 +273,7 @@
 			isa = PBXGroup;
 			children = (
 				8339813D263F47B6005614E8 /* Home */,
+				833981992640C3D0005614E8 /* Chat */,
 				83398130263F2F63005614E8 /* Settings */,
 				8339818A264070E9005614E8 /* Utilities */,
 				833817892639AC18007A8B28 /* Info.plist */,
@@ -402,8 +413,6 @@
 			isa = PBXGroup;
 			children = (
 				83398129263F2E60005614E8 /* ChatView.swift */,
-				8339818026406402005614E8 /* ThreadRow.swift */,
-				8339817D264063E8005614E8 /* ThreadView.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -464,7 +473,6 @@
 			isa = PBXGroup;
 			children = (
 				83398131263F2F7C005614E8 /* SettingsView.swift */,
-				83398134263F324C005614E8 /* PreferencesView.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -592,6 +600,27 @@
 				83398172264058D9005614E8 /* Haptic.swift */,
 			);
 			path = Utilities;
+			sourceTree = "<group>";
+		};
+		833981992640C3D0005614E8 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				8339818026406402005614E8 /* ThreadRow.swift */,
+				8339817D264063E8005614E8 /* ThreadDetailView.swift */,
+				8339818B264098D5005614E8 /* ReplyCountView.swift */,
+				8339818E26409C94005614E8 /* AuthorNameView.swift */,
+				8339819126409D77005614E8 /* ContributedView.swift */,
+				833981932640A232005614E8 /* LolView.swift */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
+		8339819C2640CA14005614E8 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				83398134263F324C005614E8 /* PreferencesView.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -761,8 +790,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				8339817726405B4D005614E8 /* iPadChatView.swift in Sources */,
+				8339818F26409C94005614E8 /* AuthorNameView.swift in Sources */,
 				8339810E263F1028005614E8 /* StringExtensions.swift in Sources */,
 				8339810A263F0F7A005614E8 /* TrendingCard.swift in Sources */,
+				8339819226409D77005614E8 /* ContributedView.swift in Sources */,
 				83398140263F525F005614E8 /* iPadHomeButton.swift in Sources */,
 				833980D0263C914D005614E8 /* iPadContentView.swift in Sources */,
 				8339811A263F26CA005614E8 /* PreviewService.swift in Sources */,
@@ -772,14 +803,16 @@
 				83398127263F2E59005614E8 /* InboxView.swift in Sources */,
 				83398121263F2E39005614E8 /* TagsView.swift in Sources */,
 				83398106263F0D38005614E8 /* ChatService.swift in Sources */,
-				8339817E264063E8005614E8 /* ThreadView.swift in Sources */,
+				8339817E264063E8005614E8 /* ThreadDetailView.swift in Sources */,
 				8339818826406F0B005614E8 /* TimeRemainingIndicator.swift in Sources */,
 				833980FC263F0AF3005614E8 /* iPhoneArticlesView.swift in Sources */,
 				833980F5263F0958005614E8 /* TrendingView.swift in Sources */,
+				833981942640A232005614E8 /* LolView.swift in Sources */,
 				8339816F26405899005614E8 /* RefreshableScrollView.swift in Sources */,
 				83398124263F2E4E005614E8 /* SearchView.swift in Sources */,
 				8339812A263F2E60005614E8 /* ChatView.swift in Sources */,
 				833980DF263CAB93005614E8 /* AppSessionStore.swift in Sources */,
+				8339818C264098D5005614E8 /* ReplyCountView.swift in Sources */,
 				833981682640439F005614E8 /* macOSSettingsView.swift in Sources */,
 				83398135263F324C005614E8 /* PreferencesView.swift in Sources */,
 				8339811E263F288D005614E8 /* ArticleCard.swift in Sources */,
@@ -816,6 +849,7 @@
 				8339816526404049005614E8 /* macOSSidebarButton.swift in Sources */,
 				83398151263F6427005614E8 /* ArrayExtensions.swift in Sources */,
 				833980E0263CAB93005614E8 /* AppSessionStore.swift in Sources */,
+				8339819A2640C7ED005614E8 /* PreferencesView.swift in Sources */,
 				8339816026403F08005614E8 /* macOSTagsView.swift in Sources */,
 				833981692640439F005614E8 /* macOSSettingsView.swift in Sources */,
 				8339818526406814005614E8 /* ShackGlobals.swift in Sources */,

@@ -24,15 +24,18 @@ struct ChatView: View {
             RefreshableScrollView(height: 70, refreshing: self.$chatStore.loadingChat, scrollTarget: self.$chatStore.scrollTargetChat, scrollTargetTop: self.$chatStore.scrollTargetChatTop) {
                 
                 ForEach(filteredThreads(), id: \.threadId) { thread in
-                    ThreadRow(threadId: .constant(thread.threadId))
-                        .environmentObject(AppSessionStore())
-                        .environmentObject(ChatStore(service: ChatService()))
+                    NavigationLink(destination: ThreadDetailView(threadId: .constant(thread.threadId))) {
+                        ThreadRow(threadId: .constant(thread.threadId), activeThreadId: .constant(0))
+                            .environmentObject(AppSessionStore())
+                            .environmentObject(ChatStore(service: ChatService()))
+                    }
+                    .id(thread.threadId)
+                    .padding(.bottom, -10)
                 }
                 
                 VStack {
                     Spacer().frame(maxWidth: .infinity).frame(height: 30)
                 }.id(9999999999993)
-
             }
         }
         .background(Color("PrimaryBackground").frame(height: 2600).offset(y: -80))

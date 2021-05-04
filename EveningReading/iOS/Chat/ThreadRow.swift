@@ -12,11 +12,12 @@ struct ThreadRow: View {
     @EnvironmentObject var chatStore: ChatStore
 
     @Binding var threadId: Int
+    @Binding var activeThreadId: Int
 
     @State private var categoryWidth: CGFloat = 3
     @State private var rootPostCategory: String = "ontopic"
     @State private var rootPostAuthor: String = ""
-    @State private var hasContributed: Bool = false
+    @State private var contributed: Bool = false
     @State private var replyCount: Int = 0
     @State private var rootPostBody: String = ""
     @State private var postDate: String = "2020-08-14T21:05:00Z"
@@ -70,7 +71,10 @@ struct ThreadRow: View {
         }
     }
     
-    private func isAuthor() -> Bool {
+    private func isAuthor() -> Bool {        
+        if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil && self.rootPostAuthor == "egestas" {
+            return true
+        }
         return false
     }
     
@@ -92,7 +96,7 @@ struct ThreadRow: View {
                     Spacer()
                 }
                 
-                // Collapse
+                // Collapse Button
                 HStack {
                     Spacer()
                     if self.swipeScale > 0.0 {
@@ -107,6 +111,7 @@ struct ThreadRow: View {
                     self.showingCollapseAlert = true
                 }
                 
+                // Collapse Alert
                 Spacer().frame(width: 0, height: 0)
                 .alert(isPresented: self.$showingCollapseAlert) {
                     Alert(title: Text("Hide thread?"), message: Text(""), primaryButton: .default(Text("Yes")) {
@@ -117,101 +122,18 @@ struct ThreadRow: View {
                     })
                 }
                 
-                // Author, Contribution, Tags, Replies, Time
+                // Author, Contribution, Lols, Replies, Time, Preview
                 HStack {
                     VStack {
                         HStack (alignment: .center) {
-                            // Author
-                            Text("\(self.rootPostAuthor)")
-                                .font(.footnote)
-                                .bold()
-                                .foregroundColor(Color(UIColor.systemOrange))
-                                .lineLimit(1)
-                                .contextMenu {
-                                    Button(action: {
-                                        // send message
-                                    }) {
-                                        Text("Send Message")
-                                        Image(systemName: "envelope.circle")
-                                    }
-                                    Button(action: {
-                                        // search posts
-                                    }) {
-                                        Text("Search Post History")
-                                        Image(systemName: "magnifyingglass.circle")
-                                    }
-                                    Button(action: {
-                                        // report user
-                                    }) {
-                                        Text("Report User")
-                                        Image(systemName: "exclamationmark.circle")
-                                    }
-                                }
+                            AuthorNameView(name: self.$rootPostAuthor)
 
-                            /*
-                            NavigationLink(destination: SearchView(populateTerms: Binding.constant(""), populateAuthor: Binding.constant(post.author), populateParent: Binding.constant("")), isActive: self.$showingSearchView) {
-                                Spacer().frame(width: 0, height: 0)
-                            }
-                            */
+                            ContributedView(contributed: self.$contributed)
+
+                            LolView(lols: self.$lols)
+
+                            ReplyCountView(replyCount: self.$replyCount)
                             
-                            // Contribution
-                            if self.hasContributed {
-                                #if os(iOS)
-                                    Image(systemName: "pencil")
-                                        .imageScale(.small)
-                                        .foregroundColor(Color(UIColor.systemTeal))
-                                        .padding(.leading, 5)
-                                        .offset(x: 0, y: -1)
-                                #else
-                                    Image(systemName: "pencil")
-                                        .imageScale(.small)
-                                        .foregroundColor(Color(NSColor.systemTeal))
-                                        .padding(.leading, 5)
-                                        .offset(x: 0, y: -1)
-                                #endif
-                            }
-                            Spacer()
-
-                            // Lols
-                            HStack {
-                                Text(" ")
-                                    .font(.caption2)
-                                    .fontWeight(.bold)
-                                ForEach(self.lols.sorted(by: <), id: \.key) { key, value in
-                                    if value > 0 {
-                                        HStack {
-                                            Text(key)
-                                                .font(.caption2)
-                                                .fontWeight(.bold)
-                                                .foregroundColor(PostTagColor[key])
-                                            +
-                                            Text(" \(value)")
-                                                .font(.caption2)
-                                                .fontWeight(.bold)
-                                                .foregroundColor(PostTagColor[key])
-                                        }
-                                    }
-                                }
-                            }
-                            .contextMenu {
-                                if self.hasLols {
-                                    Button(action: {
-                                        // show who's tagging
-                                    }) {
-                                        Text("Who's Tagging?")
-                                        Image(systemName: "tag.circle")
-                                    }
-                                }
-                            }
-
-                            // Reply Count
-                            Text("\(self.replyCount)")
-                                .font(.footnote)
-                                .foregroundColor(Color(UIColor.systemGray)) +
-                            Text(self.replyCount == 1 ? " Reply" : " Replies")
-                                    .font(.footnote)
-                                    .foregroundColor(Color(UIColor.systemGray))
-                                                     
                             TimeRemainingIndicator(percent:  .constant(self.postDate.getTimeRemaining()))
                                     .frame(width: 10, height: 10)
                         }
@@ -234,7 +156,7 @@ struct ThreadRow: View {
                             }
                         }
                         .frame(maxWidth: .infinity)
-                        .background(RoundedCornersView(color: (isAuthor() ? Color("ChatBubbleAuthor") : Color("ChatBubblePrimary")), shadowColor: Color("ChatBubbleShadow"), tl: 0, tr: 10, bl: 10, br: 10))
+                        .background(RoundedCornersView(color: (self.activeThreadId == self.threadId ? Color("ChatBubbleSecondary") : Color("ChatBubblePrimary")), shadowColor: Color("ChatBubbleShadow"), tl: 0, tr: 10, bl: 10, br: 10))
                         .padding(.bottom, 5)
                         
                     }
@@ -272,7 +194,7 @@ struct ThreadRow: View {
 
 struct ThreadRow_Previews: PreviewProvider {
     static var previews: some View {
-        ThreadRow(threadId: .constant(9999999992))
+        ThreadRow(threadId: .constant(9999999992), activeThreadId: .constant(9999999991))
             .environmentObject(AppSessionStore())
             .environmentObject(ChatStore(service: ChatService()))
     }

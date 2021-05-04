@@ -56,8 +56,10 @@
       allowLocationSimulation = "YES"
       launchAutomaticallySubstyle = "8"
       notificationPayloadFile = "EveningReading Extension/PushNotificationPayload.apns">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <RemoteRunnable
+         runnableDebuggingMode = "2"
+         BundleIdentifier = "com.apple.Carousel"
+         RemotePath = "/Evening Reading">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "833980A0263C41CE005614E8"
@@ -65,7 +67,7 @@
             BlueprintName = "EveningReading"
             ReferencedContainer = "container:EveningReading.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </RemoteRunnable>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -75,8 +77,10 @@
       debugDocumentVersioning = "YES"
       launchAutomaticallySubstyle = "8"
       notificationPayloadFile = "EveningReading Extension/PushNotificationPayload.apns">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <RemoteRunnable
+         runnableDebuggingMode = "2"
+         BundleIdentifier = "com.apple.Carousel"
+         RemotePath = "/Evening Reading">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "833980A0263C41CE005614E8"
@@ -84,7 +88,16 @@
             BlueprintName = "EveningReading"
             ReferencedContainer = "container:EveningReading.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </RemoteRunnable>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "833980A0263C41CE005614E8"
+            BuildableName = "EveningReading.app"
+            BlueprintName = "EveningReading"
+            ReferencedContainer = "container:EveningReading.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

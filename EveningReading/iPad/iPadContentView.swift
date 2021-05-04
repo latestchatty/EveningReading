@@ -11,6 +11,7 @@ struct iPadContentView: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var chatStore: ChatStore
+    
     var body: some View {
         NavigationView {
             ScrollViewReader { scrollProxy in

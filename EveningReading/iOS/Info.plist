@@ -22,10 +22,19 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>You can take photos to post to the forum.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>You can upload photos to post on the forum.</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>replylines.ttf</string>
+		<string>tags.ttf</string>
+	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
-		<true/>
+		<false/>
 	</dict>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
@@ -35,6 +44,8 @@
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>UIRequiresFullScreen</key>
+	<true/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
@@ -45,15 +56,6 @@
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
-	<key>NSCameraUsageDescription</key>
-	<string>You can take photos to post to the forum.</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>You can upload photos to post on the forum.</string>
-	<key>UIAppFonts</key>
-	<array>
-		<string>replylines.ttf</string>
-		<string>tags.ttf</string>
 	</array>
 </dict>
 </plist>

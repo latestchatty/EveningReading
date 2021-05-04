@@ -48,6 +48,8 @@ class ChatStore: ObservableObject {
     init(service: ChatService) {
         self.service = service
     }
+
+    @Published var activeThreadId: Int = 0
     
     @Published var scrollTargetChat: Int?
     @Published var scrollTargetChatTop: Int?

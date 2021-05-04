@@ -12,11 +12,6 @@ struct iPhoneContentView: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var chatStore: ChatStore
     
-    func navigateTo(_ goToDestination: inout Bool) {
-            appSessionStore.resetNavigation()
-            goToDestination = true
-        }
-    
     var body: some View {
         NavigationView {            
             ScrollView {
