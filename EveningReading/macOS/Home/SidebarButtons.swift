@@ -1,5 +1,5 @@
 //
-//  macOSSidebarButtons.swift
+//  SidebarButtons.swift
 //  EveningReading
 //
 //  Created by Chris Hodge on 5/3/21.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct macOSSidebarButtons: View {
+struct SidebarButtons: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
     
     private func navigateTo(_ goToDestination: inout Bool) {
@@ -17,27 +17,27 @@ struct macOSSidebarButtons: View {
     
     var body: some View {
         VStack (alignment: .leading, spacing: 10) {
-            macOSSidebarButton(text: .constant("Chat"), imageName: .constant("text.bubble"), selected: $appSessionStore.showingChatView)
+            SidebarButton(text: .constant("Chat"), imageName: .constant("text.bubble"), selected: $appSessionStore.showingChatView)
                 .onTapGesture(count: 1) {
                     navigateTo(&appSessionStore.showingChatView)
                 }
             
-            macOSSidebarButton(text: .constant("Inbox"), imageName: .constant("envelope.open"), selected: $appSessionStore.showingInboxView)
+            SidebarButton(text: .constant("Inbox"), imageName: .constant("envelope.open"), selected: $appSessionStore.showingInboxView)
                 .onTapGesture(count: 1) {
                     navigateTo(&appSessionStore.showingInboxView)
                 }
             
-            macOSSidebarButton(text: .constant("Search"), imageName: .constant("magnifyingglass"), selected: $appSessionStore.showingSearchView)
+            SidebarButton(text: .constant("Search"), imageName: .constant("magnifyingglass"), selected: $appSessionStore.showingSearchView)
                 .onTapGesture(count: 1) {
                     navigateTo(&appSessionStore.showingSearchView)
                 }
             
-            macOSSidebarButton(text: .constant("Tags"), imageName: .constant("tag"), selected: $appSessionStore.showingTagsView)
+            SidebarButton(text: .constant("Tags"), imageName: .constant("tag"), selected: $appSessionStore.showingTagsView)
                 .onTapGesture(count: 1) {
                     navigateTo(&appSessionStore.showingTagsView)
                 }
             
-            macOSSidebarButton(text: .constant("Settings"), imageName: .constant("gear"), selected: $appSessionStore.showingSettingsView)
+            SidebarButton(text: .constant("Settings"), imageName: .constant("gear"), selected: $appSessionStore.showingSettingsView)
                 .onTapGesture(count: 1) {
                     navigateTo(&appSessionStore.showingSettingsView)
                 }
@@ -45,9 +45,9 @@ struct macOSSidebarButtons: View {
     }
 }
 
-struct macOSSidebarButtons_Previews: PreviewProvider {
+struct SidebarButtons_Previews: PreviewProvider {
     static var previews: some View {
-        macOSSidebarButtons()
+        SidebarButtons()
             .environmentObject(AppSessionStore())
     }
 }

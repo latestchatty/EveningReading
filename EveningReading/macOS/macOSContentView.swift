@@ -24,7 +24,7 @@ struct macOSContentView: View {
                         .font(.caption2)
                         .foregroundColor(Color("macOSSidebarHeader"))
                         .bold()
-                    macOSSidebarButtons()
+                    SidebarButtons()
                 }
                 .listStyle(SidebarListStyle())
                 .navigationTitle("Explore")

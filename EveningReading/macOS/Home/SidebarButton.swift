@@ -1,5 +1,5 @@
 //
-//  macOSSidebarButton.swift
+//  SidebarButton.swift
 //  EveningReading
 //
 //  Created by Chris Hodge on 5/3/21.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct macOSSidebarButton: View {
+struct SidebarButton: View {
     @Binding var text: String
     @Binding var imageName: String
     @Binding var selected: Bool
@@ -27,8 +27,8 @@ struct macOSSidebarButton: View {
     }
 }
 
-struct macOSSidebarButton_Previews: PreviewProvider {
+struct SidebarButton_Previews: PreviewProvider {
     static var previews: some View {
-        macOSSidebarButton(text: .constant("Chat"), imageName: .constant("text.bubble"), selected: .constant(true))
+        SidebarButton(text: .constant("Chat"), imageName: .constant("text.bubble"), selected: .constant(true))
     }
 }

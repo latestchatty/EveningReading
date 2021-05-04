@@ -66,10 +66,10 @@
 		83398159263F6BB1005614E8 /* macOSInboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83398157263F6BB1005614E8 /* macOSInboxView.swift */; };
 		8339815D263F6FC4005614E8 /* macOSSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339815B263F6FC4005614E8 /* macOSSearchView.swift */; };
 		8339816026403F08005614E8 /* macOSTagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339815E26403F08005614E8 /* macOSTagsView.swift */; };
-		8339816526404049005614E8 /* macOSSidebarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339816326404049005614E8 /* macOSSidebarButton.swift */; };
+		8339816526404049005614E8 /* SidebarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339816326404049005614E8 /* SidebarButton.swift */; };
 		833981682640439F005614E8 /* macOSSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833981672640439F005614E8 /* macOSSettingsView.swift */; };
 		833981692640439F005614E8 /* macOSSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833981672640439F005614E8 /* macOSSettingsView.swift */; };
-		8339816C26404F59005614E8 /* macOSSidebarButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339816A26404F59005614E8 /* macOSSidebarButtons.swift */; };
+		8339816C26404F59005614E8 /* SidebarButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339816A26404F59005614E8 /* SidebarButtons.swift */; };
 		8339816F26405899005614E8 /* RefreshableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339816E26405899005614E8 /* RefreshableScrollView.swift */; };
 		8339817026405899005614E8 /* RefreshableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339816E26405899005614E8 /* RefreshableScrollView.swift */; };
 		83398173264058D9005614E8 /* Haptic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83398172264058D9005614E8 /* Haptic.swift */; };
@@ -186,9 +186,9 @@
 		83398157263F6BB1005614E8 /* macOSInboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSInboxView.swift; sourceTree = "<group>"; };
 		8339815B263F6FC4005614E8 /* macOSSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSSearchView.swift; sourceTree = "<group>"; };
 		8339815E26403F08005614E8 /* macOSTagsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSTagsView.swift; sourceTree = "<group>"; };
-		8339816326404049005614E8 /* macOSSidebarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSSidebarButton.swift; sourceTree = "<group>"; };
+		8339816326404049005614E8 /* SidebarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarButton.swift; sourceTree = "<group>"; };
 		833981672640439F005614E8 /* macOSSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSSettingsView.swift; sourceTree = "<group>"; };
-		8339816A26404F59005614E8 /* macOSSidebarButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSSidebarButtons.swift; sourceTree = "<group>"; };
+		8339816A26404F59005614E8 /* SidebarButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarButtons.swift; sourceTree = "<group>"; };
 		8339816E26405899005614E8 /* RefreshableScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshableScrollView.swift; sourceTree = "<group>"; };
 		83398172264058D9005614E8 /* Haptic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptic.swift; sourceTree = "<group>"; };
 		8339817626405B4D005614E8 /* iPadChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadChatView.swift; sourceTree = "<group>"; };
@@ -540,8 +540,8 @@
 		8339816226404032005614E8 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				8339816326404049005614E8 /* macOSSidebarButton.swift */,
-				8339816A26404F59005614E8 /* macOSSidebarButtons.swift */,
+				8339816326404049005614E8 /* SidebarButton.swift */,
+				8339816A26404F59005614E8 /* SidebarButtons.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -836,7 +836,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8339816C26404F59005614E8 /* macOSSidebarButtons.swift in Sources */,
+				8339816C26404F59005614E8 /* SidebarButtons.swift in Sources */,
 				833817952639AC18007A8B28 /* macOSContentView.swift in Sources */,
 				8339817026405899005614E8 /* RefreshableScrollView.swift in Sources */,
 				8339817C264062BB005614E8 /* RoundedCornersView.swift in Sources */,
@@ -846,7 +846,7 @@
 				8339815D263F6FC4005614E8 /* macOSSearchView.swift in Sources */,
 				8339818926406F0B005614E8 /* TimeRemainingIndicator.swift in Sources */,
 				83398112263F1794005614E8 /* DateExtensions.swift in Sources */,
-				8339816526404049005614E8 /* macOSSidebarButton.swift in Sources */,
+				8339816526404049005614E8 /* SidebarButton.swift in Sources */,
 				83398151263F6427005614E8 /* ArrayExtensions.swift in Sources */,
 				833980E0263CAB93005614E8 /* AppSessionStore.swift in Sources */,
 				8339819A2640C7ED005614E8 /* PreferencesView.swift in Sources */,
