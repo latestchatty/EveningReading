@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct AuthorNameView: View {
+    @Environment(\.colorScheme) var colorScheme
     @Binding var name: String
     
     var body: some View {
@@ -42,7 +43,7 @@ struct AuthorNameView: View {
             Text("\(self.name)")
                 .font(.body)
                 .bold()
-                .foregroundColor(Color(NSColor.systemOrange))
+                .foregroundColor(colorScheme == .dark ? Color(NSColor.systemOrange) : Color(NSColor.systemPurple))
                 .lineLimit(1)
                 .contextMenu {
                     Button(action: {
@@ -83,5 +84,6 @@ struct AuthorNameView: View {
 struct AuthorNameView_Previews: PreviewProvider {
     static var previews: some View {
         AuthorNameView(name: .constant("tamzyn"))
+            .environment(\.colorScheme, .light)
     }
 }

@@ -73,6 +73,7 @@ struct watchOSThreadRow: View {
                 ContributedView(contributed: .constant(self.contributed))
                 Spacer()
                 LolView(lols: self.$lols)
+                ReplyCountView(replyCount: self.$replyCount)
             }            
             HStack {
                 Button(action: {
@@ -85,7 +86,7 @@ struct watchOSThreadRow: View {
                         .lineLimit(3)
                 }
                 .buttonStyle(PlainButtonStyle())
-                NavigationLink(destination: watchOsThreadDetail(), isActive: self.$showingDetail) {
+                NavigationLink(destination: watchOsThreadDetail(threadId: .constant(self.threadId)), isActive: self.$showingDetail) {
                     EmptyView()
                 }.frame(width: 0, height: 0)
                 Spacer()

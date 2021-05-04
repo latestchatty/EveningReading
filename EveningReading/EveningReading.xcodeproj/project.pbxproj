@@ -107,6 +107,8 @@
 		833981B62641B48A005614E8 /* replylines.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 833980D4263C9C2D005614E8 /* replylines.ttf */; };
 		833981B72641B48C005614E8 /* tags.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 833980D5263C9C2D005614E8 /* tags.ttf */; };
 		833981B92641B723005614E8 /* watchOsThreadDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833981B82641B723005614E8 /* watchOsThreadDetail.swift */; };
+		833981BA2641C4E8005614E8 /* ReplyCountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339818B264098D5005614E8 /* ReplyCountView.swift */; };
+		833981BB2641C4E9005614E8 /* ReplyCountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339818B264098D5005614E8 /* ReplyCountView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -634,7 +636,6 @@
 			children = (
 				8339818026406402005614E8 /* ThreadRow.swift */,
 				8339817D264063E8005614E8 /* ThreadDetailView.swift */,
-				8339818B264098D5005614E8 /* ReplyCountView.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -652,6 +653,7 @@
 			children = (
 				8339818E26409C94005614E8 /* AuthorNameView.swift */,
 				8339819126409D77005614E8 /* ContributedView.swift */,
+				8339818B264098D5005614E8 /* ReplyCountView.swift */,
 				833981932640A232005614E8 /* LolView.swift */,
 			);
 			path = Chat;
@@ -876,6 +878,7 @@
 				8339816C26404F59005614E8 /* SidebarButtons.swift in Sources */,
 				833817952639AC18007A8B28 /* macOSContentView.swift in Sources */,
 				8339817026405899005614E8 /* RefreshableScrollView.swift in Sources */,
+				833981BA2641C4E8005614E8 /* ReplyCountView.swift in Sources */,
 				8339817C264062BB005614E8 /* RoundedCornersView.swift in Sources */,
 				833981A326412FAC005614E8 /* AuthorNameView.swift in Sources */,
 				83398118263F250E005614E8 /* ArticleService.swift in Sources */,
@@ -914,6 +917,7 @@
 				833980B4263C41CF005614E8 /* NotificationController.swift in Sources */,
 				833981A82641A922005614E8 /* ChatService.swift in Sources */,
 				833980B2263C41CF005614E8 /* watchOSContentView.swift in Sources */,
+				833981BB2641C4E9005614E8 /* ReplyCountView.swift in Sources */,
 				833980B0263C41CF005614E8 /* EveningReadingApp.swift in Sources */,
 				833981B32641B015005614E8 /* ArrayExtensions.swift in Sources */,
 				833981AC2641A989005614E8 /* PreviewService.swift in Sources */,
