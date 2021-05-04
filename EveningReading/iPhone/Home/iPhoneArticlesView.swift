@@ -51,9 +51,7 @@ struct iPhoneArticlesView: View {
             }
             .padding(.top, -30)
         }
-        .onAppear() {
-            fetchArticles()
-        }
+        .onAppear(perform: fetchArticles)
     }
 }
 

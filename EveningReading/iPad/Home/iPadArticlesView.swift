@@ -88,9 +88,7 @@ struct iPadArticlesView: View {
             .padding(.top, -60)
             
         }
-        .onAppear() {
-            fetchArticles()
-        }
+        .onAppear(perform: fetchArticles)
     }
 }
 

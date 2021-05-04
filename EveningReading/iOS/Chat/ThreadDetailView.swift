@@ -21,6 +21,7 @@ struct ThreadDetailView: View {
     @State private var hasLols: Bool = false
     @State private var lols = [String: Int]()
     @State private var lolTypeCount: Int = 0
+    @State private var showThread: Bool = false
     
     private func getThreadData() {
         if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
@@ -40,6 +41,9 @@ struct ThreadDetailView: View {
                         lolTypeCount += 1
                     }
                 }
+                self.showThread = true
+            } else {
+                self.showThread = false
             }
         }
         if let thread = chatData.threads.filter({ return $0.threadId == self.threadId }).first {
@@ -57,17 +61,66 @@ struct ThreadDetailView: View {
                     lolTypeCount += 1
                 }
             }
+            self.showThread = true
+        } else {
+            self.showThread = false
         }
     }
     
     var body: some View {
-        LazyVStack {
-            Text("\(threadId)")
+        VStack {
+            if self.showThread {
+                
+                RefreshableScrollView(height: 70, refreshing: self.$chatStore.loadingThread, scrollTarget: self.$chatStore.scrollTargetThread, scrollTargetTop: self.$chatStore.scrollTargetThreadTop) {
+                        
+                    // Root Post
+                    VStack {
+                        HStack (alignment: .center) {
+                            AuthorNameView(name: self.$rootPostAuthor, postId: .constant(self.threadId))
+
+                            ContributedView(contributed: self.$contributed)
+
+                            Spacer()
+
+                            if UIDevice.current.userInterfaceIdiom == .phone {
+                                LolView(lols: self.$lols)
+                            }
+                        }
+                        .padding(.top, 10)
+                        
+                        VStack {
+                            HStack () {
+                                Text("\(self.rootPostBody)")
+                                    .font(.body)
+                                Spacer()
+                            }
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 10)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .background(RoundedCornersView(color: Color("ChatBubblePrimary")))
+                        .padding(.bottom, 10)
+                    }
+                    .padding(EdgeInsets(top: 0, leading: 10, bottom: 5, trailing: 10))
+                    .id(9999999999991)
+                    
+                    // Replies
+                    
+                    
+                }
+                
+            }
+        }
+        .onAppear(perform: getThreadData)
+        .onReceive(self.chatStore.$activeThreadId) { _ in
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                getThreadData()
+            }
         }
         .background(Color("PrimaryBackground").frame(height: 2600).offset(y: -80))
         .edgesIgnoringSafeArea(.bottom)
         .navigationViewStyle(StackNavigationViewStyle())
-        .navigationBarTitle("Inbox", displayMode: .inline)
+        .navigationBarTitle(UIDevice.current.userInterfaceIdiom == .pad ? "Chat" : "Thread", displayMode: .inline)
         .navigationBarItems(leading: Spacer().frame(width: 26, height: 16))
     }
 }
@@ -75,5 +128,7 @@ struct ThreadDetailView: View {
 struct ThreadDetailView_Previews: PreviewProvider {
     static var previews: some View {
         ThreadDetailView(threadId: .constant(9999999992))
+            .environmentObject(AppSessionStore())
+            .environmentObject(ChatStore(service: ChatService()))
     }
 }

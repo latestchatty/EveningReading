@@ -123,9 +123,7 @@ struct TrendingCard: View {
             
             Spacer().frame(height: 20)
         }
-        .onAppear() {
-            getCardData()
-        }
+        .onAppear(perform: getCardData)
         .background(Color("TrendingCardPrimaryBackground"))
         .cornerRadius(30)
         .frame(minWidth: 300)

@@ -69,7 +69,7 @@ struct FullThreadView: View {
             ThreadCategoryColor[self.rootPostCategory].frame(height: 5)
             
             HStack {
-                AuthorNameView(name: self.$rootPostAuthor)
+                AuthorNameView(name: self.$rootPostAuthor, postId: self.$threadId)
                 
                 ContributedView(contributed: self.$contributed)
                 

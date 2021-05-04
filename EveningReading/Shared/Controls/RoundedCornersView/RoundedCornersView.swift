@@ -12,9 +12,9 @@ struct RoundedCornersView: View {
     var color: Color = .blue
     var shadowColor: Color = Color("ChatBubbleShadow")
     var tl: CGFloat = 0.0
-    var tr: CGFloat = 0.0
-    var bl: CGFloat = 0.0
-    var br: CGFloat = 0.0
+    var tr: CGFloat = 10.0
+    var bl: CGFloat = 10.0
+    var br: CGFloat = 10.0
 
     var body: some View {
         GeometryReader { geometry in
@@ -39,7 +39,6 @@ struct RoundedCornersView: View {
             }
             .fill(self.color)
         }
-        .drawingGroup()
         .shadow(color: shadowColor, radius: 6, x: 0, y: 6)
     }
 }

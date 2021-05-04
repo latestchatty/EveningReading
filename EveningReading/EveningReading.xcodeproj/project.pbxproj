@@ -106,9 +106,10 @@
 		833981B52641B426005614E8 /* ShackGlobals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339818326406814005614E8 /* ShackGlobals.swift */; };
 		833981B62641B48A005614E8 /* replylines.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 833980D4263C9C2D005614E8 /* replylines.ttf */; };
 		833981B72641B48C005614E8 /* tags.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 833980D5263C9C2D005614E8 /* tags.ttf */; };
-		833981B92641B723005614E8 /* watchOsThreadDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833981B82641B723005614E8 /* watchOsThreadDetail.swift */; };
+		833981B92641B723005614E8 /* watchOSThreadDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833981B82641B723005614E8 /* watchOSThreadDetail.swift */; };
 		833981BA2641C4E8005614E8 /* ReplyCountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339818B264098D5005614E8 /* ReplyCountView.swift */; };
 		833981BB2641C4E9005614E8 /* ReplyCountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339818B264098D5005614E8 /* ReplyCountView.swift */; };
+		833981BD2641E188005614E8 /* watchOSAuthorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833981BC2641E188005614E8 /* watchOSAuthorView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -225,7 +226,8 @@
 		833981932640A232005614E8 /* LolView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LolView.swift; sourceTree = "<group>"; };
 		8339819D264128B2005614E8 /* FullThreadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullThreadView.swift; sourceTree = "<group>"; };
 		833981AE2641AC58005614E8 /* watchOSThreadRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = watchOSThreadRow.swift; sourceTree = "<group>"; };
-		833981B82641B723005614E8 /* watchOsThreadDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = watchOsThreadDetail.swift; sourceTree = "<group>"; };
+		833981B82641B723005614E8 /* watchOSThreadDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = watchOSThreadDetail.swift; sourceTree = "<group>"; };
+		833981BC2641E188005614E8 /* watchOSAuthorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = watchOSAuthorView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -338,7 +340,8 @@
 				833980AF263C41CF005614E8 /* EveningReadingApp.swift */,
 				833980B1263C41CF005614E8 /* watchOSContentView.swift */,
 				833981AE2641AC58005614E8 /* watchOSThreadRow.swift */,
-				833981B82641B723005614E8 /* watchOsThreadDetail.swift */,
+				833981B82641B723005614E8 /* watchOSThreadDetail.swift */,
+				833981BC2641E188005614E8 /* watchOSAuthorView.swift */,
 				833980B3263C41CF005614E8 /* NotificationController.swift */,
 				833980B5263C41CF005614E8 /* NotificationView.swift */,
 				833980B9263C41D0005614E8 /* Assets.xcassets */,
@@ -908,7 +911,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				833981B92641B723005614E8 /* watchOsThreadDetail.swift in Sources */,
+				833981B92641B723005614E8 /* watchOSThreadDetail.swift in Sources */,
 				833981B12641B011005614E8 /* StringExtensions.swift in Sources */,
 				833981AD2641A98E005614E8 /* ArticleService.swift in Sources */,
 				833981A62641A051005614E8 /* ContributedView.swift in Sources */,
@@ -924,6 +927,7 @@
 				833981B52641B426005614E8 /* ShackGlobals.swift in Sources */,
 				833981A72641A166005614E8 /* AuthorNameView.swift in Sources */,
 				833980B6263C41CF005614E8 /* NotificationView.swift in Sources */,
+				833981BD2641E188005614E8 /* watchOSAuthorView.swift in Sources */,
 				833981B42641B2D7005614E8 /* LolView.swift in Sources */,
 				833981B22641B013005614E8 /* DateExtensions.swift in Sources */,
 			);

@@ -24,7 +24,7 @@ struct macOSChatView: View {
                 ScrollViewReader { scrollProxy in
                     VStack {
                         Spacer().frame(maxWidth: .infinity).frame(height: 30)
-                    }.id(1)
+                    }.id(9999999999991)
                     ForEach(filteredThreads(), id: \.threadId) { thread in
                         FullThreadView(threadId: .constant(thread.threadId))
                     }

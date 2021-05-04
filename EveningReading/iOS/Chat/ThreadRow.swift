@@ -119,7 +119,7 @@ struct ThreadRow: View {
                 HStack {
                     VStack {
                         HStack (alignment: .center) {
-                            AuthorNameView(name: self.$rootPostAuthor)
+                            AuthorNameView(name: self.$rootPostAuthor, postId: self.$threadId)
 
                             ContributedView(contributed: self.$contributed)
 
@@ -151,7 +151,7 @@ struct ThreadRow: View {
                             }
                         }
                         .frame(maxWidth: .infinity)
-                        .background(RoundedCornersView(color: (self.activeThreadId == self.threadId ? Color("ChatBubbleSecondary") : Color("ChatBubblePrimary")), shadowColor: Color("ChatBubbleShadow"), tl: 0, tr: 10, bl: 10, br: 10))
+                        .background(RoundedCornersView(color: (self.activeThreadId == self.threadId ? Color("ChatBubbleSecondary") : Color("ChatBubblePrimary"))))
                         .padding(.bottom, 5)
                     }
                     .onAppear(perform: getThreadData)

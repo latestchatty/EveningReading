@@ -10,6 +10,11 @@ import SwiftUI
 struct AuthorNameView: View {
     @Environment(\.colorScheme) var colorScheme
     @Binding var name: String
+    @Binding var postId: Int
+    
+    #if os(watchOS)
+    @State private var showingAuthor = false
+    #endif
     
     var body: some View {
         #if os(iOS)
@@ -68,7 +73,7 @@ struct AuthorNameView: View {
         #endif
         #if os(watchOS)
             Button(action: {
-                // report user
+                self.showingAuthor.toggle()
             }) {
                 Text("\(self.name)")
                     .font(.footnote)
@@ -77,13 +82,17 @@ struct AuthorNameView: View {
                     .lineLimit(1)
             }
             .buttonStyle(PlainButtonStyle())
+
+        NavigationLink(destination: watchOSAuthorView(name: .constant(self.name), postId: .constant(self.postId)), isActive: self.$showingAuthor) {
+                EmptyView()
+        }.frame(width: 0, height: 0)
         #endif
     }
 }
 
 struct AuthorNameView_Previews: PreviewProvider {
     static var previews: some View {
-        AuthorNameView(name: .constant("tamzyn"))
+        AuthorNameView(name: .constant("tamzyn"), postId: .constant(9999999996))
             .environment(\.colorScheme, .light)
     }
 }

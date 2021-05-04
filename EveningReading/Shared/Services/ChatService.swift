@@ -53,14 +53,27 @@ class ChatStore: ObservableObject {
     
     @Published var scrollTargetChat: Int?
     @Published var scrollTargetChatTop: Int?
+    @Published var scrollTargetThread: Int?
+    @Published var scrollTargetThreadTop: Int?
 
     @Published var loadingChat: Bool = false {
         didSet {
             if oldValue == false && loadingChat == true {
-                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5)) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3)) {
                     self.loadingChat = false
                 }
             }
         }
     }
+    
+    @Published var loadingThread: Bool = false {
+        didSet {
+            if oldValue == false && loadingThread == true {
+                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3)) {
+                    self.loadingThread = false
+                }
+            }
+        }
+    }
+
 }

@@ -65,11 +65,12 @@ struct watchOSThreadRow: View {
     }
 
     @State private var showingDetail = false
+    @State private var showingUser = false
 
     var body: some View {
         VStack (alignment: .leading) {
             HStack {
-                AuthorNameView(name: .constant(self.rootPostAuthor))
+                AuthorNameView(name: .constant(self.rootPostAuthor), postId: self.$threadId)
                 ContributedView(contributed: .constant(self.contributed))
                 Spacer()
                 LolView(lols: self.$lols)

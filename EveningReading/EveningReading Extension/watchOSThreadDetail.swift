@@ -64,7 +64,7 @@ struct watchOsThreadDetail: View {
         ScrollView {
             VStack (alignment: .leading) {
                 HStack {
-                    AuthorNameView(name: .constant(self.rootPostAuthor))
+                    AuthorNameView(name: .constant(self.rootPostAuthor), postId: self.$threadId)
                     ContributedView(contributed: .constant(self.contributed))
                     Spacer()
                     LolView(lols: self.$lols)
