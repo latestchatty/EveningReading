@@ -30,5 +30,10 @@
 		<key>NSExtensionPointIdentifier</key>
 		<string>com.apple.watchkit</string>
 	</dict>
+	<key>UIAppFonts</key>
+	<array>
+		<string>replylines.ttf</string>
+		<string>tags.ttf</string>
+	</array>
 </dict>
 </plist>

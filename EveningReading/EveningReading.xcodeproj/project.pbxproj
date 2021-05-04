@@ -87,10 +87,26 @@
 		8339819226409D77005614E8 /* ContributedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339819126409D77005614E8 /* ContributedView.swift */; };
 		833981942640A232005614E8 /* LolView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833981932640A232005614E8 /* LolView.swift */; };
 		8339819A2640C7ED005614E8 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83398134263F324C005614E8 /* PreferencesView.swift */; };
-		8339819F26412A42005614E8 /* ThreadBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339819D264128B2005614E8 /* ThreadBubbleView.swift */; };
+		8339819F26412A42005614E8 /* FullThreadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339819D264128B2005614E8 /* FullThreadView.swift */; };
 		833981A326412FAC005614E8 /* AuthorNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339818E26409C94005614E8 /* AuthorNameView.swift */; };
 		833981A4264189DC005614E8 /* ContributedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339819126409D77005614E8 /* ContributedView.swift */; };
 		833981A526418DCD005614E8 /* LolView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833981932640A232005614E8 /* LolView.swift */; };
+		833981A62641A051005614E8 /* ContributedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339819126409D77005614E8 /* ContributedView.swift */; };
+		833981A72641A166005614E8 /* AuthorNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339818E26409C94005614E8 /* AuthorNameView.swift */; };
+		833981A82641A922005614E8 /* ChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83398105263F0D38005614E8 /* ChatService.swift */; };
+		833981AB2641A93E005614E8 /* AppSessionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833980DE263CAB93005614E8 /* AppSessionStore.swift */; };
+		833981AC2641A989005614E8 /* PreviewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83398119263F26CA005614E8 /* PreviewService.swift */; };
+		833981AD2641A98E005614E8 /* ArticleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83398116263F250E005614E8 /* ArticleService.swift */; };
+		833981AF2641AC58005614E8 /* watchOSThreadRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833981AE2641AC58005614E8 /* watchOSThreadRow.swift */; };
+		833981B02641AC8A005614E8 /* Chat.json in Resources */ = {isa = PBXBuildFile; fileRef = 833980FF263F0C72005614E8 /* Chat.json */; };
+		833981B12641B011005614E8 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339810D263F1028005614E8 /* StringExtensions.swift */; };
+		833981B22641B013005614E8 /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83398110263F1794005614E8 /* DateExtensions.swift */; };
+		833981B32641B015005614E8 /* ArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339814F263F6427005614E8 /* ArrayExtensions.swift */; };
+		833981B42641B2D7005614E8 /* LolView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833981932640A232005614E8 /* LolView.swift */; };
+		833981B52641B426005614E8 /* ShackGlobals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339818326406814005614E8 /* ShackGlobals.swift */; };
+		833981B62641B48A005614E8 /* replylines.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 833980D4263C9C2D005614E8 /* replylines.ttf */; };
+		833981B72641B48C005614E8 /* tags.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 833980D5263C9C2D005614E8 /* tags.ttf */; };
+		833981B92641B723005614E8 /* watchOsThreadDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833981B82641B723005614E8 /* watchOsThreadDetail.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -205,7 +221,9 @@
 		8339818E26409C94005614E8 /* AuthorNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorNameView.swift; sourceTree = "<group>"; };
 		8339819126409D77005614E8 /* ContributedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContributedView.swift; sourceTree = "<group>"; };
 		833981932640A232005614E8 /* LolView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LolView.swift; sourceTree = "<group>"; };
-		8339819D264128B2005614E8 /* ThreadBubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadBubbleView.swift; sourceTree = "<group>"; };
+		8339819D264128B2005614E8 /* FullThreadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullThreadView.swift; sourceTree = "<group>"; };
+		833981AE2641AC58005614E8 /* watchOSThreadRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = watchOSThreadRow.swift; sourceTree = "<group>"; };
+		833981B82641B723005614E8 /* watchOsThreadDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = watchOsThreadDetail.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -317,6 +335,8 @@
 			children = (
 				833980AF263C41CF005614E8 /* EveningReadingApp.swift */,
 				833980B1263C41CF005614E8 /* watchOSContentView.swift */,
+				833981AE2641AC58005614E8 /* watchOSThreadRow.swift */,
+				833981B82641B723005614E8 /* watchOsThreadDetail.swift */,
 				833980B3263C41CF005614E8 /* NotificationController.swift */,
 				833980B5263C41CF005614E8 /* NotificationView.swift */,
 				833980B9263C41D0005614E8 /* Assets.xcassets */,
@@ -515,7 +535,7 @@
 			isa = PBXGroup;
 			children = (
 				83398153263F69E0005614E8 /* macOSChatView.swift */,
-				8339819D264128B2005614E8 /* ThreadBubbleView.swift */,
+				8339819D264128B2005614E8 /* FullThreadView.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -791,7 +811,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				833981B72641B48C005614E8 /* tags.ttf in Resources */,
 				833980BD263C41D0005614E8 /* Preview Assets.xcassets in Resources */,
+				833981B62641B48A005614E8 /* replylines.ttf in Resources */,
+				833981B02641AC8A005614E8 /* Chat.json in Resources */,
 				833980BA263C41D0005614E8 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -861,7 +884,7 @@
 				8339815D263F6FC4005614E8 /* macOSSearchView.swift in Sources */,
 				8339818926406F0B005614E8 /* TimeRemainingIndicator.swift in Sources */,
 				83398112263F1794005614E8 /* DateExtensions.swift in Sources */,
-				8339819F26412A42005614E8 /* ThreadBubbleView.swift in Sources */,
+				8339819F26412A42005614E8 /* FullThreadView.swift in Sources */,
 				8339816526404049005614E8 /* SidebarButton.swift in Sources */,
 				833981A526418DCD005614E8 /* LolView.swift in Sources */,
 				83398151263F6427005614E8 /* ArrayExtensions.swift in Sources */,
@@ -882,10 +905,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				833981B92641B723005614E8 /* watchOsThreadDetail.swift in Sources */,
+				833981B12641B011005614E8 /* StringExtensions.swift in Sources */,
+				833981AD2641A98E005614E8 /* ArticleService.swift in Sources */,
+				833981A62641A051005614E8 /* ContributedView.swift in Sources */,
+				833981AB2641A93E005614E8 /* AppSessionStore.swift in Sources */,
+				833981AF2641AC58005614E8 /* watchOSThreadRow.swift in Sources */,
 				833980B4263C41CF005614E8 /* NotificationController.swift in Sources */,
+				833981A82641A922005614E8 /* ChatService.swift in Sources */,
 				833980B2263C41CF005614E8 /* watchOSContentView.swift in Sources */,
 				833980B0263C41CF005614E8 /* EveningReadingApp.swift in Sources */,
+				833981B32641B015005614E8 /* ArrayExtensions.swift in Sources */,
+				833981AC2641A989005614E8 /* PreviewService.swift in Sources */,
+				833981B52641B426005614E8 /* ShackGlobals.swift in Sources */,
+				833981A72641A166005614E8 /* AuthorNameView.swift in Sources */,
 				833980B6263C41CF005614E8 /* NotificationView.swift in Sources */,
+				833981B42641B2D7005614E8 /* LolView.swift in Sources */,
+				833981B22641B013005614E8 /* DateExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

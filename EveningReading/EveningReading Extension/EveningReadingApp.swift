@@ -9,10 +9,17 @@ import SwiftUI
 
 @main
 struct EveningReadingApp: App {
+    @StateObject var appSessionStore = AppSessionStore()
+    @StateObject var chatStore = ChatStore(service: .init())
+    
     @SceneBuilder var body: some Scene {
         WindowGroup {
             NavigationView {
                 watchOSContentView()
+                    .environmentObject(appSessionStore)
+                    .environmentObject(chatStore)
+                    
+                .navigationTitle("Chat")
             }
         }
 

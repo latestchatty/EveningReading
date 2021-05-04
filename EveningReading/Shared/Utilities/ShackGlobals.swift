@@ -8,6 +8,27 @@
 import Foundation
 import SwiftUI
 
+#if os(iOS)
+let ThreadCategoryColor: [String: Color] = [
+    "informative": Color(UIColor.systemBlue),
+    "offtopic": Color(UIColor.systemGray),
+    "stupid": Color(UIColor.systemGreen),
+    "political": Color(UIColor.systemOrange),
+    "nws": Color(UIColor.systemRed),
+    "ontopic": Color(UIColor.clear),
+    "": Color(UIColor.clear)
+]
+let PostTagColor: [String: Color] = [
+    "lol": Color(UIColor.systemYellow),
+    "inf": Color(UIColor.systemBlue),
+    "unf": Color(UIColor.systemRed),
+    "tag": Color(UIColor.systemGreen),
+    "wtf": Color(UIColor.systemPink),
+    "wow": Color(UIColor.systemGray),
+    "aww": Color(UIColor.systemTeal)
+]
+#endif
+
 #if os(OSX)
 let ThreadCategoryColor: [String: Color] = [
     "informative": Color(NSColor.systemBlue),
@@ -27,24 +48,26 @@ let PostTagColor: [String: Color] = [
     "wow": Color(NSColor.systemGray),
     "aww": Color(NSColor.systemTeal)
 ]
-#else
+#endif
+
+#if os(watchOS)
 let ThreadCategoryColor: [String: Color] = [
-    "informative": Color(UIColor.systemBlue),
-    "offtopic": Color(UIColor.systemGray),
-    "stupid": Color(UIColor.systemGreen),
-    "political": Color(UIColor.systemOrange),
-    "nws": Color(UIColor.systemRed),
-    "ontopic": Color(UIColor.clear),
-    "": Color(UIColor.clear)
+    "informative": Color.blue,
+    "offtopic": Color.gray,
+    "stupid": Color.green,
+    "political": Color.orange,
+    "nws": Color.red,
+    "ontopic": Color.clear,
+    "": Color.clear
 ]
 let PostTagColor: [String: Color] = [
-    "lol": Color(UIColor.systemYellow),
-    "inf": Color(UIColor.systemBlue),
-    "unf": Color(UIColor.systemRed),
-    "tag": Color(UIColor.systemGreen),
-    "wtf": Color(UIColor.systemPink),
-    "wow": Color(UIColor.systemGray),
-    "aww": Color(UIColor.systemTeal)
+    "lol": Color.yellow,
+    "inf": Color.blue,
+    "unf": Color.red,
+    "tag": Color.green,
+    "wtf": Color.pink,
+    "wow": Color.gray,
+    "aww": Color.purple
 ]
 #endif
 

@@ -12,58 +12,70 @@ struct AuthorNameView: View {
     
     var body: some View {
         #if os(iOS)
-        Text("\(self.name)")
-            .font(.footnote)
-            .bold()
-            .foregroundColor(Color(UIColor.systemOrange))
-            .lineLimit(1)
-            .contextMenu {
-                Button(action: {
-                    // send message
-                }) {
-                    Text("Send Message")
-                    Image(systemName: "envelope.circle")
+            Text("\(self.name)")
+                .font(.footnote)
+                .bold()
+                .foregroundColor(Color(UIColor.systemOrange))
+                .lineLimit(1)
+                .contextMenu {
+                    Button(action: {
+                        // send message
+                    }) {
+                        Text("Send Message")
+                        Image(systemName: "envelope.circle")
+                    }
+                    Button(action: {
+                        // search posts
+                    }) {
+                        Text("Search Post History")
+                        Image(systemName: "magnifyingglass.circle")
+                    }
+                    Button(action: {
+                        // report user
+                    }) {
+                        Text("Report User")
+                        Image(systemName: "exclamationmark.circle")
+                    }
                 }
-                Button(action: {
-                    // search posts
-                }) {
-                    Text("Search Post History")
-                    Image(systemName: "magnifyingglass.circle")
-                }
-                Button(action: {
-                    // report user
-                }) {
-                    Text("Report User")
-                    Image(systemName: "exclamationmark.circle")
-                }
-            }
         #endif
         #if os(OSX)
-        Text("\(self.name)")
-            .font(.body)
-            .bold()
-            .foregroundColor(Color(NSColor.systemOrange))
-            .lineLimit(1)
-            .contextMenu {
-                Button(action: {
-                    // send message
-                }) {
-                    Text("Send Message")
-                    Image(systemName: "envelope.circle")
+            Text("\(self.name)")
+                .font(.body)
+                .bold()
+                .foregroundColor(Color(NSColor.systemOrange))
+                .lineLimit(1)
+                .contextMenu {
+                    Button(action: {
+                        // send message
+                    }) {
+                        Text("Send Message")
+                        Image(systemName: "envelope.circle")
+                    }
+                    Button(action: {
+                        // search posts
+                    }) {
+                        Text("Search Post History")
+                        Image(systemName: "magnifyingglass.circle")
+                    }
+                    Button(action: {
+                        // report user
+                    }) {
+                        Text("Report User")
+                        Image(systemName: "exclamationmark.circle")
+                    }
                 }
-                Button(action: {
-                    // search posts
-                }) {
-                    Text("Search Post History")
-                    Image(systemName: "magnifyingglass.circle")
-                }
-                Button(action: {
-                    // report user
-                }) {
-                    Text("Report User")
-                    Image(systemName: "exclamationmark.circle")
-                }
+        #endif
+        #if os(watchOS)
+            Button(action: {
+                // report user
+            }) {
+                Text("\(self.name)")
+                    .font(.footnote)
+                    .bold()
+                    .foregroundColor(Color.orange)
+                    .lineLimit(1)
             }
+            .buttonStyle(PlainButtonStyle())
         #endif
     }
 }

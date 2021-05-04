@@ -13,58 +13,72 @@ struct LolView: View {
     var body: some View {
         // Lols
         #if os(iOS)
-        HStack {
-            Text(" ")
-                .font(.caption2)
-                .fontWeight(.bold)
-            ForEach(self.lols.sorted(by: <), id: \.key) { key, value in
-                if value > 0 {
-                    HStack {
-                        Text(key)
-                            .font(.caption2)
-                            .fontWeight(.bold)
-                            .foregroundColor(PostTagColor[key])
-                        +
-                        Text(" \(value)")
-                            .font(.caption2)
-                            .fontWeight(.bold)
-                            .foregroundColor(PostTagColor[key])
+            HStack {
+                Text(" ")
+                    .font(.caption2)
+                    .fontWeight(.bold)
+                ForEach(self.lols.sorted(by: <), id: \.key) { key, value in
+                    if value > 0 {
+                        HStack {
+                            Text(key)
+                                .font(.caption2)
+                                .fontWeight(.bold)
+                                .foregroundColor(PostTagColor[key])
+                            +
+                            Text(" \(value)")
+                                .font(.caption2)
+                                .fontWeight(.bold)
+                                .foregroundColor(PostTagColor[key])
+                        }
                     }
                 }
             }
-        }
-        .contextMenu {
-            //if self.hasLols {
-                Button(action: {
-                    // show who's tagging
-                }) {
-                    Text("Who's Tagging?")
-                    Image(systemName: "tag.circle")
-                }
-            //}
-        }
+            .contextMenu {
+                //if self.hasLols {
+                    Button(action: {
+                        // show who's tagging
+                    }) {
+                        Text("Who's Tagging?")
+                        Image(systemName: "tag.circle")
+                    }
+                //}
+            }
         #endif
         #if os(OSX)
-        HStack {
-            ForEach(self.lols.sorted(by: <), id: \.key) { key, value in
-                if value > 0 {
-                    HStack {
-                        Text(key)
-                            .font(.caption2)
-                            .fontWeight(.bold)
-                            .foregroundColor(PostTagColor[key])
-                        +
-                        Text(" \(value)")
-                            .font(.caption2)
-                            .fontWeight(.bold)
-                            .foregroundColor(PostTagColor[key])
+            HStack {
+                ForEach(self.lols.sorted(by: <), id: \.key) { key, value in
+                    if value > 0 {
+                        HStack {
+                            Text(key)
+                                .font(.caption2)
+                                .fontWeight(.bold)
+                                .foregroundColor(PostTagColor[key])
+                            +
+                            Text(" \(value)")
+                                .font(.caption2)
+                                .fontWeight(.bold)
+                                .foregroundColor(PostTagColor[key])
+                        }
+                        .padding(.init(top: 1, leading: 4, bottom: 1, trailing: 4))
+                        .overlay(Capsule(style: .continuous)
+                                    .stroke(PostTagColor[key]!))
                     }
-                    .padding(.init(top: 1, leading: 4, bottom: 1, trailing: 4))
-                    .overlay(Capsule(style: .continuous)
-                                .stroke(PostTagColor[key]!))
                 }
             }
-        }
+        #endif
+        #if os(watchOS)
+            HStack {
+                ForEach(self.lols.sorted(by: <), id: \.key) { key, value in
+                    if value > 0 {
+                        Text("A") // 'A' is a tag
+                            .lineLimit(1)
+                            .fixedSize()
+                            .font(.custom("tags", size: 8, relativeTo: .caption))
+                            .padding(EdgeInsets(top: 3, leading: -5, bottom: 0, trailing: 0))
+                            .foregroundColor(PostTagColor[key])
+                    }
+                }
+            }
         #endif
     }
 }

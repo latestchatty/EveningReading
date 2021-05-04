@@ -26,7 +26,7 @@ struct macOSChatView: View {
                         Spacer().frame(maxWidth: .infinity).frame(height: 30)
                     }.id(1)
                     ForEach(filteredThreads(), id: \.threadId) { thread in
-                        ThreadBubbleView(threadId: .constant(thread.threadId))
+                        FullThreadView(threadId: .constant(thread.threadId))
                     }
                     VStack {
                         Spacer().frame(maxWidth: .infinity).frame(height: 30)
