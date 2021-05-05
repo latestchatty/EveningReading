@@ -86,7 +86,7 @@ struct watchOsPostDetail: View {
                 // Replies
                 if self.replies.count > 0 {
                     ForEach(self.replies, id: \.id) { reply in
-                        watchOSReplyButton(replyId: .constant(reply.id), replyText: .constant(String(reply.body.getPreview.prefix(100))))
+                        watchOSPostPreview(postId: .constant(reply.id), replyText: .constant(String(reply.body.getPreview.prefix(100))))
                     }
                 }
                 

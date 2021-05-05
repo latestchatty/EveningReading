@@ -110,7 +110,7 @@
 		833981BA2641C4E8005614E8 /* ReplyCountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339818B264098D5005614E8 /* ReplyCountView.swift */; };
 		833981BB2641C4E9005614E8 /* ReplyCountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339818B264098D5005614E8 /* ReplyCountView.swift */; };
 		833981BD2641E188005614E8 /* watchOSAuthorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833981BC2641E188005614E8 /* watchOSAuthorView.swift */; };
-		833981BF26421312005614E8 /* watchOSReplyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833981BE26421312005614E8 /* watchOSReplyButton.swift */; };
+		833981BF26421312005614E8 /* watchOSPostPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833981BE26421312005614E8 /* watchOSPostPreview.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -229,7 +229,7 @@
 		833981AE2641AC58005614E8 /* watchOSThreadRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = watchOSThreadRow.swift; sourceTree = "<group>"; };
 		833981B82641B723005614E8 /* watchOSPostDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = watchOSPostDetail.swift; sourceTree = "<group>"; };
 		833981BC2641E188005614E8 /* watchOSAuthorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = watchOSAuthorView.swift; sourceTree = "<group>"; };
-		833981BE26421312005614E8 /* watchOSReplyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = watchOSReplyButton.swift; sourceTree = "<group>"; };
+		833981BE26421312005614E8 /* watchOSPostPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = watchOSPostPreview.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -343,7 +343,7 @@
 				833980B1263C41CF005614E8 /* watchOSContentView.swift */,
 				833981AE2641AC58005614E8 /* watchOSThreadRow.swift */,
 				833981B82641B723005614E8 /* watchOSPostDetail.swift */,
-				833981BE26421312005614E8 /* watchOSReplyButton.swift */,
+				833981BE26421312005614E8 /* watchOSPostPreview.swift */,
 				833981BC2641E188005614E8 /* watchOSAuthorView.swift */,
 				833980B3263C41CF005614E8 /* NotificationController.swift */,
 				833980B5263C41CF005614E8 /* NotificationView.swift */,
@@ -922,7 +922,7 @@
 				833981AF2641AC58005614E8 /* watchOSThreadRow.swift in Sources */,
 				833980B4263C41CF005614E8 /* NotificationController.swift in Sources */,
 				833981A82641A922005614E8 /* ChatService.swift in Sources */,
-				833981BF26421312005614E8 /* watchOSReplyButton.swift in Sources */,
+				833981BF26421312005614E8 /* watchOSPostPreview.swift in Sources */,
 				833980B2263C41CF005614E8 /* watchOSContentView.swift in Sources */,
 				833981BB2641C4E9005614E8 /* ReplyCountView.swift in Sources */,
 				833980B0263C41CF005614E8 /* EveningReadingApp.swift in Sources */,
