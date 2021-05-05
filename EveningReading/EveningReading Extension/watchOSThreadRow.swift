@@ -27,8 +27,7 @@ struct watchOSThreadRow: View {
     @State private var showPost: Bool = false
     
     private func getThreadData() {
-        if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
-        {
+        if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil {
             if let thread = chatData.threads.filter({ return $0.threadId == self.threadId }).first {
                 let rootPost = thread.posts.filter({ return $0.parentId == 0 }).first
                 self.rootPostCategory = rootPost?.category ?? "ontopic"

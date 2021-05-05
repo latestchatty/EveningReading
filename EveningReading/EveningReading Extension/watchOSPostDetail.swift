@@ -29,49 +29,26 @@ struct watchOsPostDetail: View {
         //if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
         //{
             let thread = chatData.threads.filter { !$0.posts.isEmpty && $0.posts.contains(where: { post in post.id == self.postId }) }.first
-
-            if let rootPost = thread?.posts.filter({ return $0.parentId == 0 }).first {
-                if rootPost.id == postId {
-                    self.isRootPost = true
-                    self.postCategory = rootPost.category
-                    self.postAuthor = rootPost.author
-                    self.postBody = rootPost.body.getPreview
-                    
-                    for lol in rootPost.lols {
-                        if lol.count > 0 {
-                            self.hasLols = true
-                        }
-                        lols[String("\(lol.tag)")] = lol.count
-                        if lol.count > 0 {
-                            lolTypeCount += 1
-                        }
-                    }
-                    
-                    self.replies = thread?.posts.filter({ return $0.parentId == rootPost.id }) ?? [ChatPosts]()
-                }
-            }
             
-            if !self.isRootPost {
-                if let childPost = thread?.posts.filter({ return $0.id == self.postId }).first {
-                    
-                    self.postCategory = childPost.category
-                    self.postAuthor = childPost.author
-                    self.postBody = childPost.body.getPreview
-                    
-                    for lol in childPost.lols {
-                        if lol.count > 0 {
-                            self.hasLols = true
-                        }
-                        lols[String("\(lol.tag)")] = lol.count
-                        if lol.count > 0 {
-                            lolTypeCount += 1
-                        }
+            if let childPost = thread?.posts.filter({ return $0.id == self.postId }).first {
+                
+                self.postCategory = childPost.category
+                self.postAuthor = childPost.author
+                self.postBody = childPost.body.getPreview
+                
+                for lol in childPost.lols {
+                    if lol.count > 0 {
+                        self.hasLols = true
                     }
-                    
-                    self.replies = thread?.posts.filter({ return $0.parentId == self.postId }) ?? [ChatPosts]()
-                } else {
-                    self.postAuthor = "none"
+                    lols[String("\(lol.tag)")] = lol.count
+                    if lol.count > 0 {
+                        lolTypeCount += 1
+                    }
                 }
+                
+                self.replies = thread?.posts.filter({ return $0.parentId == self.postId }) ?? [ChatPosts]()
+            } else {
+                self.postAuthor = "none"
             }
         //}
     }
@@ -79,12 +56,13 @@ struct watchOsPostDetail: View {
     var body: some View {
         ScrollView {
             
-            // Fixes watchOS navigation bug?
+            // Fixes SwiftUI/watchOS/simulator navigation bug?
             NavigationLink(destination: EmptyView(), isActive: .constant(false)) {
                 EmptyView()
             }.frame(width: 0, height: 0)
             
             LazyVStack {
+                
                 // Post
                 VStack (alignment: .leading) {
                     HStack {
@@ -99,7 +77,7 @@ struct watchOsPostDetail: View {
                         Text(postBody)
                             .font(.footnote)
                     }
-                    
+                
                 }
                 .padding()
                 .background(Color("ThreadBubblePrimary"))
@@ -111,6 +89,7 @@ struct watchOsPostDetail: View {
                         watchOSReplyButton(replyId: .constant(reply.id), replyText: .constant(String(reply.body.getPreview.prefix(100))))
                     }
                 }
+                
             }
             
         }
