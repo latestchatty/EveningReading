@@ -178,7 +178,7 @@
                     "author": "dapibus",
                     "category": "ontopic",
                     "date": "2020-08-14T06:44:00Z",
-                    "body": "“Etiam luctus nisl est, id vulputate neque pharetra et. Nullam sem arcu, commodo sit amet volutpat a, finibus et nisl. Nullam porta bibendum erat sed maximus. Mauris vel dapibus justo.",
+                    "body": "Etiam luctus nisl est, id vulputate neque pharetra et. Nullam sem arcu, commodo sit amet volutpat a, finibus et nisl. Nullam porta bibendum erat sed maximus. Mauris vel dapibus justo.",
                     "lols": []
                 }
             ]
@@ -271,7 +271,7 @@
             "threadId": 9999999999,
             "posts": [
                 {
-                    "id": 9999999998,
+                    "id": 9999999999,
                     "threadId": 9999999999,
                     "parentId": 0,
                     "author": "ultricies",

@@ -24,6 +24,8 @@ struct watchOSThreadRow: View {
     @State private var lols = [String: Int]()
     @State private var lolTypeCount: Int = 0
     
+    @State private var showPost: Bool = false
+    
     private func getThreadData() {
         if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
         {
@@ -64,9 +66,6 @@ struct watchOSThreadRow: View {
         }
     }
 
-    @State private var showingDetail = false
-    @State private var showingUser = false
-
     var body: some View {
         VStack (alignment: .leading) {
             HStack {
@@ -80,14 +79,14 @@ struct watchOSThreadRow: View {
                 Button(action: {
                     // go to thread
                     chatStore.activeThreadId = self.threadId
-                    self.showingDetail.toggle()
+                    self.showPost.toggle()
                 }) {
                     Text(rootPostBodyPreview)
                         .font(.footnote)
                         .lineLimit(3)
                 }
                 .buttonStyle(PlainButtonStyle())
-                NavigationLink(destination: watchOsThreadDetail(threadId: .constant(self.threadId)), isActive: self.$showingDetail) {
+                NavigationLink(destination: watchOsPostDetail(postId: .constant(self.threadId)), isActive: self.$showPost) {
                     EmptyView()
                 }.frame(width: 0, height: 0)
                 Spacer()

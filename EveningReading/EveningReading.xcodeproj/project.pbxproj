@@ -78,8 +78,8 @@
 		8339817C264062BB005614E8 /* RoundedCornersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339817A264062BB005614E8 /* RoundedCornersView.swift */; };
 		8339817E264063E8005614E8 /* ThreadDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339817D264063E8005614E8 /* ThreadDetailView.swift */; };
 		8339818126406402005614E8 /* ThreadRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339818026406402005614E8 /* ThreadRow.swift */; };
-		8339818426406814005614E8 /* ShackGlobals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339818326406814005614E8 /* ShackGlobals.swift */; };
-		8339818526406814005614E8 /* ShackGlobals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339818326406814005614E8 /* ShackGlobals.swift */; };
+		8339818426406814005614E8 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339818326406814005614E8 /* Globals.swift */; };
+		8339818526406814005614E8 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339818326406814005614E8 /* Globals.swift */; };
 		8339818826406F0B005614E8 /* TimeRemainingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339818726406F0B005614E8 /* TimeRemainingIndicator.swift */; };
 		8339818926406F0B005614E8 /* TimeRemainingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339818726406F0B005614E8 /* TimeRemainingIndicator.swift */; };
 		8339818C264098D5005614E8 /* ReplyCountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339818B264098D5005614E8 /* ReplyCountView.swift */; };
@@ -103,13 +103,14 @@
 		833981B22641B013005614E8 /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83398110263F1794005614E8 /* DateExtensions.swift */; };
 		833981B32641B015005614E8 /* ArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339814F263F6427005614E8 /* ArrayExtensions.swift */; };
 		833981B42641B2D7005614E8 /* LolView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833981932640A232005614E8 /* LolView.swift */; };
-		833981B52641B426005614E8 /* ShackGlobals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339818326406814005614E8 /* ShackGlobals.swift */; };
+		833981B52641B426005614E8 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339818326406814005614E8 /* Globals.swift */; };
 		833981B62641B48A005614E8 /* replylines.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 833980D4263C9C2D005614E8 /* replylines.ttf */; };
 		833981B72641B48C005614E8 /* tags.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 833980D5263C9C2D005614E8 /* tags.ttf */; };
-		833981B92641B723005614E8 /* watchOSThreadDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833981B82641B723005614E8 /* watchOSThreadDetail.swift */; };
+		833981B92641B723005614E8 /* watchOSPostDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833981B82641B723005614E8 /* watchOSPostDetail.swift */; };
 		833981BA2641C4E8005614E8 /* ReplyCountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339818B264098D5005614E8 /* ReplyCountView.swift */; };
 		833981BB2641C4E9005614E8 /* ReplyCountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339818B264098D5005614E8 /* ReplyCountView.swift */; };
 		833981BD2641E188005614E8 /* watchOSAuthorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833981BC2641E188005614E8 /* watchOSAuthorView.swift */; };
+		833981BF26421312005614E8 /* watchOSReplyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833981BE26421312005614E8 /* watchOSReplyButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -218,7 +219,7 @@
 		8339817A264062BB005614E8 /* RoundedCornersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCornersView.swift; sourceTree = "<group>"; };
 		8339817D264063E8005614E8 /* ThreadDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadDetailView.swift; sourceTree = "<group>"; };
 		8339818026406402005614E8 /* ThreadRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadRow.swift; sourceTree = "<group>"; };
-		8339818326406814005614E8 /* ShackGlobals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShackGlobals.swift; sourceTree = "<group>"; };
+		8339818326406814005614E8 /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 		8339818726406F0B005614E8 /* TimeRemainingIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeRemainingIndicator.swift; sourceTree = "<group>"; };
 		8339818B264098D5005614E8 /* ReplyCountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyCountView.swift; sourceTree = "<group>"; };
 		8339818E26409C94005614E8 /* AuthorNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorNameView.swift; sourceTree = "<group>"; };
@@ -226,8 +227,9 @@
 		833981932640A232005614E8 /* LolView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LolView.swift; sourceTree = "<group>"; };
 		8339819D264128B2005614E8 /* FullThreadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullThreadView.swift; sourceTree = "<group>"; };
 		833981AE2641AC58005614E8 /* watchOSThreadRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = watchOSThreadRow.swift; sourceTree = "<group>"; };
-		833981B82641B723005614E8 /* watchOSThreadDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = watchOSThreadDetail.swift; sourceTree = "<group>"; };
+		833981B82641B723005614E8 /* watchOSPostDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = watchOSPostDetail.swift; sourceTree = "<group>"; };
 		833981BC2641E188005614E8 /* watchOSAuthorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = watchOSAuthorView.swift; sourceTree = "<group>"; };
+		833981BE26421312005614E8 /* watchOSReplyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = watchOSReplyButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -340,7 +342,8 @@
 				833980AF263C41CF005614E8 /* EveningReadingApp.swift */,
 				833980B1263C41CF005614E8 /* watchOSContentView.swift */,
 				833981AE2641AC58005614E8 /* watchOSThreadRow.swift */,
-				833981B82641B723005614E8 /* watchOSThreadDetail.swift */,
+				833981B82641B723005614E8 /* watchOSPostDetail.swift */,
+				833981BE26421312005614E8 /* watchOSReplyButton.swift */,
 				833981BC2641E188005614E8 /* watchOSAuthorView.swift */,
 				833980B3263C41CF005614E8 /* NotificationController.swift */,
 				833980B5263C41CF005614E8 /* NotificationView.swift */,
@@ -597,7 +600,7 @@
 		83398171264058CD005614E8 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				8339818326406814005614E8 /* ShackGlobals.swift */,
+				8339818326406814005614E8 /* Globals.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -869,7 +872,7 @@
 				8339812E263F2F5A005614E8 /* ArticleView.swift in Sources */,
 				83398111263F1794005614E8 /* DateExtensions.swift in Sources */,
 				8339818126406402005614E8 /* ThreadRow.swift in Sources */,
-				8339818426406814005614E8 /* ShackGlobals.swift in Sources */,
+				8339818426406814005614E8 /* Globals.swift in Sources */,
 				83398132263F2F7C005614E8 /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -898,7 +901,7 @@
 				8339819A2640C7ED005614E8 /* PreferencesView.swift in Sources */,
 				8339816026403F08005614E8 /* macOSTagsView.swift in Sources */,
 				833981692640439F005614E8 /* macOSSettingsView.swift in Sources */,
-				8339818526406814005614E8 /* ShackGlobals.swift in Sources */,
+				8339818526406814005614E8 /* Globals.swift in Sources */,
 				8339810F263F1028005614E8 /* StringExtensions.swift in Sources */,
 				83398107263F0D38005614E8 /* ChatService.swift in Sources */,
 				83398155263F69E0005614E8 /* macOSChatView.swift in Sources */,
@@ -911,7 +914,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				833981B92641B723005614E8 /* watchOSThreadDetail.swift in Sources */,
+				833981B92641B723005614E8 /* watchOSPostDetail.swift in Sources */,
 				833981B12641B011005614E8 /* StringExtensions.swift in Sources */,
 				833981AD2641A98E005614E8 /* ArticleService.swift in Sources */,
 				833981A62641A051005614E8 /* ContributedView.swift in Sources */,
@@ -919,12 +922,13 @@
 				833981AF2641AC58005614E8 /* watchOSThreadRow.swift in Sources */,
 				833980B4263C41CF005614E8 /* NotificationController.swift in Sources */,
 				833981A82641A922005614E8 /* ChatService.swift in Sources */,
+				833981BF26421312005614E8 /* watchOSReplyButton.swift in Sources */,
 				833980B2263C41CF005614E8 /* watchOSContentView.swift in Sources */,
 				833981BB2641C4E9005614E8 /* ReplyCountView.swift in Sources */,
 				833980B0263C41CF005614E8 /* EveningReadingApp.swift in Sources */,
 				833981B32641B015005614E8 /* ArrayExtensions.swift in Sources */,
 				833981AC2641A989005614E8 /* PreviewService.swift in Sources */,
-				833981B52641B426005614E8 /* ShackGlobals.swift in Sources */,
+				833981B52641B426005614E8 /* Globals.swift in Sources */,
 				833981A72641A166005614E8 /* AuthorNameView.swift in Sources */,
 				833980B6263C41CF005614E8 /* NotificationView.swift in Sources */,
 				833981BD2641E188005614E8 /* watchOSAuthorView.swift in Sources */,
