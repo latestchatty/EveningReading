@@ -24,7 +24,9 @@ struct watchOSThreadRow: View {
     @State private var lols = [String: Int]()
     @State private var lolTypeCount: Int = 0
     
-    @State private var showPost: Bool = false
+    @State private var isThreadCollapsed: Bool = false
+    @State private var showingCollapseAlert: Bool = false
+    @State private var showingPost: Bool = false
     
     private func getThreadData() {
         if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil {
@@ -64,37 +66,47 @@ struct watchOSThreadRow: View {
             }
         }
     }
-
+    
     var body: some View {
-        VStack (alignment: .leading) {
-            HStack {
-                AuthorNameView(name: .constant(self.rootPostAuthor), postId: self.$threadId)
-                ContributedView(contributed: .constant(self.contributed))
-                Spacer()
-                LolView(lols: self.$lols)
-                ReplyCountView(replyCount: self.$replyCount)
-            }            
-            HStack {
-                Button(action: {
-                    // go to thread
-                    chatStore.activeThreadId = self.threadId
-                    self.showPost.toggle()
-                }) {
-                    Text(rootPostBodyPreview)
-                        .font(.footnote)
-                        .lineLimit(3)
+        VStack {
+            if !self.isThreadCollapsed {
+                VStack (alignment: .leading) {
+                    HStack {
+                        AuthorNameView(name: .constant(self.rootPostAuthor), postId: self.$threadId)
+                        ContributedView(contributed: .constant(self.contributed))
+                        Spacer()
+                        LolView(lols: self.$lols)
+                        ReplyCountView(replyCount: self.$replyCount)
+                    }
+                    HStack {
+                        Text(rootPostBodyPreview)
+                            .font(.footnote)
+                            .lineLimit(3)
+                            .onTapGesture(count: 1) {
+                                self.showingPost.toggle()
+                            }
+                            .onLongPressGesture {
+                                self.showingCollapseAlert.toggle()
+                            }
+                        NavigationLink(destination: watchOsPostDetail(postId: .constant(self.threadId)), isActive: self.$showingPost) {
+                            EmptyView()
+                        }.frame(width: 0, height: 0)
+                        Spacer()
+                    }
                 }
-                .buttonStyle(PlainButtonStyle())
-                NavigationLink(destination: watchOsPostDetail(postId: .constant(self.threadId)), isActive: self.$showPost) {
-                    EmptyView()
-                }.frame(width: 0, height: 0)
+                .padding()
+                .background(Color("ThreadBubblePrimary"))
+                .cornerRadius(5)
+                .onAppear(perform: getThreadData)
+            } else {
                 Spacer()
             }
         }
-        .padding()
-        .background(Color("ThreadBubblePrimary"))
-        .cornerRadius(5)
-        .onAppear(perform: getThreadData)
+        .alert(isPresented: self.$showingCollapseAlert) {
+            Alert(title: Text("Hide Thread?"), message: Text(""), primaryButton: .cancel(), secondaryButton: Alert.Button.default(Text("OK"), action: {
+                self.isThreadCollapsed = true
+            }))
+        }
     }
 }
 
