@@ -69,13 +69,19 @@ struct watchOSThreadRow: View {
     
     var body: some View {
         VStack {
+            
+            // Fixes SwiftUI/watchOS/simulator navigation bug?
+            NavigationLink(destination: EmptyView(), isActive: .constant(false)) {
+                EmptyView()
+            }.frame(width: 0, height: 0)
+            
             if !self.isThreadCollapsed {
                 VStack (alignment: .leading) {
                     HStack {
-                        AuthorNameView(name: .constant(self.rootPostAuthor), postId: self.$threadId)
-                        ContributedView(contributed: .constant(self.contributed))
+                        AuthorNameView(name: self.rootPostAuthor, postId: self.threadId, bold: false)
+                        ContributedView(contributed: self.contributed)
                         Spacer()
-                        LolView(lols: self.$lols)
+                        LolView(lols: self.lols)
                         ReplyCountView(replyCount: self.$replyCount)
                     }
                     HStack {

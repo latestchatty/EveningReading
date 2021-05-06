@@ -89,6 +89,10 @@
                     "lols": [
                         {
                             "tag": "inf",
+                            "count": 2
+                        },
+                        {
+                            "tag": "tag",
                             "count": 1
                         }
                     ]
@@ -111,7 +115,20 @@
                     "category": "ontopic",
                     "date": "2020-08-14T21:05:00Z",
                     "body": "Ultricies lacus sed turpis tincidunt id. Id aliquet lectus proin nibh nisl condimentum. Enim sed faucibus turpis in eu mi bibendum neque egestas.Est sit amet facilisis magna etiam tempor. Amet consectetur adipiscing elit duis tristique sollicitudin nibh sit amet. Sed cras ornare arcu dui. Nisl purus in mollis nunc sed id semper. Est ullamcorper eget nulla facilisi etiam dignissim diam quis enim. Cum sociis natoque penatibus et magnis dis parturient montes nascetur.",
-                    "lols": []
+                    "lols": [
+                        {
+                            "tag": "lol",
+                            "count": 7
+                        },
+                        {
+                            "tag": "unf",
+                            "count": 1
+                        },
+                        {
+                            "tag": "wtf",
+                            "count": 3
+                        }
+                    ]
                 }
                 
             ]

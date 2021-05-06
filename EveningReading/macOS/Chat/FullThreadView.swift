@@ -95,12 +95,10 @@ struct FullThreadView: View {
             let replies = thread.posts.filter({ return $0.parentId == parentId }).sorted(by: { $0.id < $1.id })
             
             for post in replies {
-                postList.append(post)
-                
                 for lol in post.lols {
                     postLols[post.id, default: [:]][lol.tag] = lol.count
                 }
-                
+                postList.append(post)
                 getPostList(parentId: post.id)
             }
         }
@@ -114,22 +112,23 @@ struct FullThreadView: View {
                     ThreadCategoryColor[self.rootPostCategory].frame(height: 5)
                     
                     HStack {
-                        AuthorNameView(name: self.$rootPostAuthor, postId: self.$threadId)
+                        AuthorNameView(name: self.rootPostAuthor, postId: self.threadId, bold: true)
                         
-                        ContributedView(contributed: self.$contributed)
+                        ContributedView(contributed: self.contributed)
                         
                         if self.hasLols {
-                            LolView(lols: self.$lols)
+                            LolView(lols: self.lols)
                         }
                         Spacer()
 
                         ReplyCountView(replyCount: self.$replyCount)
                         
                         TimeRemainingIndicator(percent: .constant(self.rootPostDate.getTimeRemaining()))
-                            .frame(width: 10, height: 10)
+                            .frame(width: 12, height: 12)
+                            .padding(.horizontal, 2)
                         
-                        Text(self.rootPostDate.getTimeAgo())
-                            .font(.body)
+                        //Text(self.rootPostDate.getTimeAgo())
+                        //    .font(.body)
                         
                         Image(systemName: "eye.slash")
                             .imageScale(.large)
@@ -148,15 +147,13 @@ struct FullThreadView: View {
                             .onTapGesture(count: 1) {
                             }
                     }
-                    .padding(.leading, 20)
-                    .padding(.trailing, 20)
+                    .padding(.horizontal, 20)
                     
                     HStack {
                         Text("\(self.rootPostBody)")
                             .font(.body)
                             .fixedSize(horizontal: false, vertical: true)
-                            .padding(.leading, 20)
-                            .padding(.trailing, 20)
+                            .padding(.horizontal, 20)
                             .padding(.bottom, 10)
                     }
 
@@ -168,17 +165,17 @@ struct FullThreadView: View {
                             VStack (alignment: .leading) {
                                 LazyVGrid(columns: self.repliesPreviewColumns, alignment: .leading, spacing: 16) {
                                     ForEach(recentPosts.prefix(5), id: \.id) { post in
-                                        Text("\(post.author)")
-                                            .font(.body)
-                                            .lineLimit(1)
-                                            .foregroundColor(Color(NSColor.systemOrange))
-                                        Text("\(post.body.getPreview)")
-                                            .font(.body)
-                                            .lineLimit(1)
+                                        AuthorNameView(name: post.author, postId: post.id)
+                                        HStack {
+                                            Text("\(post.body.getPreview)")
+                                                .font(.body)
+                                                .lineLimit(1)
+                                            Spacer()
+                                            LolView(chatlols: post.lols)
+                                        }
                                     }
                                 }
-                                .padding(.leading, 20)
-                                .padding(.trailing, 20)
+                                .padding(.horizontal, 20)
                                 .padding(.bottom, 10)
                                 
                                 VStack (alignment: .center) {
@@ -190,8 +187,7 @@ struct FullThreadView: View {
                                     }, label: {
                                         Image(systemName: "ellipsis")
                                             .imageScale(.large)
-                                            .padding(.leading, 20)
-                                            .padding(.trailing, 20)
+                                            .padding(.horizontal, 20)
                                             .padding(.bottom, 20)
 
                                     })
@@ -206,8 +202,7 @@ struct FullThreadView: View {
                                     .foregroundColor(Color("NoData"))
                             }
                             .frame(maxWidth: .infinity)
-                            .padding(.leading, 20)
-                            .padding(.trailing, 20)
+                            .padding(.horizontal, 20)
                             .padding(.bottom, 20)
                         }
                     } else {
@@ -219,8 +214,7 @@ struct FullThreadView: View {
                             }, label: {
                                 Image(systemName: "ellipsis")
                                     .imageScale(.large)
-                                    .padding(.leading, 20)
-                                    .padding(.trailing, 20)
+                                    .padding(.horizontal, 20)
                                     .padding(.bottom, 20)
 
                             })
@@ -233,33 +227,38 @@ struct FullThreadView: View {
                         LazyVGrid(columns: self.repliesExpandedColumns, alignment: .leading, spacing: 0) {
                             ForEach(recentPosts.prefix(5), id: \.id) { post in
                                 HStack {
-                                    Text("\(post.author)")
-                                        .font(.body)
-                                        .lineLimit(1)
-                                        .foregroundColor(Color(NSColor.systemOrange))
+                                    AuthorNameView(name: post.author, postId: post.id)
                                 }
                                 if post.author == "maecenas" || post.author == "rhoncus" {
-                                    HStack {
-                                        Text("\(post.body.getPreview)")
-                                            .font(.body)
-                                            .fixedSize(horizontal: false, vertical: true)
-                                            .padding(8)
-                                        Spacer()
+                                    VStack {
+                                        HStack {
+                                            Spacer()
+                                            LolView(chatlols: post.lols, expanded: true)
+                                                .padding(.top, 5)
+                                        }
+                                        HStack {
+                                            Text("\(post.body.getPreview)")
+                                                .font(.body)
+                                                .fixedSize(horizontal: false, vertical: true)
+                                                .padding(8)
+                                            Spacer()
+                                        }
+                                        .frame(maxWidth: .infinity)
+                                        .background(Color("ThreadBubbleSecondary"))
+                                        .cornerRadius(5)
                                     }
-                                    .frame(maxWidth: .infinity)
-                                    .background(Color("ThreadBubbleSecondary"))
-                                    .cornerRadius(5)
                                 } else {
                                     HStack {
                                         Text("\(post.body.getPreview)")
                                             .font(.body)
                                             .lineLimit(1)
+                                        Spacer()
+                                        LolView(chatlols: post.lols)
                                     }
                                 }
                             }
                         }
-                        .padding(.leading, 20)
-                        .padding(.trailing, 20)
+                        .padding(.horizontal, 20)
                         .padding(.bottom, 10)
                     }
                 }
@@ -296,8 +295,7 @@ struct FullThreadView: View {
                     Text("wow").tag(5)
                     Text("aww").tag(6)
                 })
-                .padding(.leading, 60)
-                .padding(.trailing, 60)
+                .padding(.horizontal, 60)
                 
                 HStack {
                     Button("OK") {

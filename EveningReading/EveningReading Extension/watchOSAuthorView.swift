@@ -14,7 +14,7 @@ struct watchOSAuthorView: View {
     @State private var showReportUserMessage: Bool = false
     @State private var showMessageSent: Bool = false
     
-    var body: some View {
+    var body: some View {        
         VStack {
             if self.showReportUserMessage {
                 ScrollView {

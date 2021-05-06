@@ -27,9 +27,13 @@ struct ChatPosts: Hashable, Codable {
     var lols: [ChatLols]
 }
 
-struct ChatLols: Hashable, Codable {
+struct ChatLols: Hashable, Codable, Comparable {
     var tag: String
     var count: Int
+    
+    static func <(lhs: ChatLols, rhs: ChatLols) -> Bool {
+        return lhs.tag < rhs.tag
+    }
 }
 
 class ChatService {

@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct LolView: View {
-    @Binding var lols: [String: Int]
+    var lols: [String: Int] = [String: Int]()
+    var chatlols: [ChatLols] = [ChatLols]()
+    var expanded: Bool = false
     
     var body: some View {
         // Lols
@@ -45,23 +47,52 @@ struct LolView: View {
             }
         #endif
         #if os(OSX)
-            HStack {
-                ForEach(self.lols.sorted(by: <), id: \.key) { key, value in
-                    if value > 0 {
-                        HStack {
-                            Text(key)
+            if chatlols.count > 0 {
+                if self.expanded {
+                    ForEach(self.chatlols.sorted(by: <), id: \.self) { lol in
+                        if lol.count > 0 {
+                            Text(lol.tag)
                                 .font(.caption2)
                                 .fontWeight(.bold)
-                                .foregroundColor(PostTagColor[key])
+                                .foregroundColor(PostTagColor[lol.tag])
                             +
-                            Text(" \(value)")
+                            Text(" \(lol.count)")
                                 .font(.caption2)
                                 .fontWeight(.bold)
-                                .foregroundColor(PostTagColor[key])
+                                .foregroundColor(PostTagColor[lol.tag])
                         }
-                        .padding(.init(top: 1, leading: 4, bottom: 1, trailing: 4))
-                        .overlay(Capsule(style: .continuous)
-                                    .stroke(PostTagColor[key]!))
+                    }
+                } else {
+                    ForEach(self.chatlols.sorted(by: <), id: \.self) { lol in
+                                            if lol.count > 0 {
+                            Text("A") // 'A' is a tag
+                                .lineLimit(1)
+                                .fixedSize()
+                                .font(.custom("tags", size: 8, relativeTo: .caption))
+                                .padding(EdgeInsets(top: 3, leading: -5, bottom: 0, trailing: 0))
+                                .foregroundColor(PostTagColor[lol.tag])
+                        }
+                    }
+                }
+            } else {
+                HStack {
+                    ForEach(self.lols.sorted(by: <), id: \.key) { key, value in
+                        if value > 0 {
+                            HStack {
+                                Text(key)
+                                    .font(.caption2)
+                                    .fontWeight(.bold)
+                                    .foregroundColor(PostTagColor[key])
+                                +
+                                Text(" \(value)")
+                                    .font(.caption2)
+                                    .fontWeight(.bold)
+                                    .foregroundColor(PostTagColor[key])
+                            }
+                            .padding(.init(top: 1, leading: 4, bottom: 1, trailing: 4))
+                            .overlay(Capsule(style: .continuous)
+                                        .stroke(PostTagColor[key]!))
+                        }
                     }
                 }
             }
@@ -85,6 +116,6 @@ struct LolView: View {
 
 struct LolView_Previews: PreviewProvider {
     static var previews: some View {
-        LolView(lols: .constant(["lol": 5, "inf": 2, "unf": 6, "tag": 1]))
+        LolView(lols: ["lol": 5, "inf": 2, "unf": 6, "tag": 1])
     }
 }

@@ -76,14 +76,14 @@ struct ThreadDetailView: View {
                     // Root Post
                     VStack {
                         HStack (alignment: .center) {
-                            AuthorNameView(name: self.$rootPostAuthor, postId: .constant(self.threadId))
+                            AuthorNameView(name: self.rootPostAuthor, postId: self.threadId)
 
-                            ContributedView(contributed: self.$contributed)
+                            ContributedView(contributed: self.contributed)
 
                             Spacer()
 
                             if UIDevice.current.userInterfaceIdiom == .phone {
-                                LolView(lols: self.$lols)
+                                LolView(lols: self.lols)
                             }
                         }
                         .padding(.top, 10)

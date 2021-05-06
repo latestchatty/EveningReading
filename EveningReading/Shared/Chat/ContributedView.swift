@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContributedView: View {
-    @Binding var contributed: Bool
+    var contributed: Bool = false
     
     var body: some View {
         if self.contributed {
@@ -39,6 +39,6 @@ struct ContributedView: View {
 
 struct ContributedView_Previews: PreviewProvider {
     static var previews: some View {
-        ContributedView(contributed: .constant(true))
+        ContributedView(contributed: true)
     }
 }

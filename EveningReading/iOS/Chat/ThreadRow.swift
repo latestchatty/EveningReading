@@ -119,13 +119,13 @@ struct ThreadRow: View {
                 HStack {
                     VStack {
                         HStack (alignment: .center) {
-                            AuthorNameView(name: self.$rootPostAuthor, postId: self.$threadId)
+                            AuthorNameView(name: self.rootPostAuthor, postId: self.threadId)
 
-                            ContributedView(contributed: self.$contributed)
+                            ContributedView(contributed: self.contributed)
 
                             Spacer()
 
-                            LolView(lols: self.$lols)
+                            LolView(lols: self.lols)
 
                             ReplyCountView(replyCount: self.$replyCount)
                             

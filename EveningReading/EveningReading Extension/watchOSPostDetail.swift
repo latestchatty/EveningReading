@@ -66,10 +66,10 @@ struct watchOsPostDetail: View {
                 // Post
                 VStack (alignment: .leading) {
                     HStack {
-                        AuthorNameView(name: .constant(self.postAuthor), postId: self.$postId)
-                        ContributedView(contributed: .constant(self.contributed))
+                        AuthorNameView(name: self.postAuthor, postId: self.postId)
+                        ContributedView(contributed: self.contributed)
                         Spacer()
-                        LolView(lols: self.$lols)
+                        LolView(lols: self.lols)
                     }
                     .padding(.bottom, 2)
                     

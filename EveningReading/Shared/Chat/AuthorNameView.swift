@@ -9,8 +9,9 @@ import SwiftUI
 
 struct AuthorNameView: View {
     @Environment(\.colorScheme) var colorScheme
-    @Binding var name: String
-    @Binding var postId: Int
+    var name: String = ""
+    var postId: Int = 0
+    var bold: Bool = false
     
     #if os(watchOS)
     @State private var showingAuthor = false
@@ -45,7 +46,8 @@ struct AuthorNameView: View {
                 }
         #endif
         #if os(OSX)
-            Text("\(self.name)")                
+            Text("\(self.name)")
+                .font(self.bold ? .headline : .body)
                 .foregroundColor(colorScheme == .dark ? Color(NSColor.systemOrange) : Color(NSColor.systemPurple))
                 .lineLimit(1)
                 .contextMenu {
@@ -90,7 +92,7 @@ struct AuthorNameView: View {
 
 struct AuthorNameView_Previews: PreviewProvider {
     static var previews: some View {
-        AuthorNameView(name: .constant("tamzyn"), postId: .constant(9999999996))
+        AuthorNameView(name: "tamzyn", postId: 9999999996, bold: false)
             .environment(\.colorScheme, .light)
     }
 }
