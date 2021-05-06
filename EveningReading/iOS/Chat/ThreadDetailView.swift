@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ThreadDetailView: View {
+    @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var chatStore: ChatStore
     
@@ -21,6 +22,8 @@ struct ThreadDetailView: View {
     @State private var contributed: Bool = false
     @State private var showThread: Bool = false
     
+    @State private var postList = [ChatPosts]()
+        
     private func getThreadData() {
         if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
         {
@@ -51,6 +54,17 @@ struct ThreadDetailView: View {
         }
     }
     
+    private func getPostList(parentId: Int) {
+        if let thread = chatData.threads.filter({ return $0.threadId == self.threadId }).first {
+            let replies = thread.posts.filter({ return $0.parentId == parentId }).sorted(by: { $0.id < $1.id })
+            
+            for post in replies {
+                postList.append(post)
+                getPostList(parentId: post.id)
+            }
+        }
+    }
+    
     var body: some View {
         VStack {
             if self.showThread {
@@ -67,7 +81,7 @@ struct ThreadDetailView: View {
                             Spacer()
 
                             if UIDevice.current.userInterfaceIdiom == .phone {
-                                LolView(lols: self.rootPostLols)
+                                LolView(lols: self.rootPostLols, expanded: true)
                             }
                         }
                         .padding(.top, 10)
@@ -89,16 +103,69 @@ struct ThreadDetailView: View {
                     .id(9999999999991)
                     
                     // Replies
-                    // TODO...
-                    
+                    ForEach(postList, id: \.id) { post in
+                        HStack {
+                            // Rarely a post category on a reply
+                            if post.category == "nws" {
+                                Text("nws")
+                                    .bold()
+                                    .lineLimit(1)
+                                    .font(.footnote)
+                                    .foregroundColor(Color(UIColor.systemRed))
+                            } else if post.category == "stupid" {
+                                Text("stupid")
+                                    .bold()
+                                    .lineLimit(1)
+                                    .font(.footnote)
+                                    .foregroundColor(Color(UIColor.systemGreen))
+                            } else if post.category == "informative" {
+                                Text("inf")
+                                    .bold()
+                                    .lineLimit(1)
+                                    .font(.footnote)
+                                    .foregroundColor(Color(UIColor.systemBlue))
+                            }
+                            
+                            // Post preview
+                            Text(post.body.getPreview)
+                                //.fontWeight(recentPostOpacity[replyId] != nil ? PostWeight[recentPostOpacity[replyId]!] : .regular)
+                                .lineLimit(1)
+                                .truncationMode(.tail)
+                                .font(.callout)
+                                .foregroundColor(colorScheme == .dark ? Color(UIColor.white) : Color(UIColor.black))
+                                //.opacity(recentPostOpacity[replyId] != nil ? recentPostOpacity[replyId]! : 0.75)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            
+                            // Maybe show post author
+                            if self.appSessionStore.displayPostAuthor {
+                                AuthorNameView(name: post.author, postId: post.id)
+                            }
+                            
+                            // Lols
+                            HStack {
+                                LolView(lols: post.lols)
+                            }
+                            
+                        }
+                        .padding(.horizontal, 10)
+                        .frame(maxWidth: .infinity)
+                        .id(post.id)
+                    }
                 }
                 
             }
         }
-        .onAppear(perform: getThreadData)
+        .onAppear(perform: {
+            getThreadData()
+            if UIDevice.current.userInterfaceIdiom == .phone {
+                getPostList(parentId: self.threadId)
+            }
+        })
         .onReceive(self.chatStore.$activeThreadId) { _ in
             if UIDevice.current.userInterfaceIdiom == .pad {
                 getThreadData()
+                postList = [ChatPosts]()
+                getPostList(parentId: self.threadId)
             }
         }
         .background(Color("PrimaryBackground").frame(height: 2600).offset(y: -80))
@@ -112,6 +179,7 @@ struct ThreadDetailView: View {
 struct ThreadDetailView_Previews: PreviewProvider {
     static var previews: some View {
         ThreadDetailView(threadId: .constant(9999999992))
+            .environment(\.colorScheme, .dark)
             .environmentObject(AppSessionStore())
             .environmentObject(ChatStore(service: ChatService()))
     }

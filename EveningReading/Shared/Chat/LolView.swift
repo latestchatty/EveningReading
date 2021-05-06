@@ -15,34 +15,45 @@ struct LolView: View {
     var body: some View {
         // Lols
         #if os(iOS)
-            HStack {
-                Text(" ")
-                    .font(.caption2)
-                    .fontWeight(.bold)
-                ForEach(self.lols.sorted(by: <), id: \.self) { lol in
-                    if lol.count > 0 {
-                        HStack {
-                            Text(lol.tag)
-                                .font(.caption2)
-                                .fontWeight(.bold)
-                                .foregroundColor(PostTagColor[lol.tag])
-                            +
-                            Text(" \(lol.count)")
-                                .font(.caption2)
-                                .fontWeight(.bold)
-                                .foregroundColor(PostTagColor[lol.tag])
+            if self.expanded {
+                HStack {
+                    Text(" ")
+                        .font(.caption2)
+                        .fontWeight(.bold)
+                    ForEach(self.lols.sorted(by: <), id: \.self) { lol in
+                        if lol.count > 0 {
+                            HStack {
+                                Text(lol.tag)
+                                    .font(.caption2)
+                                    .fontWeight(.bold)
+                                    .foregroundColor(PostTagColor[lol.tag])
+                                +
+                                Text(" \(lol.count)")
+                                    .font(.caption2)
+                                    .fontWeight(.bold)
+                                    .foregroundColor(PostTagColor[lol.tag])
+                            }
                         }
                     }
                 }
-            }
-            .contextMenu {
-                if self.lols.count > 0 {
-                    Button(action: {
-                        // show who's tagging
-                    }) {
-                        Text("Who's Tagging?")
-                        Image(systemName: "tag.circle")
+                .contextMenu {
+                    if self.lols.count > 0 {
+                        Button(action: {
+                            // show who's tagging
+                        }) {
+                            Text("Who's Tagging?")
+                            Image(systemName: "tag.circle")
+                        }
                     }
+                }
+            } else {
+                ForEach(self.lols.sorted(by: <), id: \.self) { lol in
+                    Text("A")
+                        .lineLimit(1)
+                        .fixedSize()
+                        .font(.custom("tags", size: 8, relativeTo: .caption))
+                        .padding(EdgeInsets(top: 3, leading: -5, bottom: 0, trailing: 0))
+                        .foregroundColor(PostTagColor[lol.tag])
                 }
             }
         #endif

@@ -108,7 +108,7 @@ struct ThreadRow: View {
 
                             Spacer()
 
-                            LolView(lols: self.rootPostLols)
+                            LolView(lols: self.rootPostLols, expanded: true)
 
                             ReplyCountView(replyCount: self.replyCount)
                             

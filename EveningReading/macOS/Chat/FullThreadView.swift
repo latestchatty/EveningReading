@@ -22,12 +22,16 @@ struct FullThreadView: View {
     @State private var replyCount: Int = 0
     @State private var recentPosts: [ChatPosts] = [ChatPosts]()
     
-    @State private var showingTagSheet: Bool = false
+    @State private var postList = [ChatPosts]()
+    
+    @State private var showingLolSheet: Bool = false
     @State private var showingComposeSheet: Bool = false
     
     @State private var isThreadCollapsed: Bool = false
     @State private var showingCollapseAlert: Bool = false
     @State private var isThreadExpanded: Bool = false
+    
+    @State private var selectedLol = 0
     
     @State private var repliesPreviewColumns: [GridItem] = [
         GridItem(.flexible(maximum: 120)),
@@ -38,10 +42,6 @@ struct FullThreadView: View {
         GridItem(.flexible(maximum: 120)),
         GridItem(.flexible())
     ]
-    
-    @State private var postList = [ChatPosts]()
-    
-    @State private var selectedLol = 0
     
     private func getThreadData() {
         if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
@@ -117,7 +117,7 @@ struct FullThreadView: View {
                         Image(systemName: "tag")
                             .imageScale(.large)
                             .onTapGesture(count: 1) {
-                                self.showingTagSheet.toggle()
+                                self.showingLolSheet.toggle()
                             }
                         
                         Image(systemName: "arrowshape.turn.up.left")
@@ -126,6 +126,7 @@ struct FullThreadView: View {
                             }
                     }
                     .padding(.horizontal, 20)
+                    .id(self.threadId)
                     
                     HStack {
                         Text("\(self.rootPostBody)")
@@ -164,7 +165,9 @@ struct FullThreadView: View {
                                         withAnimation {
                                             self.isThreadExpanded = true
                                         }
-                                        getPostList(parentId: self.threadId)
+                                        if postList.count < 1 {
+                                            getPostList(parentId: self.threadId)
+                                        }
                                     }, label: {
                                         Image(systemName: "ellipsis")
                                             .imageScale(.large)
@@ -229,6 +232,7 @@ struct FullThreadView: View {
                                         .background(Color("ThreadBubbleSecondary"))
                                         .cornerRadius(5)
                                     }
+                                    .id(post.id)
                                 } else {
                                     HStack {
                                         Text("\(post.body.getPreview)")
@@ -237,6 +241,7 @@ struct FullThreadView: View {
                                         Spacer()
                                         LolView(lols: post.lols)
                                     }
+                                    .id(post.id)
                                 }
                             }
                         }
@@ -258,7 +263,7 @@ struct FullThreadView: View {
                 self.isThreadCollapsed = true
             }))
         }
-        .sheet(isPresented: $showingTagSheet) {
+        .sheet(isPresented: $showingLolSheet) {
             VStack {
                 Text("Tag This Post?")
                     .font(.body)
@@ -281,11 +286,11 @@ struct FullThreadView: View {
                 
                 HStack {
                     Button("OK") {
-                        self.showingTagSheet = false
+                        self.showingLolSheet = false
                     }
                     
                     Button("Cancel") {
-                        self.showingTagSheet = false
+                        self.showingLolSheet = false
                     }
                 }
             }

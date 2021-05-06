@@ -24,6 +24,8 @@ struct AuthorNameView: View {
                 .bold()
                 .foregroundColor(Color(UIColor.systemOrange))
                 .lineLimit(1)
+                .truncationMode(.tail)
+                .fixedSize()
                 .contextMenu {
                     Button(action: {
                         // send message
