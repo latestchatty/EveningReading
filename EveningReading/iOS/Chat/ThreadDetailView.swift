@@ -17,10 +17,8 @@ struct ThreadDetailView: View {
     @State private var rootPostAuthor: String = ""
     @State private var rootPostBody: String = ""
     @State private var rootPostDate: String = "2020-08-14T21:05:00Z"
+    @State private var rootPostLols: [ChatLols] = [ChatLols]()
     @State private var contributed: Bool = false
-    @State private var hasLols: Bool = false
-    @State private var lols = [String: Int]()
-    @State private var lolTypeCount: Int = 0
     @State private var showThread: Bool = false
     
     private func getThreadData() {
@@ -31,16 +29,9 @@ struct ThreadDetailView: View {
                 self.rootPostCategory = rootPost?.category ?? "ontopic"
                 self.rootPostAuthor = rootPost?.author ?? ""
                 self.rootPostBody = rootPost?.body.getPreview ?? ""
+                self.rootPostDate = rootPost?.date ?? "2020-08-14T21:05:00Z"
+                self.rootPostLols = rootPost?.lols ?? [ChatLols]()
                 
-                for lol in rootPost?.lols ?? [ChatLols]() {
-                    if lol.count > 0 {
-                        self.hasLols = true
-                    }
-                    lols[String("\(lol.tag)")] = lol.count
-                    if lol.count > 0 {
-                        lolTypeCount += 1
-                    }
-                }
                 self.showThread = true
             } else {
                 self.showThread = false
@@ -51,16 +42,9 @@ struct ThreadDetailView: View {
             self.rootPostCategory = rootPost?.category ?? "ontopic"
             self.rootPostAuthor = rootPost?.author ?? ""
             self.rootPostBody = rootPost?.body.getPreview ?? ""
+            self.rootPostDate = rootPost?.date ?? "2020-08-14T21:05:00Z"
+            self.rootPostLols = rootPost?.lols ?? [ChatLols]()
             
-            for lol in rootPost?.lols ?? [ChatLols]() {
-                if lol.count > 0 {
-                    self.hasLols = true
-                }
-                lols[String("\(lol.tag)")] = lol.count
-                if lol.count > 0 {
-                    lolTypeCount += 1
-                }
-            }
             self.showThread = true
         } else {
             self.showThread = false
@@ -83,7 +67,7 @@ struct ThreadDetailView: View {
                             Spacer()
 
                             if UIDevice.current.userInterfaceIdiom == .phone {
-                                LolView(lols: self.lols)
+                                LolView(lols: self.rootPostLols)
                             }
                         }
                         .padding(.top, 10)

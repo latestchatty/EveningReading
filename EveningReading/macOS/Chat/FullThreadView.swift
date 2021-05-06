@@ -17,12 +17,10 @@ struct FullThreadView: View {
     @State private var rootPostAuthor: String = ""
     @State private var rootPostBody: String = ""
     @State private var rootPostDate: String = "2020-08-14T21:05:00Z"
+    @State private var rootPostLols: [ChatLols] = [ChatLols]()
     @State private var contributed: Bool = false
     @State private var replyCount: Int = 0
     @State private var recentPosts: [ChatPosts] = [ChatPosts]()
-    @State private var hasLols: Bool = false
-    @State private var lols = [String: Int]()
-    @State private var lolTypeCount: Int = 0
     
     @State private var showingTagSheet: Bool = false
     @State private var showingComposeSheet: Bool = false
@@ -42,7 +40,6 @@ struct FullThreadView: View {
     ]
     
     @State private var postList = [ChatPosts]()
-    @State private var postLols = [Int: [String: Int]]()
     
     @State private var selectedLol = 0
     
@@ -54,19 +51,11 @@ struct FullThreadView: View {
                 self.rootPostCategory = rootPost?.category ?? "ontopic"
                 self.rootPostAuthor = rootPost?.author ?? ""
                 self.rootPostBody = rootPost?.body.getPreview ?? ""
+                self.rootPostDate = rootPost?.date ?? "2020-08-14T21:05:00Z"
+                self.rootPostLols = rootPost?.lols ?? [ChatLols]()
                 self.replyCount = thread.posts.count - 1
                 
                 self.recentPosts = thread.posts.filter({ return $0.parentId != 0 }).sorted(by: { $0.id > $1.id })
-                
-                for lol in rootPost?.lols ?? [ChatLols]() {
-                    if lol.count > 0 {
-                        self.hasLols = true
-                    }
-                    lols[String("\(lol.tag)")] = lol.count
-                    if lol.count > 0 {
-                        lolTypeCount += 1
-                    }
-                }
             }
         }
         if let thread = chatData.threads.filter({ return $0.threadId == self.threadId }).first {
@@ -74,19 +63,11 @@ struct FullThreadView: View {
             self.rootPostCategory = rootPost?.category ?? "ontopic"
             self.rootPostAuthor = rootPost?.author ?? ""
             self.rootPostBody = rootPost?.body.getPreview ?? ""
+            self.rootPostDate = rootPost?.date ?? "2020-08-14T21:05:00Z"
+            self.rootPostLols = rootPost?.lols ?? [ChatLols]()
             self.replyCount = thread.posts.count - 1
             
             self.recentPosts = thread.posts.filter({ return $0.parentId != 0 }).sorted(by: { $0.id > $1.id })
-            
-            for lol in rootPost?.lols ?? [ChatLols]() {
-                if lol.count > 0 {
-                    self.hasLols = true
-                }
-                lols[String("\(lol.tag)")] = lol.count
-                if lol.count > 0 {
-                    lolTypeCount += 1
-                }
-            }
         }
     }
     
@@ -95,9 +76,6 @@ struct FullThreadView: View {
             let replies = thread.posts.filter({ return $0.parentId == parentId }).sorted(by: { $0.id < $1.id })
             
             for post in replies {
-                for lol in post.lols {
-                    postLols[post.id, default: [:]][lol.tag] = lol.count
-                }
                 postList.append(post)
                 getPostList(parentId: post.id)
             }
@@ -116,9 +94,8 @@ struct FullThreadView: View {
                         
                         ContributedView(contributed: self.contributed)
                         
-                        if self.hasLols {
-                            LolView(lols: self.lols)
-                        }
+                        LolView(lols: self.rootPostLols, capsule: true)
+
                         Spacer()
 
                         ReplyCountView(replyCount: self.$replyCount)
@@ -171,7 +148,7 @@ struct FullThreadView: View {
                                                 .font(.body)
                                                 .lineLimit(1)
                                             Spacer()
-                                            LolView(chatlols: post.lols)
+                                            LolView(lols: post.lols)
                                         }
                                     }
                                 }
@@ -233,7 +210,7 @@ struct FullThreadView: View {
                                     VStack {
                                         HStack {
                                             Spacer()
-                                            LolView(chatlols: post.lols, expanded: true)
+                                            LolView(lols: post.lols, expanded: true)
                                                 .padding(.top, 5)
                                         }
                                         HStack {
@@ -253,7 +230,7 @@ struct FullThreadView: View {
                                             .font(.body)
                                             .lineLimit(1)
                                         Spacer()
-                                        LolView(chatlols: post.lols)
+                                        LolView(lols: post.lols)
                                     }
                                 }
                             }

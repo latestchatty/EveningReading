@@ -18,9 +18,7 @@ struct watchOsPostDetail: View {
     @State private var contributed: Bool = false
     @State private var postBody: String = ""
     @State private var postDate: String = "2020-08-14T21:05:00Z"
-    @State private var hasLols: Bool = false
-    @State private var lols = [String: Int]()
-    @State private var lolTypeCount: Int = 0
+    @State private var postLols: [ChatLols] = [ChatLols]()
     @State private var replies: [ChatPosts] = [ChatPosts]()
     
     @State private var isRootPost: Bool = false
@@ -31,20 +29,11 @@ struct watchOsPostDetail: View {
             let thread = chatData.threads.filter { !$0.posts.isEmpty && $0.posts.contains(where: { post in post.id == self.postId }) }.first
             
             if let childPost = thread?.posts.filter({ return $0.id == self.postId }).first {
-                
                 self.postCategory = childPost.category
                 self.postAuthor = childPost.author
                 self.postBody = childPost.body.getPreview
-                
-                for lol in childPost.lols {
-                    if lol.count > 0 {
-                        self.hasLols = true
-                    }
-                    lols[String("\(lol.tag)")] = lol.count
-                    if lol.count > 0 {
-                        lolTypeCount += 1
-                    }
-                }
+                self.postDate = childPost.date
+                self.postLols = childPost.lols
                 
                 self.replies = thread?.posts.filter({ return $0.parentId == self.postId }) ?? [ChatPosts]()
             } else {
@@ -69,7 +58,7 @@ struct watchOsPostDetail: View {
                         AuthorNameView(name: self.postAuthor, postId: self.postId)
                         ContributedView(contributed: self.contributed)
                         Spacer()
-                        LolView(lols: self.lols)
+                        LolView(lols: self.postLols)
                     }
                     .padding(.bottom, 2)
                     

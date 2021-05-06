@@ -18,11 +18,9 @@ struct watchOSThreadRow: View {
     @State private var rootPostAuthor: String = ""
     @State private var rootPostBodyPreview: String = ""
     @State private var rootPostDate: String = "2020-08-14T21:05:00Z"
+    @State private var rootPostLols: [ChatLols] = [ChatLols]()
     @State private var contributed: Bool = false
     @State private var replyCount: Int = 0
-    @State private var hasLols: Bool = false
-    @State private var lols = [String: Int]()
-    @State private var lolTypeCount: Int = 0
     
     @State private var isThreadCollapsed: Bool = false
     @State private var showingCollapseAlert: Bool = false
@@ -35,17 +33,9 @@ struct watchOSThreadRow: View {
                 self.rootPostCategory = rootPost?.category ?? "ontopic"
                 self.rootPostAuthor = rootPost?.author ?? ""
                 self.rootPostBodyPreview = rootPost?.body.getPreview ?? ""
+                self.rootPostDate = rootPost?.date ?? "2020-08-14T21:05:00Z"
                 self.replyCount = thread.posts.count - 1
-                
-                for lol in rootPost?.lols ?? [ChatLols]() {
-                    if lol.count > 0 {
-                        self.hasLols = true
-                    }
-                    lols[String("\(lol.tag)")] = lol.count
-                    if lol.count > 0 {
-                        lolTypeCount += 1
-                    }
-                }
+                self.rootPostLols = rootPost?.lols ?? [ChatLols]()
             }
         }
         if let thread = chatData.threads.filter({ return $0.threadId == self.threadId }).first {
@@ -53,17 +43,9 @@ struct watchOSThreadRow: View {
             self.rootPostCategory = rootPost?.category ?? "ontopic"
             self.rootPostAuthor = rootPost?.author ?? ""
             self.rootPostBodyPreview = rootPost?.body.getPreview ?? ""
+            self.rootPostDate = rootPost?.date ?? "2020-08-14T21:05:00Z"
             self.replyCount = thread.posts.count - 1
-            
-            for lol in rootPost?.lols ?? [ChatLols]() {
-                if lol.count > 0 {
-                    self.hasLols = true
-                }
-                lols[String("\(lol.tag)")] = lol.count
-                if lol.count > 0 {
-                    lolTypeCount += 1
-                }
-            }
+            self.rootPostLols = rootPost?.lols ?? [ChatLols]()
         }
     }
     
@@ -81,7 +63,7 @@ struct watchOSThreadRow: View {
                         AuthorNameView(name: self.rootPostAuthor, postId: self.threadId, bold: false)
                         ContributedView(contributed: self.contributed)
                         Spacer()
-                        LolView(lols: self.lols)
+                        LolView(lols: self.rootPostLols)
                         ReplyCountView(replyCount: self.$replyCount)
                     }
                     HStack {
