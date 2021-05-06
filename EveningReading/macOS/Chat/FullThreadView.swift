@@ -24,13 +24,27 @@ struct FullThreadView: View {
     @State private var lols = [String: Int]()
     @State private var lolTypeCount: Int = 0
     
+    @State private var showingTagSheet: Bool = false
+    @State private var showingComposeSheet: Bool = false
+    
     @State private var isThreadCollapsed: Bool = false
     @State private var showingCollapseAlert: Bool = false
+    @State private var isThreadExpanded: Bool = false
     
-    @State private var replyPreviewColumns: [GridItem] = [
+    @State private var repliesPreviewColumns: [GridItem] = [
         GridItem(.flexible(maximum: 120)),
         GridItem(.flexible())
     ]
+    
+    @State private var repliesExpandedColumns: [GridItem] = [
+        GridItem(.flexible(maximum: 120)),
+        GridItem(.flexible())
+    ]
+    
+    @State private var postList = [ChatPosts]()
+    @State private var postLols = [Int: [String: Int]]()
+    
+    @State private var selectedLol = 0
     
     private func getThreadData() {
         if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
@@ -75,6 +89,22 @@ struct FullThreadView: View {
             }
         }
     }
+    
+    private func getPostList(parentId: Int) {
+        if let thread = chatData.threads.filter({ return $0.threadId == self.threadId }).first {
+            let replies = thread.posts.filter({ return $0.parentId == parentId }).sorted(by: { $0.id < $1.id })
+            
+            for post in replies {
+                postList.append(post)
+                
+                for lol in post.lols {
+                    postLols[post.id, default: [:]][lol.tag] = lol.count
+                }
+                
+                getPostList(parentId: post.id)
+            }
+        }
+    }
 
     var body: some View {
         VStack {
@@ -110,6 +140,7 @@ struct FullThreadView: View {
                         Image(systemName: "tag")
                             .imageScale(.large)
                             .onTapGesture(count: 1) {
+                                self.showingTagSheet.toggle()
                             }
                         
                         Image(systemName: "arrowshape.turn.up.left")
@@ -131,34 +162,48 @@ struct FullThreadView: View {
 
                     Divider()
                     .padding(.init(top: 0, leading: 20, bottom: 10, trailing: 20))
-                    
-                    if self.replyCount > 0 {
-                        VStack (alignment: .leading) {
-                            
-                            LazyVGrid(columns: self.replyPreviewColumns, alignment: .leading, spacing: 16) {
-                                
-                                ForEach(recentPosts.prefix(5), id: \.id) { post in
-                                    //HStack {
+
+                    if !self.isThreadExpanded {
+                        if self.replyCount > 0 {
+                            VStack (alignment: .leading) {
+                                LazyVGrid(columns: self.repliesPreviewColumns, alignment: .leading, spacing: 16) {
+                                    ForEach(recentPosts.prefix(5), id: \.id) { post in
                                         Text("\(post.author)")
-                                            .font(.subheadline)
+                                            .font(.body)
                                             .lineLimit(1)
                                             .foregroundColor(Color(NSColor.systemOrange))
                                         Text("\(post.body.getPreview)")
-                                            .font(.subheadline)
+                                            .font(.body)
                                             .lineLimit(1)
-                                        //Spacer()
-                                    //}
-                                }
-                            }
-                            .padding(.leading, 20)
-                            .padding(.trailing, 20)
-                            .padding(.bottom, 5)
-                            
-                            VStack (alignment: .center) {
-                                Image(systemName: "ellipsis")
-                                    .imageScale(.large)
-                                    .onTapGesture(count: 1) {
                                     }
+                                }
+                                .padding(.leading, 20)
+                                .padding(.trailing, 20)
+                                .padding(.bottom, 10)
+                                
+                                VStack (alignment: .center) {
+                                    Button(action: {
+                                        withAnimation {
+                                            self.isThreadExpanded = true
+                                        }
+                                        getPostList(parentId: self.threadId)
+                                    }, label: {
+                                        Image(systemName: "ellipsis")
+                                            .imageScale(.large)
+                                            .padding(.leading, 20)
+                                            .padding(.trailing, 20)
+                                            .padding(.bottom, 20)
+
+                                    })
+                                    .buttonStyle(BorderlessButtonStyle())
+                                }
+                                .frame(maxWidth: .infinity)
+                            }
+                        } else {
+                            VStack (alignment: .center) {
+                                Text("No replies, be the first to post.")
+                                    .bold()
+                                    .foregroundColor(Color("NoData"))
                             }
                             .frame(maxWidth: .infinity)
                             .padding(.leading, 20)
@@ -167,12 +212,55 @@ struct FullThreadView: View {
                         }
                     } else {
                         VStack (alignment: .center) {
-                            Text("No replies, be the first to post.")
-                                .bold()
-                                .foregroundColor(Color("NoData"))
+                            Button(action: {
+                                withAnimation {
+                                    self.isThreadExpanded = false
+                                }
+                            }, label: {
+                                Image(systemName: "ellipsis")
+                                    .imageScale(.large)
+                                    .padding(.leading, 20)
+                                    .padding(.trailing, 20)
+                                    .padding(.bottom, 20)
+
+                            })
+                            .buttonStyle(BorderlessButtonStyle())
                         }
                         .frame(maxWidth: .infinity)
-                        .padding(.init(top: 0, leading: 20, bottom: 20, trailing: 20))
+                    }
+                    
+                    if self.isThreadExpanded {
+                        LazyVGrid(columns: self.repliesExpandedColumns, alignment: .leading, spacing: 0) {
+                            ForEach(recentPosts.prefix(5), id: \.id) { post in
+                                HStack {
+                                    Text("\(post.author)")
+                                        .font(.body)
+                                        .lineLimit(1)
+                                        .foregroundColor(Color(NSColor.systemOrange))
+                                }
+                                if post.author == "maecenas" || post.author == "rhoncus" {
+                                    HStack {
+                                        Text("\(post.body.getPreview)")
+                                            .font(.body)
+                                            .fixedSize(horizontal: false, vertical: true)
+                                            .padding(8)
+                                        Spacer()
+                                    }
+                                    .frame(maxWidth: .infinity)
+                                    .background(Color("ThreadBubbleSecondary"))
+                                    .cornerRadius(5)
+                                } else {
+                                    HStack {
+                                        Text("\(post.body.getPreview)")
+                                            .font(.body)
+                                            .lineLimit(1)
+                                    }
+                                }
+                            }
+                        }
+                        .padding(.leading, 20)
+                        .padding(.trailing, 20)
+                        .padding(.bottom, 10)
                     }
                 }
                 .onAppear(perform: getThreadData)
@@ -188,6 +276,40 @@ struct FullThreadView: View {
             Alert(title: Text("Hide Thread?"), message: Text(""), primaryButton: .cancel(), secondaryButton: Alert.Button.default(Text("OK"), action: {
                 self.isThreadCollapsed = true
             }))
+        }
+        .sheet(isPresented: $showingTagSheet) {
+            VStack {
+                Text("Tag This Post?")
+                    .font(.body)
+                    .bold()
+                
+                Text("If already tagged, you will untag any previous tags of the same type.")
+                    .font(.subheadline)
+                    .padding(.init(top: 10, leading: 60, bottom: 10, trailing: 60))
+                
+                Picker("Tag", selection: $selectedLol, content: {
+                    Text("lol").tag(0)
+                    Text("inf").tag(1)
+                    Text("unf").tag(2)
+                    Text("tag").tag(3)
+                    Text("wtf").tag(4)
+                    Text("wow").tag(5)
+                    Text("aww").tag(6)
+                })
+                .padding(.leading, 60)
+                .padding(.trailing, 60)
+                
+                HStack {
+                    Button("OK") {
+                        self.showingTagSheet = false
+                    }
+                    
+                    Button("Cancel") {
+                        self.showingTagSheet = false
+                    }
+                }
+            }
+            .frame(width: 300, height: 200)
         }
     }
 }

@@ -23,6 +23,8 @@ struct macOSContentView: View {
     var body: some View {
         HStack() {
             NavigationView {
+                
+                // Navigation
                 List {
                     Text("Evening Reading")
                         .font(.caption2)
@@ -72,7 +74,7 @@ struct macOSContentView: View {
                     }
                 }
                 
-                // Content
+                // Detail View
                 if appSessionStore.showingChatView {
                     macOSChatView()
                 } else if appSessionStore.showingInboxView {

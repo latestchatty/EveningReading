@@ -45,9 +45,7 @@ struct AuthorNameView: View {
                 }
         #endif
         #if os(OSX)
-            Text("\(self.name)")
-                .font(.body)
-                .bold()
+            Text("\(self.name)")                
                 .foregroundColor(colorScheme == .dark ? Color(NSColor.systemOrange) : Color(NSColor.systemPurple))
                 .lineLimit(1)
                 .contextMenu {
