@@ -110,7 +110,7 @@ struct ThreadRow: View {
 
                             LolView(lols: self.rootPostLols)
 
-                            ReplyCountView(replyCount: self.$replyCount)
+                            ReplyCountView(replyCount: self.replyCount)
                             
                             TimeRemainingIndicator(percent:  .constant(self.rootPostDate.getTimeRemaining()))
                                     .frame(width: 10, height: 10)

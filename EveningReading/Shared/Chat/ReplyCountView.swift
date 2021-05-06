@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ReplyCountView: View {
-    @Binding var replyCount: Int
+    var replyCount: Int
     
     var body: some View {
         #if os(iOS)
@@ -39,6 +39,6 @@ struct ReplyCountView: View {
 
 struct ReplyCountView_Previews: PreviewProvider {
     static var previews: some View {
-        ReplyCountView(replyCount: .constant(33))
+        ReplyCountView(replyCount: 33)
     }
 }

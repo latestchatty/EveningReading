@@ -64,7 +64,7 @@ struct watchOSThreadRow: View {
                         ContributedView(contributed: self.contributed)
                         Spacer()
                         LolView(lols: self.rootPostLols)
-                        ReplyCountView(replyCount: self.$replyCount)
+                        ReplyCountView(replyCount: self.replyCount)
                     }
                     HStack {
                         Text(rootPostBodyPreview)

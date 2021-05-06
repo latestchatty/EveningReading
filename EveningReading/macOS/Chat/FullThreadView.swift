@@ -56,6 +56,7 @@ struct FullThreadView: View {
                 self.replyCount = thread.posts.count - 1
                 
                 self.recentPosts = thread.posts.filter({ return $0.parentId != 0 }).sorted(by: { $0.id > $1.id })
+                
             }
         }
         if let thread = chatData.threads.filter({ return $0.threadId == self.threadId }).first {
@@ -98,7 +99,7 @@ struct FullThreadView: View {
 
                         Spacer()
 
-                        ReplyCountView(replyCount: self.$replyCount)
+                        ReplyCountView(replyCount: self.replyCount)
                         
                         TimeRemainingIndicator(percent: .constant(self.rootPostDate.getTimeRemaining()))
                             .frame(width: 12, height: 12)
@@ -140,6 +141,8 @@ struct FullThreadView: View {
                     if !self.isThreadExpanded {
                         if self.replyCount > 0 {
                             VStack (alignment: .leading) {
+                                
+                                // Most recent posts
                                 LazyVGrid(columns: self.repliesPreviewColumns, alignment: .leading, spacing: 16) {
                                     ForEach(recentPosts.prefix(5), id: \.id) { post in
                                         AuthorNameView(name: post.author, postId: post.id)
@@ -155,6 +158,7 @@ struct FullThreadView: View {
                                 .padding(.horizontal, 20)
                                 .padding(.bottom, 10)
                                 
+                                // Expand thread button
                                 VStack (alignment: .center) {
                                     Button(action: {
                                         withAnimation {
@@ -171,6 +175,7 @@ struct FullThreadView: View {
                                     .buttonStyle(BorderlessButtonStyle())
                                 }
                                 .frame(maxWidth: .infinity)
+                                
                             }
                         } else {
                             VStack (alignment: .center) {
@@ -202,11 +207,11 @@ struct FullThreadView: View {
                     
                     if self.isThreadExpanded {
                         LazyVGrid(columns: self.repliesExpandedColumns, alignment: .leading, spacing: 0) {
-                            ForEach(recentPosts.prefix(5), id: \.id) { post in
+                            ForEach(postList, id: \.id) { post in
                                 HStack {
                                     AuthorNameView(name: post.author, postId: post.id)
                                 }
-                                if post.author == "maecenas" || post.author == "rhoncus" {
+                                if post.author == "egestas" || post.author == "rhoncus" {
                                     VStack {
                                         HStack {
                                             Spacer()
