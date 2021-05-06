@@ -15,9 +15,9 @@ struct ThreadDetailView: View {
     
     @State private var rootPostCategory: String = "ontopic"
     @State private var rootPostAuthor: String = ""
-    @State private var contributed: Bool = false
     @State private var rootPostBody: String = ""
     @State private var rootPostDate: String = "2020-08-14T21:05:00Z"
+    @State private var contributed: Bool = false
     @State private var hasLols: Bool = false
     @State private var lols = [String: Int]()
     @State private var lolTypeCount: Int = 0
