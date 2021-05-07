@@ -49,6 +49,7 @@ struct macOSContentView: View {
                         if appSessionStore.showingChatView {
                             Button(action: {
                                 // refresh
+                                chatStore.getChat()
                             }, label: {
                                 Image(systemName: "arrow.counterclockwise")
                             })
