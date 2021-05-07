@@ -9,10 +9,19 @@ import SwiftUI
 
 struct TrendingView: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
+        @EnvironmentObject var chatStore: ChatStore
 
     private func navigateTo(_ goToDestination: inout Bool) {
         appSessionStore.resetNavigation()
         goToDestination = true
+    }
+    
+    private func fetchChat() {
+        if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil || chatStore.threads.count > 0
+        {
+            return
+        }
+        chatStore.getChat()
     }
     
     private func filteredThreads() -> [ChatThread] {
@@ -20,7 +29,12 @@ struct TrendingView: View {
         {
             return Array(chatData.threads.prefix(4))
         }
-        return Array(chatData.threads.prefix(4))
+        let threads = self.chatStore.threads.filter({ return self.appSessionStore.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !self.appSessionStore.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
+        if threads.count > 0 {
+            return Array(threads.prefix(4))
+        } else {
+            return Array(chatData.threads.prefix(4))
+        }
     }
     
     private func rotationAmount() -> CGFloat {
@@ -68,10 +82,13 @@ struct TrendingView: View {
             }
             .padding(.top, -20)
         }
+        .onAppear(perform: fetchChat)
     }
 }
 struct TrendingView_Previews: PreviewProvider {
     static var previews: some View {
         TrendingView()
+            .environmentObject(AppSessionStore())
+            .environmentObject(ChatStore(service: ChatService()))
     }
 }

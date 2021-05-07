@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ChatView: View {
     @Environment(\.colorScheme) var colorScheme
+    @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var chatStore: ChatStore
     
     private func filteredThreads() -> [ChatThread] {
@@ -16,7 +17,12 @@ struct ChatView: View {
         {
             return Array(chatData.threads)
         }
-        return Array(chatData.threads)
+        let threads = chatStore.threads.filter({ return self.appSessionStore.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !self.appSessionStore.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})        
+        if threads.count > 0 {
+            return Array(threads)
+        } else {
+            return Array(chatData.threads)
+        }
     }
     
     var body: some View {
@@ -24,10 +30,10 @@ struct ChatView: View {
             RefreshableScrollView(height: 70, refreshing: self.$chatStore.loadingChat, scrollTarget: self.$chatStore.scrollTargetChat, scrollTargetTop: self.$chatStore.scrollTargetChatTop) {
                 
                 ForEach(filteredThreads(), id: \.threadId) { thread in
-                    NavigationLink(destination: ThreadDetailView(threadId: .constant(thread.threadId))) {
+                    NavigationLink(destination: ThreadDetailView(threadId: .constant(thread.threadId)).environmentObject(appSessionStore).environmentObject(chatStore)) {
                         ThreadRow(threadId: .constant(thread.threadId), activeThreadId: .constant(0))
-                            .environmentObject(AppSessionStore())
-                            .environmentObject(ChatStore(service: ChatService()))
+                            .environmentObject(appSessionStore)
+                            .environmentObject(chatStore)
                     }
                     .padding(.bottom, -10)
                     .id(thread.threadId)
@@ -50,6 +56,7 @@ struct ChatView_Previews: PreviewProvider {
     static var previews: some View {
         ChatView()
             .environment(\.colorScheme, .dark)
+            .environmentObject(AppSessionStore())
             .environmentObject(ChatStore(service: ChatService()))
     }
 }

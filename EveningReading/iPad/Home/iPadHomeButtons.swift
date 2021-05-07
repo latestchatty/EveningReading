@@ -9,6 +9,7 @@ import SwiftUI
 
 struct iPadHomeButtons: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var chatStore: ChatStore
     
     private func navigateTo(_ goToDestination: inout Bool) {
         appSessionStore.resetNavigation()
@@ -78,5 +79,6 @@ struct iPadHomeButtons_Previews: PreviewProvider {
     static var previews: some View {
         iPadHomeButtons()
             .environmentObject(AppSessionStore())
+            .environmentObject(ChatStore(service: ChatService()))
     }
 }

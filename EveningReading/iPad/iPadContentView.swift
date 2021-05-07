@@ -11,13 +11,15 @@ struct iPadContentView: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var chatStore: ChatStore
-    
+
     var body: some View {
         NavigationView {
             ScrollViewReader { scrollProxy in
                 ScrollView {
                     VStack {
-                        iPadHomeButtons()                            
+                        iPadHomeButtons()
+                            .environmentObject(appSessionStore)
+                            .environmentObject(chatStore)
                         TrendingView()
                         iPadArticlesView()
                     }

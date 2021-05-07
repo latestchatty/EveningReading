@@ -42,15 +42,18 @@ struct ThreadRow: View {
                 self.rootPostLols = rootPost?.lols ?? [ChatLols]()
                 self.replyCount = thread.posts.count - 1
             }
-        }
-        if let thread = chatData.threads.filter({ return $0.threadId == self.threadId }).first {
-            let rootPost = thread.posts.filter({ return $0.parentId == 0 }).first
-            self.rootPostCategory = rootPost?.category ?? "ontopic"
-            self.rootPostAuthor = rootPost?.author ?? ""
-            self.rootPostBodyPreview = rootPost?.body.getPreview ?? ""
-            self.rootPostDate = rootPost?.date ?? "2020-08-14T21:05:00Z"
-            self.rootPostLols = rootPost?.lols ?? [ChatLols]()
-            self.replyCount = thread.posts.count - 1
+        } else {
+            let threads = chatStore.threads.filter({ return self.appSessionStore.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !self.appSessionStore.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
+            
+            if let thread = threads.filter({ return $0.threadId == self.threadId }).first {
+                let rootPost = thread.posts.filter({ return $0.parentId == 0 }).first
+                self.rootPostCategory = rootPost?.category ?? "ontopic"
+                self.rootPostAuthor = rootPost?.author ?? ""
+                self.rootPostBodyPreview = rootPost?.body.getPreview ?? ""
+                self.rootPostDate = rootPost?.date ?? "2020-08-14T21:05:00Z"
+                self.rootPostLols = rootPost?.lols ?? [ChatLols]()
+                self.replyCount = thread.posts.count - 1
+            }
         }
     }
     

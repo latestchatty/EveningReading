@@ -17,6 +17,8 @@ struct iPhoneContentView: View {
             ScrollView {
                 VStack {
                     iPhoneHomeButtons()
+                        .environmentObject(appSessionStore)
+                        .environmentObject(chatStore)
                     TrendingView()
                     iPhoneArticlesView()
                 }

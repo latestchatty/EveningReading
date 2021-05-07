@@ -113,7 +113,7 @@ struct watchOsPostDetail: View {
 
 struct watchOsPostDetail_Previews: PreviewProvider {
     static var previews: some View {
-        watchOsPostDetail(postId: .constant(9999999992))
+        watchOsPostDetail(postId: .constant(999999992))
             .previewDevice(PreviewDevice(rawValue: "Apple Watch Series 5 - 44mm"))
             .environmentObject(AppSessionStore())
             .environmentObject(ChatStore(service: ChatService()))

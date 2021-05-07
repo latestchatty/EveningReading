@@ -9,7 +9,8 @@ import SwiftUI
 
 struct iPhoneHomeButtons: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
-
+    @EnvironmentObject var chatStore: ChatStore
+    
     private func navigateTo(_ goToDestination: inout Bool) {
         appSessionStore.resetNavigation()
         goToDestination = true
@@ -80,5 +81,6 @@ struct iPhoneHomeButtons_Previews: PreviewProvider {
     static var previews: some View {
         iPhoneHomeButtons()
             .environmentObject(AppSessionStore())
+            .environmentObject(ChatStore(service: ChatService()))
     }
 }

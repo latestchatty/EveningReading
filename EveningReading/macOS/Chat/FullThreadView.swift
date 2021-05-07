@@ -39,16 +39,6 @@ struct FullThreadView: View {
     
     @State private var selectedLol = 0
     
-    @State private var repliesPreviewColumns: [GridItem] = [
-        GridItem(.flexible(maximum: 120)),
-        GridItem(.flexible())
-    ]
-    
-    @State private var repliesExpandedColumns: [GridItem] = [
-        GridItem(.flexible(maximum: 120)),
-        GridItem(.flexible())
-    ]
-    
     private func getThreadData() {
         if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
         {
@@ -197,6 +187,7 @@ struct FullThreadView: View {
                         if self.replyCount > 0 {
                             VStack (alignment: .leading) {
                                 
+                                /*
                                 // Most recent posts
                                 HStack {
                                     ForEach(recentPosts.prefix(5), id: \.id) { post in
@@ -210,6 +201,7 @@ struct FullThreadView: View {
                                 }
                                 .padding(.horizontal, 20)
                                 .padding(.bottom, 10)
+                                */
                                 
                                 // Expand thread button
                                 VStack (alignment: .center) {

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct iPadChatView: View {
+    @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var chatStore: ChatStore
     
     private func filteredThreads() -> [ChatThread] {
@@ -15,7 +16,12 @@ struct iPadChatView: View {
         {
             return Array(chatData.threads)
         }
-        return Array(chatData.threads)
+        let threads = chatStore.threads.filter({ return self.appSessionStore.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !self.appSessionStore.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
+        if threads.count > 0 {
+            return Array(threads)
+        } else {
+            return Array(chatData.threads)
+        }
     }
         
     private func selectThreadById(threadId: Int) {
@@ -31,8 +37,8 @@ struct iPadChatView: View {
                         
                         ForEach(filteredThreads(), id: \.threadId) { thread in
                             ThreadRow(threadId: .constant(thread.threadId), activeThreadId: $chatStore.activeThreadId)
-                                .environmentObject(AppSessionStore())
-                                .environmentObject(ChatStore(service: ChatService()))
+                                .environmentObject(appSessionStore)
+                                .environmentObject(chatStore)
                                 .onTapGesture(count: 1) {
                                     selectThreadById(threadId: thread.threadId)
                                 }
@@ -52,6 +58,8 @@ struct iPadChatView: View {
                 // Detail
                 VStack {
                     ThreadDetailView(threadId: $chatStore.activeThreadId)
+                        .environmentObject(appSessionStore)
+                        .environmentObject(chatStore)
                 }
                 .frame(width: geometry.size.width * 0.65)
             }
@@ -69,6 +77,7 @@ struct iPadChatView_Previews: PreviewProvider {
         iPadChatView()
             .environment(\.colorScheme, .dark)
             .previewDevice(PreviewDevice(rawValue: "iPad (8th generation)"))
+            .environmentObject(AppSessionStore())
             .environmentObject(ChatStore(service: ChatService()))
         
     }

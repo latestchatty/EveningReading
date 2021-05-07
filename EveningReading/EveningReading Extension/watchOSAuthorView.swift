@@ -56,7 +56,7 @@ struct watchOSAuthorView: View {
 
 struct watchOSAuthorView_Previews: PreviewProvider {
     static var previews: some View {
-        watchOSAuthorView(name: .constant("ellawala"), postId: .constant(9999999996))
+        watchOSAuthorView(name: .constant("ellawala"), postId: .constant(999999996))
             .previewDevice(PreviewDevice(rawValue: "Apple Watch Series 5 - 44mm"))
     }
 }

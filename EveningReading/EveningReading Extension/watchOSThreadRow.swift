@@ -101,7 +101,7 @@ struct watchOSThreadRow: View {
 
 struct watchOSThreadRow_Previews: PreviewProvider {
     static var previews: some View {
-        watchOSThreadRow(threadId: .constant(9999999992))
+        watchOSThreadRow(threadId: .constant(999999992))
             .previewDevice(PreviewDevice(rawValue: "Apple Watch Series 5 - 44mm"))
             .environmentObject(AppSessionStore())
             .environmentObject(ChatStore(service: ChatService()))

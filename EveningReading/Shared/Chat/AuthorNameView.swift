@@ -94,7 +94,7 @@ struct AuthorNameView: View {
 
 struct AuthorNameView_Previews: PreviewProvider {
     static var previews: some View {
-        AuthorNameView(name: "tamzyn", postId: 9999999996, bold: false)
+        AuthorNameView(name: "tamzyn", postId: 999999996, bold: false)
             .environment(\.colorScheme, .light)
     }
 }
