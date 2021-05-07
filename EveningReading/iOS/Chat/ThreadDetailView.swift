@@ -27,6 +27,7 @@ struct ThreadDetailView: View {
     @State private var postStrength = [Int: Double]()
     @State private var replyLines = [Int: String]()
     
+    @State private var selectedPost = 0
     @State private var selectedPostRichText = [RichTextBlock]()
     
     private func getThreadData() {
@@ -132,60 +133,114 @@ struct ThreadDetailView: View {
                     
                     // Replies
                     ForEach(postList, id: \.id) { post in
-                        HStack {
-                            // Reply lines
-                            Text(self.replyLines[post.id] == nil ? String(repeating: " ", count: 5) : self.replyLines[post.id]!)
-                                .lineLimit(1)
-                                .fixedSize()
-                                .font(.custom("replylines", size: 25, relativeTo: .callout))
-                                .foregroundColor(Color("replyLines"))
-
-                            // Rarely a post category on a reply
-                            if post.category == "nws" {
-                                Text("nws")
-                                    .bold()
-                                    .lineLimit(1)
-                                    .font(.footnote)
-                                    .foregroundColor(Color(UIColor.systemRed))
-                            } else if post.category == "stupid" {
-                                Text("stupid")
-                                    .bold()
-                                    .lineLimit(1)
-                                    .font(.footnote)
-                                    .foregroundColor(Color(UIColor.systemGreen))
-                            } else if post.category == "informative" {
-                                Text("inf")
-                                    .bold()
-                                    .lineLimit(1)
-                                    .font(.footnote)
-                                    .foregroundColor(Color(UIColor.systemBlue))
-                            }
-                            
-                            // Post preview
-                            Text(post.body.getPreview)
-                                .fontWeight(postStrength[post.id] != nil ? PostWeight[postStrength[post.id]!] : .regular)
-                                .lineLimit(1)
-                                .truncationMode(.tail)
-                                .font(.callout)
-                                .foregroundColor(colorScheme == .dark ? Color(UIColor.white) : Color(UIColor.black))
-                                .opacity(postStrength[post.id] != nil ? postStrength[post.id]! : 0.75)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                            
-                            // Maybe show post author
-                            if self.appSessionStore.displayPostAuthor {
-                                AuthorNameView(name: post.author, postId: post.id)
-                            }
-                            
-                            // Lols
+                        VStack {
                             HStack {
-                                LolView(lols: post.lols)
+                                
+                                // Reply preview
+                                if self.selectedPost != post.id {
+                                    // Reply lines
+                                    Text(self.replyLines[post.id] == nil ? String(repeating: " ", count: 5) : self.replyLines[post.id]!)
+                                        .lineLimit(1)
+                                        .fixedSize()
+                                        .font(.custom("replylines", size: 25, relativeTo: .callout))
+                                        .foregroundColor(Color("replyLines"))
+
+                                    // Rarely a post category on a reply
+                                    if post.category == "nws" {
+                                        Text("nws")
+                                            .bold()
+                                            .lineLimit(1)
+                                            .font(.footnote)
+                                            .foregroundColor(Color(UIColor.systemRed))
+                                    } else if post.category == "stupid" {
+                                        Text("stupid")
+                                            .bold()
+                                            .lineLimit(1)
+                                            .font(.footnote)
+                                            .foregroundColor(Color(UIColor.systemGreen))
+                                    } else if post.category == "informative" {
+                                        Text("inf")
+                                            .bold()
+                                            .lineLimit(1)
+                                            .font(.footnote)
+                                            .foregroundColor(Color(UIColor.systemBlue))
+                                    }
+                                    
+                                    // Post preview
+                                    Text(post.body.getPreview)
+                                        .fontWeight(postStrength[post.id] != nil ? PostWeight[postStrength[post.id]!] : .regular)
+                                        .lineLimit(1)
+                                        .truncationMode(.tail)
+                                        .font(.callout)
+                                        .foregroundColor(colorScheme == .dark ? Color(UIColor.white) : Color(UIColor.black))
+                                        .opacity(postStrength[post.id] != nil ? postStrength[post.id]! : 0.75)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                    
+                                    // Maybe show post author
+                                    if self.appSessionStore.displayPostAuthor {
+                                        AuthorNameView(name: post.author, postId: post.id)
+                                    }
+                                    
+                                    // Lols
+                                    HStack {
+                                        LolView(lols: post.lols)
+                                    }
+                                }
+                                
+                                // Reply expanded
+                                if self.selectedPost == post.id {
+                                    VStack {
+                                        HStack {
+                                            // Reply lines
+                                            Text(self.replyLines[post.id] == nil ? String(repeating: " ", count: 5) : self.replyLines[post.id]!)
+                                                .lineLimit(1)
+                                                .fixedSize()
+                                                .font(.custom("replylines", size: 25, relativeTo: .callout))
+                                                .foregroundColor(Color("replyLines"))
+                                            
+                                            AuthorNameView(name: post.author, postId: post.id)
+                                            
+                                            Spacer()
+                                            
+                                            // Lols
+                                            HStack {
+                                                LolView(lols: post.lols, expanded: true)
+                                            }
+                                        }
+                                        // Expanded reply rich text and bubble
+                                        HStack {
+                                            HStack {
+                                                RichTextView(topBlocks: self.selectedPostRichText).fixedSize(horizontal: false, vertical: true)
+                                                Spacer()
+                                            }
+                                            .padding(10)
+                                            .frame(maxWidth: .infinity)
+                                        }
+                                        .background(RoundedCornersView(color: Color("ChatBubbleSecondary")))
+                                        .padding(.bottom, 5)
+                                    }
+                                }
+                                
                             }
+                            .padding(.horizontal, 10)
+                            .frame(maxWidth: .infinity)
+                            .onTapGesture(count: 1) {
+                                withAnimation {
+                                    self.selectedPostRichText = RichTextBuilder.getRichText(postBody: post.body)
+                                    self.selectedPost = post.id
+                                }
+                            }
+                            
                             
                         }
-                        .padding(.horizontal, 10)
-                        .frame(maxWidth: .infinity)
                         .id(post.id)
                     }
+                    
+                    // Padding so we can see the bottom post
+                    VStack {
+                        Spacer().frame(width: UIScreen.main.bounds.width, height: 30)
+                    }.id(9999999999993)
+                    
                 }
                 
             }
@@ -198,9 +253,10 @@ struct ThreadDetailView: View {
         })
         .onReceive(self.chatStore.$activeThreadId) { _ in
             if UIDevice.current.userInterfaceIdiom == .pad {
+                self.selectedPost = 0
                 getThreadData()
-                postList = [ChatPosts]()
-                postStrength = [Int: Double]()
+                self.postList = [ChatPosts]()
+                self.postStrength = [Int: Double]()
                 getPostList(parentId: self.threadId)
             }
         }
