@@ -80,3 +80,11 @@ enum PostTag: String, CaseIterable {
     case wow = "wow"
     case aww = "aww"
 }
+
+let PostWeight: [Double: Font.Weight] = [
+    0.95: .heavy,
+    0.90: .bold,
+    0.85: .semibold,
+    0.80: .medium,
+    0.75: .regular
+]

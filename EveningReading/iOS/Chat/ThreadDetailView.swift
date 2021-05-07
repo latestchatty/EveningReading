@@ -54,10 +54,23 @@ struct ThreadDetailView: View {
         }
     }
     
+    @State private var postStrength = [Int: Double]()
+    
     private func getPostList(parentId: Int) {
         if let thread = chatData.threads.filter({ return $0.threadId == self.threadId }).first {
+            // Replies to post
             let replies = thread.posts.filter({ return $0.parentId == parentId }).sorted(by: { $0.id < $1.id })
             
+            // Font strength for recent posts
+            let recentPosts = Array(thread.posts.sorted(by: { $0.id > $1.id }).prefix(5))
+            var opacity = 0.95
+            postStrength = [Int: Double]()
+            for recentPost in recentPosts {
+                postStrength[recentPost.id] = opacity
+                opacity = round(1000.0 * (opacity - 0.05)) / 1000.0
+            }
+            
+            // Get replies to this post
             for post in replies {
                 postList.append(post)
                 getPostList(parentId: post.id)
@@ -128,12 +141,12 @@ struct ThreadDetailView: View {
                             
                             // Post preview
                             Text(post.body.getPreview)
-                                //.fontWeight(recentPostOpacity[replyId] != nil ? PostWeight[recentPostOpacity[replyId]!] : .regular)
+                                .fontWeight(postStrength[post.id] != nil ? PostWeight[postStrength[post.id]!] : .regular)
                                 .lineLimit(1)
                                 .truncationMode(.tail)
                                 .font(.callout)
                                 .foregroundColor(colorScheme == .dark ? Color(UIColor.white) : Color(UIColor.black))
-                                //.opacity(recentPostOpacity[replyId] != nil ? recentPostOpacity[replyId]! : 0.75)
+                                .opacity(postStrength[post.id] != nil ? postStrength[post.id]! : 0.75)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                             
                             // Maybe show post author
