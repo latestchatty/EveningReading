@@ -36,6 +36,8 @@ struct iPadChatView: View {
                                 .onTapGesture(count: 1) {
                                     selectThreadById(threadId: thread.threadId)
                                 }
+                                .padding(.bottom, -10)
+                                .id(thread.threadId)
                         }
                         
                         VStack {

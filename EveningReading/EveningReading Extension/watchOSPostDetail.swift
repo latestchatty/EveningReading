@@ -17,6 +17,7 @@ struct watchOsPostDetail: View {
     @State private var postAuthor: String = ""
     @State private var contributed: Bool = false
     @State private var postBody: String = ""
+    @State private var richTextBody = [RichTextBlock]()
     @State private var postDate: String = "2020-08-14T21:05:00Z"
     @State private var postLols: [ChatLols] = [ChatLols]()
     @State private var replies: [ChatPosts] = [ChatPosts]()
@@ -31,7 +32,7 @@ struct watchOsPostDetail: View {
             if let childPost = thread?.posts.filter({ return $0.id == self.postId }).first {
                 self.postCategory = childPost.category
                 self.postAuthor = childPost.author
-                self.postBody = childPost.body.getPreview
+                self.postBody = childPost.body
                 self.postDate = childPost.date
                 self.postLols = childPost.lols
                 
@@ -39,6 +40,8 @@ struct watchOsPostDetail: View {
             } else {
                 self.postAuthor = "none"
             }
+        
+            self.richTextBody = RichTextBuilder.getRichText(postBody: self.postBody)
         //}
     }
     
@@ -63,10 +66,13 @@ struct watchOsPostDetail: View {
                     .padding(.bottom, 2)
                     
                     HStack {
+                        RichTextView(topBlocks: self.richTextBody)
+                            .fixedSize(horizontal: false, vertical: true)
+                        /*
                         Text(postBody)
                             .font(.footnote)
+                        */
                     }
-                
                 }
                 .padding()
                 .background(Color("ThreadBubblePrimary"))

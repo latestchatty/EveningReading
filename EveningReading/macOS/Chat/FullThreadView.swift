@@ -16,6 +16,7 @@ struct FullThreadView: View {
     @State private var rootPostCategory: String = "ontopic"
     @State private var rootPostAuthor: String = ""
     @State private var rootPostBody: String = ""
+    @State private var rootPostRichText = [RichTextBlock]()
     @State private var rootPostDate: String = "2020-08-14T21:05:00Z"
     @State private var rootPostLols: [ChatLols] = [ChatLols]()
     @State private var contributed: Bool = false
@@ -23,6 +24,8 @@ struct FullThreadView: View {
     @State private var recentPosts: [ChatPosts] = [ChatPosts]()
     
     @State private var postList = [ChatPosts]()
+    @State private var postStrength = [Int: Double]()
+    @State private var replyLines = [Int: String]()
     
     @State private var showingLolSheet: Bool = false
     @State private var showingComposeSheet: Bool = false
@@ -30,6 +33,9 @@ struct FullThreadView: View {
     @State private var isThreadCollapsed: Bool = false
     @State private var showingCollapseAlert: Bool = false
     @State private var isThreadExpanded: Bool = false
+    
+    @State private var selectedPost = 0
+    @State private var selectedPostRichText = [RichTextBlock]()
     
     @State private var selectedLol = 0
     
@@ -50,12 +56,11 @@ struct FullThreadView: View {
                 let rootPost = thread.posts.filter({ return $0.parentId == 0 }).first
                 self.rootPostCategory = rootPost?.category ?? "ontopic"
                 self.rootPostAuthor = rootPost?.author ?? ""
-                self.rootPostBody = rootPost?.body.getPreview ?? ""
+                self.rootPostBody = rootPost?.body ?? ""
                 self.rootPostDate = rootPost?.date ?? "2020-08-14T21:05:00Z"
                 self.rootPostLols = rootPost?.lols ?? [ChatLols]()
                 self.replyCount = thread.posts.count - 1
-                
-                self.recentPosts = thread.posts.filter({ return $0.parentId != 0 }).sorted(by: { $0.id > $1.id })
+                //self.recentPosts = thread.posts.filter({ return $0.parentId != 0 }).sorted(by: { $0.id > $1.id })
                 
             }
         }
@@ -63,26 +68,37 @@ struct FullThreadView: View {
             let rootPost = thread.posts.filter({ return $0.parentId == 0 }).first
             self.rootPostCategory = rootPost?.category ?? "ontopic"
             self.rootPostAuthor = rootPost?.author ?? ""
-            self.rootPostBody = rootPost?.body.getPreview ?? ""
+            self.rootPostBody = rootPost?.body ?? ""
             self.rootPostDate = rootPost?.date ?? "2020-08-14T21:05:00Z"
             self.rootPostLols = rootPost?.lols ?? [ChatLols]()
             self.replyCount = thread.posts.count - 1
-            
-            self.recentPosts = thread.posts.filter({ return $0.parentId != 0 }).sorted(by: { $0.id > $1.id })
+            //self.recentPosts = thread.posts.filter({ return $0.parentId != 0 }).sorted(by: { $0.id > $1.id })
         }
     }
     
     private func getPostList(parentId: Int) {
         if let thread = chatData.threads.filter({ return $0.threadId == self.threadId }).first {
+            // Replies to post
             let replies = thread.posts.filter({ return $0.parentId == parentId }).sorted(by: { $0.id < $1.id })
             
+            // Font strength for recent posts
+            let recentPosts = Array(thread.posts.sorted(by: { $0.id > $1.id }).prefix(5))
+            var opacity = 0.95
+            postStrength = [Int: Double]()
+            for recentPost in recentPosts {
+                postStrength[recentPost.id] = opacity
+                opacity = round(1000.0 * (opacity - 0.05)) / 1000.0
+            }
+            
+            // Get replies to this post
             for post in replies {
+                self.replyLines[post.id] = ReplyLineBuilder.getLines(post: post, thread: thread)
                 postList.append(post)
                 getPostList(parentId: post.id)
             }
         }
     }
-
+        
     var body: some View {
         VStack {
             if !self.isThreadCollapsed {
@@ -128,32 +144,41 @@ struct FullThreadView: View {
                     .padding(.horizontal, 20)
                     .id(self.threadId)
                     
-                    HStack {
+                    VStack (alignment: .leading) {
+                        RichTextView(topBlocks: self.rootPostRichText)
+                            .fixedSize(horizontal: false, vertical: true)
+                        /*
                         Text("\(self.rootPostBody)")
                             .font(.body)
                             .fixedSize(horizontal: false, vertical: true)
                             .padding(.horizontal, 20)
                             .padding(.bottom, 10)
+                        
+                        */
                     }
-
+                    .padding(.horizontal, 20)
+                    .onAppear() {
+                        self.rootPostRichText = RichTextBuilder.getRichText(postBody: self.rootPostBody)
+                    }
+                    
                     Divider()
                     .padding(.init(top: 0, leading: 20, bottom: 10, trailing: 20))
 
                     if !self.isThreadExpanded {
+                        
+                        // Collapsed thread view
                         if self.replyCount > 0 {
                             VStack (alignment: .leading) {
                                 
                                 // Most recent posts
-                                LazyVGrid(columns: self.repliesPreviewColumns, alignment: .leading, spacing: 16) {
+                                HStack {
                                     ForEach(recentPosts.prefix(5), id: \.id) { post in
                                         AuthorNameView(name: post.author, postId: post.id)
-                                        HStack {
-                                            Text("\(post.body.getPreview)")
-                                                .font(.body)
-                                                .lineLimit(1)
-                                            Spacer()
-                                            LolView(lols: post.lols)
-                                        }
+                                        Text("\(post.body.getPreview)")
+                                            .font(.body)
+                                            .lineLimit(1)
+                                        Spacer()
+                                        LolView(lols: post.lols)
                                     }
                                 }
                                 .padding(.horizontal, 20)
@@ -181,6 +206,8 @@ struct FullThreadView: View {
                                 
                             }
                         } else {
+                            
+                            // No replies
                             VStack (alignment: .center) {
                                 Text("No replies, be the first to post.")
                                     .bold()
@@ -189,8 +216,12 @@ struct FullThreadView: View {
                             .frame(maxWidth: .infinity)
                             .padding(.horizontal, 20)
                             .padding(.bottom, 20)
+                            
                         }
+                        
                     } else {
+                        
+                        // Collapse thread button
                         VStack (alignment: .center) {
                             Button(action: {
                                 withAnimation {
@@ -206,47 +237,119 @@ struct FullThreadView: View {
                             .buttonStyle(BorderlessButtonStyle())
                         }
                         .frame(maxWidth: .infinity)
+                        
                     }
                     
                     if self.isThreadExpanded {
-                        LazyVGrid(columns: self.repliesExpandedColumns, alignment: .leading, spacing: 0) {
+                        
+                        // Expanded thread view
+                        VStack {
                             ForEach(postList, id: \.id) { post in
                                 HStack {
-                                    AuthorNameView(name: post.author, postId: post.id)
-                                }
-                                if post.author == "egestas" || post.author == "rhoncus" {
-                                    VStack {
-                                        HStack {
-                                            Spacer()
-                                            LolView(lols: post.lols, expanded: true)
-                                                .padding(.top, 5)
+                                    // Reply expaned row
+                                    if self.selectedPost == post.id {
+                                        VStack {
+                                            HStack {
+                                                // Reply lines
+                                                Text(self.replyLines[post.id] == nil ? String(repeating: " ", count: 5) : self.replyLines[post.id]!)
+                                                    .lineLimit(1)
+                                                    .fixedSize()
+                                                    .font(.custom("replylines", size: 25, relativeTo: .callout))
+                                                    .foregroundColor(Color("replyLines"))
+                                                
+                                                // Author
+                                                AuthorNameView(name: post.author, postId: post.id)
+                                                
+                                                Spacer()
+                                                
+                                                // Lols
+                                                LolView(lols: post.lols, expanded: true)
+                                                    .padding(.top, 5)
+                                            }
+                                            HStack {
+                                                VStack {
+                                                    // Full post
+                                                    RichTextView(topBlocks: self.selectedPostRichText)
+                                                        .fixedSize(horizontal: false, vertical: true)
+                                                }
+                                                .padding(8)
+                                                Spacer()
+                                                /*
+                                                Text("\(post.body.getPreview)")
+                                                    .font(.body)
+                                                    .fixedSize(horizontal: false, vertical: true)
+                                                    .padding(8)
+                                                Spacer()
+                                                */
+                                            }
+                                            .frame(maxWidth: .infinity)
+                                            .background(Color("ThreadBubbleSecondary"))
+                                            .cornerRadius(5)
                                         }
+                                        .onAppear() {
+                                            // Load Rich Text
+                                            self.selectedPostRichText = RichTextBuilder.getRichText(postBody: post.body)
+                                        }
+                                    }
+                                    
+                                    // Reply preview row
+                                    if self.selectedPost != post.id {
                                         HStack {
+                                            // Reply lines
+                                            Text(self.replyLines[post.id] == nil ? String(repeating: " ", count: 5) : self.replyLines[post.id]!)
+                                                .lineLimit(1)
+                                                .fixedSize()
+                                                .font(.custom("replylines", size: 25, relativeTo: .callout))
+                                                .foregroundColor(Color("replyLines"))
+                                            
+                                            // Category (rarely)
+                                            if post.category == "nws" {
+                                                Text("nws")
+                                                    .bold()
+                                                    .lineLimit(1)
+                                                    .font(.footnote)
+                                                    .foregroundColor(Color(NSColor.systemRed))
+                                            } else if post.category == "stupid" {
+                                                Text("stupid")
+                                                    .bold()
+                                                    .lineLimit(1)
+                                                    .font(.footnote)
+                                                    .foregroundColor(Color(NSColor.systemGreen))
+                                            } else if post.category == "informative" {
+                                                Text("inf")
+                                                    .bold()
+                                                    .lineLimit(1)
+                                                    .font(.footnote)
+                                                    .foregroundColor(Color(NSColor.systemBlue))
+                                            }
+                                            
+                                            // Post preview line
                                             Text("\(post.body.getPreview)")
                                                 .font(.body)
-                                                .fixedSize(horizontal: false, vertical: true)
-                                                .padding(8)
+                                                .fontWeight(postStrength[post.id] != nil ? PostWeight[postStrength[post.id]!] : .regular)
+                                                .opacity(postStrength[post.id] != nil ? postStrength[post.id]! : 0.75)
+                                                .lineLimit(1)
                                             Spacer()
+                                            
+                                            // Author
+                                            AuthorNameView(name: post.author, postId: post.id)
+                                            
+                                            // Lols
+                                            LolView(lols: post.lols)
                                         }
-                                        .frame(maxWidth: .infinity)
-                                        .background(Color("ThreadBubbleSecondary"))
-                                        .cornerRadius(5)
+                                        .onTapGesture(count: 1) {
+                                            withAnimation {
+                                                selectedPost = post.id
+                                            }
+                                        }
                                     }
-                                    .id(post.id)
-                                } else {
-                                    HStack {
-                                        Text("\(post.body.getPreview)")
-                                            .font(.body)
-                                            .lineLimit(1)
-                                        Spacer()
-                                        LolView(lols: post.lols)
-                                    }
-                                    .id(post.id)
                                 }
+                                .id(post.id)
                             }
                         }
                         .padding(.horizontal, 20)
                         .padding(.bottom, 10)
+                        
                     }
                 }
                 .onAppear(perform: getThreadData)
@@ -258,11 +361,13 @@ struct FullThreadView: View {
                 Spacer().frame(height: 8)
             }
         }
+        // Collapse thread?
         .alert(isPresented: self.$showingCollapseAlert) {
             Alert(title: Text("Hide Thread?"), message: Text(""), primaryButton: .cancel(), secondaryButton: Alert.Button.default(Text("OK"), action: {
                 self.isThreadCollapsed = true
             }))
         }
+        // Lol drop down
         .sheet(isPresented: $showingLolSheet) {
             VStack {
                 Text("Tag This Post?")

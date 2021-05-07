@@ -29,8 +29,8 @@ struct ChatView: View {
                             .environmentObject(AppSessionStore())
                             .environmentObject(ChatStore(service: ChatService()))
                     }
-                    .id(thread.threadId)
                     .padding(.bottom, -10)
+                    .id(thread.threadId)
                 }
                 
                 VStack {

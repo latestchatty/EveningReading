@@ -17,13 +17,18 @@ struct ThreadDetailView: View {
     @State private var rootPostCategory: String = "ontopic"
     @State private var rootPostAuthor: String = ""
     @State private var rootPostBody: String = ""
+    @State private var rootPostRichText = [RichTextBlock]()
     @State private var rootPostDate: String = "2020-08-14T21:05:00Z"
     @State private var rootPostLols: [ChatLols] = [ChatLols]()
     @State private var contributed: Bool = false
     @State private var showThread: Bool = false
     
     @State private var postList = [ChatPosts]()
-        
+    @State private var postStrength = [Int: Double]()
+    @State private var replyLines = [Int: String]()
+    
+    @State private var selectedPostRichText = [RichTextBlock]()
+    
     private func getThreadData() {
         if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
         {
@@ -31,7 +36,8 @@ struct ThreadDetailView: View {
                 let rootPost = thread.posts.filter({ return $0.parentId == 0 }).first
                 self.rootPostCategory = rootPost?.category ?? "ontopic"
                 self.rootPostAuthor = rootPost?.author ?? ""
-                self.rootPostBody = rootPost?.body.getPreview ?? ""
+                self.rootPostBody = rootPost?.body ?? ""
+                self.rootPostRichText = RichTextBuilder.getRichText(postBody: self.rootPostBody)
                 self.rootPostDate = rootPost?.date ?? "2020-08-14T21:05:00Z"
                 self.rootPostLols = rootPost?.lols ?? [ChatLols]()
                 
@@ -44,7 +50,8 @@ struct ThreadDetailView: View {
             let rootPost = thread.posts.filter({ return $0.parentId == 0 }).first
             self.rootPostCategory = rootPost?.category ?? "ontopic"
             self.rootPostAuthor = rootPost?.author ?? ""
-            self.rootPostBody = rootPost?.body.getPreview ?? ""
+            self.rootPostBody = rootPost?.body ?? ""
+            self.rootPostRichText = RichTextBuilder.getRichText(postBody: self.rootPostBody)
             self.rootPostDate = rootPost?.date ?? "2020-08-14T21:05:00Z"
             self.rootPostLols = rootPost?.lols ?? [ChatLols]()
             
@@ -53,8 +60,6 @@ struct ThreadDetailView: View {
             self.showThread = false
         }
     }
-    
-    @State private var postStrength = [Int: Double]()
     
     private func getPostList(parentId: Int) {
         if let thread = chatData.threads.filter({ return $0.threadId == self.threadId }).first {
@@ -72,6 +77,7 @@ struct ThreadDetailView: View {
             
             // Get replies to this post
             for post in replies {
+                self.replyLines[post.id] = ReplyLineBuilder.getLines(post: post, thread: thread)
                 postList.append(post)
                 getPostList(parentId: post.id)
             }
@@ -100,6 +106,14 @@ struct ThreadDetailView: View {
                         .padding(.top, 10)
                         
                         VStack {
+                            // Full root post body
+                            HStack () {
+                                RichTextView(topBlocks: self.rootPostRichText).fixedSize(horizontal: false, vertical: true)
+                                Spacer()
+                            }
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 10)
+                            /*
                             HStack () {
                                 Text("\(self.rootPostBody)")
                                     .font(.body)
@@ -107,6 +121,7 @@ struct ThreadDetailView: View {
                             }
                             .padding(.horizontal, 10)
                             .padding(.vertical, 10)
+                            */
                         }
                         .frame(maxWidth: .infinity)
                         .background(RoundedCornersView(color: Color("ChatBubblePrimary")))
@@ -118,6 +133,13 @@ struct ThreadDetailView: View {
                     // Replies
                     ForEach(postList, id: \.id) { post in
                         HStack {
+                            // Reply lines
+                            Text(self.replyLines[post.id] == nil ? String(repeating: " ", count: 5) : self.replyLines[post.id]!)
+                                .lineLimit(1)
+                                .fixedSize()
+                                .font(.custom("replylines", size: 25, relativeTo: .callout))
+                                .foregroundColor(Color("replyLines"))
+
                             // Rarely a post category on a reply
                             if post.category == "nws" {
                                 Text("nws")
@@ -178,6 +200,7 @@ struct ThreadDetailView: View {
             if UIDevice.current.userInterfaceIdiom == .pad {
                 getThreadData()
                 postList = [ChatPosts]()
+                postStrength = [Int: Double]()
                 getPostList(parentId: self.threadId)
             }
         }
