@@ -85,9 +85,9 @@ struct AuthorNameView: View {
             }
             .buttonStyle(PlainButtonStyle())
 
-        NavigationLink(destination: watchOSAuthorView(name: .constant(self.name), postId: .constant(self.postId)), isActive: self.$showingAuthor) {
-                EmptyView()
-        }.frame(width: 0, height: 0)
+            NavigationLink(destination: watchOSAuthorView(name: .constant(self.name), postId: .constant(self.postId)), isActive: self.$showingAuthor) {
+                    EmptyView()
+            }.frame(width: 0, height: 0)
         #endif
     }
 }

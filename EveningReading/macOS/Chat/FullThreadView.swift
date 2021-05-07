@@ -50,7 +50,7 @@ struct FullThreadView: View {
                 self.rootPostDate = rootPost?.date ?? "2020-08-14T21:05:00Z"
                 self.rootPostLols = rootPost?.lols ?? [ChatLols]()
                 self.replyCount = thread.posts.count - 1
-                //self.recentPosts = thread.posts.filter({ return $0.parentId != 0 }).sorted(by: { $0.id > $1.id })
+                self.recentPosts = thread.posts.filter({ return $0.parentId != 0 }).sorted(by: { $0.id > $1.id })
                 
             }
         } else {
@@ -64,7 +64,7 @@ struct FullThreadView: View {
                 self.rootPostDate = rootPost?.date ?? "2020-08-14T21:05:00Z"
                 self.rootPostLols = rootPost?.lols ?? [ChatLols]()
                 self.replyCount = thread.posts.count - 1
-                //self.recentPosts = thread.posts.filter({ return $0.parentId != 0 }).sorted(by: { $0.id > $1.id })
+                self.recentPosts = thread.posts.filter({ return $0.parentId != 0 }).sorted(by: { $0.id > $1.id })
             }
         }
     }
@@ -77,10 +77,10 @@ struct FullThreadView: View {
                 let replies = thread.posts.filter({ return $0.parentId == parentId }).sorted(by: { $0.id < $1.id })
                 
                 // Font strength for recent posts
-                let recentPosts = Array(thread.posts.sorted(by: { $0.id > $1.id }).prefix(5))
+                let recent = Array(thread.posts.sorted(by: { $0.id > $1.id }).prefix(5))
                 var opacity = 0.95
                 postStrength = [Int: Double]()
-                for recentPost in recentPosts {
+                for recentPost in recent {
                     postStrength[recentPost.id] = opacity
                     opacity = round(1000.0 * (opacity - 0.05)) / 1000.0
                 }
@@ -98,10 +98,10 @@ struct FullThreadView: View {
                 let replies = thread.posts.filter({ return $0.parentId == parentId }).sorted(by: { $0.id < $1.id })
                 
                 // Font strength for recent posts
-                let recentPosts = Array(thread.posts.sorted(by: { $0.id > $1.id }).prefix(5))
+                let recent = Array(thread.posts.sorted(by: { $0.id > $1.id }).prefix(5))
                 var opacity = 0.95
                 postStrength = [Int: Double]()
-                for recentPost in recentPosts {
+                for recentPost in recent {
                     postStrength[recentPost.id] = opacity
                     opacity = round(1000.0 * (opacity - 0.05)) / 1000.0
                 }
@@ -187,21 +187,21 @@ struct FullThreadView: View {
                         if self.replyCount > 0 {
                             VStack (alignment: .leading) {
                                 
-                                /*
                                 // Most recent posts
-                                HStack {
+                                VStack {
                                     ForEach(recentPosts.prefix(5), id: \.id) { post in
-                                        AuthorNameView(name: post.author, postId: post.id)
-                                        Text("\(post.body.getPreview)")
-                                            .font(.body)
-                                            .lineLimit(1)
-                                        Spacer()
-                                        LolView(lols: post.lols)
+                                        HStack {
+                                            Text("\(post.body.getPreview)")
+                                                .font(.body)
+                                                .lineLimit(1)
+                                            Spacer()
+                                            AuthorNameView(name: post.author, postId: post.id)
+                                            LolView(lols: post.lols)
+                                        }
                                     }
                                 }
                                 .padding(.horizontal, 20)
                                 .padding(.bottom, 10)
-                                */
                                 
                                 // Expand thread button
                                 VStack (alignment: .center) {
