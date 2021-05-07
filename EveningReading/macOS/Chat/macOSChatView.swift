@@ -41,6 +41,11 @@ struct macOSChatView: View {
                     VStack {
                         Spacer().frame(maxWidth: .infinity).frame(height: 30)
                     }.id(9999999999991)
+                    .onReceive(self.chatStore.$threads) { threads in
+                        if threads.count < 1 {
+                            scrollProxy.scrollTo(9999999999991)
+                        }
+                    }
                     ForEach(filteredThreads(), id: \.threadId) { thread in
                         FullThreadView(threadId: .constant(thread.threadId))
                     }

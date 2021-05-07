@@ -18,8 +18,6 @@ struct macOSContentView: View {
         
     @State private var showingChatView = false
     
-    
-    
     var body: some View {
         HStack() {
             NavigationView {

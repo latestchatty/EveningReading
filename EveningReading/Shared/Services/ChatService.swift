@@ -89,9 +89,7 @@ class ChatStore: ObservableObject {
     @Published var loadingChat: Bool = false {
         didSet {
             if oldValue == false && loadingChat == true {
-                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3)) {
-                    self.loadingChat = false
-                }
+                self.getChat()
             }
         }
     }
@@ -116,6 +114,7 @@ class ChatStore: ObservableObject {
                 case .failure:
                     self?.threads = []
                 }
+                self?.loadingChat = false
             }
         }
     }
