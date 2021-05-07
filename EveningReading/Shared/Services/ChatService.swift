@@ -111,6 +111,10 @@ class ChatStore: ObservableObject {
     }
 
     func getChat() {
+        #if os(watchOS)
+        self.threads = []
+        self.loadingChat = true
+        #endif
         #if os(OSX)
         self.threads = []
         self.loadingChat = true
