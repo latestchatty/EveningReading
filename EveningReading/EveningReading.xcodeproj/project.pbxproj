@@ -128,6 +128,7 @@
 		83AA19272645C43500556E69 /* PostDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19262645C43500556E69 /* PostDecorator.swift */; };
 		83AA19282645C43500556E69 /* PostDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19262645C43500556E69 /* PostDecorator.swift */; };
 		83AA19292645C43500556E69 /* PostDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19262645C43500556E69 /* PostDecorator.swift */; };
+		83AA19332645E36600556E69 /* RefreshNoticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19312645E36600556E69 /* RefreshNoticeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -258,6 +259,7 @@
 		833EE9E026454DFB00345A1D /* WebAuthenticationPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebAuthenticationPresenter.swift; sourceTree = "<group>"; };
 		833EE9E126454DFB00345A1D /* WebAuthenticationSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebAuthenticationSession.swift; sourceTree = "<group>"; };
 		83AA19262645C43500556E69 /* PostDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDecorator.swift; sourceTree = "<group>"; };
+		83AA19312645E36600556E69 /* RefreshNoticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshNoticeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -574,6 +576,7 @@
 			children = (
 				83398153263F69E0005614E8 /* macOSChatView.swift */,
 				8339819D264128B2005614E8 /* FullThreadView.swift */,
+				83AA19312645E36600556E69 /* RefreshNoticeView.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -987,6 +990,7 @@
 				833981692640439F005614E8 /* macOSSettingsView.swift in Sources */,
 				8339818526406814005614E8 /* Globals.swift in Sources */,
 				8339810F263F1028005614E8 /* StringExtensions.swift in Sources */,
+				83AA19332645E36600556E69 /* RefreshNoticeView.swift in Sources */,
 				83398107263F0D38005614E8 /* ChatService.swift in Sources */,
 				83398155263F69E0005614E8 /* macOSChatView.swift in Sources */,
 				833981A4264189DC005614E8 /* ContributedView.swift in Sources */,

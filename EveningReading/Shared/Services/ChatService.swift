@@ -89,7 +89,9 @@ class ChatStore: ObservableObject {
     @Published var loadingChat: Bool = false {
         didSet {
             if oldValue == false && loadingChat == true {
-                self.getChat()
+                #if os(iOS)
+                    self.getChat()
+                #endif
             }
         }
     }
@@ -106,6 +108,9 @@ class ChatStore: ObservableObject {
 
     func getChat() {
         self.threads = []
+        #if os(OSX)
+            self.loadingChat = true
+        #endif
         service.getChat() { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
