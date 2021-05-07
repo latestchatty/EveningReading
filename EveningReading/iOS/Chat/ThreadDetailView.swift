@@ -283,9 +283,9 @@ struct ThreadDetailView: View {
 
 struct ThreadDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        ThreadDetailView(threadId: .constant(9999999992))
+        ThreadDetailView(threadId: .constant(999999992))
             .environment(\.colorScheme, .dark)
-            .environmentObject(AppSessionStore())
+            .environmentObject(AppSessionStore(service: AuthService()))
             .environmentObject(ChatStore(service: ChatService()))
     }
 }

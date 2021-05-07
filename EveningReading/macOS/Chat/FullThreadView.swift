@@ -414,9 +414,9 @@ struct FullThreadView: View {
 
 struct FullThreadView_Previews: PreviewProvider {
     static var previews: some View {
-        FullThreadView(threadId: .constant(9999999992))
+        FullThreadView(threadId: .constant(999999992))
             .previewLayout(.fixed(width: 640, height: 960))
-            .environmentObject(AppSessionStore())
+            .environmentObject(AppSessionStore(service: AuthService()))
             .environmentObject(ChatStore(service: ChatService()))
     }
 }

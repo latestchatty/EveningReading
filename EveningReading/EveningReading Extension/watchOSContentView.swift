@@ -50,7 +50,7 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         watchOSContentView()
             .previewDevice(PreviewDevice(rawValue: "Apple Watch Series 5 - 44mm"))
-            .environmentObject(AppSessionStore())
+            .environmentObject(AppSessionStore(service: AuthService()))
             .environmentObject(ChatStore(service: ChatService()))
     }
 }

@@ -40,7 +40,7 @@ struct iPhoneContentView_Previews: PreviewProvider {
     static var previews: some View {
         iPhoneContentView()
             .environment(\.colorScheme, .dark)
-            .environmentObject(AppSessionStore())
+            .environmentObject(AppSessionStore(service: AuthService()))
             .environmentObject(ChatStore(service: ChatService()))
     }
 }

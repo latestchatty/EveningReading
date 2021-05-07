@@ -11,9 +11,11 @@ struct PreferencesView: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
     var body: some View {
         Group {
+            #if os(iOS)
             Toggle(isOn: self.$appSessionStore.displayPostAuthor) {
                 Text("Display Authors")
             }
+            #endif
             Toggle(isOn: self.$appSessionStore.abbreviateThreads) {
                 Text("Abbreviate Threads")
             }
@@ -27,6 +29,6 @@ struct PreferencesView: View {
 struct PreferencesView_Previews: PreviewProvider {
     static var previews: some View {
         PreferencesView()
-            .environmentObject(AppSessionStore())
+            .environmentObject(AppSessionStore(service: AuthService()))
     }
 }

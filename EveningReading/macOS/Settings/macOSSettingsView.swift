@@ -15,7 +15,7 @@ struct macOSSettingsView: View {
             Form {
                 Section(header: Text("PREFERENCES")) {
                     PreferencesView()
-                        .environmentObject(AppSessionStore())
+                        .environmentObject(appSessionStore)
                 }
             }
             .padding(.leading, 20)
@@ -34,6 +34,6 @@ struct macOSSettingsView: View {
 struct macOSSettingsView_Previews: PreviewProvider {
     static var previews: some View {
         macOSSettingsView()
-            .environmentObject(AppSessionStore())
+            .environmentObject(AppSessionStore(service: AuthService()))
     }
 }

@@ -88,7 +88,7 @@ struct TrendingView: View {
 struct TrendingView_Previews: PreviewProvider {
     static var previews: some View {
         TrendingView()
-            .environmentObject(AppSessionStore())
+            .environmentObject(AppSessionStore(service: AuthService()))
             .environmentObject(ChatStore(service: ChatService()))
     }
 }

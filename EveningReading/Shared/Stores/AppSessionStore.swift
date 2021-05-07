@@ -15,6 +15,12 @@ class AppSessionStore : ObservableObject {
     @Published var showingTagsView = false
     @Published var showingSettingsView = false
     
+    private let service: AuthService
+    init(service: AuthService) {
+        self.service = service
+        loadDefaults()
+    }
+    
     // Preferences
     @Published var displayPostAuthor: Bool = true {
         didSet {
@@ -46,9 +52,21 @@ class AppSessionStore : ObservableObject {
         }
     }
     
-    init() {
-        loadDefaults()
+    // Auth
+    @Published var signInUsername = ""
+    @Published var signInPassword = ""
+    @Published var showingSignInWarning = false
+    @Published var isSignedIn: Bool = false {
+        didSet {
+            let defaults = UserDefaults.standard
+            defaults.set(isSignedIn, forKey: "IsSignedIn")
+            if !isSignedIn {
+                self.signInUsername = ""
+                self.signInPassword = ""
+            }
+        }
     }
+    
     
     func loadDefaults() {
             // Preferences

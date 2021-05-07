@@ -101,7 +101,7 @@ struct macOSContentView: View {
 struct macOSContentView_Previews: PreviewProvider {
     static var previews: some View {
         macOSContentView()
-            .environmentObject(AppSessionStore())
+            .environmentObject(AppSessionStore(service: AuthService()))
             .environmentObject(ChatStore(service: ChatService()))
     }
 }

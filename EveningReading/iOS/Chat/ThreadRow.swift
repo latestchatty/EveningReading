@@ -174,8 +174,9 @@ struct ThreadRow: View {
 
 struct ThreadRow_Previews: PreviewProvider {
     static var previews: some View {
-        ThreadRow(threadId: .constant(9999999992), activeThreadId: .constant(9999999991))
-            .environmentObject(AppSessionStore())
+        ThreadRow(threadId: .constant(999999992), activeThreadId: .constant(999999992))
+            .environment(\.colorScheme, .dark)
+            .environmentObject(AppSessionStore(service: AuthService()))
             .environmentObject(ChatStore(service: ChatService()))
     }
 }

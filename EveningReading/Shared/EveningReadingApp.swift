@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct EveningReadingApp: App {
-    @StateObject var appSessionStore = AppSessionStore()
+    @StateObject var appSessionStore = AppSessionStore(service: .init())
     @StateObject var chatStore = ChatStore(service: .init())
     
     var body: some Scene {

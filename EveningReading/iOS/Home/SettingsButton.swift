@@ -33,6 +33,6 @@ struct SettingsButton: View {
 struct SettingsButton_Previews: PreviewProvider {
     static var previews: some View {
         SettingsButton()
-            .environmentObject(AppSessionStore())
+            .environmentObject(AppSessionStore(service: AuthService()))
     }
 }
