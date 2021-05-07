@@ -107,6 +107,7 @@ class ChatStore: ObservableObject {
     }
 
     func getChat() {
+        self.threads = []
         service.getChat() { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
