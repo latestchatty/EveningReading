@@ -19,7 +19,7 @@ struct iPadChatView: View {
     }
         
     private func selectThreadById(threadId: Int) {
-        self.chatStore.activeThreadId = threadId
+        chatStore.activeThreadId = threadId
     }
     
     var body: some View {

@@ -37,15 +37,16 @@ struct watchOSThreadRow: View {
                 self.replyCount = thread.posts.count - 1
                 self.rootPostLols = rootPost?.lols ?? [ChatLols]()
             }
-        }
-        if let thread = chatData.threads.filter({ return $0.threadId == self.threadId }).first {
-            let rootPost = thread.posts.filter({ return $0.parentId == 0 }).first
-            self.rootPostCategory = rootPost?.category ?? "ontopic"
-            self.rootPostAuthor = rootPost?.author ?? ""
-            self.rootPostBodyPreview = rootPost?.body.getPreview ?? ""
-            self.rootPostDate = rootPost?.date ?? "2020-08-14T21:05:00Z"
-            self.replyCount = thread.posts.count - 1
-            self.rootPostLols = rootPost?.lols ?? [ChatLols]()
+        } else {
+            if let thread = chatStore.threads.filter({ return $0.threadId == self.threadId }).first {
+                let rootPost = thread.posts.filter({ return $0.parentId == 0 }).first
+                self.rootPostCategory = rootPost?.category ?? "ontopic"
+                self.rootPostAuthor = rootPost?.author ?? ""
+                self.rootPostBodyPreview = rootPost?.body.getPreview ?? ""
+                self.rootPostDate = rootPost?.date ?? "2020-08-14T21:05:00Z"
+                self.replyCount = thread.posts.count - 1
+                self.rootPostLols = rootPost?.lols ?? [ChatLols]()
+            }
         }
     }
     
@@ -76,7 +77,7 @@ struct watchOSThreadRow: View {
                             .onLongPressGesture {
                                 self.showingCollapseAlert.toggle()
                             }
-                        NavigationLink(destination: watchOsPostDetail(postId: .constant(self.threadId)), isActive: self.$showingPost) {
+                        NavigationLink(destination: watchOsPostDetail(postId: .constant(self.threadId)).environmentObject(chatStore), isActive: self.$showingPost) {
                             EmptyView()
                         }.frame(width: 0, height: 0)
                         Spacer()

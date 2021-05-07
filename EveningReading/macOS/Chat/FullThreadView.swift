@@ -64,7 +64,7 @@ struct FullThreadView: View {
                 
             }
         } else {
-            let threads = self.chatStore.threads.filter({ return self.appSessionStore.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !self.appSessionStore.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
+            let threads = chatStore.threads.filter({ return self.appSessionStore.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !self.appSessionStore.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
             
             if let thread = threads.filter({ return $0.threadId == self.threadId }).first {
                 let rootPost = thread.posts.filter({ return $0.parentId == 0 }).first
@@ -103,7 +103,7 @@ struct FullThreadView: View {
                 }
             }
         } else {
-            if let thread = self.chatStore.threads.filter({ return $0.threadId == self.threadId }).first {
+            if let thread = chatStore.threads.filter({ return $0.threadId == self.threadId }).first {
                 // Replies to post
                 let replies = thread.posts.filter({ return $0.parentId == parentId }).sorted(by: { $0.id < $1.id })
                 

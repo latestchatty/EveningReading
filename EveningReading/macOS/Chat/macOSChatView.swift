@@ -12,7 +12,7 @@ struct macOSChatView: View {
     @EnvironmentObject var chatStore: ChatStore
     
     private func fetchChat() {
-        if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil || self.chatStore.threads.count > 0
+        if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil || chatStore.threads.count > 0
         {
             return
         }
@@ -25,7 +25,7 @@ struct macOSChatView: View {
             return Array(chatData.threads)
         }
         
-        let threads = self.chatStore.threads.filter({ return self.appSessionStore.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !self.appSessionStore.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
+        let threads = chatStore.threads.filter({ return self.appSessionStore.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !self.appSessionStore.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
         
         if threads.count > 0 {
             return Array(threads)
@@ -41,7 +41,7 @@ struct macOSChatView: View {
                     VStack {
                         Spacer().frame(maxWidth: .infinity).frame(height: 30)
                     }.id(9999999999991)
-                    .onReceive(self.chatStore.$threads) { threads in
+                    .onReceive(chatStore.$threads) { threads in
                         if threads.count < 1 {
                             scrollProxy.scrollTo(9999999999991)
                         }

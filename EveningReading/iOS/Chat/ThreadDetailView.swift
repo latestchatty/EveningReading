@@ -251,7 +251,7 @@ struct ThreadDetailView: View {
                 getPostList(parentId: self.threadId)
             }
         })
-        .onReceive(self.chatStore.$activeThreadId) { _ in
+        .onReceive(chatStore.$activeThreadId) { _ in
             if UIDevice.current.userInterfaceIdiom == .pad {
                 self.selectedPost = 0
                 getThreadData()

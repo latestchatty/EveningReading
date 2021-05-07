@@ -25,8 +25,8 @@ struct watchOsPostDetail: View {
     @State private var isRootPost: Bool = false
     
     private func getThreadData() {
-        //if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
-        //{
+        if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
+        {
             let thread = chatData.threads.filter { !$0.posts.isEmpty && $0.posts.contains(where: { post in post.id == self.postId }) }.first
             
             if let childPost = thread?.posts.filter({ return $0.id == self.postId }).first {
@@ -42,7 +42,25 @@ struct watchOsPostDetail: View {
             }
         
             self.richTextBody = RichTextBuilder.getRichText(postBody: self.postBody)
-        //}
+        } else {
+            let thread = chatStore.threads.filter { !$0.posts.isEmpty && $0.posts.contains(where: { post in post.id == self.postId }) }.first
+            
+            print("we found \(thread?.threadId ?? 0)")
+                        
+            if let childPost = thread?.posts.filter({ return $0.id == self.postId }).first {
+                self.postCategory = childPost.category
+                self.postAuthor = childPost.author
+                self.postBody = childPost.body
+                self.postDate = childPost.date
+                self.postLols = childPost.lols
+                
+                self.replies = thread?.posts.filter({ return $0.parentId == self.postId }) ?? [ChatPosts]()
+            } else {
+                self.postAuthor = "none"
+            }
+        
+            self.richTextBody = RichTextBuilder.getRichText(postBody: self.postBody)
+        }
     }
     
     var body: some View {
@@ -82,6 +100,7 @@ struct watchOsPostDetail: View {
                 if self.replies.count > 0 {
                     ForEach(self.replies, id: \.id) { reply in
                         watchOSPostPreview(postId: .constant(reply.id), replyText: .constant(String(reply.body.getPreview.prefix(100))))
+                            .environmentObject(chatStore)
                     }
                 }
                 
