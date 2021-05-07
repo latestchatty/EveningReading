@@ -198,6 +198,7 @@ struct FullThreadView: View {
                                             AuthorNameView(name: post.author, postId: post.id)
                                             LolView(lols: post.lols)
                                         }
+                                        .padding(.top, 2)
                                     }
                                 }
                                 .padding(.horizontal, 20)
