@@ -44,6 +44,30 @@ class ChatService {
         self.session = session
         self.decoder = decoder
     }
+    
+    public func getChat(handler: @escaping (Result<[ChatThread], Error>) -> Void) {
+        guard
+            let urlComponents = URLComponents(string: "https://winchatty.com/v2/getChatty")
+            else { preconditionFailure("Can't create url components...") }
+
+        guard
+            let url = urlComponents.url
+            else { preconditionFailure("Can't create url from url components...") }
+
+        session.dataTask(with: url) { [weak self] data, _, error in
+            if let error = error {
+                handler(.failure(error))
+            } else {
+                do {
+                    let data = data ?? Data()
+                    let response = try self?.decoder.decode(Chat.self, from: data)
+                    handler(.success(response?.threads ?? []))
+                } catch {
+                    handler(.failure(error))
+                }
+            }
+        }.resume()
+    }
 }
 
 class ChatStore: ObservableObject {
@@ -53,6 +77,8 @@ class ChatStore: ObservableObject {
         self.service = service
     }
 
+    @Published var threads: [ChatThread] = []
+    
     @Published var activeThreadId: Int = 0
     
     @Published var scrollTargetChat: Int?
@@ -80,4 +106,17 @@ class ChatStore: ObservableObject {
         }
     }
 
+    func getChat() {
+        service.getChat() { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let threads):
+                    self?.threads = threads
+                case .failure:
+                    self?.threads = []
+                }
+            }
+        }
+    }
+    
 }

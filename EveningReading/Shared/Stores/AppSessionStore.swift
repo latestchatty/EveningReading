@@ -35,6 +35,9 @@ class AppSessionStore : ObservableObject {
         }
     }
     
+    // Filters
+    @Published var threadFilters: [String] = ["informative", "ontopic"]
+    
     // Collapsed
     @Published var collapsedThreads: [Int] = [0] {
         didSet {

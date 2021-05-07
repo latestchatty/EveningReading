@@ -63,38 +63,65 @@ struct FullThreadView: View {
                 //self.recentPosts = thread.posts.filter({ return $0.parentId != 0 }).sorted(by: { $0.id > $1.id })
                 
             }
-        }
-        if let thread = chatData.threads.filter({ return $0.threadId == self.threadId }).first {
-            let rootPost = thread.posts.filter({ return $0.parentId == 0 }).first
-            self.rootPostCategory = rootPost?.category ?? "ontopic"
-            self.rootPostAuthor = rootPost?.author ?? ""
-            self.rootPostBody = rootPost?.body ?? ""
-            self.rootPostDate = rootPost?.date ?? "2020-08-14T21:05:00Z"
-            self.rootPostLols = rootPost?.lols ?? [ChatLols]()
-            self.replyCount = thread.posts.count - 1
-            //self.recentPosts = thread.posts.filter({ return $0.parentId != 0 }).sorted(by: { $0.id > $1.id })
+        } else {
+            let threads = self.chatStore.threads.filter({ return self.appSessionStore.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !self.appSessionStore.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
+            
+            if let thread = threads.filter({ return $0.threadId == self.threadId }).first {
+                let rootPost = thread.posts.filter({ return $0.parentId == 0 }).first
+                self.rootPostCategory = rootPost?.category ?? "ontopic"
+                self.rootPostAuthor = rootPost?.author ?? ""
+                self.rootPostBody = rootPost?.body ?? ""
+                self.rootPostDate = rootPost?.date ?? "2020-08-14T21:05:00Z"
+                self.rootPostLols = rootPost?.lols ?? [ChatLols]()
+                self.replyCount = thread.posts.count - 1
+                //self.recentPosts = thread.posts.filter({ return $0.parentId != 0 }).sorted(by: { $0.id > $1.id })
+            }
         }
     }
     
     private func getPostList(parentId: Int) {
-        if let thread = chatData.threads.filter({ return $0.threadId == self.threadId }).first {
-            // Replies to post
-            let replies = thread.posts.filter({ return $0.parentId == parentId }).sorted(by: { $0.id < $1.id })
-            
-            // Font strength for recent posts
-            let recentPosts = Array(thread.posts.sorted(by: { $0.id > $1.id }).prefix(5))
-            var opacity = 0.95
-            postStrength = [Int: Double]()
-            for recentPost in recentPosts {
-                postStrength[recentPost.id] = opacity
-                opacity = round(1000.0 * (opacity - 0.05)) / 1000.0
+        if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
+                {
+            if let thread = chatData.threads.filter({ return $0.threadId == self.threadId }).first {
+                // Replies to post
+                let replies = thread.posts.filter({ return $0.parentId == parentId }).sorted(by: { $0.id < $1.id })
+                
+                // Font strength for recent posts
+                let recentPosts = Array(thread.posts.sorted(by: { $0.id > $1.id }).prefix(5))
+                var opacity = 0.95
+                postStrength = [Int: Double]()
+                for recentPost in recentPosts {
+                    postStrength[recentPost.id] = opacity
+                    opacity = round(1000.0 * (opacity - 0.05)) / 1000.0
+                }
+                
+                // Get replies to this post
+                for post in replies {
+                    self.replyLines[post.id] = ReplyLineBuilder.getLines(post: post, thread: thread)
+                    postList.append(post)
+                    getPostList(parentId: post.id)
+                }
             }
-            
-            // Get replies to this post
-            for post in replies {
-                self.replyLines[post.id] = ReplyLineBuilder.getLines(post: post, thread: thread)
-                postList.append(post)
-                getPostList(parentId: post.id)
+        } else {
+            if let thread = self.chatStore.threads.filter({ return $0.threadId == self.threadId }).first {
+                // Replies to post
+                let replies = thread.posts.filter({ return $0.parentId == parentId }).sorted(by: { $0.id < $1.id })
+                
+                // Font strength for recent posts
+                let recentPosts = Array(thread.posts.sorted(by: { $0.id > $1.id }).prefix(5))
+                var opacity = 0.95
+                postStrength = [Int: Double]()
+                for recentPost in recentPosts {
+                    postStrength[recentPost.id] = opacity
+                    opacity = round(1000.0 * (opacity - 0.05)) / 1000.0
+                }
+                
+                // Get replies to this post
+                for post in replies {
+                    self.replyLines[post.id] = ReplyLineBuilder.getLines(post: post, thread: thread)
+                    postList.append(post)
+                    getPostList(parentId: post.id)
+                }
             }
         }
     }
