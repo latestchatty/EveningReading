@@ -125,6 +125,9 @@
 		833EE9E326454DFB00345A1D /* WebAuthenticationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833EE9E026454DFB00345A1D /* WebAuthenticationPresenter.swift */; };
 		833EE9E426454DFB00345A1D /* WebAuthenticationSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833EE9E126454DFB00345A1D /* WebAuthenticationSession.swift */; };
 		833EE9E52645517D00345A1D /* RichTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833EE9CA2644DB2100345A1D /* RichTextView.swift */; };
+		83AA19272645C43500556E69 /* PostDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19262645C43500556E69 /* PostDecorator.swift */; };
+		83AA19282645C43500556E69 /* PostDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19262645C43500556E69 /* PostDecorator.swift */; };
+		83AA19292645C43500556E69 /* PostDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19262645C43500556E69 /* PostDecorator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -254,6 +257,7 @@
 		833EE9DF26454DFB00345A1D /* WebAuthenticationPresentationModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebAuthenticationPresentationModifier.swift; sourceTree = "<group>"; };
 		833EE9E026454DFB00345A1D /* WebAuthenticationPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebAuthenticationPresenter.swift; sourceTree = "<group>"; };
 		833EE9E126454DFB00345A1D /* WebAuthenticationSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebAuthenticationSession.swift; sourceTree = "<group>"; };
+		83AA19262645C43500556E69 /* PostDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDecorator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -628,6 +632,7 @@
 			children = (
 				8339818326406814005614E8 /* Globals.swift */,
 				830292F02644C57F00B974B3 /* ReplyLineBuilder.swift */,
+				83AA19262645C43500556E69 /* PostDecorator.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -930,6 +935,7 @@
 				8339818C264098D5005614E8 /* ReplyCountView.swift in Sources */,
 				833981682640439F005614E8 /* macOSSettingsView.swift in Sources */,
 				833EE9D226454DA100345A1D /* Shared.swift in Sources */,
+				83AA19272645C43500556E69 /* PostDecorator.swift in Sources */,
 				83398135263F324C005614E8 /* PreferencesView.swift in Sources */,
 				8339811E263F288D005614E8 /* ArticleCard.swift in Sources */,
 				83398143263F526A005614E8 /* iPadHomeButtons.swift in Sources */,
@@ -962,6 +968,7 @@
 				8339817026405899005614E8 /* RefreshableScrollView.swift in Sources */,
 				833981BA2641C4E8005614E8 /* ReplyCountView.swift in Sources */,
 				8339817C264062BB005614E8 /* RoundedCornersView.swift in Sources */,
+				83AA19282645C43500556E69 /* PostDecorator.swift in Sources */,
 				833981A326412FAC005614E8 /* AuthorNameView.swift in Sources */,
 				83398118263F250E005614E8 /* ArticleService.swift in Sources */,
 				8339811B263F26CA005614E8 /* PreviewService.swift in Sources */,
@@ -995,6 +1002,7 @@
 				833981B92641B723005614E8 /* watchOSPostDetail.swift in Sources */,
 				833981B12641B011005614E8 /* StringExtensions.swift in Sources */,
 				833981AD2641A98E005614E8 /* ArticleService.swift in Sources */,
+				83AA19292645C43500556E69 /* PostDecorator.swift in Sources */,
 				833981A62641A051005614E8 /* ContributedView.swift in Sources */,
 				833981AB2641A93E005614E8 /* AppSessionStore.swift in Sources */,
 				830292F32644C57F00B974B3 /* ReplyLineBuilder.swift in Sources */,

@@ -10,6 +10,8 @@
 import SwiftUI
 
 struct RefreshableScrollView<Content: View>: View {
+    @EnvironmentObject var chatStore: ChatStore
+    
     @State private var previousScrollOffset: CGFloat = 0
     @State private var scrollOffset: CGFloat = 0
     @State private var frozen: Bool = false
@@ -53,6 +55,12 @@ struct RefreshableScrollView<Content: View>: View {
                                 scrollProxy.scrollTo(targetTop, anchor: .top)
                             }
                         }
+                    }
+                    .onReceive(chatStore.$scrollTargetThread) { target in
+                        scrollProxy.scrollTo(target)
+                    }
+                    .onReceive(chatStore.$scrollTargetThreadTop) { targetTop in
+                        scrollProxy.scrollTo(targetTop, anchor: .top)
                     }
                     
                     ProgressViewIndicator(height: self.threshold, loading: self.refreshing, frozen: self.frozen, rotation: self.rotation, spokes: self.spokes)

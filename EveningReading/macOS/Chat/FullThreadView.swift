@@ -77,13 +77,7 @@ struct FullThreadView: View {
                 let replies = thread.posts.filter({ return $0.parentId == parentId }).sorted(by: { $0.id < $1.id })
                 
                 // Font strength for recent posts
-                let recent = Array(thread.posts.sorted(by: { $0.id > $1.id }).prefix(5))
-                var opacity = 0.95
-                postStrength = [Int: Double]()
-                for recentPost in recent {
-                    postStrength[recentPost.id] = opacity
-                    opacity = round(1000.0 * (opacity - 0.05)) / 1000.0
-                }
+                postStrength = PostDecorator.getPostStrength(thread: thread)
                 
                 // Get replies to this post
                 for post in replies {
@@ -98,13 +92,7 @@ struct FullThreadView: View {
                 let replies = thread.posts.filter({ return $0.parentId == parentId }).sorted(by: { $0.id < $1.id })
                 
                 // Font strength for recent posts
-                let recent = Array(thread.posts.sorted(by: { $0.id > $1.id }).prefix(5))
-                var opacity = 0.95
-                postStrength = [Int: Double]()
-                for recentPost in recent {
-                    postStrength[recentPost.id] = opacity
-                    opacity = round(1000.0 * (opacity - 0.05)) / 1000.0
-                }
+                postStrength = PostDecorator.getPostStrength(thread: thread)
                 
                 // Get replies to this post
                 for post in replies {
