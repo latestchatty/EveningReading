@@ -86,11 +86,15 @@ class ChatStore: ObservableObject {
     @Published var scrollTargetThread: Int?
     @Published var scrollTargetThreadTop: Int?
 
+    // For pull to refresh
     @Published var loadingChat: Bool = false {
         didSet {
             if oldValue == false && loadingChat == true {
                 #if os(iOS)
+                // Delay long enough for the pull to refresh animation to complete...
+                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
                     self.getChat()
+                }
                 #endif
             }
         }
@@ -107,9 +111,9 @@ class ChatStore: ObservableObject {
     }
 
     func getChat() {
-        self.threads = []
         #if os(OSX)
-            self.loadingChat = true
+        self.threads = []
+        self.loadingChat = true
         #endif
         service.getChat() { [weak self] result in
             DispatchQueue.main.async {

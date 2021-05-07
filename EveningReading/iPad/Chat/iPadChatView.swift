@@ -17,11 +17,7 @@ struct iPadChatView: View {
             return Array(chatData.threads)
         }
         let threads = chatStore.threads.filter({ return self.appSessionStore.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !self.appSessionStore.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
-        if threads.count > 0 {
-            return Array(threads)
-        } else {
-            return Array(chatData.threads)
-        }
+        return Array(threads)
     }
         
     private func selectThreadById(threadId: Int) {
