@@ -43,6 +43,61 @@ class AppSessionStore : ObservableObject {
     
     // Filters
     @Published var threadFilters: [String] = ["informative", "ontopic"]
+    @Published var showInformative: Bool = true {
+        didSet {
+            let defaults = UserDefaults.standard
+            defaults.set(showInformative, forKey: "ShowInformative")
+            if self.showInformative && !self.threadFilters.contains("informative") {
+                self.threadFilters.append("informative")
+            } else if !self.showInformative {
+                self.threadFilters = self.threadFilters.filter { $0 != "informative" }
+            }
+        }
+    }
+    @Published var showOffTopic: Bool = false {
+        didSet {
+            let defaults = UserDefaults.standard
+            defaults.set(showOffTopic, forKey: "ShowOffTopic")
+            if self.showOffTopic && !self.threadFilters.contains("offtopic") {
+                self.threadFilters.append("offtopic")
+            } else if !self.showOffTopic {
+                self.threadFilters = self.threadFilters.filter { $0 != "offtopic" }
+            }
+        }
+    }
+    @Published var showPolitical: Bool = false {
+        didSet {
+            let defaults = UserDefaults.standard
+            defaults.set(showPolitical, forKey: "ShowPolitical")
+            if self.showPolitical && !self.threadFilters.contains("political") {
+                self.threadFilters.append("political")
+            } else if !self.showPolitical {
+                self.threadFilters = self.threadFilters.filter { $0 != "political" }
+            }
+        }
+    }
+    @Published var showStupid: Bool = false {
+        didSet {
+            let defaults = UserDefaults.standard
+            defaults.set(showStupid, forKey: "ShowStupid")
+            if self.showStupid && !self.threadFilters.contains("stupid") {
+                self.threadFilters.append("stupid")
+            } else if !self.showStupid {
+                self.threadFilters = self.threadFilters.filter { $0 != "stupid" }
+            }
+        }
+    }
+    @Published var showNWS: Bool = false {
+        didSet {
+            let defaults = UserDefaults.standard
+            defaults.set(showNWS, forKey: "ShowNWS")
+            if self.showNWS && !self.threadFilters.contains("nws") {
+                self.threadFilters.append("nws")
+            } else if !self.showNWS {
+                self.threadFilters = self.threadFilters.filter { $0 != "nws" }
+            }
+        }
+    }    
     
     // Collapsed
     @Published var collapsedThreads: [Int] = [0] {
@@ -56,6 +111,7 @@ class AppSessionStore : ObservableObject {
     @Published var signInUsername = ""
     @Published var signInPassword = ""
     @Published var showingSignInWarning = false
+    @Published var isAuthenticating: Bool = false
     @Published var isSignedIn: Bool = false {
         didSet {
             let defaults = UserDefaults.standard
@@ -69,11 +125,22 @@ class AppSessionStore : ObservableObject {
     
     
     func loadDefaults() {
-            // Preferences
-            let defaults = UserDefaults.standard
-            self.displayPostAuthor = defaults.object(forKey: "DisplayPostAuthor") as? Bool ?? true
-            self.abbreviateThreads = defaults.object(forKey: "AbbreviateThreads") as? Bool ?? true
-            self.threadNavigation = defaults.object(forKey: "ThreadNavigation") as? Bool ?? false
+        // Preferences
+        let defaults = UserDefaults.standard
+        self.displayPostAuthor = defaults.object(forKey: "DisplayPostAuthor") as? Bool ?? true
+        self.abbreviateThreads = defaults.object(forKey: "AbbreviateThreads") as? Bool ?? true
+        self.threadNavigation = defaults.object(forKey: "ThreadNavigation") as? Bool ?? false
+    
+        // Filters
+        self.threadFilters = defaults.object(forKey: "ThreadFilters") as? [String] ?? ["informative", "ontopic"]
+        self.showInformative = defaults.object(forKey: "ShowInformative") as? Bool ?? true
+        self.showOffTopic = defaults.object(forKey: "ShowOffTopic") as? Bool ?? false
+        self.showPolitical = defaults.object(forKey: "ShowPolitical") as? Bool ?? false
+        self.showStupid = defaults.object(forKey: "ShowStupid") as? Bool ?? false
+        self.showNWS = defaults.object(forKey: "ShowNWS") as? Bool ?? false
+        
+        // Collapsed
+        self.collapsedThreads = defaults.object(forKey: "CollapsedThreads") as? [Int] ?? [0]
     }
     
     func resetNavigation() {

@@ -17,6 +17,10 @@ struct macOSSettingsView: View {
                     PreferencesView()
                         .environmentObject(appSessionStore)
                 }
+                Section(header: Text("CATEGORIES")) {
+                    CategoriesView()
+                        .environmentObject(appSessionStore)
+                }
             }
             .padding(.leading, 20)
             .padding(.top, 20)

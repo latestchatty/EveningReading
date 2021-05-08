@@ -19,6 +19,9 @@ struct SettingsView: View {
             Section(header: Text("ACCOUNT")) {
                 AccountView()
             }
+            Section(header: Text("CATEGORIES")) {
+                CategoriesView()
+            }
         }
         .edgesIgnoringSafeArea(.bottom)
         .navigationBarTitle("Settings", displayMode: .inline)

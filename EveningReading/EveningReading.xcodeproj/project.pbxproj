@@ -134,6 +134,8 @@
 		83AA193B2645F66500556E69 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19392645F66500556E69 /* AuthService.swift */; };
 		83AA193C2645F66500556E69 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19392645F66500556E69 /* AuthService.swift */; };
 		83AA193E2645FF8900556E69 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA193D2645FF8900556E69 /* AccountView.swift */; };
+		83AA194226462AFC00556E69 /* CategoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA194126462AFC00556E69 /* CategoriesView.swift */; };
+		83AA194326462AFC00556E69 /* CategoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA194126462AFC00556E69 /* CategoriesView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -268,6 +270,7 @@
 		83AA19352645F4A700556E69 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		83AA19392645F66500556E69 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		83AA193D2645FF8900556E69 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
+		83AA194126462AFC00556E69 /* CategoriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -550,6 +553,7 @@
 				83398131263F2F7C005614E8 /* SettingsView.swift */,
 				83AA19352645F4A700556E69 /* SignInView.swift */,
 				83AA193D2645FF8900556E69 /* AccountView.swift */,
+				83AA194126462AFC00556E69 /* CategoriesView.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -972,6 +976,7 @@
 				83398111263F1794005614E8 /* DateExtensions.swift in Sources */,
 				8339818126406402005614E8 /* ThreadRow.swift in Sources */,
 				8339818426406814005614E8 /* Globals.swift in Sources */,
+				83AA194226462AFC00556E69 /* CategoriesView.swift in Sources */,
 				83398132263F2F7C005614E8 /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -985,6 +990,7 @@
 				833817952639AC18007A8B28 /* macOSContentView.swift in Sources */,
 				8339817026405899005614E8 /* RefreshableScrollView.swift in Sources */,
 				833981BA2641C4E8005614E8 /* ReplyCountView.swift in Sources */,
+				83AA194326462AFC00556E69 /* CategoriesView.swift in Sources */,
 				8339817C264062BB005614E8 /* RoundedCornersView.swift in Sources */,
 				83AA19282645C43500556E69 /* PostDecorator.swift in Sources */,
 				833981A326412FAC005614E8 /* AuthorNameView.swift in Sources */,
