@@ -150,6 +150,7 @@
 		83AA1965264656BD00556E69 /* KeychainWrapperSubscript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA195E264656BD00556E69 /* KeychainWrapperSubscript.swift */; };
 		83AA1966264656BD00556E69 /* KeychainWrapperSubscript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA195E264656BD00556E69 /* KeychainWrapperSubscript.swift */; };
 		83AA1967264656BD00556E69 /* KeychainWrapperSubscript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA195E264656BD00556E69 /* KeychainWrapperSubscript.swift */; };
+		83AA196B2646648900556E69 /* watchOSGuidelines.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19682646648900556E69 /* watchOSGuidelines.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -293,6 +294,7 @@
 		83AA195C264656BC00556E69 /* KeychainItemAccessibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainItemAccessibility.swift; sourceTree = "<group>"; };
 		83AA195D264656BD00556E69 /* KeychainWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainWrapper.swift; sourceTree = "<group>"; };
 		83AA195E264656BD00556E69 /* KeychainWrapperSubscript.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainWrapperSubscript.swift; sourceTree = "<group>"; };
+		83AA19682646648900556E69 /* watchOSGuidelines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = watchOSGuidelines.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -410,6 +412,7 @@
 				833981B82641B723005614E8 /* watchOSPostDetail.swift */,
 				833981BE26421312005614E8 /* watchOSPostPreview.swift */,
 				833981BC2641E188005614E8 /* watchOSAuthorView.swift */,
+				83AA19682646648900556E69 /* watchOSGuidelines.swift */,
 				833980B3263C41CF005614E8 /* NotificationController.swift */,
 				833980B5263C41CF005614E8 /* NotificationView.swift */,
 				833980B9263C41D0005614E8 /* Assets.xcassets */,
@@ -1109,6 +1112,7 @@
 				83AA19292645C43500556E69 /* PostDecorator.swift in Sources */,
 				833981A62641A051005614E8 /* ContributedView.swift in Sources */,
 				833981AB2641A93E005614E8 /* AppSessionStore.swift in Sources */,
+				83AA196B2646648900556E69 /* watchOSGuidelines.swift in Sources */,
 				83AA194F26463EAD00556E69 /* ArticleService.swift in Sources */,
 				830292F32644C57F00B974B3 /* ReplyLineBuilder.swift in Sources */,
 				833981AF2641AC58005614E8 /* watchOSThreadRow.swift in Sources */,
