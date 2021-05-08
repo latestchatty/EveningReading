@@ -12,6 +12,7 @@ struct AuthorNameView: View {
     var name: String = ""
     var postId: Int = 0
     var bold: Bool = false
+    var navLink: Bool = false
     
     #if os(watchOS)
     @State private var showingAuthor = false
@@ -74,20 +75,43 @@ struct AuthorNameView: View {
                 }
         #endif
         #if os(watchOS)
-            Button(action: {
-                self.showingAuthor.toggle()
-            }) {
-                Text("\(self.name)")
-                    .font(.footnote)
-                    .bold()
-                    .foregroundColor(Color.orange)
-                    .lineLimit(1)
-            }
-            .buttonStyle(PlainButtonStyle())
+            if self.navLink {
+                Button(action: {
+                    self.showingAuthor.toggle()
+                }) {
+                    Text("\(self.name)")
+                        .font(.footnote)
+                        .bold()
+                        .foregroundColor(Color.orange)
+                        .lineLimit(1)
+                }
+                .buttonStyle(PlainButtonStyle())
 
-            NavigationLink(destination: watchOSAuthorView(name: .constant(self.name), postId: .constant(self.postId)), isActive: self.$showingAuthor) {
-                    EmptyView()
-            }.frame(width: 0, height: 0)
+                NavigationLink(destination: watchOSAuthorView(name: .constant(self.name), postId: .constant(self.postId)), isActive: self.$showingAuthor) {
+                        EmptyView()
+                }.frame(width: 0, height: 0)
+            } else {
+                VStack {
+                    Button(action: {
+                        self.showingAuthor.toggle()
+                    }) {
+                        Text("\(self.name)")
+                            .font(.footnote)
+                            .bold()
+                            .foregroundColor(Color.orange)
+                            .lineLimit(1)
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                }
+                .alert(isPresented: self.$showingAuthor) {
+                    Alert(title: Text("Report \(self.name)"), message: Text("For post \(self.postId)"),
+                          primaryButton: .default (Text("OK")) {
+                            print("OK button tapped")
+                            
+                          }, secondaryButton: .cancel()
+                    )
+                }
+            }
         #endif
     }
 }

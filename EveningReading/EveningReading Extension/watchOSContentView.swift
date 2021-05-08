@@ -30,18 +30,18 @@ struct watchOSContentView: View {
     
     var body: some View {
         ScrollView {
-            Button(action: {
-                chatStore.getChat()
-            }) {
-                HStack {
-                    Text("Refresh")
-                        .font(.footnote)
-                        .lineLimit(1)
-                        .truncationMode(.tail)
-                        .padding()
-                }
-            }
             if filteredThreads().count > 0 {
+                Button(action: {
+                    chatStore.getChat()
+                }) {
+                    HStack {
+                        Text("Refresh")
+                            .font(.footnote)
+                            .lineLimit(1)
+                            .truncationMode(.tail)
+                            .padding()
+                    }
+                }
                 LazyVStack (alignment: .leading) {
                     ForEach(filteredThreads(), id: \.threadId) { thread in
                         watchOSThreadRow(threadId: .constant(thread.threadId))

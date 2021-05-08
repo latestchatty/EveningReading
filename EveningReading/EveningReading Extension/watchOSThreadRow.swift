@@ -61,7 +61,7 @@ struct watchOSThreadRow: View {
             if !self.isThreadCollapsed {
                 VStack (alignment: .leading) {
                     HStack {
-                        AuthorNameView(name: self.rootPostAuthor, postId: self.threadId, bold: false)
+                        AuthorNameView(name: self.rootPostAuthor, postId: self.threadId, navLink: true)
                         ContributedView(contributed: self.contributed)
                         Spacer()
                         LolView(lols: self.rootPostLols)
