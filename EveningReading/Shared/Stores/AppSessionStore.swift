@@ -155,6 +155,13 @@ class AppSessionStore : ObservableObject {
         self.showingSettingsView = false
     }
     
+    func clearAuth() {
+        _ = KeychainWrapper.standard.removeObject(forKey: "Username")
+        _ = KeychainWrapper.standard.removeObject(forKey: "Password")
+        self.isSignedIn = false
+        self.showingSignInWarning = true
+    }
+    
     func authenticate() {
         self.isAuthenticating = true
         service.auth(username: self.signInUsername, password: self.signInPassword) { [weak self] result in
@@ -167,22 +174,13 @@ class AppSessionStore : ObservableObject {
                         if didSaveUser && didSavePassword {
                             self?.isSignedIn = true
                         } else {
-                            _ = KeychainWrapper.standard.removeObject(forKey: "Username")
-                            _ = KeychainWrapper.standard.removeObject(forKey: "Password")
-                            self?.isSignedIn = false
-                            self?.showingSignInWarning = true
+                            self?.clearAuth()
                         }
                     } else {
-                        _ = KeychainWrapper.standard.removeObject(forKey: "Username")
-                        _ = KeychainWrapper.standard.removeObject(forKey: "Password")
-                        self?.isSignedIn = false
-                        self?.showingSignInWarning = true
+                        self?.clearAuth()
                     }
                 case .failure:
-                    _ = KeychainWrapper.standard.removeObject(forKey: "Username")
-                    _ = KeychainWrapper.standard.removeObject(forKey: "Password")
-                    self?.isSignedIn = false
-                    self?.showingSignInWarning = true
+                    self?.clearAuth()
                 }
                 self?.isAuthenticating = false
             }
