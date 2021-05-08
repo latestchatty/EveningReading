@@ -151,6 +151,7 @@
 		83AA1966264656BD00556E69 /* KeychainWrapperSubscript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA195E264656BD00556E69 /* KeychainWrapperSubscript.swift */; };
 		83AA1967264656BD00556E69 /* KeychainWrapperSubscript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA195E264656BD00556E69 /* KeychainWrapperSubscript.swift */; };
 		83AA196B2646648900556E69 /* watchOSGuidelines.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19682646648900556E69 /* watchOSGuidelines.swift */; };
+		83AA196D2646685500556E69 /* TagsWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA196C2646685500556E69 /* TagsWebView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -295,6 +296,7 @@
 		83AA195D264656BD00556E69 /* KeychainWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainWrapper.swift; sourceTree = "<group>"; };
 		83AA195E264656BD00556E69 /* KeychainWrapperSubscript.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainWrapperSubscript.swift; sourceTree = "<group>"; };
 		83AA19682646648900556E69 /* watchOSGuidelines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = watchOSGuidelines.swift; sourceTree = "<group>"; };
+		83AA196C2646685500556E69 /* TagsWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsWebView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -370,6 +372,7 @@
 				8339813D263F47B6005614E8 /* Home */,
 				83AA19452646308C00556E69 /* Guidelines */,
 				833981992640C3D0005614E8 /* Chat */,
+				833980FA263F0A29005614E8 /* Tags */,
 				83398130263F2F63005614E8 /* Settings */,
 				83AA195426464FA600556E69 /* Controls */,
 				8339818A264070E9005614E8 /* Utilities */,
@@ -449,7 +452,6 @@
 				833980F7263F09E6005614E8 /* Chat */,
 				833980F8263F0A0F005614E8 /* Inbox */,
 				833980F9263F0A21005614E8 /* Search */,
-				833980FA263F0A29005614E8 /* Tags */,
 				8339812C263F2EC0005614E8 /* Articles */,
 				833980CD263C9137005614E8 /* iPhoneContentView.swift */,
 			);
@@ -542,6 +544,7 @@
 			isa = PBXGroup;
 			children = (
 				83398120263F2E39005614E8 /* TagsView.swift */,
+				83AA196C2646685500556E69 /* TagsWebView.swift */,
 			);
 			path = Tags;
 			sourceTree = "<group>";
@@ -1048,6 +1051,7 @@
 				8339817B264062BB005614E8 /* RoundedCornersView.swift in Sources */,
 				83AA195726464FBC00556E69 /* BlurView.swift in Sources */,
 				830292F12644C57F00B974B3 /* ReplyLineBuilder.swift in Sources */,
+				83AA196D2646685500556E69 /* TagsWebView.swift in Sources */,
 				833817922639AC18007A8B28 /* EveningReadingApp.swift in Sources */,
 				833EE9DE26454DF100345A1D /* SafariView+View.swift in Sources */,
 				8339812E263F2F5A005614E8 /* ArticleView.swift in Sources */,
