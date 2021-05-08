@@ -47,6 +47,8 @@ struct TrendingView: View {
         }
     }
     
+    @State private var selectedThreadId: Int? = 0
+    
     var body: some View {
         VStack {
             // Heading
@@ -65,17 +67,19 @@ struct TrendingView: View {
             VStack {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 80) {
-                        
                         ForEach(filteredThreads(), id: \.threadId) { thread in
                             GeometryReader { geometry in
+                                NavigationLink(destination: ThreadDetailView(threadId: .constant(thread.threadId)), tag: thread.threadId, selection: $selectedThreadId) { EmptyView() }
                                 TrendingCard(thread: .constant(thread))
-                                    .conditionalModifier(thread.threadId, RedactedModifier())
+                                .conditionalModifier(thread.threadId, RedactedModifier())
                                 .rotation3DEffect(Angle(degrees: Double((geometry.frame(in: .global).minX - rotationAmount()) / (rotationAmount() * -1))), axis: (x: 0, y: 10, z: 0))
                                 .background(Color.clear)
+                                .onTapGesture(count: 1) {
+                                    self.selectedThreadId = thread.threadId
+                                }
                             }
                             .frame(width: 246, height: 360)
-                        }
-                        
+                        }                        
                     }.padding(40)
                     Spacer()
                 }
