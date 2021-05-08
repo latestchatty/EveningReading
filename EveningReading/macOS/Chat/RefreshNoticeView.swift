@@ -15,11 +15,11 @@ struct RefreshNoticeView : View {
             VStack {
                 Text("You're up to date!")
                     .font(.title)
-                    .foregroundColor(Color.primary)
+                    .foregroundColor(Color.black)
             }
             .frame(width: 200, height: 200)
             .background(Color.gray)
-            .opacity(0.8)
+            .opacity(0.6)
             .cornerRadius(20)
             .onAppear(perform: {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
