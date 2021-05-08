@@ -46,7 +46,6 @@ struct iPadContentView: View {
         }
         .navigationViewStyle(StackNavigationViewStyle())
         .accentColor(colorScheme == .dark ? Color.white : Color(UIColor.systemBlue))
-        .overlay(appSessionStore.showingHomeScreen ? Color("ClearColor").frame(width: 0, height: 0).offset(y: 0) : Color("HomeScreenOverlay").frame(width: 2600, height: 2600).offset(y: -80) )
     }
 }
 

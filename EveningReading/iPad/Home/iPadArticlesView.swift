@@ -26,9 +26,9 @@ struct iPadArticlesView: View {
         }
         if articleStore.articles.count > 0 {
             let articlesChunked = articleStore.articles.chunked(into: 5)
-            if articlesChunked.count > 0 && row == 1{
+            if articlesChunked.count > 0 && row == 1 {
                 return articlesChunked[0]
-            } else if articlesChunked.count > 1 {
+            } else if articlesChunked.count > 1 && row == 2 {
                 return articlesChunked[1]
             } else {
                 return Array(articleStore.articles)

@@ -12,6 +12,8 @@ struct ArticleCard: View {
     @Binding var articlePreview: String
     @Binding var articleLink: String
     
+    @State var showingArticleSheet: Bool = false
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             HStack {
@@ -43,6 +45,21 @@ struct ArticleCard: View {
         }
         .background(Color("ArticleCardBackground"))
         .cornerRadius(10)
+        .onTapGesture(count: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/, perform: {
+            self.showingArticleSheet = true
+        })
+        .safariView(isPresented: self.$showingArticleSheet) {
+            SafariView(
+                url: URL(string: articleLink)!,
+                configuration: SafariView.Configuration(
+                    entersReaderIfAvailable: false,
+                    barCollapsingEnabled: true
+                )
+            )
+            .preferredBarAccentColor(.clear)
+            .preferredControlAccentColor(.accentColor)
+            .dismissButtonStyle(.done)
+        }
     }
 }
 
