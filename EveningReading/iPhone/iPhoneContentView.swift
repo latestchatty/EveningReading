@@ -12,10 +12,20 @@ struct iPhoneContentView: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var chatStore: ChatStore
     
+    @State private var showingGuidelinesView = false
+    
     var body: some View {
         NavigationView {            
             ScrollView {
                 VStack {
+                    GuidelinesView(showingGuidelinesView: $showingGuidelinesView)
+                    .onAppear() {
+                        DispatchQueue.main.async {
+                            let defaults = UserDefaults.standard
+                            let guidelinesAccepted = defaults.object(forKey: "GuidelinesAccepted") as? Bool ?? false
+                            self.showingGuidelinesView = !guidelinesAccepted
+                        }
+                    }
                     iPhoneHomeButtons()
                         .environmentObject(appSessionStore)
                         .environmentObject(chatStore)

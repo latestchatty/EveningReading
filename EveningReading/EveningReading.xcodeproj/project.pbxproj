@@ -70,7 +70,6 @@
 		8339815D263F6FC4005614E8 /* macOSSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339815B263F6FC4005614E8 /* macOSSearchView.swift */; };
 		8339816026403F08005614E8 /* macOSTagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339815E26403F08005614E8 /* macOSTagsView.swift */; };
 		8339816526404049005614E8 /* SidebarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339816326404049005614E8 /* SidebarButton.swift */; };
-		833981682640439F005614E8 /* macOSSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833981672640439F005614E8 /* macOSSettingsView.swift */; };
 		833981692640439F005614E8 /* macOSSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833981672640439F005614E8 /* macOSSettingsView.swift */; };
 		8339816C26404F59005614E8 /* SidebarButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339816A26404F59005614E8 /* SidebarButtons.swift */; };
 		8339816F26405899005614E8 /* RefreshableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339816E26405899005614E8 /* RefreshableScrollView.swift */; };
@@ -136,6 +135,7 @@
 		83AA193E2645FF8900556E69 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA193D2645FF8900556E69 /* AccountView.swift */; };
 		83AA194226462AFC00556E69 /* CategoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA194126462AFC00556E69 /* CategoriesView.swift */; };
 		83AA194326462AFC00556E69 /* CategoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA194126462AFC00556E69 /* CategoriesView.swift */; };
+		83AA1947264630A900556E69 /* GuidelinesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA1946264630A900556E69 /* GuidelinesView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -271,6 +271,7 @@
 		83AA19392645F66500556E69 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		83AA193D2645FF8900556E69 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		83AA194126462AFC00556E69 /* CategoriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesView.swift; sourceTree = "<group>"; };
+		83AA1946264630A900556E69 /* GuidelinesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuidelinesView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -344,6 +345,7 @@
 			isa = PBXGroup;
 			children = (
 				8339813D263F47B6005614E8 /* Home */,
+				83AA19452646308C00556E69 /* Guidelines */,
 				833981992640C3D0005614E8 /* Chat */,
 				83398130263F2F63005614E8 /* Settings */,
 				8339818A264070E9005614E8 /* Utilities */,
@@ -754,6 +756,14 @@
 			path = WebAuthenticationSession;
 			sourceTree = "<group>";
 		};
+		83AA19452646308C00556E69 /* Guidelines */ = {
+			isa = PBXGroup;
+			children = (
+				83AA1946264630A900556E69 /* GuidelinesView.swift */,
+			);
+			path = Guidelines;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -953,7 +963,6 @@
 				8339812A263F2E60005614E8 /* ChatView.swift in Sources */,
 				833980DF263CAB93005614E8 /* AppSessionStore.swift in Sources */,
 				8339818C264098D5005614E8 /* ReplyCountView.swift in Sources */,
-				833981682640439F005614E8 /* macOSSettingsView.swift in Sources */,
 				833EE9D226454DA100345A1D /* Shared.swift in Sources */,
 				83AA19272645C43500556E69 /* PostDecorator.swift in Sources */,
 				83398135263F324C005614E8 /* PreferencesView.swift in Sources */,
@@ -974,6 +983,7 @@
 				833EE9DE26454DF100345A1D /* SafariView+View.swift in Sources */,
 				8339812E263F2F5A005614E8 /* ArticleView.swift in Sources */,
 				83398111263F1794005614E8 /* DateExtensions.swift in Sources */,
+				83AA1947264630A900556E69 /* GuidelinesView.swift in Sources */,
 				8339818126406402005614E8 /* ThreadRow.swift in Sources */,
 				8339818426406814005614E8 /* Globals.swift in Sources */,
 				83AA194226462AFC00556E69 /* CategoriesView.swift in Sources */,
