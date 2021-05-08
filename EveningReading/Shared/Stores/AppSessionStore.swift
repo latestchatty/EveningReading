@@ -41,7 +41,7 @@ class AppSessionStore : ObservableObject {
         }
     }
     
-    // Filters
+    // Category Filters
     @Published var threadFilters: [String] = ["informative", "ontopic"]
     @Published var showInformative: Bool = true {
         didSet {
@@ -122,7 +122,6 @@ class AppSessionStore : ObservableObject {
             }
         }
     }
-    
     
     func loadDefaults() {
         // Preferences

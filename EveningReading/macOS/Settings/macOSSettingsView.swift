@@ -10,6 +10,15 @@ import SwiftUI
 struct macOSSettingsView: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
     
+    private func version() -> String {
+        let dict = Bundle.main.infoDictionary!
+        if let version = dict["CFBundleShortVersionString"] as? String {
+            return version
+        } else {
+            return "1.0"
+        }
+    }
+    
     var body: some View {
         VStack (alignment: .leading) {
             Form {
@@ -20,6 +29,16 @@ struct macOSSettingsView: View {
                 Section(header: Text("CATEGORIES")) {
                     CategoriesView()
                         .environmentObject(appSessionStore)
+                }
+                Section(header: Text("ABOUT")) {
+                    HStack {
+                        Text("Version")
+                        Text("\(self.version())")
+                    }
+                    HStack {
+                        Link("Guidelines", destination: URL(string: "https://www.shacknews.com/guidelines")!).font(.callout).foregroundColor(Color(NSColor.linkColor))
+                        Spacer()
+                    }
                 }
             }
             .padding(.leading, 20)
