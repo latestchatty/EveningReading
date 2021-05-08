@@ -30,6 +30,13 @@ struct ThreadDetailView: View {
     @State private var selectedPost = 0
     @State private var selectedPostRichText = [RichTextBlock]()
     
+    @State private var username = ""
+    
+    private func getUserData() {
+        let user: String? = KeychainWrapper.standard.string(forKey: "Username")
+        self.username = user ?? ""
+    }
+    
     private func getThreadData() {
         if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
         {
@@ -135,7 +142,7 @@ struct ThreadDetailView: View {
                             .padding(.vertical, 10)
                             */
                             
-                            // Tag and reply
+                            // Tag and Reply
                             if appSessionStore.isSignedIn {
                                 HStack {
                                     Spacer()
@@ -153,6 +160,17 @@ struct ThreadDetailView: View {
                     }
                     .padding(EdgeInsets(top: 0, leading: 10, bottom: 5, trailing: 10))
                     .id(9999999999991)
+                    
+                    if postList.count < 1 {
+                        Spacer()
+                        HStack {
+                            Text("No replies, be the first to post.")
+                                .font(.body)
+                                .bold()
+                                .foregroundColor(Color("NoDataLabel"))
+                        }
+                        Spacer()
+                    }
                     
                     // Replies
                     ForEach(postList, id: \.id) { post in
@@ -195,7 +213,7 @@ struct ThreadDetailView: View {
                                         .lineLimit(1)
                                         .truncationMode(.tail)
                                         .font(.callout)
-                                        .foregroundColor(colorScheme == .dark ? Color(UIColor.white) : Color(UIColor.black))
+                                        .foregroundColor(self.username == post.author ? Color(UIColor.systemTeal) : (colorScheme == .dark ? Color(UIColor.white) : Color(UIColor.black)))
                                         .opacity(postStrength[post.id] != nil ? postStrength[post.id]! : 0.75)
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                     
@@ -282,6 +300,7 @@ struct ThreadDetailView: View {
             }
         }
         .onAppear(perform: {
+            getUserData()
             getThreadData()
             if UIDevice.current.userInterfaceIdiom == .phone {
                 getPostList(parentId: self.threadId)
