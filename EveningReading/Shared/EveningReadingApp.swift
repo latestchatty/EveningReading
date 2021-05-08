@@ -11,6 +11,7 @@ import SwiftUI
 struct EveningReadingApp: App {
     @StateObject var appSessionStore = AppSessionStore(service: .init())
     @StateObject var chatStore = ChatStore(service: .init())
+    @StateObject var articleStore = ArticleStore(service: .init())
     
     var body: some Scene {
         WindowGroup {
@@ -19,15 +20,18 @@ struct EveningReadingApp: App {
                 iPadContentView()
                     .environmentObject(appSessionStore)
                     .environmentObject(chatStore)
+                    .environmentObject(articleStore)
             } else {
                 iPhoneContentView()
                     .environmentObject(appSessionStore)
                     .environmentObject(chatStore)
+                    .environmentObject(articleStore)
             }
             #else
                 macOSContentView()
                     .environmentObject(appSessionStore)
                     .environmentObject(chatStore)
+                    .environmentObject(articleStore)
             #endif
         }
     }

@@ -9,7 +9,9 @@ import SwiftUI
 
 struct TrendingView: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
-        @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var chatStore: ChatStore
+    
+    @State private var showPlaceholder = true
 
     private func navigateTo(_ goToDestination: inout Bool) {
         appSessionStore.resetNavigation()
@@ -67,6 +69,7 @@ struct TrendingView: View {
                         ForEach(filteredThreads(), id: \.threadId) { thread in
                             GeometryReader { geometry in
                                 TrendingCard(thread: .constant(thread))
+                                    .conditionalModifier(thread.threadId, RedactedModifier())
                                 .rotation3DEffect(Angle(degrees: Double((geometry.frame(in: .global).minX - rotationAmount()) / (rotationAmount() * -1))), axis: (x: 0, y: 10, z: 0))
                                 .background(Color.clear)
                             }

@@ -8,14 +8,26 @@
 import SwiftUI
 
 struct iPhoneArticlesView: View {
-    @State var articles: [Article] = [Article]()
+    @EnvironmentObject var articleStore: ArticleStore
     
     private func fetchArticles() {
+        if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil || articleStore.articles.count > 0
+        {
+            return
+        }
+        articleStore.getArticles()
+    }
+    
+    private func articles() -> [Article] {
         if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
         {
-            articles = Array(articlesData)
+            return Array(articlesData)
         }
-        articles = Array(articlesData)
+        if articleStore.articles.count > 0 {
+            return Array(articleStore.articles)
+        } else {
+            return Array(articlesData)
+        }
     }
 
     var body: some View {
@@ -37,8 +49,9 @@ struct iPhoneArticlesView: View {
             VStack(alignment: .leading) {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack() {
-                        ForEach(articles, id: \.id) { article in
+                        ForEach(articles(), id: \.id) { article in
                             ArticleCard(articleTitle: .constant(article.name), articlePreview: .constant(article.preview), articleLink: .constant(article.url))
+                                .conditionalModifier(article.id, RedactedModifier())
                                 .frame(width: 260.0, height: 180)
                                 .shadow(color: Color.black.opacity(0.25), radius: 10, x: 0, y: 10)
                             Spacer().frame(width: 20)
@@ -58,5 +71,6 @@ struct iPhoneArticlesView: View {
 struct iPhoneArticlesView_Previews: PreviewProvider {
     static var previews: some View {
         iPhoneArticlesView()
+            .environmentObject(ArticleStore(service: ArticleService()))
     }
 }

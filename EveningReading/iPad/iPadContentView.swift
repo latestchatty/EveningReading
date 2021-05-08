@@ -11,6 +11,7 @@ struct iPadContentView: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var articleStore: ArticleStore
 
     @State private var showingGuidelinesView = false
     
@@ -32,6 +33,7 @@ struct iPadContentView: View {
                             .environmentObject(chatStore)
                         TrendingView()
                         iPadArticlesView()
+                            .environmentObject(articleStore)
                     }
                     .background(Color("PrimaryBackground").frame(height: 2600).offset(y: -80))
                 }
@@ -55,5 +57,6 @@ struct iPadContentView_Previews: PreviewProvider {
             .environment(\.colorScheme, .dark)
             .environmentObject(AppSessionStore(service: AuthService()))
             .environmentObject(ChatStore(service: ChatService()))
+            .environmentObject(ArticleStore(service: ArticleService()))
     }
 }

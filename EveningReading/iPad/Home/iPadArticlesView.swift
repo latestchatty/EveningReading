@@ -9,30 +9,32 @@ import SwiftUI
 
 
 struct iPadArticlesView: View {
-    @State var articles: [Article] = [Article]()
-    @State var articlesRow1: [Article] = [Article]()
-    @State var articlesRow2: [Article] = [Article]()
-    
+    @EnvironmentObject var articleStore: ArticleStore
     
     private func fetchArticles() {
+        if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil || articleStore.articles.count > 0
+        {
+            return
+        }
+        articleStore.getArticles()
+    }
+    
+    private func articlesRow(_ row: Int) -> [Article] {
         if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
         {
-            articles = Array(articlesData)
-            let articlesChunked = articles.chunked(into: 5)
-            if articlesChunked.count > 0 {
-                articlesRow1 = articlesChunked[0]
-            }
-            if articles.count > 1 {
-                articlesRow2 = articlesChunked[1]
-            }
+            return Array(articlesData)
         }
-        articles = Array(articlesData)
-        let articlesChunked = articles.chunked(into: 5)
-        if articlesChunked.count > 0 {
-            articlesRow1 = articlesChunked[0]
-        }
-        if articles.count > 1 {
-            articlesRow2 = articlesChunked[1]
+        if articleStore.articles.count > 0 {
+            let articlesChunked = articleStore.articles.chunked(into: 5)
+            if articlesChunked.count > 0 && row == 1{
+                return articlesChunked[0]
+            } else if articlesChunked.count > 1 {
+                return articlesChunked[1]
+            } else {
+                return Array(articleStore.articles)
+            }
+        } else {
+            return Array(articlesData)
         }
     }
 
@@ -55,8 +57,9 @@ struct iPadArticlesView: View {
             VStack(alignment: .leading) {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack() {
-                        ForEach(articlesRow1, id: \.id) { article in
+                        ForEach(articlesRow(1), id: \.id) { article in
                             ArticleCard(articleTitle: .constant(article.name), articlePreview: .constant(article.preview), articleLink: .constant(article.url))
+                                .conditionalModifier(article.id, RedactedModifier())
                                 .frame(width: 260.0, height: 180)
                                 .shadow(color: Color.black.opacity(0.25), radius: 10, x: 0, y: 10)
                             Spacer().frame(width: 20)
@@ -73,8 +76,9 @@ struct iPadArticlesView: View {
             VStack(alignment: .leading) {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack() {
-                        ForEach(articlesRow2, id: \.id) { article in
+                        ForEach(articlesRow(2), id: \.id) { article in
                             ArticleCard(articleTitle: .constant(article.name), articlePreview: .constant(article.preview), articleLink: .constant(article.url))
+                                .conditionalModifier(article.id, RedactedModifier())
                                 .frame(width: 260.0, height: 180)
                                 .shadow(color: Color.black.opacity(0.25), radius: 10, x: 0, y: 10)
                             Spacer().frame(width: 20)
@@ -95,5 +99,6 @@ struct iPadArticlesView: View {
 struct iPadArticlesView_Previews: PreviewProvider {
     static var previews: some View {
         iPadArticlesView()
+            .environmentObject(ArticleStore(service: ArticleService()))
     }
 }
