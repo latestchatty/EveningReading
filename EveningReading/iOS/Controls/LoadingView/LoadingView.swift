@@ -7,14 +7,26 @@
 
 import SwiftUI
 
-struct LoadingView: View {
+struct LoadingView : View {
+    @Binding public var show: Bool
+    @Binding public var title: String
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        if show {
+            ProgressView(title)
+                .frame(width: 120,
+                       height: 120)
+                .background(BlurView(style: .systemUltraThinMaterial))
+                .foregroundColor(Color.primary)
+                .cornerRadius(20)
+        } else {
+            EmptyView()
+        }
     }
 }
 
 struct LoadingView_Previews: PreviewProvider {
     static var previews: some View {
-        LoadingView()
+        LoadingView(show: .constant(true), title: .constant("Loading..."))
     }
 }

@@ -57,5 +57,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>IMGUR_KEY</key>
+	<string>$(IMGUR_KEY)</string>
+	<key>LOL_KEY</key>
+	<string>$(LOL_KEY)</string>
 </dict>
 </plist>

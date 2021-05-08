@@ -17,7 +17,6 @@ struct SignInView: View {
         if self.appSessionStore.signInUsername.count < 1 || self.appSessionStore.signInPassword.count < 1 {
             self.appSessionStore.showingSignInWarning = true
         } else {
-            self.appSessionStore.isAuthenticating = true
             self.appSessionStore.authenticate()
         }
     }

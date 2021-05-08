@@ -153,6 +153,10 @@
 		83AA196D2646685500556E69 /* TagsWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA196C2646685500556E69 /* TagsWebView.swift */; };
 		83AA19712646DE7100556E69 /* TagPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19702646DE7100556E69 /* TagPostView.swift */; };
 		83AA19782646E49A00556E69 /* ComposePostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19742646DEA100556E69 /* ComposePostView.swift */; };
+		83AA198026470B0900556E69 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA197F26470B0900556E69 /* AlertView.swift */; };
+		83AA198426470CC100556E69 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA198326470CC100556E69 /* LoadingView.swift */; };
+		83AA198E26470FD400556E69 /* UIImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA198D26470FD400556E69 /* UIImageExtensions.swift */; };
+		83AA19932647110300556E69 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19922647110300556E69 /* ImagePickerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -299,6 +303,11 @@
 		83AA196C2646685500556E69 /* TagsWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsWebView.swift; sourceTree = "<group>"; };
 		83AA19702646DE7100556E69 /* TagPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagPostView.swift; sourceTree = "<group>"; };
 		83AA19742646DEA100556E69 /* ComposePostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposePostView.swift; sourceTree = "<group>"; };
+		83AA197F26470B0900556E69 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
+		83AA198326470CC100556E69 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		83AA198D26470FD400556E69 /* UIImageExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtensions.swift; sourceTree = "<group>"; };
+		83AA19922647110300556E69 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
+		83AA199626472E6900556E69 /* KeyConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = KeyConfig.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -379,6 +388,7 @@
 				833980FA263F0A29005614E8 /* Tags */,
 				83398130263F2F63005614E8 /* Settings */,
 				83AA195426464FA600556E69 /* Controls */,
+				83AA198C26470FB900556E69 /* Extensions */,
 				8339818A264070E9005614E8 /* Utilities */,
 				833817892639AC18007A8B28 /* Info.plist */,
 			);
@@ -476,6 +486,7 @@
 			children = (
 				833980E1263CAC7A005614E8 /* Data */,
 				833980D3263C9C1B005614E8 /* Fonts */,
+				83AA199626472E6900556E69 /* KeyConfig.xcconfig */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -574,9 +585,9 @@
 			isa = PBXGroup;
 			children = (
 				83398131263F2F7C005614E8 /* SettingsView.swift */,
-				83AA19352645F4A700556E69 /* SignInView.swift */,
 				83AA193D2645FF8900556E69 /* AccountView.swift */,
 				83AA194126462AFC00556E69 /* CategoriesView.swift */,
+				83AA19352645F4A700556E69 /* SignInView.swift */,
 				83AA195026464F7300556E69 /* AuthenticatingView.swift */,
 			);
 			path = Settings;
@@ -793,7 +804,10 @@
 		83AA195426464FA600556E69 /* Controls */ = {
 			isa = PBXGroup;
 			children = (
+				83AA1991264710F800556E69 /* ImagePickerView */,
+				83AA197E26470B0000556E69 /* AlertView */,
 				83AA195526464FB300556E69 /* BlurView */,
+				83AA198726470CC500556E69 /* LoadingView */,
 			);
 			path = Controls;
 			sourceTree = "<group>";
@@ -815,6 +829,38 @@
 				83AA195B264656BC00556E69 /* SwiftKeychainWrapper.h */,
 			);
 			path = SwiftKeychainWrapper;
+			sourceTree = "<group>";
+		};
+		83AA197E26470B0000556E69 /* AlertView */ = {
+			isa = PBXGroup;
+			children = (
+				83AA197F26470B0900556E69 /* AlertView.swift */,
+			);
+			path = AlertView;
+			sourceTree = "<group>";
+		};
+		83AA198726470CC500556E69 /* LoadingView */ = {
+			isa = PBXGroup;
+			children = (
+				83AA198326470CC100556E69 /* LoadingView.swift */,
+			);
+			path = LoadingView;
+			sourceTree = "<group>";
+		};
+		83AA198C26470FB900556E69 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				83AA198D26470FD400556E69 /* UIImageExtensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		83AA1991264710F800556E69 /* ImagePickerView */ = {
+			isa = PBXGroup;
+			children = (
+				83AA19922647110300556E69 /* ImagePickerView.swift */,
+			);
+			path = ImagePickerView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1004,6 +1050,7 @@
 				8339811A263F26CA005614E8 /* PreviewService.swift in Sources */,
 				833980F2263F08C1005614E8 /* SettingsButton.swift in Sources */,
 				83398173264058D9005614E8 /* Haptic.swift in Sources */,
+				83AA19932647110300556E69 /* ImagePickerView.swift in Sources */,
 				833980CE263C9137005614E8 /* iPhoneContentView.swift in Sources */,
 				83398127263F2E59005614E8 /* InboxView.swift in Sources */,
 				83398121263F2E39005614E8 /* TagsView.swift in Sources */,
@@ -1031,6 +1078,7 @@
 				833EE9E426454DFB00345A1D /* WebAuthenticationSession.swift in Sources */,
 				833980EB263F07DC005614E8 /* iPhoneHomeButton.swift in Sources */,
 				8339814D263F6394005614E8 /* iPadArticlesView.swift in Sources */,
+				83AA198E26470FD400556E69 /* UIImageExtensions.swift in Sources */,
 				83398117263F250E005614E8 /* ArticleService.swift in Sources */,
 				83AA19362645F4A700556E69 /* SignInView.swift in Sources */,
 				833EE9E326454DFB00345A1D /* WebAuthenticationPresenter.swift in Sources */,
@@ -1047,7 +1095,9 @@
 				83AA1947264630A900556E69 /* GuidelinesView.swift in Sources */,
 				8339818126406402005614E8 /* ThreadRow.swift in Sources */,
 				8339818426406814005614E8 /* Globals.swift in Sources */,
+				83AA198026470B0900556E69 /* AlertView.swift in Sources */,
 				83AA194226462AFC00556E69 /* CategoriesView.swift in Sources */,
+				83AA198426470CC100556E69 /* LoadingView.swift in Sources */,
 				83398132263F2F7C005614E8 /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1149,6 +1199,7 @@
 /* Begin XCBuildConfiguration section */
 		833817982639AC18007A8B28 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 83AA199626472E6900556E69 /* KeyConfig.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1210,6 +1261,7 @@
 		};
 		833817992639AC18007A8B28 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 83AA199626472E6900556E69 /* KeyConfig.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;

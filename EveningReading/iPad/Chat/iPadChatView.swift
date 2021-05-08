@@ -53,9 +53,20 @@ struct iPadChatView: View {
                 
                 // Detail
                 VStack {
-                    ThreadDetailView(threadId: $chatStore.activeThreadId)
-                        .environmentObject(appSessionStore)
-                        .environmentObject(chatStore)
+                    if chatStore.activeThreadId > 0 {
+                        ThreadDetailView(threadId: $chatStore.activeThreadId)
+                            .environmentObject(appSessionStore)
+                            .environmentObject(chatStore)
+                    } else {
+                        Spacer()
+                        HStack {
+                            Text("No thread selected.")
+                                .font(.body)
+                                .bold()
+                                .foregroundColor(Color("NoDataLabel"))
+                        }
+                        Spacer()
+                    }
                 }
                 .frame(width: geometry.size.width * 0.65)
             }

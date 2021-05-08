@@ -9,25 +9,272 @@ import SwiftUI
 import Photos
 
 struct ComposePostView: View {
-    @Environment(\.presentationMode) var presentationMode
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var chatStore: ChatStore
     
     public var isRootPost: Bool = false
     
+    @State private var postText = ""
     @State private var showingComposeSheet = false
-
+    @State private var showingLoading = false
+    @State private var loadingMessage = "Loading"
+    @State private var showingImageSheet = false
+    @State private var uploadImage: UIImage?
+    @State private var uploadImageFail = false
+    @State private var showingSubmitAlert = false
+    
     private func submitPost() {
         
     }
-        
+
+    private func showImageSheet() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(20)) {
+            let status = PHPhotoLibrary.authorizationStatus()
+            switch status {
+            case .authorized:
+                //handle authorized status
+                self.showingImageSheet = true
+                break
+            case .denied, .restricted :
+                //handle denied status
+                break
+            case .notDetermined:
+                // ask for permissions
+                PHPhotoLibrary.requestAuthorization { status in
+                    switch status {
+                    case .authorized:
+                        // as above
+                        self.showingImageSheet = true
+                    case .denied, .restricted:
+                        // as above
+                        print("denied access to photos")
+                        break
+                    case .notDetermined:
+                        // won't happen but still
+                        print("undetermined photo access status")
+                        break
+                    case .limited:
+                        print("unknown photo access error")
+                    @unknown default:
+                        print("unknown photo access error")
+                    }
+                }
+            case .limited:
+                print("unknown photo access error")
+            @unknown default:
+                print("unknown photo access error")
+            }
+        }
+    }
+    
+    private func getBase64Image(image: UIImage, complete: @escaping (String?) -> ()) {
+        DispatchQueue.main.async {
+            let imageData = image.pngData()
+            let base64Image = imageData?.base64EncodedString(options: .lineLength64Characters)
+            complete(base64Image)
+        }
+    }
+    
     private func uploadImageToImgur(image: UIImage) {
-        
+        if let imgurKey = Bundle.main.infoDictionary?["IMGUR_KEY"] as? String {
+            var resizedImage = image
+            let imageSize = image.getSizeIn(.megabyte)
+            
+            if imageSize > 9.0 {
+                resizedImage = image.resized(withPercentage: 0.5) ?? image
+            }
+            
+            getBase64Image(image: resizedImage) { base64Image in
+                let boundary = "Boundary-\(UUID().uuidString)"
+
+                var request = URLRequest(url: URL(string: "https://api.imgur.com/3/image")!)
+                request.addValue("Client-ID \(imgurKey)", forHTTPHeaderField: "Authorization")
+                request.addValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+
+                request.httpMethod = "POST"
+
+                var body = ""
+                body += "--\(boundary)\r\n"
+                body += "Content-Disposition:form-data; name=\"image\""
+                body += "\r\n\r\n\(base64Image ?? "")\r\n"
+                body += "--\(boundary)--\r\n"
+                let postData = body.data(using: .utf8)
+
+                request.httpBody = postData
+                request.timeoutInterval = 60
+
+                URLSession.shared.dataTask(with: request) { data, response, error in
+                    if let error = error {
+                        self.showingLoading = false
+                        self.uploadImageFail = true
+                        return
+                    }
+                    guard let response = response as? HTTPURLResponse,
+                          (200...299).contains(response.statusCode) else {
+                        self.showingLoading = false
+                        self.uploadImageFail = true
+                        return
+                    }
+                    if let mimeType = response.mimeType, mimeType == "application/json", let data = data, let dataString = String(data: data, encoding: .utf8) {
+                        let parsedResult: [String: AnyObject]
+                        do {
+                            parsedResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String: AnyObject]
+                            if let dataJson = parsedResult["data"] as? [String: Any] {
+                                self.postText += "\(dataJson["link"] as? String ?? "[Error Uploading Image]")"
+                                self.showingLoading = false
+                                self.uploadImageFail = false
+                            }
+                        } catch {
+                            self.uploadImageFail = true
+                        }
+                    }
+                }.resume()
+            }
+        } else {
+            // NO API KEY
+            self.uploadImageFail = true
+        }
     }
     
     var body: some View {
         VStack {
+            Spacer().frame(width: 0, height: 0)
+
+            // Compose Post Sheet
+            .sheet(isPresented: $showingComposeSheet,
+               onDismiss: {
+                    print("Modal Dismissed")
+               }) {
+                VStack {
+                    HStack {
+                        Spacer().frame(width: 10)
+                        
+                        Button("Cancel") {
+                            DispatchQueue.main.async {
+                                //self.chattyStore.submitPostSuccessMessage = ""
+                                //self.chattyStore.submitPostErrorMessage = ""
+                                self.postText = ""
+                                self.showingLoading = false
+                                self.uploadImageFail = false
+                                self.showingComposeSheet = false
+                            }
+                        }
+                        Spacer()
+                        
+                        if self.showingLoading {
+                            ProgressView().frame(width: 20, height: 20)
+                        }
+                        
+                        Spacer().frame(width: 10)
+                        
+                        Button(action: {
+                            if self.showingLoading {
+                                return
+                            }
+                            DispatchQueue.main.async {
+                                self.showingComposeSheet = false
+                                self.uploadImageFail = false
+                                showImageSheet()
+                            }
+                        }) {
+                            if self.uploadImageFail {
+                                Image(systemName: "photo")
+                                    .foregroundColor(self.showingLoading ? Color(UIColor.systemGray3) : Color(UIColor.link))
+                                    .overlay(Image(systemName: "exclamationmark").scaleEffect(0.75).padding(.top, -5).padding(.leading, 25).foregroundColor(Color(UIColor.systemRed)), alignment: .top)
+                            } else {
+                                Image(systemName: "photo")
+                                    .foregroundColor(self.showingLoading ? Color(UIColor.systemGray3) : Color(UIColor.link))
+                            }
+                        }
+                        
+                        Spacer().frame(width: 10)
+                        
+                        Button("Submit") {
+                            if self.showingLoading {
+                                return
+                            }
+                            withAnimation(.easeIn(duration: 0.05)) {
+                                self.showingSubmitAlert = true
+                            }
+                        }
+                        .frame(width: 70, height: 30)
+                        .foregroundColor(self.showingLoading ? Color(UIColor.systemGray3) : Color(UIColor.link))
+                        
+                        Spacer().frame(width: 10)
+                    }
+                    .padding(.top, 10)
+                    
+                    // TextEditor
+                    ZStack {
+                        // no way to change the background yet :(
+                        if colorScheme == .light {
+                            TextEditor(text: $postText)
+                                .border(Color(UIColor.systemGray5))
+                                .cornerRadius(4.0)
+                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                                .padding(EdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5))
+                        } else {
+                            TextEditor(text: $postText)
+                                .border(Color(UIColor.systemGray5))
+                                .cornerRadius(4.0)
+                                .colorInvert()
+                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                                .padding(EdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5))
+                        }
+
+                        // Loading indicator
+                        LoadingView(show: self.$showingLoading, title: self.$loadingMessage)
+                        
+                        // Block the text editor
+                        if self.showingLoading || self.showingSubmitAlert {
+                            Rectangle()
+                                .fill(Color(UIColor.systemGray))
+                                .frame(maxWidth:.infinity, maxHeight: .infinity)
+                                .padding(.all, 5)
+                                .cornerRadius(5)
+                                .opacity(0.1)
+                        }
+                        
+                        // Can't show a real alert on top of a sheet
+                        AlertView(shown: self.$showingSubmitAlert, closureA: .constant(.others), message: "Submit post?", confirmAction: {
+                            print("Submit post? confirmAction")
+                            self.submitPost()
+                            self.loadingMessage = "Submitting"
+                            self.showingLoading = true
+                        })
+                    }
+                    Spacer()                    
+                }
+            }
+            // End Compose Post Sheet
+            
+            // Image Picker Sheet
+            .sheet(isPresented: $showingImageSheet,
+                   onDismiss: {
+                        print("Image Sheet Dismissed")
+                        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(20)) {
+                            print("show composing sheet")
+                            self.showingComposeSheet = true
+                            if self.uploadImage != nil {
+                                print("uploading to Imgur")
+                                uploadImageToImgur(image: self.uploadImage!)
+                            } else {
+                                print("self.uploadImage is nil")
+                            }
+                        }
+                   }) {
+                ImagePickerView(sourceType: .photoLibrary) { image in
+                    self.uploadImage = image
+                    self.showingImageSheet = false
+                    self.showingLoading = true
+                    self.loadingMessage = "Uploading"
+                }
+            }
+            // End Image Picker Sheet
+            
+            // Button
             if self.appSessionStore.isSignedIn || ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil {
                 Button(action: {
                     DispatchQueue.main.async {
@@ -47,6 +294,7 @@ struct ComposePostView: View {
                     }
                 }
             }
+            
         }
     }
 }
