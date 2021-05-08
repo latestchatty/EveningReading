@@ -119,6 +119,8 @@ class AppSessionStore : ObservableObject {
             if !isSignedIn {
                 self.signInUsername = ""
                 self.signInPassword = ""
+                _ = KeychainWrapper.standard.removeObject(forKey: "Username")
+                _ = KeychainWrapper.standard.removeObject(forKey: "Password")
             }
         }
     }
@@ -140,6 +142,9 @@ class AppSessionStore : ObservableObject {
         
         // Collapsed
         self.collapsedThreads = defaults.object(forKey: "CollapsedThreads") as? [Int] ?? [0]
+        
+        // Auth
+        self.isSignedIn = defaults.object(forKey: "IsSignedIn") as? Bool ?? false
     }
     
     func resetNavigation() {
@@ -148,5 +153,39 @@ class AppSessionStore : ObservableObject {
         self.showingSearchView = false
         self.showingTagsView = false
         self.showingSettingsView = false
+    }
+    
+    func authenticate() {
+        self.isAuthenticating = true
+        service.auth(username: self.signInUsername, password: self.signInPassword) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let authSuccess):
+                    if authSuccess {
+                        let didSaveUser: Bool = KeychainWrapper.standard.set(self?.signInUsername ?? "", forKey: "Username")
+                        let didSavePassword: Bool = KeychainWrapper.standard.set(self?.signInPassword ?? "", forKey: "Password")
+                        if didSaveUser && didSavePassword {
+                            self?.isSignedIn = true
+                        } else {
+                            _ = KeychainWrapper.standard.removeObject(forKey: "Username")
+                            _ = KeychainWrapper.standard.removeObject(forKey: "Password")
+                            self?.isSignedIn = false
+                            self?.showingSignInWarning = true
+                        }
+                    } else {
+                        _ = KeychainWrapper.standard.removeObject(forKey: "Username")
+                        _ = KeychainWrapper.standard.removeObject(forKey: "Password")
+                        self?.isSignedIn = false
+                        self?.showingSignInWarning = true
+                    }
+                case .failure:
+                    _ = KeychainWrapper.standard.removeObject(forKey: "Username")
+                    _ = KeychainWrapper.standard.removeObject(forKey: "Password")
+                    self?.isSignedIn = false
+                    self?.showingSignInWarning = true
+                }
+                self?.isAuthenticating = false
+            }
+        }
     }
 }

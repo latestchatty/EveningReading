@@ -53,6 +53,7 @@ struct ThreadRow: View {
                 self.rootPostDate = rootPost?.date ?? "2020-08-14T21:05:00Z"
                 self.rootPostLols = rootPost?.lols ?? [ChatLols]()
                 self.replyCount = thread.posts.count - 1
+                self.contributed = PostDecorator.checkParticipatedStatus(thread: thread, author: self.rootPostAuthor)
             }
         }
     }

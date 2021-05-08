@@ -11,8 +11,15 @@ struct SignInView: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var appSessionStore: AppSessionStore
     
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    
     private func signIn() {
-        
+        if self.appSessionStore.signInUsername.count < 1 || self.appSessionStore.signInPassword.count < 1 {
+            self.appSessionStore.showingSignInWarning = true
+        } else {
+            self.appSessionStore.isAuthenticating = true
+            self.appSessionStore.authenticate()
+        }
     }
 
     private func close() {
@@ -72,6 +79,15 @@ struct SignInView: View {
             }
             .padding()
             .background(Color("SignInBackground").frame(height: 2600).offset(y: -80))
+            .disabled(self.appSessionStore.isAuthenticating)
+            .overlay(AuthenticatingView(isVisible: self.$appSessionStore.isAuthenticating))
+            .onReceive(timer) { _ in
+                if self.appSessionStore.isSignedIn {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(50)) {
+                        presentationMode.wrappedValue.dismiss()
+                    }
+                }
+            }
             
             VStack {
                 HStack {

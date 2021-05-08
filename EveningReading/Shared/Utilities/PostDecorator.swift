@@ -21,4 +21,16 @@ class PostDecorator {
         return strength
     }
     
+    static func checkParticipatedStatus(thread: ChatThread, author: String) -> Bool {
+        let username: String? = KeychainWrapper.standard.string(forKey: "Username")
+
+        let contributedReplies = thread.posts.filter({ return $0.author == username }).count
+        
+        if username == author || contributedReplies > 0 {
+            return true
+        } else {
+            return false
+        }
+    }
+    
 }

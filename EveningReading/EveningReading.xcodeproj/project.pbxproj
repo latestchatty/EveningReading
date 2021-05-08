@@ -139,6 +139,17 @@
 		83AA194D2646353800556E69 /* RedactingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA194B2646353800556E69 /* RedactingView.swift */; };
 		83AA194E2646353800556E69 /* RedactingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA194B2646353800556E69 /* RedactingView.swift */; };
 		83AA194F26463EAD00556E69 /* ArticleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83398116263F250E005614E8 /* ArticleService.swift */; };
+		83AA195126464F7300556E69 /* AuthenticatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA195026464F7300556E69 /* AuthenticatingView.swift */; };
+		83AA195726464FBC00556E69 /* BlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA195626464FBC00556E69 /* BlurView.swift */; };
+		83AA195F264656BD00556E69 /* KeychainItemAccessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA195C264656BC00556E69 /* KeychainItemAccessibility.swift */; };
+		83AA1960264656BD00556E69 /* KeychainItemAccessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA195C264656BC00556E69 /* KeychainItemAccessibility.swift */; };
+		83AA1961264656BD00556E69 /* KeychainItemAccessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA195C264656BC00556E69 /* KeychainItemAccessibility.swift */; };
+		83AA1962264656BD00556E69 /* KeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA195D264656BD00556E69 /* KeychainWrapper.swift */; };
+		83AA1963264656BD00556E69 /* KeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA195D264656BD00556E69 /* KeychainWrapper.swift */; };
+		83AA1964264656BD00556E69 /* KeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA195D264656BD00556E69 /* KeychainWrapper.swift */; };
+		83AA1965264656BD00556E69 /* KeychainWrapperSubscript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA195E264656BD00556E69 /* KeychainWrapperSubscript.swift */; };
+		83AA1966264656BD00556E69 /* KeychainWrapperSubscript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA195E264656BD00556E69 /* KeychainWrapperSubscript.swift */; };
+		83AA1967264656BD00556E69 /* KeychainWrapperSubscript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA195E264656BD00556E69 /* KeychainWrapperSubscript.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -276,6 +287,12 @@
 		83AA194126462AFC00556E69 /* CategoriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesView.swift; sourceTree = "<group>"; };
 		83AA1946264630A900556E69 /* GuidelinesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuidelinesView.swift; sourceTree = "<group>"; };
 		83AA194B2646353800556E69 /* RedactingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedactingView.swift; sourceTree = "<group>"; };
+		83AA195026464F7300556E69 /* AuthenticatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticatingView.swift; sourceTree = "<group>"; };
+		83AA195626464FBC00556E69 /* BlurView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurView.swift; sourceTree = "<group>"; };
+		83AA195B264656BC00556E69 /* SwiftKeychainWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwiftKeychainWrapper.h; sourceTree = "<group>"; };
+		83AA195C264656BC00556E69 /* KeychainItemAccessibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainItemAccessibility.swift; sourceTree = "<group>"; };
+		83AA195D264656BD00556E69 /* KeychainWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainWrapper.swift; sourceTree = "<group>"; };
+		83AA195E264656BD00556E69 /* KeychainWrapperSubscript.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainWrapperSubscript.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -352,6 +369,7 @@
 				83AA19452646308C00556E69 /* Guidelines */,
 				833981992640C3D0005614E8 /* Chat */,
 				83398130263F2F63005614E8 /* Settings */,
+				83AA195426464FA600556E69 /* Controls */,
 				8339818A264070E9005614E8 /* Utilities */,
 				833817892639AC18007A8B28 /* Info.plist */,
 			);
@@ -561,6 +579,7 @@
 				83AA19352645F4A700556E69 /* SignInView.swift */,
 				83AA193D2645FF8900556E69 /* AccountView.swift */,
 				83AA194126462AFC00556E69 /* CategoriesView.swift */,
+				83AA195026464F7300556E69 /* AuthenticatingView.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -655,6 +674,7 @@
 		83398171264058CD005614E8 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				83AA195A2646569800556E69 /* SwiftKeychainWrapper */,
 				8339818326406814005614E8 /* Globals.swift */,
 				830292F02644C57F00B974B3 /* ReplyLineBuilder.swift */,
 				83AA19262645C43500556E69 /* PostDecorator.swift */,
@@ -775,6 +795,33 @@
 				83AA194B2646353800556E69 /* RedactingView.swift */,
 			);
 			path = RedactingView;
+			sourceTree = "<group>";
+		};
+		83AA195426464FA600556E69 /* Controls */ = {
+			isa = PBXGroup;
+			children = (
+				83AA195526464FB300556E69 /* BlurView */,
+			);
+			path = Controls;
+			sourceTree = "<group>";
+		};
+		83AA195526464FB300556E69 /* BlurView */ = {
+			isa = PBXGroup;
+			children = (
+				83AA195626464FBC00556E69 /* BlurView.swift */,
+			);
+			path = BlurView;
+			sourceTree = "<group>";
+		};
+		83AA195A2646569800556E69 /* SwiftKeychainWrapper */ = {
+			isa = PBXGroup;
+			children = (
+				83AA195C264656BC00556E69 /* KeychainItemAccessibility.swift */,
+				83AA195D264656BD00556E69 /* KeychainWrapper.swift */,
+				83AA195E264656BD00556E69 /* KeychainWrapperSubscript.swift */,
+				83AA195B264656BC00556E69 /* SwiftKeychainWrapper.h */,
+			);
+			path = SwiftKeychainWrapper;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -946,6 +993,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83AA195126464F7300556E69 /* AuthenticatingView.swift in Sources */,
 				8339817726405B4D005614E8 /* iPadChatView.swift in Sources */,
 				8339818F26409C94005614E8 /* AuthorNameView.swift in Sources */,
 				83AA194C2646353800556E69 /* RedactingView.swift in Sources */,
@@ -954,6 +1002,7 @@
 				8339810A263F0F7A005614E8 /* TrendingCard.swift in Sources */,
 				8339819226409D77005614E8 /* ContributedView.swift in Sources */,
 				83AA193E2645FF8900556E69 /* AccountView.swift in Sources */,
+				83AA1962264656BD00556E69 /* KeychainWrapper.swift in Sources */,
 				833EE9CB2644DB2100345A1D /* RichTextView.swift in Sources */,
 				83398140263F525F005614E8 /* iPadHomeButton.swift in Sources */,
 				833980D0263C914D005614E8 /* iPadContentView.swift in Sources */,
@@ -965,6 +1014,7 @@
 				83398121263F2E39005614E8 /* TagsView.swift in Sources */,
 				833EE9E226454DFB00345A1D /* WebAuthenticationPresentationModifier.swift in Sources */,
 				833EE9DC26454DF100345A1D /* SafariViewPresenter.swift in Sources */,
+				83AA195F264656BD00556E69 /* KeychainItemAccessibility.swift in Sources */,
 				83398106263F0D38005614E8 /* ChatService.swift in Sources */,
 				8339817E264063E8005614E8 /* ThreadDetailView.swift in Sources */,
 				83AA193A2645F66500556E69 /* AuthService.swift in Sources */,
@@ -980,6 +1030,7 @@
 				833EE9D226454DA100345A1D /* Shared.swift in Sources */,
 				83AA19272645C43500556E69 /* PostDecorator.swift in Sources */,
 				83398135263F324C005614E8 /* PreferencesView.swift in Sources */,
+				83AA1965264656BD00556E69 /* KeychainWrapperSubscript.swift in Sources */,
 				8339811E263F288D005614E8 /* ArticleCard.swift in Sources */,
 				83398143263F526A005614E8 /* iPadHomeButtons.swift in Sources */,
 				833EE9E426454DFB00345A1D /* WebAuthenticationSession.swift in Sources */,
@@ -992,6 +1043,7 @@
 				833EE9DD26454DF100345A1D /* SafariView.swift in Sources */,
 				83398150263F6427005614E8 /* ArrayExtensions.swift in Sources */,
 				8339817B264062BB005614E8 /* RoundedCornersView.swift in Sources */,
+				83AA195726464FBC00556E69 /* BlurView.swift in Sources */,
 				830292F12644C57F00B974B3 /* ReplyLineBuilder.swift in Sources */,
 				833817922639AC18007A8B28 /* EveningReadingApp.swift in Sources */,
 				833EE9DE26454DF100345A1D /* SafariView+View.swift in Sources */,
@@ -1032,6 +1084,8 @@
 				833980E0263CAB93005614E8 /* AppSessionStore.swift in Sources */,
 				8339819A2640C7ED005614E8 /* PreferencesView.swift in Sources */,
 				8339816026403F08005614E8 /* macOSTagsView.swift in Sources */,
+				83AA1960264656BD00556E69 /* KeychainItemAccessibility.swift in Sources */,
+				83AA1963264656BD00556E69 /* KeychainWrapper.swift in Sources */,
 				833EE9CC2644DE1A00345A1D /* RichTextView.swift in Sources */,
 				833981692640439F005614E8 /* macOSSettingsView.swift in Sources */,
 				8339818526406814005614E8 /* Globals.swift in Sources */,
@@ -1040,6 +1094,7 @@
 				83398107263F0D38005614E8 /* ChatService.swift in Sources */,
 				83398155263F69E0005614E8 /* macOSChatView.swift in Sources */,
 				833981A4264189DC005614E8 /* ContributedView.swift in Sources */,
+				83AA1966264656BD00556E69 /* KeychainWrapperSubscript.swift in Sources */,
 				833817932639AC18007A8B28 /* EveningReadingApp.swift in Sources */,
 				830292F22644C57F00B974B3 /* ReplyLineBuilder.swift in Sources */,
 			);
@@ -1058,6 +1113,7 @@
 				830292F32644C57F00B974B3 /* ReplyLineBuilder.swift in Sources */,
 				833981AF2641AC58005614E8 /* watchOSThreadRow.swift in Sources */,
 				833980B4263C41CF005614E8 /* NotificationController.swift in Sources */,
+				83AA1964264656BD00556E69 /* KeychainWrapper.swift in Sources */,
 				833981A82641A922005614E8 /* ChatService.swift in Sources */,
 				833981BF26421312005614E8 /* watchOSPostPreview.swift in Sources */,
 				833980B2263C41CF005614E8 /* watchOSContentView.swift in Sources */,
@@ -1072,6 +1128,8 @@
 				833981A72641A166005614E8 /* AuthorNameView.swift in Sources */,
 				833980B6263C41CF005614E8 /* NotificationView.swift in Sources */,
 				833981BD2641E188005614E8 /* watchOSAuthorView.swift in Sources */,
+				83AA1961264656BD00556E69 /* KeychainItemAccessibility.swift in Sources */,
+				83AA1967264656BD00556E69 /* KeychainWrapperSubscript.swift in Sources */,
 				833981B42641B2D7005614E8 /* LolView.swift in Sources */,
 				833981B22641B013005614E8 /* DateExtensions.swift in Sources */,
 			);
