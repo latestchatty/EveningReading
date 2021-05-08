@@ -64,7 +64,7 @@ struct iPadChatView: View {
         .edgesIgnoringSafeArea(.bottom)
         .navigationViewStyle(StackNavigationViewStyle())
         .navigationBarTitle("Chat", displayMode: .inline)
-        .navigationBarItems(leading: Spacer().frame(width: 26, height: 16))
+        .navigationBarItems(leading: Spacer().frame(width: 26, height: 16), trailing: ComposePostView(isRootPost: true))
     }
 }
 

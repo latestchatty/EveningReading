@@ -82,7 +82,7 @@ public class TagsWebViewStore: ObservableObject {
                 guard error == nil else {
                     return
                 }
-                guard let data = data else {
+                guard let _ = data else {
                     return
                 }
                 

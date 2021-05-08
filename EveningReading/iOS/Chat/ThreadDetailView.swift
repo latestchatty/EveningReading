@@ -134,6 +134,18 @@ struct ThreadDetailView: View {
                             .padding(.horizontal, 10)
                             .padding(.vertical, 10)
                             */
+                            
+                            // Tag and reply
+                            if appSessionStore.isSignedIn {
+                                HStack {
+                                    Spacer()
+                                    TagPostView()
+                                    Spacer().frame(width: 10)
+                                    ComposePostView()
+                                }
+                                .padding(.horizontal, 10)
+                                .padding(.bottom, 10)
+                            }
                         }
                         .frame(maxWidth: .infinity)
                         .background(RoundedCornersView(color: Color("ChatBubblePrimary")))
@@ -219,16 +231,29 @@ struct ThreadDetailView: View {
                                             }
                                         }
                                         // Expanded reply rich text and bubble
-                                        HStack {
+                                        VStack {
                                             HStack {
                                                 RichTextView(topBlocks: self.selectedPostRichText).fixedSize(horizontal: false, vertical: true)
                                                 Spacer()
                                             }
                                             .padding(10)
                                             .frame(maxWidth: .infinity)
+                                            
+                                            // Tag and reply
+                                            if appSessionStore.isSignedIn {
+                                                HStack {
+                                                    Spacer()
+                                                    TagPostView()
+                                                    Spacer().frame(width: 10)
+                                                    ComposePostView()
+                                                }
+                                                .padding(.horizontal, 10)
+                                                .padding(.bottom, 10)
+                                            }
                                         }
                                         .background(RoundedCornersView(color: Color("ChatBubbleSecondary")))
                                         .padding(.bottom, 5)
+                                        
                                     }
                                 }
                                 
@@ -241,7 +266,6 @@ struct ThreadDetailView: View {
                                     self.selectedPost = post.id
                                 }
                             }
-                            
                             
                         }
                         .id(post.id)
