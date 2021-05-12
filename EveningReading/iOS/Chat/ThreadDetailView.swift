@@ -260,7 +260,7 @@ struct ThreadDetailView: View {
                         .background(RoundedCornersView(color: Color("ChatBubblePrimary")))
                         .padding(.bottom, 10)
                     }
-                    .padding(EdgeInsets(top: 0, leading: 10, bottom: 5, trailing: 10))
+                    .padding(EdgeInsets(top: 0, leading: 10, bottom: -5, trailing: 10))
                     .id(9999999999991)
                     
                     // No replies yet
