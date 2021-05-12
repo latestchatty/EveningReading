@@ -9,10 +9,19 @@ import SwiftUI
 
 struct AuthorNameView: View {
     @Environment(\.colorScheme) var colorScheme
+    @StateObject var msgStore = MessageStore(service: .init())
+    
     var name: String = ""
     var postId: Int = 0
     var bold: Bool = false
     var navLink: Bool = false
+    
+    #if os(iOS)
+    @State private var showingNewMessageView = false
+    @State private var messageRecipient: String = ""
+    @State private var messageSubject: String = ""
+    @State private var messageBody: String = ""
+    #endif
     
     #if os(watchOS)
     @State private var showingAuthor = false
@@ -20,6 +29,8 @@ struct AuthorNameView: View {
     
     var body: some View {
         #if os(iOS)
+        //NewMessageView(showingNewMessageSheet: $showingNewMessageView, messageId: Binding.constant(postId), recipientName: self.$messageRecipient, subjectText: self.$messageSubject, bodyText: self.$messageBody)
+        
             Text("\(self.name)")
                 .font(.footnote)
                 .bold()
@@ -27,26 +38,38 @@ struct AuthorNameView: View {
                 .lineLimit(1)
                 .truncationMode(.tail)
                 .fixedSize()
+                /*
                 .contextMenu {
                     Button(action: {
                         // send message
+                        self.messageRecipient = self.name
+                        self.messageSubject = ""
+                        self.messageBody = ""
+                        self.showingNewMessageView = true
                     }) {
                         Text("Send Message")
                         Image(systemName: "envelope.circle")
                     }
+                    /*
                     Button(action: {
                         // search posts
                     }) {
                         Text("Search Post History")
                         Image(systemName: "magnifyingglass.circle")
                     }
+                    */
                     Button(action: {
                         // report user
+                        self.messageRecipient = "Duke Nuked"
+                        self.messageSubject = "Reporting Author of Post"
+                        self.messageBody = msgStore.getComplaintText(author: self.name, postId: self.postId)
+                        self.showingNewMessageView = true
                     }) {
                         Text("Report User")
                         Image(systemName: "exclamationmark.circle")
                     }
                 }
+                */
         #endif
         #if os(OSX)
             Text("\(self.name)")
@@ -106,8 +129,8 @@ struct AuthorNameView: View {
                 .alert(isPresented: self.$showingAuthor) {
                     Alert(title: Text("Report \(self.name)"), message: Text("For post \(self.postId)"),
                           primaryButton: .default (Text("OK")) {
-                            print("OK button tapped")
-                            
+                            // report user
+                            msgStore.submitComplaint(author: self.name, postId: self.postId)
                           }, secondaryButton: .cancel()
                     )
                 }
@@ -120,5 +143,6 @@ struct AuthorNameView_Previews: PreviewProvider {
     static var previews: some View {
         AuthorNameView(name: "tamzyn", postId: 999999996, bold: false)
             .environment(\.colorScheme, .light)
+            .environmentObject(MessageStore(service: MessageService()))
     }
 }

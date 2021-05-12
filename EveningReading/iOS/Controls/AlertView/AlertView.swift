@@ -17,8 +17,9 @@ enum AlertAction {
 struct AlertView: View {
     @Environment(\.colorScheme) var colorScheme
     @Binding var shown: Bool
-    @Binding var closureA: AlertAction?
+    @Binding var alertAction: AlertAction?
     var message: String
+    var cancelOnly: Bool
     var confirmAction: () -> Void = {}
 
     var body: some View {
@@ -35,35 +36,49 @@ struct AlertView: View {
                     .frame(height: 1)
                     .offset(x: 0, y: 8)
                 HStack {
-                    Button(action: {
-                        print("Cancel")
-                        closureA = .cancel
-                        withAnimation(.easeOut(duration: 0.1)) {
-                            shown.toggle()
+                    if cancelOnly {
+                        Button(action: {
+                            alertAction = .ok
+                            confirmAction()
+                            withAnimation(.easeOut(duration: 0.1)) {
+                                shown.toggle()
+                            }
+                        }) {
+                            Text("OK")
+                                .bold()
+                                .foregroundColor(Color(UIColor.link))
                         }
-                    }) {
-                        Text("Cancel")
-                            .bold()
-                            .foregroundColor(Color(UIColor.link))
-                    }
-                    .frame(width: 120, height: 30)
-                    .foregroundColor(.white)
-                    Rectangle()
-                        .fill(Color(UIColor.systemGray2))
-                        .frame(width: 1)
-                    Button(action: {
-                        print("Yes")
-                        closureA = .ok
-                        confirmAction()
-                        withAnimation(.easeOut(duration: 0.1)) {
-                            shown.toggle()
+                        .frame(width: 120, height: 30)
+                        .foregroundColor(.white)
+                    } else {
+                        Button(action: {
+                            alertAction = .cancel
+                            withAnimation(.easeOut(duration: 0.1)) {
+                                shown.toggle()
+                            }
+                        }) {
+                            Text("Cancel")
+                                .bold()
+                                .foregroundColor(Color(UIColor.link))
                         }
-                    }) {
-                        Text("Yes")
-                            .foregroundColor(Color(UIColor.link))
+                        .frame(width: 120, height: 30)
+                        .foregroundColor(.white)
+                        Rectangle()
+                            .fill(Color(UIColor.systemGray2))
+                            .frame(width: 1)
+                        Button(action: {
+                            alertAction = .ok
+                            confirmAction()
+                            withAnimation(.easeOut(duration: 0.1)) {
+                                shown.toggle()
+                            }
+                        }) {
+                            Text("Yes")
+                                .foregroundColor(Color(UIColor.link))
+                        }
+                        .frame(width: 120, height: 30)
+                        .foregroundColor(.white)
                     }
-                    .frame(width: 120, height: 30)
-                    .foregroundColor(.white)
                 }
                 .frame(height: 50)
             }
@@ -82,7 +97,7 @@ struct AlertView: View {
 struct AlertView_Previews: PreviewProvider {
     
     static var previews: some View {
-        AlertView(shown: .constant(true), closureA: .constant(.others), message: "Submit post?")
+        AlertView(shown: .constant(true), alertAction: .constant(.others), message: "Submit post?", cancelOnly: true)
             .environment(\.colorScheme, .dark)
     }
 }

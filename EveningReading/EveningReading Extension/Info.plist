@@ -30,6 +30,10 @@
 		<key>NSExtensionPointIdentifier</key>
 		<string>com.apple.watchkit</string>
 	</dict>
+	<key>SHACK_ERPASS</key>
+	<string>$(SHACK_ERPASS)</string>
+	<key>SHACK_ERUSER</key>
+	<string>$(SHACK_ERUSER)</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>replylines.ttf</string>

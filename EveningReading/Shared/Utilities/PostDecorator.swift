@@ -21,6 +21,7 @@ class PostDecorator {
         return strength
     }
     
+    // Check if participated in thread
     static func checkParticipatedStatus(thread: ChatThread, author: String) -> Bool {
         let username: String? = KeychainWrapper.standard.string(forKey: "Username")
 

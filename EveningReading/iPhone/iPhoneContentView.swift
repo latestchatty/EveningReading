@@ -12,6 +12,8 @@ struct iPhoneContentView: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var chatStore: ChatStore
     @EnvironmentObject var articleStore: ArticleStore
+    @EnvironmentObject var messageStore: MessageStore
+    @EnvironmentObject var notifications: Notifications
     
     @State private var showingGuidelinesView = false
     
@@ -54,5 +56,7 @@ struct iPhoneContentView_Previews: PreviewProvider {
             .environmentObject(AppSessionStore(service: AuthService()))
             .environmentObject(ChatStore(service: ChatService()))
             .environmentObject(ArticleStore(service: ArticleService()))
+            .environmentObject(MessageStore(service: MessageService()))
+            .environmentObject(Notifications())
     }
 }

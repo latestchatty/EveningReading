@@ -12,6 +12,9 @@ struct TrendingView: View {
     @EnvironmentObject var chatStore: ChatStore
     
     @State private var showPlaceholder = true
+    @State private var selectedThreadId: Int? = 0
+    
+    private var threadLimit = 6
 
     private func navigateTo(_ goToDestination: inout Bool) {
         appSessionStore.resetNavigation()
@@ -31,23 +34,13 @@ struct TrendingView: View {
         {
             return Array(chatData.threads.prefix(4))
         }
-        let threads = self.chatStore.threads.filter({ return self.appSessionStore.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !self.appSessionStore.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)}).sorted(by: { $0.posts.count > $1.posts.count }).prefix(4)
+        let threads = self.chatStore.threads.filter({ return self.appSessionStore.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !self.appSessionStore.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)}).sorted(by: { $0.posts.count > $1.posts.count }).prefix(self.threadLimit)
         if threads.count > 0 {
-            return Array(threads.prefix(4))
+            return Array(threads.prefix(self.threadLimit))
         } else {
-            return Array(chatData.threads.prefix(4))
+            return Array(chatData.threads.prefix(self.threadLimit))
         }
     }
-    
-    private func rotationAmount() -> CGFloat {
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            return 60
-        } else {
-            return 30
-        }
-    }
-    
-    @State private var selectedThreadId: Int? = 0
     
     var body: some View {
         VStack {
@@ -66,20 +59,17 @@ struct TrendingView: View {
             // Content
             VStack {
                 ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 80) {
+                    HStack {
                         ForEach(filteredThreads(), id: \.threadId) { thread in
-                            GeometryReader { geometry in
-                                NavigationLink(destination: ThreadDetailView(threadId: .constant(thread.threadId)), tag: thread.threadId, selection: $selectedThreadId) { EmptyView() }
-                                TrendingCard(thread: .constant(thread))
-                                .conditionalModifier(thread.threadId, RedactedModifier())
-                                .rotation3DEffect(Angle(degrees: Double((geometry.frame(in: .global).minX - rotationAmount()) / (rotationAmount() * -1))), axis: (x: 0, y: 10, z: 0))
-                                .background(Color.clear)
-                                .onTapGesture(count: 1) {
-                                    self.selectedThreadId = thread.threadId
-                                }
+                            NavigationLink(destination: ThreadDetailView(threadId: .constant(thread.threadId), postId: .constant(0)), tag: thread.threadId, selection: $selectedThreadId) { EmptyView() }
+                            TrendingCard(thread: .constant(thread))
+                            .conditionalModifier(thread.threadId, RedactedModifier())
+                            .background(Color.clear)
+                            .padding(.trailing, 33)
+                            .onTapGesture(count: 1) {
+                                self.selectedThreadId = thread.threadId
                             }
-                            .frame(width: 246, height: 360)
-                        }                        
+                        }
                     }.padding(40)
                     Spacer()
                 }

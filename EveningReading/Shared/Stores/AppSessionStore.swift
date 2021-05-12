@@ -6,20 +6,24 @@
 //
 
 import Foundation
+import SwiftUI
+import Combine
 
 class AppSessionStore : ObservableObject {
+    // Init
+    private let service: AuthService
+    init(service: AuthService) {
+        self.service = service
+        loadDefaults()
+    }
+    
+    // Navigation
     @Published var showingHomeScreen = true
     @Published var showingChatView = false
     @Published var showingInboxView = false
     @Published var showingSearchView = false
     @Published var showingTagsView = false
     @Published var showingSettingsView = false
-    
-    private let service: AuthService
-    init(service: AuthService) {
-        self.service = service
-        loadDefaults()
-    }
     
     // Preferences
     @Published var displayPostAuthor: Bool = true {
@@ -38,6 +42,18 @@ class AppSessionStore : ObservableObject {
         didSet {
             let defaults = UserDefaults.standard
             defaults.set(threadNavigation, forKey: "ThreadNavigation")
+        }
+    }
+    @Published var isDarkMode: Bool = true {
+        didSet {
+            let defaults = UserDefaults.standard
+            defaults.set(isDarkMode, forKey: "IsDarkMode")
+        }
+    }
+    @Published var useYoutubeApp: Bool = false {
+        didSet {
+            let defaults = UserDefaults.standard
+            defaults.set(useYoutubeApp, forKey: "UseYoutubeApp")
         }
     }
     
@@ -107,6 +123,22 @@ class AppSessionStore : ObservableObject {
         }
     }
     
+    // Thread Navigation
+    #if os(iOS)
+    @Published var paginateLocationX: CGFloat = UIScreen.main.bounds.width - 50 {
+        didSet {
+            let defaults = UserDefaults.standard
+            defaults.set(paginateLocationX, forKey: "PaginateLocationX")
+        }
+    }
+    @Published var paginateLocationY: CGFloat = UIScreen.main.bounds.height - 120 {
+        didSet {
+            let defaults = UserDefaults.standard
+            defaults.set(paginateLocationY, forKey: "PaginateLocationY")
+        }
+    }
+    #endif
+    
     // Auth
     @Published var signInUsername = ""
     @Published var signInPassword = ""
@@ -125,13 +157,24 @@ class AppSessionStore : ObservableObject {
         }
     }
     
+    // Search & Push
+    @Published var showingShackLink: Bool = false
+    @Published var shackLinkPostId: String = ""
+    func setLink(postId: String) {
+        shackLinkPostId = postId
+        showingShackLink = true
+    }
+    
     func loadDefaults() {
-        // Preferences
         let defaults = UserDefaults.standard
+        
+        // Preferences
         self.displayPostAuthor = defaults.object(forKey: "DisplayPostAuthor") as? Bool ?? true
         self.abbreviateThreads = defaults.object(forKey: "AbbreviateThreads") as? Bool ?? true
         self.threadNavigation = defaults.object(forKey: "ThreadNavigation") as? Bool ?? false
-    
+        self.isDarkMode = defaults.object(forKey: "IsDarkMode") as? Bool ?? true
+        self.useYoutubeApp = defaults.object(forKey: "UseYoutubeApp") as? Bool ?? false
+        
         // Filters
         self.threadFilters = defaults.object(forKey: "ThreadFilters") as? [String] ?? ["informative", "ontopic"]
         self.showInformative = defaults.object(forKey: "ShowInformative") as? Bool ?? true
@@ -143,8 +186,29 @@ class AppSessionStore : ObservableObject {
         // Collapsed
         self.collapsedThreads = defaults.object(forKey: "CollapsedThreads") as? [Int] ?? [0]
         
+        // Navigation
+        #if os(iOS)
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            self.paginateLocationX = 0
+            self.paginateLocationY = 0
+        } else {
+            self.paginateLocationX = defaults.object(forKey: "PaginateLocationX") as? CGFloat ?? UIScreen.main.bounds.width - 50
+            self.paginateLocationY = defaults.object(forKey: "PaginateLocationY") as? CGFloat ?? UIScreen.main.bounds.height - 120
+        }
+        #endif
+        
         // Auth
         self.isSignedIn = defaults.object(forKey: "IsSignedIn") as? Bool ?? false
+        
+/*
+// Reset on startup
+let resetDarkMode = defaults.object(forKey: "ResetDarkMode") as? Bool ?? false
+if !resetDarkMode {
+    self.isDarkMode = tue
+    defaults.set(true, forKey: "ResetDarkMode")
+}
+*/
+        
     }
     
     func resetNavigation() {

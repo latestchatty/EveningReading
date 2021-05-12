@@ -29,25 +29,23 @@ struct watchOSThreadRow: View {
     private func getThreadData() {
         if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil {
             if let thread = chatData.threads.filter({ return $0.threadId == self.threadId }).first {
-                let rootPost = thread.posts.filter({ return $0.parentId == 0 }).first
-                self.rootPostCategory = rootPost?.category ?? "ontopic"
-                self.rootPostAuthor = rootPost?.author ?? ""
-                self.rootPostBodyPreview = rootPost?.body.getPreview ?? ""
-                self.rootPostDate = rootPost?.date ?? "2020-08-14T21:05:00Z"
-                self.replyCount = thread.posts.count - 1
-                self.rootPostLols = rootPost?.lols ?? [ChatLols]()
+                setThreadData(thread)
             }
         } else {
             if let thread = chatStore.threads.filter({ return $0.threadId == self.threadId }).first {
-                let rootPost = thread.posts.filter({ return $0.parentId == 0 }).first
-                self.rootPostCategory = rootPost?.category ?? "ontopic"
-                self.rootPostAuthor = rootPost?.author ?? ""
-                self.rootPostBodyPreview = rootPost?.body.getPreview ?? ""
-                self.rootPostDate = rootPost?.date ?? "2020-08-14T21:05:00Z"
-                self.replyCount = thread.posts.count - 1
-                self.rootPostLols = rootPost?.lols ?? [ChatLols]()
+                setThreadData(thread)
             }
         }
+    }
+    
+    private func setThreadData(_ thread: ChatThread) {
+        let rootPost = thread.posts.filter({ return $0.parentId == 0 }).first
+        self.rootPostCategory = rootPost?.category ?? "ontopic"
+        self.rootPostAuthor = rootPost?.author ?? ""
+        self.rootPostBodyPreview = rootPost?.body.getPreview ?? ""
+        self.rootPostDate = rootPost?.date ?? "2020-08-14T21:05:00Z"
+        self.replyCount = thread.posts.count - 1
+        self.rootPostLols = rootPost?.lols ?? [ChatLols]()
     }
     
     var body: some View {
@@ -60,13 +58,15 @@ struct watchOSThreadRow: View {
             
             if !self.isThreadCollapsed {
                 VStack (alignment: .leading) {
+                    // Thread details
                     HStack {
                         AuthorNameView(name: self.rootPostAuthor, postId: self.threadId, navLink: true)
                         ContributedView(contributed: self.contributed)
                         Spacer()
-                        LolView(lols: self.rootPostLols)
+                        LolView(lols: self.rootPostLols, postId: self.threadId)
                         ReplyCountView(replyCount: self.replyCount)
                     }
+                    // Thread body preview
                     HStack {
                         Text(rootPostBodyPreview)
                             .font(.footnote)
@@ -90,12 +90,16 @@ struct watchOSThreadRow: View {
             } else {
                 Spacer()
             }
+            
         }
+        // Show when collapsing a thread
         .alert(isPresented: self.$showingCollapseAlert) {
             Alert(title: Text("Hide Thread?"), message: Text(""), primaryButton: .cancel(), secondaryButton: Alert.Button.default(Text("OK"), action: {
                 self.isThreadCollapsed = true
+                self.appSessionStore.collapsedThreads.append(threadId)
             }))
         }
+        
     }
 }
 

@@ -35,6 +35,7 @@ struct macOSContentView: View {
                 .navigationTitle("Evening Reading")
                 .frame(minWidth: 150, idealWidth: 250, maxWidth: 300)
                 .toolbar {
+                    
                     // Collapse Sidebar
                     ToolbarItem(placement: .automatic) {
                         Button(action: {
@@ -43,6 +44,7 @@ struct macOSContentView: View {
                             Image(systemName: "sidebar.left")
                         })
                     }
+                    
                     // Toolbar Buttons
                     ToolbarItemGroup(placement: .navigation) {
                         if appSessionStore.showingChatView {
@@ -72,6 +74,7 @@ struct macOSContentView: View {
                             EmptyView()
                         }
                     }
+                    
                 }
                 
                 // Detail View

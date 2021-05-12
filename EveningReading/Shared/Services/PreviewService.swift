@@ -8,9 +8,11 @@
 import Foundation
 
 let chatData: Chat = loadPreviewData("Chat.json")
+let messageData: MessageResponse = loadPreviewData("Messages.json")
 
 #if !os(watchOS)
 let articlesData: [Article] = loadPreviewData("Articles.json")
+let searchData: SearchChat = loadPreviewData("SearchResults.json")
 #endif
 
 func loadPreviewData<T: Decodable>(_ filename: String) -> T {

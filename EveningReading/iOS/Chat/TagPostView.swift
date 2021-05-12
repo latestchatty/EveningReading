@@ -12,16 +12,62 @@ struct TagPostView: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var chatStore: ChatStore
     
+    var postId: Int
+    
     @State private var showingTagActionSheet = false
     @State private var tag = ""
     
-    func tagPost(_ tag: String) {
+    // Tag or untag a post
+    private func tagPost(_ tag: String) {
+        let user: String? = KeychainWrapper.standard.string(forKey: "Username")
         
+        var userTagsForPost = [String: Int]()
+        for tag in PostTag.allCases {
+            userTagsForPost[tag.rawValue] = 0
+        }
+        
+        // Find out if we are tagging or untagging then proceed
+        chatStore.getRaters(postId: postId, completionSuccess: {
+                for rater in chatStore.raters {
+                    for username in rater.usernames {
+                        if username == user {
+                            if let userTagged = PostTagCode[rater.tag] {
+                                userTagsForPost[userTagged] = 1
+                            }
+                        }
+                    }
+                }
+                if (userTagsForPost[tag] ?? 0 < 1) {
+                    chatStore.tag(postId: self.postId, tag: tag, untag: "0")
+                    chatStore.taggingNoticeText = "Tagged!"
+                } else {
+                    chatStore.tag(postId: self.postId, tag: tag, untag: "1")
+                    chatStore.taggingNoticeText = "Untagged!"
+                }
+                chatStore.didTagPost = true
+            }, completionFail: {
+                if !(userTagsForPost[tag] ?? 0 > 0) {
+                    chatStore.tag(postId: self.postId, tag: tag, untag: "0")
+                } else {
+                    chatStore.tag(postId: self.postId, tag: tag, untag: "1")
+                }
+            }
+        )
+    }
+    
+    // Make tag action sheet
+    private func getTacActionSheet() -> ActionSheet {
+        let buttons = PostTag.allCases.enumerated().map { i, option in
+            Alert.Button.default(Text(option.rawValue), action: { self.tagPost(option.rawValue) } )
+        }
+        return ActionSheet(title: Text("Tags"),
+                       buttons: buttons + [Alert.Button.cancel()])
     }
 
     var body: some View {
         VStack {
             Button(action: {
+                chatStore.didTagPost = false
                 self.showingTagActionSheet = true
             }) {
                 ZStack{
@@ -36,16 +82,7 @@ struct TagPostView: View {
             }
             .actionSheet(isPresented: self.$showingTagActionSheet)
             {
-                ActionSheet(title: Text("Tags"), message: Text(""), buttons: [
-                    .default(Text("lol")) { self.tagPost("lol") },
-                    .default(Text("inf")) { self.tagPost("inf") },
-                    .default(Text("unf")) { self.tagPost("unf") },
-                    .default(Text("tag")) { self.tagPost("tag") },
-                    .default(Text("wtf")) { self.tagPost("wtf") },
-                    .default(Text("wow")) { self.tagPost("wow") },
-                    .default(Text("aww")) { self.tagPost("aww") },
-                    .cancel()
-                ])
+                getTacActionSheet()
             }
         }
     }
@@ -53,7 +90,7 @@ struct TagPostView: View {
 
 struct TagPostView_Previews: PreviewProvider {
     static var previews: some View {
-        TagPostView()
+        TagPostView(postId: 0)
             .environmentObject(AppSessionStore(service: AuthService()))
             .environmentObject(ChatStore(service: ChatService()))
     }

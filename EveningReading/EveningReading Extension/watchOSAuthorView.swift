@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct watchOSAuthorView: View {
+    @StateObject var msgStore = MessageStore(service: .init())
+    
     @Binding var name: String
     @Binding var postId: Int
 
@@ -17,6 +19,7 @@ struct watchOSAuthorView: View {
     var body: some View {        
         VStack {
             if self.showReportUserMessage {
+                // Message
                 ScrollView {
                     Text("I would like to report user '").font(.footnote) +
                     Text("\(self.name)").font(.footnote).foregroundColor(Color.orange) +
@@ -32,8 +35,13 @@ struct watchOSAuthorView: View {
                     }
                 }
             } else if self.showMessageSent {
-                Text("User Reported!")
+                // Author was reported
+                Text("Author Reported!")
+                    .onAppear() {
+                        msgStore.submitComplaint(author: self.name, postId: self.postId)
+                    }
             } else {
+                // Prompt
                 Spacer()
                 Text("\(self.name)")
                     .font(.footnote)
@@ -43,7 +51,7 @@ struct watchOSAuthorView: View {
                     .padding(.top)
                 
                 Spacer()
-                Button("Report User") {
+                Button("Report Author") {
                     // Show message
                     withAnimation {
                         self.showReportUserMessage = true
@@ -58,5 +66,6 @@ struct watchOSAuthorView_Previews: PreviewProvider {
     static var previews: some View {
         watchOSAuthorView(name: .constant("ellawala"), postId: .constant(999999996))
             .previewDevice(PreviewDevice(rawValue: "Apple Watch Series 5 - 44mm"))
+            .environmentObject(MessageStore(service: MessageService()))
     }
 }

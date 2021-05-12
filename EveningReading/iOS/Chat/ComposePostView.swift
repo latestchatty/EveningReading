@@ -15,8 +15,9 @@ struct ComposePostView: View {
     @EnvironmentObject var chatStore: ChatStore
     
     public var isRootPost: Bool = false
+    public var postId: Int = 0
     
-    @State private var postText = ""
+    @State private var postBody = ""
     @State private var showingComposeSheet = false
     @State private var showingLoading = false
     @State private var loadingMessage = "Loading"
@@ -24,9 +25,27 @@ struct ComposePostView: View {
     @State private var uploadImage: UIImage?
     @State private var uploadImageFail = false
     @State private var showingSubmitAlert = false
+    @State private var showingSubmitError = false
     
     private func submitPost() {
+        self.loadingMessage = "Submitting"
+        self.showingLoading = true
+        self.chatStore.didSubmitPost = true
         
+        if self.isRootPost {
+            self.chatStore.didGetChatStart = true
+        } else {
+            self.chatStore.didGetThreadStart = true
+        }
+
+        // Let the loading indicator show for at least a short time
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(200)) {
+            self.chatStore.submitPost(postBody: self.postBody, postId: self.postId)
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(8)) {
+            self.chatStore.getThread()
+        }
     }
 
     private func showImageSheet() {
@@ -122,7 +141,7 @@ struct ComposePostView: View {
                         do {
                             parsedResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String: AnyObject]
                             if let dataJson = parsedResult["data"] as? [String: Any] {
-                                self.postText += "\(dataJson["link"] as? String ?? "[Error Uploading Image]")"
+                                self.postBody += "\(dataJson["link"] as? String ?? "[Error Uploading Image]")"
                                 self.showingLoading = false
                                 self.uploadImageFail = false
                             }
@@ -143,80 +162,100 @@ struct ComposePostView: View {
             Spacer().frame(width: 0, height: 0)
 
             // Compose Post Sheet
-            .sheet(isPresented: $showingComposeSheet,
+                .sheet(isPresented: self.$showingComposeSheet,
                onDismiss: {
                     print("Modal Dismissed")
                }) {
                 VStack {
-                    HStack {
-                        Spacer().frame(width: 10)
+                    ZStack {
                         
-                        Button("Cancel") {
-                            DispatchQueue.main.async {
-                                //self.chattyStore.submitPostSuccessMessage = ""
-                                //self.chattyStore.submitPostErrorMessage = ""
-                                self.postText = ""
-                                self.showingLoading = false
-                                self.uploadImageFail = false
-                                self.showingComposeSheet = false
-                            }
-                        }
-                        Spacer()
-                        
-                        if self.showingLoading {
-                            ProgressView().frame(width: 20, height: 20)
-                        }
-                        
-                        Spacer().frame(width: 10)
-                        
-                        Button(action: {
-                            if self.showingLoading {
-                                return
-                            }
-                            DispatchQueue.main.async {
-                                self.showingComposeSheet = false
-                                self.uploadImageFail = false
-                                showImageSheet()
-                            }
-                        }) {
-                            if self.uploadImageFail {
-                                Image(systemName: "photo")
-                                    .foregroundColor(self.showingLoading ? Color(UIColor.systemGray3) : Color(UIColor.link))
-                                    .overlay(Image(systemName: "exclamationmark").scaleEffect(0.75).padding(.top, -5).padding(.leading, 25).foregroundColor(Color(UIColor.systemRed)), alignment: .top)
-                            } else {
-                                Image(systemName: "photo")
-                                    .foregroundColor(self.showingLoading ? Color(UIColor.systemGray3) : Color(UIColor.link))
+                        // Heads up if it's going to be a new thread
+                        if postId == 0 {
+                            HStack {
+                                Spacer()
+                                Text("New Thread")
+                                    .font(.body)
+                                    .padding(.top, 10)
+                                Spacer()
                             }
                         }
                         
-                        Spacer().frame(width: 10)
-                        
-                        Button("Submit") {
-                            if self.showingLoading {
-                                return
+                        // Buttons
+                        HStack {
+                            Spacer().frame(width: 10)
+                            
+                            // Bail!
+                            Button("Cancel") {
+                                DispatchQueue.main.async {
+                                    chatStore.submitPostSuccessMessage = ""
+                                    chatStore.submitPostErrorMessage = ""
+                                    self.postBody = ""
+                                    self.showingLoading = false
+                                    self.uploadImageFail = false
+                                    self.showingComposeSheet = false
+                                }
                             }
-                            withAnimation(.easeIn(duration: 0.05)) {
-                                self.showingSubmitAlert = true
+                            
+                            Spacer()
+
+                            // Imgur Button
+                            Button(action: {
+                                if self.showingLoading {
+                                    return
+                                }
+                                DispatchQueue.main.async {
+                                    self.showingComposeSheet = false
+                                    self.uploadImageFail = false
+                                    showImageSheet()
+                                }
+                            }) {
+                                if self.uploadImageFail {
+                                    Image(systemName: "photo")
+                                        .foregroundColor(self.showingLoading ? Color(UIColor.systemGray3) : Color(UIColor.link))
+                                        .overlay(Image(systemName: "exclamationmark").scaleEffect(0.75).padding(.top, -5).padding(.leading, 25).foregroundColor(Color(UIColor.systemRed)), alignment: .top)
+                                } else {
+                                    Image(systemName: "photo")
+                                        .foregroundColor(self.showingLoading ? Color(UIColor.systemGray3) : Color(UIColor.link))
+                                }
                             }
+                            
+                            Spacer().frame(width: 10)
+                            
+                            // Submit Post
+                            Button("Submit") {
+                                if self.showingLoading {
+                                    return
+                                }
+                                withAnimation(.easeIn(duration: 0.05)) {
+                                    self.showingSubmitAlert = true
+                                }
+                            }
+                            .frame(width: 70, height: 30)
+                            .foregroundColor(self.showingLoading ? Color(UIColor.systemGray3) : Color(UIColor.link))
+                            
+                            Spacer().frame(width: 10)
                         }
-                        .frame(width: 70, height: 30)
-                        .foregroundColor(self.showingLoading ? Color(UIColor.systemGray3) : Color(UIColor.link))
+                        .padding(.top, 10)
                         
-                        Spacer().frame(width: 10)
                     }
-                    .padding(.top, 10)
                     
                     // TextEditor
                     ZStack {
                         // no way to change the background yet :(
-                        if colorScheme == .light {
-                            TextEditor(text: $postText)
+                        if appSessionStore.isDarkMode {
+                            TextEditor(text: $postBody)
+                                .border(Color(UIColor.systemGray5))
+                                .cornerRadius(4.0)
+                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                                .padding(EdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5))
+                        } else if colorScheme == .light {
+                            TextEditor(text: $postBody)
                                 .border(Color(UIColor.systemGray5))
                                 .cornerRadius(4.0)
                                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                                 .padding(EdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5))
                         } else {
-                            TextEditor(text: $postText)
+                            TextEditor(text: $postBody)
                                 .border(Color(UIColor.systemGray5))
                                 .cornerRadius(4.0)
                                 .colorInvert()
@@ -238,15 +277,19 @@ struct ComposePostView: View {
                         }
                         
                         // Can't show a real alert on top of a sheet
-                        AlertView(shown: self.$showingSubmitAlert, closureA: .constant(.others), message: "Submit post?", confirmAction: {
-                            print("Submit post? confirmAction")
+                        AlertView(shown: self.$showingSubmitAlert, alertAction: .constant(.others), message: "Submit post?", cancelOnly: false, confirmAction: {
                             self.submitPost()
-                            self.loadingMessage = "Submitting"
-                            self.showingLoading = true
+                        })
+                        
+                        // Some kind of posting error
+                        AlertView(shown: self.$showingSubmitError, alertAction: .constant(.others), message: "Error Posting", cancelOnly: true, confirmAction: {
+                            self.chatStore.submitPostSuccessMessage = ""
+                            self.chatStore.submitPostErrorMessage = ""
                         })
                     }
                     Spacer()                    
                 }
+                .background(appSessionStore.isDarkMode ? Color("PrimaryBackgroundDarkMode").frame(height: 2600).offset(y: -80) : Color.clear.frame(height: 2600).offset(y: -80))
             }
             // End Compose Post Sheet
             
@@ -258,10 +301,9 @@ struct ComposePostView: View {
                             print("show composing sheet")
                             self.showingComposeSheet = true
                             if self.uploadImage != nil {
-                                print("uploading to Imgur")
                                 uploadImageToImgur(image: self.uploadImage!)
                             } else {
-                                print("self.uploadImage is nil")
+                                self.uploadImageFail = false
                             }
                         }
                    }) {
@@ -272,9 +314,33 @@ struct ComposePostView: View {
                     self.loadingMessage = "Uploading"
                 }
             }
-            // End Image Picker Sheet
             
-            // Button
+            // Post Success
+            .onReceive(self.chatStore.$submitPostSuccessMessage) { successMsg in
+                if successMsg != "" {
+                    DispatchQueue.main.async {
+                        self.chatStore.submitPostSuccessMessage = ""
+                        self.chatStore.submitPostErrorMessage = ""
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(10)) {
+                        self.postBody = ""
+                        self.showingLoading = false
+                        self.showingComposeSheet = false
+                    }
+                }
+            }
+            
+            // Post Fail
+            .onReceive(self.chatStore.$submitPostErrorMessage) { errorMsg in
+                if errorMsg != "" {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(10)) {
+                        self.showingLoading = false
+                        self.showingSubmitError = true
+                    }
+                }
+            }
+            
+            // Button style is different depending on context
             if self.appSessionStore.isSignedIn || ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil {
                 Button(action: {
                     DispatchQueue.main.async {

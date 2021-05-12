@@ -25,11 +25,14 @@ struct ThreadRow: View {
     @State private var lolTypeCount: Int = 0
 
     @State private var collapseThread: Bool = false
-    @State private var showingCollapseAlert: Bool = false
-    @State private var isSwiping : Bool = false
-    @State private var swipeScale : CGFloat = 0.0
-    @State private var swipeOffset = CGSize.zero
 
+    @State private var showingWhosTaggingView = false
+    
+    @State private var showingNewMessageView = false
+    @State private var messageRecipient: String = ""
+    @State private var messageSubject: String = ""
+    @State private var messageBody: String = ""
+    
     private func getThreadData() {
         if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
         {
@@ -76,47 +79,26 @@ struct ThreadRow: View {
                     Spacer()
                 }
                 
-                // Collapse Button
-                HStack {
-                    Spacer()
-                    if self.swipeScale > 0.0 {
-                        Image(systemName: "eye.slash")
-                            .scaleEffect(swipeScale)
-                            .padding(.top, 26)
-                    }
-                    Spacer().frame(width: 20)
-                }
-                .frame(maxWidth: .infinity)
-                .onTapGesture {
-                    self.showingCollapseAlert = true
-                }
-                
-                // Collapse Alert
-                Spacer().frame(width: 0, height: 0)
-                .alert(isPresented: self.$showingCollapseAlert) {
-                    Alert(title: Text("Hide thread?"), message: Text(""), primaryButton: .default(Text("Yes")) {
-                        self.collapseThread = true
-                        //self.appSessionStore.collapsedThreads.append(post.id)
-                    }, secondaryButton: .cancel() {
-                        self.swipeOffset = .zero
-                    })
-                }
-                
                 // Author, Contribution, Lols, Replies, Time, Preview
                 HStack {
                     VStack {
+                        
                         HStack (alignment: .center) {
+                            WhosTaggingView(showingWhosTaggingView: self.$showingWhosTaggingView)
+                            
+                            NewMessageView(showingNewMessageSheet: self.$showingNewMessageView, messageId: Binding.constant(0), recipientName: self.$messageRecipient, subjectText: self.$messageSubject, bodyText: self.$messageBody)
+                            
                             AuthorNameView(name: self.rootPostAuthor, postId: self.threadId)
 
                             ContributedView(contributed: self.contributed)
 
                             Spacer()
 
-                            LolView(lols: self.rootPostLols, expanded: true)
+                            LolView(lols: self.rootPostLols, expanded: true, postId: self.threadId)
 
                             ReplyCountView(replyCount: self.replyCount)
                             
-                            TimeRemainingIndicator(percent:  .constant(self.rootPostDate.getTimeRemaining()))
+                            TimeRemainingIndicator(percent: .constant(self.rootPostDate.getTimeRemaining()))
                                     .frame(width: 10, height: 10)
                         }
                         
@@ -140,33 +122,19 @@ struct ThreadRow: View {
                         .frame(maxWidth: .infinity)
                         .background(RoundedCornersView(color: (self.activeThreadId == self.threadId ? Color("ChatBubbleSecondary") : Color("ChatBubblePrimary"))))
                         .padding(.bottom, 5)
+                        
                     }
                     .onAppear(perform: getThreadData)
                     .padding(.horizontal, 10)
                     .padding(.vertical, 10)
                 }
-                .offset(self.swipeOffset)
             }
             .frame(minHeight: 70)
             .border(Color.clear)
-            .gesture(DragGesture()
-                .onChanged { gesture in
-                    self.isSwiping = true
-                    self.swipeOffset.width = gesture.translation.width
-                }
-                .onEnded { _ in
-                    if self.swipeOffset.width < -50 {
-                        self.swipeScale = 1
-                        self.swipeOffset.width = -60
-                        self.categoryWidth = 0
-                    } else {
-                        self.swipeScale = 0.0
-                        self.swipeOffset = .zero
-                        self.categoryWidth = 3
-                    }
-                    self.isSwiping = false
-                }
-            )
+            // Actions
+            .contextMenu {
+                PostContextView(showingWhosTaggingView: self.$showingWhosTaggingView, showingNewMessageView: self.$showingNewMessageView, messageRecipient: self.$messageRecipient, messageSubject: self.$messageSubject, messageBody: self.$messageBody, collapsed: self.$collapseThread, author: self.rootPostAuthor, postId: self.threadId, threadId: self.threadId)
+            }
         } else {
             EmptyView()
         }

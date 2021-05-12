@@ -108,6 +108,7 @@ struct watchOSGuidelines: View {
                     .padding(10)
                 }
                 
+                // Accept
                 Button(action: acceptGuidelines) {
                     HStack(alignment: .center) {
                         Spacer()

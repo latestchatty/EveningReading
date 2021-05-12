@@ -13,7 +13,7 @@ struct watchOSContentView: View {
     
     @State private var showingGuidelinesView = false
     
-    private func fetchChat() {
+    private func getChat() {
         if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil || chatStore.threads.count > 0
         {
             return
@@ -32,6 +32,8 @@ struct watchOSContentView: View {
     
     var body: some View {
         ScrollView {
+            
+            // Guidelines on first run
             watchOSGuidelines(showingGuidelinesView: $showingGuidelinesView)
             .onAppear() {
                 DispatchQueue.main.async {
@@ -40,6 +42,8 @@ struct watchOSContentView: View {
                     self.showingGuidelinesView = !guidelinesAccepted
                 }
             }
+            
+            // Thread list
             if filteredThreads().count > 0 {
                 Button(action: {
                     chatStore.getChat()
@@ -62,8 +66,9 @@ struct watchOSContentView: View {
                     .progressViewStyle(CircularProgressViewStyle())
                     .padding(.top, 10)
             }
+            
         }
-        .onAppear(perform: fetchChat)
+        .onAppear(perform: getChat)
     }
 }
 

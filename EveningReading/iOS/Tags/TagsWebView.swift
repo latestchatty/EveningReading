@@ -147,7 +147,7 @@ public struct TagsWebView: View, UIViewRepresentable {
     @Binding var isLoading: Bool
     @Binding var loadUrl: String
 
-    public typealias UIViewType = UIViewContainerView<WKWebView>
+    public typealias UIViewType = TagViewContainerView<WKWebView>
   
     public init(webView: WKWebView, viewModel: TagsWebViewStore, estimatedProgress: Binding<Double>, isLoading: Binding<Bool>, loadUrl: Binding<String>) {
         self.webView = webView
@@ -159,7 +159,7 @@ public struct TagsWebView: View, UIViewRepresentable {
   
     public func makeUIView(context: UIViewRepresentableContext<TagsWebView>) -> TagsWebView.UIViewType {
         self.webView.navigationDelegate = context.coordinator
-        return UIViewContainerView()
+        return TagViewContainerView()
     }
   
     public func updateUIView(_ uiView: TagsWebView.UIViewType, context: UIViewRepresentableContext<TagsWebView>) {
@@ -218,7 +218,7 @@ public struct TagsWebView: View, UIViewRepresentable {
     }
 }
 
-public class UIViewContainerView<ContentView: UIView>: UIView {
+public class TagViewContainerView<ContentView: UIView>: UIView {
     var contentView: ContentView? {
         willSet {
             contentView?.removeFromSuperview()

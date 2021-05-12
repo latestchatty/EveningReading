@@ -16,21 +16,18 @@ struct ContributedView: View {
                 Image(systemName: "pencil")
                     .imageScale(.small)
                     .foregroundColor(Color(UIColor.systemTeal))
-                    //.padding(.leading, 5)
                     .offset(x: 0, y: -1)
             #endif
             #if os(OSX)
                 Image(systemName: "pencil")
                     .imageScale(.small)
                     .foregroundColor(Color(NSColor.systemTeal))
-                    //.padding(.leading, 5)
                     .offset(x: 0, y: -1)
             #endif
             #if os(watchOS)
                 Image(systemName: "pencil")
                     .imageScale(.small)
                     .foregroundColor(Color.blue)
-                    //.padding(.leading, 5)
                     .offset(x: 0, y: -1)
             #endif
         }

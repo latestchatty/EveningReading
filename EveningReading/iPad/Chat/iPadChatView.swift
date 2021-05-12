@@ -11,6 +11,8 @@ struct iPadChatView: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var chatStore: ChatStore
     
+    @State private var isGettingChat: Bool = false
+    
     private func filteredThreads() -> [ChatThread] {
         if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
         {
@@ -26,11 +28,16 @@ struct iPadChatView: View {
     
     var body: some View {
         GeometryReader { geometry in
+            
+            GoToPostView()
+            
             HStack (alignment: .top, spacing: 0) {
+                
                 // Navigation
                 VStack {
-                    RefreshableScrollView(height: 70, refreshing: self.$chatStore.loadingChat, scrollTarget: self.$chatStore.scrollTargetChat, scrollTargetTop: self.$chatStore.scrollTargetChatTop) {
+                    RefreshableScrollView(height: 70, refreshing: self.$chatStore.gettingChat, scrollTarget: self.$chatStore.scrollTargetChat, scrollTargetTop: self.$chatStore.scrollTargetChatTop) {
                         
+                        // All non-hidden threads
                         ForEach(filteredThreads(), id: \.threadId) { thread in
                             ThreadRow(threadId: .constant(thread.threadId), activeThreadId: $chatStore.activeThreadId)
                                 .environmentObject(appSessionStore)
@@ -42,6 +49,7 @@ struct iPadChatView: View {
                                 .id(thread.threadId)
                         }
                         
+                        // Scroll to bottom / padding
                         VStack {
                             Spacer().frame(maxWidth: .infinity).frame(height: 30)
                         }.id(9999999999993)
@@ -54,7 +62,7 @@ struct iPadChatView: View {
                 // Detail
                 VStack {
                     if chatStore.activeThreadId > 0 {
-                        ThreadDetailView(threadId: $chatStore.activeThreadId)
+                        ThreadDetailView(threadId: $chatStore.activeThreadId, postId: .constant(0))
                             .environmentObject(appSessionStore)
                             .environmentObject(chatStore)
                     } else {
@@ -69,12 +77,17 @@ struct iPadChatView: View {
                     }
                 }
                 .frame(width: geometry.size.width * 0.65)
+                
             }
         }
+        
+        // View settings
         .background(Color("PrimaryBackground").frame(height: 2600).offset(y: -80))
         .edgesIgnoringSafeArea(.bottom)
         .navigationViewStyle(StackNavigationViewStyle())
         .navigationBarTitle("Chat", displayMode: .inline)
+        
+        // New thread button
         .navigationBarItems(leading: Spacer().frame(width: 26, height: 16), trailing: ComposePostView(isRootPost: true))
     }
 }

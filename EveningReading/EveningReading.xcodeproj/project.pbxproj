@@ -157,6 +157,35 @@
 		83AA198426470CC100556E69 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA198326470CC100556E69 /* LoadingView.swift */; };
 		83AA198E26470FD400556E69 /* UIImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA198D26470FD400556E69 /* UIImageExtensions.swift */; };
 		83AA19932647110300556E69 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19922647110300556E69 /* ImagePickerView.swift */; };
+		83AA19982647933300556E69 /* SearchResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19972647933300556E69 /* SearchResultsView.swift */; };
+		83AA199C2647964000556E69 /* WhosTaggingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA199B2647964000556E69 /* WhosTaggingView.swift */; };
+		83AA19A0264821D100556E69 /* MessageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA199F264821D100556E69 /* MessageService.swift */; };
+		83AA19A5264824CB00556E69 /* NoticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19A4264824CB00556E69 /* NoticeView.swift */; };
+		83AA19A9264831D300556E69 /* ClearHiddenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19A8264831D300556E69 /* ClearHiddenView.swift */; };
+		83AA19AC264852F400556E69 /* Messages.json in Resources */ = {isa = PBXBuildFile; fileRef = 83AA19AB264852F400556E69 /* Messages.json */; };
+		83AA19AD264852F400556E69 /* Messages.json in Resources */ = {isa = PBXBuildFile; fileRef = 83AA19AB264852F400556E69 /* Messages.json */; };
+		83AA19B02648569700556E69 /* ChatBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19AF2648569700556E69 /* ChatBubble.swift */; };
+		83AA19B52648592700556E69 /* MessageDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19B42648592700556E69 /* MessageDetailView.swift */; };
+		83AA19B7264859CA00556E69 /* MessageWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19B6264859CA00556E69 /* MessageWebView.swift */; };
+		83AA19BA26485AAE00556E69 /* Stylesheet.css in Resources */ = {isa = PBXBuildFile; fileRef = 83AA19B926485AAE00556E69 /* Stylesheet.css */; };
+		83AA19BB26485AB200556E69 /* Stylesheet.css in Resources */ = {isa = PBXBuildFile; fileRef = 83AA19B926485AAE00556E69 /* Stylesheet.css */; };
+		83AA19BC26485AB300556E69 /* Stylesheet.css in Resources */ = {isa = PBXBuildFile; fileRef = 83AA19B926485AAE00556E69 /* Stylesheet.css */; };
+		83AA19BD26485B1F00556E69 /* MessageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA199F264821D100556E69 /* MessageService.swift */; };
+		83AA19BE26485B2000556E69 /* MessageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA199F264821D100556E69 /* MessageService.swift */; };
+		83AA19C026485B9100556E69 /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19BF26485B9100556E69 /* ColorExtensions.swift */; };
+		83AA19C2264862A000556E69 /* NewMessageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19C1264862A000556E69 /* NewMessageButton.swift */; };
+		83AA19C4264870BC00556E69 /* PaginateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19C3264870BC00556E69 /* PaginateView.swift */; };
+		83AA19C62648829E00556E69 /* NewMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19C52648829E00556E69 /* NewMessageView.swift */; };
+		83AA19C7264884F300556E69 /* Messages.json in Resources */ = {isa = PBXBuildFile; fileRef = 83AA19AB264852F400556E69 /* Messages.json */; };
+		83AA19C92648952400556E69 /* PostContextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19C82648952400556E69 /* PostContextView.swift */; };
+		83AA19CB2648A3AD00556E69 /* DarkModeViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19CA2648A3AD00556E69 /* DarkModeViewModifier.swift */; };
+		83AA19CD26497D5300556E69 /* SearchResults.json in Resources */ = {isa = PBXBuildFile; fileRef = 83AA19CC26497D5300556E69 /* SearchResults.json */; };
+		83AA19CE26498FDE00556E69 /* SearchResults.json in Resources */ = {isa = PBXBuildFile; fileRef = 83AA19CC26497D5300556E69 /* SearchResults.json */; };
+		83AA19D02649B72D00556E69 /* GoToPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19CF2649B72D00556E69 /* GoToPostView.swift */; };
+		83AA19D3264ADDFF00556E69 /* LinkViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19D2264ADDFF00556E69 /* LinkViewer.swift */; };
+		83AA19D8264B367100556E69 /* PostPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19D7264B367100556E69 /* PostPreviewView.swift */; };
+		83AA19DA264BFBF100556E69 /* PostExpandedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19D9264BFBF100556E69 /* PostExpandedView.swift */; };
+		83AA19DC264C323600556E69 /* watchOSPostPreview2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19DB264C323600556E69 /* watchOSPostPreview2.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -308,6 +337,28 @@
 		83AA198D26470FD400556E69 /* UIImageExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtensions.swift; sourceTree = "<group>"; };
 		83AA19922647110300556E69 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
 		83AA199626472E6900556E69 /* KeyConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = KeyConfig.xcconfig; sourceTree = "<group>"; };
+		83AA19972647933300556E69 /* SearchResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsView.swift; sourceTree = "<group>"; };
+		83AA199B2647964000556E69 /* WhosTaggingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhosTaggingView.swift; sourceTree = "<group>"; };
+		83AA199F264821D100556E69 /* MessageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageService.swift; sourceTree = "<group>"; };
+		83AA19A4264824CB00556E69 /* NoticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeView.swift; sourceTree = "<group>"; };
+		83AA19A8264831D300556E69 /* ClearHiddenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearHiddenView.swift; sourceTree = "<group>"; };
+		83AA19AB264852F400556E69 /* Messages.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Messages.json; sourceTree = "<group>"; };
+		83AA19AF2648569700556E69 /* ChatBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBubble.swift; sourceTree = "<group>"; };
+		83AA19B42648592700556E69 /* MessageDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDetailView.swift; sourceTree = "<group>"; };
+		83AA19B6264859CA00556E69 /* MessageWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageWebView.swift; sourceTree = "<group>"; };
+		83AA19B926485AAE00556E69 /* Stylesheet.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = Stylesheet.css; sourceTree = "<group>"; };
+		83AA19BF26485B9100556E69 /* ColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtensions.swift; sourceTree = "<group>"; };
+		83AA19C1264862A000556E69 /* NewMessageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageButton.swift; sourceTree = "<group>"; };
+		83AA19C3264870BC00556E69 /* PaginateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginateView.swift; sourceTree = "<group>"; };
+		83AA19C52648829E00556E69 /* NewMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageView.swift; sourceTree = "<group>"; };
+		83AA19C82648952400556E69 /* PostContextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostContextView.swift; sourceTree = "<group>"; };
+		83AA19CA2648A3AD00556E69 /* DarkModeViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkModeViewModifier.swift; sourceTree = "<group>"; };
+		83AA19CC26497D5300556E69 /* SearchResults.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SearchResults.json; sourceTree = "<group>"; };
+		83AA19CF2649B72D00556E69 /* GoToPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoToPostView.swift; sourceTree = "<group>"; };
+		83AA19D2264ADDFF00556E69 /* LinkViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkViewer.swift; sourceTree = "<group>"; };
+		83AA19D7264B367100556E69 /* PostPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPreviewView.swift; sourceTree = "<group>"; };
+		83AA19D9264BFBF100556E69 /* PostExpandedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostExpandedView.swift; sourceTree = "<group>"; };
+		83AA19DB264C323600556E69 /* watchOSPostPreview2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = watchOSPostPreview2.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -436,6 +487,7 @@
 				833980BE263C41D0005614E8 /* Info.plist */,
 				833980BF263C41D0005614E8 /* PushNotificationPayload.apns */,
 				833980BB263C41D0005614E8 /* Preview Content */,
+				83AA19DB264C323600556E69 /* watchOSPostPreview2.swift */,
 			);
 			path = "EveningReading Extension";
 			sourceTree = "<group>";
@@ -472,7 +524,6 @@
 			isa = PBXGroup;
 			children = (
 				83AA194A2646352900556E69 /* RedactingView */,
-				833EE9CE26454D7C00345A1D /* BetterSafariView */,
 				833EE9C92644DB1800345A1D /* RichTextView */,
 				8339818626406F04005614E8 /* TimeRemainingIndicator */,
 				83398179264062AB005614E8 /* RoundedCornersView */,
@@ -484,6 +535,7 @@
 		833980D2263C9C0B005614E8 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				83AA19B826485A9600556E69 /* Templates */,
 				833980E1263CAC7A005614E8 /* Data */,
 				833980D3263C9C1B005614E8 /* Fonts */,
 				83AA199626472E6900556E69 /* KeyConfig.xcconfig */,
@@ -511,6 +563,8 @@
 		833980E1263CAC7A005614E8 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				83AA19CC26497D5300556E69 /* SearchResults.json */,
+				83AA19AB264852F400556E69 /* Messages.json */,
 				833980FE263F0C72005614E8 /* Articles.json */,
 				833980FF263F0C72005614E8 /* Chat.json */,
 			);
@@ -539,6 +593,10 @@
 			isa = PBXGroup;
 			children = (
 				83398126263F2E59005614E8 /* InboxView.swift */,
+				83AA19B42648592700556E69 /* MessageDetailView.swift */,
+				83AA19B6264859CA00556E69 /* MessageWebView.swift */,
+				83AA19C1264862A000556E69 /* NewMessageButton.swift */,
+				83AA19C52648829E00556E69 /* NewMessageView.swift */,
 			);
 			path = Inbox;
 			sourceTree = "<group>";
@@ -547,6 +605,7 @@
 			isa = PBXGroup;
 			children = (
 				83398123263F2E4E005614E8 /* SearchView.swift */,
+				83AA19972647933300556E69 /* SearchResultsView.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -567,6 +626,7 @@
 				83398116263F250E005614E8 /* ArticleService.swift */,
 				83AA19392645F66500556E69 /* AuthService.swift */,
 				83398119263F26CA005614E8 /* PreviewService.swift */,
+				83AA199F264821D100556E69 /* MessageService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -577,6 +637,7 @@
 				8339810D263F1028005614E8 /* StringExtensions.swift */,
 				83398110263F1794005614E8 /* DateExtensions.swift */,
 				8339814F263F6427005614E8 /* ArrayExtensions.swift */,
+				83AA19BF26485B9100556E69 /* ColorExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -589,6 +650,7 @@
 				83AA194126462AFC00556E69 /* CategoriesView.swift */,
 				83AA19352645F4A700556E69 /* SignInView.swift */,
 				83AA195026464F7300556E69 /* AuthenticatingView.swift */,
+				83AA19A8264831D300556E69 /* ClearHiddenView.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -712,6 +774,7 @@
 			isa = PBXGroup;
 			children = (
 				83398172264058D9005614E8 /* Haptic.swift */,
+				83AA19CA2648A3AD00556E69 /* DarkModeViewModifier.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -721,8 +784,14 @@
 			children = (
 				8339818026406402005614E8 /* ThreadRow.swift */,
 				8339817D264063E8005614E8 /* ThreadDetailView.swift */,
+				83AA19D7264B367100556E69 /* PostPreviewView.swift */,
+				83AA19D9264BFBF100556E69 /* PostExpandedView.swift */,
 				83AA19702646DE7100556E69 /* TagPostView.swift */,
 				83AA19742646DEA100556E69 /* ComposePostView.swift */,
+				83AA199B2647964000556E69 /* WhosTaggingView.swift */,
+				83AA19C3264870BC00556E69 /* PaginateView.swift */,
+				83AA19C82648952400556E69 /* PostContextView.swift */,
+				83AA19CF2649B72D00556E69 /* GoToPostView.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -804,6 +873,10 @@
 		83AA195426464FA600556E69 /* Controls */ = {
 			isa = PBXGroup;
 			children = (
+				83AA19D1264ADDE900556E69 /* LinkViewer */,
+				833EE9CE26454D7C00345A1D /* BetterSafariView */,
+				83AA19B3264856CE00556E69 /* ChatBubble */,
+				83AA19A3264824AB00556E69 /* NoticeView */,
 				83AA1991264710F800556E69 /* ImagePickerView */,
 				83AA197E26470B0000556E69 /* AlertView */,
 				83AA195526464FB300556E69 /* BlurView */,
@@ -861,6 +934,38 @@
 				83AA19922647110300556E69 /* ImagePickerView.swift */,
 			);
 			path = ImagePickerView;
+			sourceTree = "<group>";
+		};
+		83AA19A3264824AB00556E69 /* NoticeView */ = {
+			isa = PBXGroup;
+			children = (
+				83AA19A4264824CB00556E69 /* NoticeView.swift */,
+			);
+			path = NoticeView;
+			sourceTree = "<group>";
+		};
+		83AA19B3264856CE00556E69 /* ChatBubble */ = {
+			isa = PBXGroup;
+			children = (
+				83AA19AF2648569700556E69 /* ChatBubble.swift */,
+			);
+			path = ChatBubble;
+			sourceTree = "<group>";
+		};
+		83AA19B826485A9600556E69 /* Templates */ = {
+			isa = PBXGroup;
+			children = (
+				83AA19B926485AAE00556E69 /* Stylesheet.css */,
+			);
+			path = Templates;
+			sourceTree = "<group>";
+		};
+		83AA19D1264ADDE900556E69 /* LinkViewer */ = {
+			isa = PBXGroup;
+			children = (
+				83AA19D2264ADDFF00556E69 /* LinkViewer.swift */,
+			);
+			path = LinkViewer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -987,9 +1092,12 @@
 			files = (
 				83398100263F0C72005614E8 /* Articles.json in Resources */,
 				83398102263F0C72005614E8 /* Chat.json in Resources */,
+				83AA19CD26497D5300556E69 /* SearchResults.json in Resources */,
 				833817962639AC18007A8B28 /* Assets.xcassets in Resources */,
+				83AA19AC264852F400556E69 /* Messages.json in Resources */,
 				833980D6263C9C2D005614E8 /* replylines.ttf in Resources */,
 				833980D7263C9C2D005614E8 /* tags.ttf in Resources */,
+				83AA19BA26485AAE00556E69 /* Stylesheet.css in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -999,9 +1107,12 @@
 			files = (
 				83398101263F0C72005614E8 /* Articles.json in Resources */,
 				83398103263F0C72005614E8 /* Chat.json in Resources */,
+				83AA19CE26498FDE00556E69 /* SearchResults.json in Resources */,
 				833817972639AC18007A8B28 /* Assets.xcassets in Resources */,
+				83AA19AD264852F400556E69 /* Messages.json in Resources */,
 				833980D8263C9D0A005614E8 /* replylines.ttf in Resources */,
 				833980D9263C9D0C005614E8 /* tags.ttf in Resources */,
+				83AA19BB26485AB200556E69 /* Stylesheet.css in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1020,6 +1131,8 @@
 				833981B72641B48C005614E8 /* tags.ttf in Resources */,
 				833980BD263C41D0005614E8 /* Preview Assets.xcassets in Resources */,
 				833981B62641B48A005614E8 /* replylines.ttf in Resources */,
+				83AA19C7264884F300556E69 /* Messages.json in Resources */,
+				83AA19BC26485AB300556E69 /* Stylesheet.css in Resources */,
 				833981B02641AC8A005614E8 /* Chat.json in Resources */,
 				833980BA263C41D0005614E8 /* Assets.xcassets in Resources */,
 			);
@@ -1035,21 +1148,27 @@
 				83AA195126464F7300556E69 /* AuthenticatingView.swift in Sources */,
 				8339817726405B4D005614E8 /* iPadChatView.swift in Sources */,
 				8339818F26409C94005614E8 /* AuthorNameView.swift in Sources */,
+				83AA19D8264B367100556E69 /* PostPreviewView.swift in Sources */,
+				83AA19B7264859CA00556E69 /* MessageWebView.swift in Sources */,
 				83AA194C2646353800556E69 /* RedactingView.swift in Sources */,
 				8339810E263F1028005614E8 /* StringExtensions.swift in Sources */,
 				833EE9DB26454DF100345A1D /* SafariViewPresentationModifier.swift in Sources */,
 				8339810A263F0F7A005614E8 /* TrendingCard.swift in Sources */,
 				8339819226409D77005614E8 /* ContributedView.swift in Sources */,
 				83AA193E2645FF8900556E69 /* AccountView.swift in Sources */,
+				83AA19A5264824CB00556E69 /* NoticeView.swift in Sources */,
 				83AA1962264656BD00556E69 /* KeychainWrapper.swift in Sources */,
 				833EE9CB2644DB2100345A1D /* RichTextView.swift in Sources */,
 				83AA19782646E49A00556E69 /* ComposePostView.swift in Sources */,
 				83398140263F525F005614E8 /* iPadHomeButton.swift in Sources */,
 				833980D0263C914D005614E8 /* iPadContentView.swift in Sources */,
 				83AA19712646DE7100556E69 /* TagPostView.swift in Sources */,
+				83AA19C4264870BC00556E69 /* PaginateView.swift in Sources */,
 				8339811A263F26CA005614E8 /* PreviewService.swift in Sources */,
 				833980F2263F08C1005614E8 /* SettingsButton.swift in Sources */,
+				83AA19C026485B9100556E69 /* ColorExtensions.swift in Sources */,
 				83398173264058D9005614E8 /* Haptic.swift in Sources */,
+				83AA19B52648592700556E69 /* MessageDetailView.swift in Sources */,
 				83AA19932647110300556E69 /* ImagePickerView.swift in Sources */,
 				833980CE263C9137005614E8 /* iPhoneContentView.swift in Sources */,
 				83398127263F2E59005614E8 /* InboxView.swift in Sources */,
@@ -1057,26 +1176,33 @@
 				833EE9E226454DFB00345A1D /* WebAuthenticationPresentationModifier.swift in Sources */,
 				833EE9DC26454DF100345A1D /* SafariViewPresenter.swift in Sources */,
 				83AA195F264656BD00556E69 /* KeychainItemAccessibility.swift in Sources */,
+				83AA19CB2648A3AD00556E69 /* DarkModeViewModifier.swift in Sources */,
 				83398106263F0D38005614E8 /* ChatService.swift in Sources */,
 				8339817E264063E8005614E8 /* ThreadDetailView.swift in Sources */,
 				83AA193A2645F66500556E69 /* AuthService.swift in Sources */,
 				8339818826406F0B005614E8 /* TimeRemainingIndicator.swift in Sources */,
+				83AA19C2264862A000556E69 /* NewMessageButton.swift in Sources */,
 				833980FC263F0AF3005614E8 /* iPhoneArticlesView.swift in Sources */,
+				83AA19D02649B72D00556E69 /* GoToPostView.swift in Sources */,
 				833980F5263F0958005614E8 /* TrendingView.swift in Sources */,
 				833981942640A232005614E8 /* LolView.swift in Sources */,
 				8339816F26405899005614E8 /* RefreshableScrollView.swift in Sources */,
 				83398124263F2E4E005614E8 /* SearchView.swift in Sources */,
 				8339812A263F2E60005614E8 /* ChatView.swift in Sources */,
+				83AA19A0264821D100556E69 /* MessageService.swift in Sources */,
 				833980DF263CAB93005614E8 /* AppSessionStore.swift in Sources */,
 				8339818C264098D5005614E8 /* ReplyCountView.swift in Sources */,
+				83AA19B02648569700556E69 /* ChatBubble.swift in Sources */,
 				833EE9D226454DA100345A1D /* Shared.swift in Sources */,
 				83AA19272645C43500556E69 /* PostDecorator.swift in Sources */,
+				83AA199C2647964000556E69 /* WhosTaggingView.swift in Sources */,
 				83398135263F324C005614E8 /* PreferencesView.swift in Sources */,
 				83AA1965264656BD00556E69 /* KeychainWrapperSubscript.swift in Sources */,
 				8339811E263F288D005614E8 /* ArticleCard.swift in Sources */,
 				83398143263F526A005614E8 /* iPadHomeButtons.swift in Sources */,
 				833EE9E426454DFB00345A1D /* WebAuthenticationSession.swift in Sources */,
 				833980EB263F07DC005614E8 /* iPhoneHomeButton.swift in Sources */,
+				83AA19C62648829E00556E69 /* NewMessageView.swift in Sources */,
 				8339814D263F6394005614E8 /* iPadArticlesView.swift in Sources */,
 				83AA198E26470FD400556E69 /* UIImageExtensions.swift in Sources */,
 				83398117263F250E005614E8 /* ArticleService.swift in Sources */,
@@ -1086,14 +1212,19 @@
 				833EE9DD26454DF100345A1D /* SafariView.swift in Sources */,
 				83398150263F6427005614E8 /* ArrayExtensions.swift in Sources */,
 				8339817B264062BB005614E8 /* RoundedCornersView.swift in Sources */,
+				83AA19982647933300556E69 /* SearchResultsView.swift in Sources */,
 				83AA195726464FBC00556E69 /* BlurView.swift in Sources */,
 				830292F12644C57F00B974B3 /* ReplyLineBuilder.swift in Sources */,
 				83AA196D2646685500556E69 /* TagsWebView.swift in Sources */,
 				833817922639AC18007A8B28 /* EveningReadingApp.swift in Sources */,
+				83AA19D3264ADDFF00556E69 /* LinkViewer.swift in Sources */,
+				83AA19A9264831D300556E69 /* ClearHiddenView.swift in Sources */,
+				83AA19C92648952400556E69 /* PostContextView.swift in Sources */,
 				833EE9DE26454DF100345A1D /* SafariView+View.swift in Sources */,
 				83398111263F1794005614E8 /* DateExtensions.swift in Sources */,
 				83AA1947264630A900556E69 /* GuidelinesView.swift in Sources */,
 				8339818126406402005614E8 /* ThreadRow.swift in Sources */,
+				83AA19DA264BFBF100556E69 /* PostExpandedView.swift in Sources */,
 				8339818426406814005614E8 /* Globals.swift in Sources */,
 				83AA198026470B0900556E69 /* AlertView.swift in Sources */,
 				83AA194226462AFC00556E69 /* CategoriesView.swift in Sources */,
@@ -1133,6 +1264,7 @@
 				83AA1963264656BD00556E69 /* KeychainWrapper.swift in Sources */,
 				833EE9CC2644DE1A00345A1D /* RichTextView.swift in Sources */,
 				833981692640439F005614E8 /* macOSSettingsView.swift in Sources */,
+				83AA19BD26485B1F00556E69 /* MessageService.swift in Sources */,
 				8339818526406814005614E8 /* Globals.swift in Sources */,
 				8339810F263F1028005614E8 /* StringExtensions.swift in Sources */,
 				83AA19332645E36600556E69 /* RefreshNoticeView.swift in Sources */,
@@ -1153,6 +1285,7 @@
 				833981B12641B011005614E8 /* StringExtensions.swift in Sources */,
 				83AA19292645C43500556E69 /* PostDecorator.swift in Sources */,
 				833981A62641A051005614E8 /* ContributedView.swift in Sources */,
+				83AA19DC264C323600556E69 /* watchOSPostPreview2.swift in Sources */,
 				833981AB2641A93E005614E8 /* AppSessionStore.swift in Sources */,
 				83AA196B2646648900556E69 /* watchOSGuidelines.swift in Sources */,
 				83AA194F26463EAD00556E69 /* ArticleService.swift in Sources */,
@@ -1174,6 +1307,7 @@
 				833981A72641A166005614E8 /* AuthorNameView.swift in Sources */,
 				833980B6263C41CF005614E8 /* NotificationView.swift in Sources */,
 				833981BD2641E188005614E8 /* watchOSAuthorView.swift in Sources */,
+				83AA19BE26485B2000556E69 /* MessageService.swift in Sources */,
 				83AA1961264656BD00556E69 /* KeychainItemAccessibility.swift in Sources */,
 				83AA1967264656BD00556E69 /* KeychainWrapperSubscript.swift in Sources */,
 				833981B42641B2D7005614E8 /* LolView.swift in Sources */,
@@ -1320,7 +1454,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 39;
+				CURRENT_PROJECT_VERSION = 46;
 				DEVELOPMENT_TEAM = U3SY428MXR;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
@@ -1329,7 +1463,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.139;
+				MARKETING_VERSION = 0.146;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrishodge.eveningreading;
 				PRODUCT_NAME = EveningReading;
 				SDKROOT = iphoneos;
@@ -1344,7 +1478,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 39;
+				CURRENT_PROJECT_VERSION = 46;
 				DEVELOPMENT_TEAM = U3SY428MXR;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
@@ -1353,7 +1487,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.139;
+				MARKETING_VERSION = 0.146;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrishodge.eveningreading;
 				PRODUCT_NAME = EveningReading;
 				SDKROOT = iphoneos;
@@ -1371,7 +1505,7 @@
 				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 39;
+				CURRENT_PROJECT_VERSION = 46;
 				DEVELOPMENT_TEAM = U3SY428MXR;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -1381,7 +1515,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 0.139;
+				MARKETING_VERSION = 0.146;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrishodge.eveningreading;
 				PRODUCT_NAME = EveningReading;
 				SDKROOT = macosx;
@@ -1397,7 +1531,7 @@
 				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 39;
+				CURRENT_PROJECT_VERSION = 46;
 				DEVELOPMENT_TEAM = U3SY428MXR;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -1407,7 +1541,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 0.139;
+				MARKETING_VERSION = 0.146;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrishodge.eveningreading;
 				PRODUCT_NAME = EveningReading;
 				SDKROOT = macosx;
@@ -1422,11 +1556,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 39;
+				CURRENT_PROJECT_VERSION = 46;
 				DEVELOPMENT_TEAM = U3SY428MXR;
 				IBSC_MODULE = EveningReading_Extension;
 				INFOPLIST_FILE = EveningReading/Info.plist;
-				MARKETING_VERSION = 0.139;
+				MARKETING_VERSION = 0.146;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrishodge.eveningreading.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -1444,11 +1578,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 39;
+				CURRENT_PROJECT_VERSION = 46;
 				DEVELOPMENT_TEAM = U3SY428MXR;
 				IBSC_MODULE = EveningReading_Extension;
 				INFOPLIST_FILE = EveningReading/Info.plist;
-				MARKETING_VERSION = 0.139;
+				MARKETING_VERSION = 0.146;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrishodge.eveningreading.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -1464,7 +1598,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 39;
+				CURRENT_PROJECT_VERSION = 46;
 				DEVELOPMENT_ASSET_PATHS = "\"EveningReading Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = U3SY428MXR;
 				ENABLE_PREVIEWS = YES;
@@ -1474,7 +1608,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 0.139;
+				MARKETING_VERSION = 0.146;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrishodge.eveningreading.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
@@ -1489,7 +1623,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 39;
+				CURRENT_PROJECT_VERSION = 46;
 				DEVELOPMENT_ASSET_PATHS = "\"EveningReading Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = U3SY428MXR;
 				ENABLE_PREVIEWS = YES;
@@ -1499,7 +1633,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 0.139;
+				MARKETING_VERSION = 0.146;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrishodge.eveningreading.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;

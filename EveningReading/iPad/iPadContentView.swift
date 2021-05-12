@@ -12,7 +12,9 @@ struct iPadContentView: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var chatStore: ChatStore
     @EnvironmentObject var articleStore: ArticleStore
-
+    @EnvironmentObject var messageStore: MessageStore
+    @EnvironmentObject var notifications: Notifications
+    
     @State private var showingGuidelinesView = false
     
     var body: some View {
@@ -20,7 +22,7 @@ struct iPadContentView: View {
             ScrollViewReader { scrollProxy in
                 ScrollView {
                     VStack {
-                        GuidelinesView(showingGuidelinesView: $showingGuidelinesView)
+                        GuidelinesView(showingGuidelinesView: self.$showingGuidelinesView)
                         .onAppear() {
                             DispatchQueue.main.async {
                                 let defaults = UserDefaults.standard
@@ -57,5 +59,7 @@ struct iPadContentView_Previews: PreviewProvider {
             .environmentObject(AppSessionStore(service: AuthService()))
             .environmentObject(ChatStore(service: ChatService()))
             .environmentObject(ArticleStore(service: ArticleService()))
+            .environmentObject(MessageStore(service: MessageService()))
+            .environmentObject(Notifications())
     }
 }

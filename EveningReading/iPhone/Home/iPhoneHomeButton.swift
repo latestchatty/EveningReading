@@ -21,6 +21,7 @@ struct iPhoneHomeButton: View {
                     .aspectRatio(contentMode: .fit)
                     .imageScale(.small)
                     .frame(width: 40)
+                    .padding(.top, title == "Inbox" ? 7 : 0)
             }
             .frame(width: 64, height: 64)
             .background(buttonBackground)
@@ -40,6 +41,6 @@ struct iPhoneHomeButton: View {
 
 struct iPhoneHomeButton_Previews: PreviewProvider {
     static var previews: some View {
-        iPhoneHomeButton(title: .constant("Chat"), imageName: .constant("glyphicons-basic-238-chat-message"), buttonBackground: .constant(Color("HomeButtonChat")))
+        iPhoneHomeButton(title: .constant("Chat"), imageName: .constant("glyphicons-basic-122-envelope-empty"), buttonBackground: .constant(Color("HomeButtonChat")))
     }
 }

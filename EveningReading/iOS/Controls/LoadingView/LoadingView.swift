@@ -13,12 +13,21 @@ struct LoadingView : View {
     
     var body: some View {
         if show {
-            ProgressView(title)
-                .frame(width: 120,
-                       height: 120)
-                .background(BlurView(style: .systemUltraThinMaterial))
-                .foregroundColor(Color.primary)
-                .cornerRadius(20)
+            if title != "" {
+                ProgressView(title)
+                    .frame(width: 120,
+                           height: 120)
+                    .background(BlurView(style: .systemUltraThinMaterial))
+                    .foregroundColor(Color.primary)
+                    .cornerRadius(20)
+            } else {
+                ProgressView()
+                    .frame(width: 120,
+                           height: 120)
+                    .background(BlurView(style: .systemUltraThinMaterial))
+                    .foregroundColor(Color.primary)
+                    .cornerRadius(20)
+            }
         } else {
             EmptyView()
         }

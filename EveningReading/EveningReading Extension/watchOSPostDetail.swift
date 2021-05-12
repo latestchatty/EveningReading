@@ -28,37 +28,21 @@ struct watchOsPostDetail: View {
         if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
         {
             let thread = chatData.threads.filter { !$0.posts.isEmpty && $0.posts.contains(where: { post in post.id == self.postId }) }.first
-            
-            if let childPost = thread?.posts.filter({ return $0.id == self.postId }).first {
-                self.postCategory = childPost.category
-                self.postAuthor = childPost.author
-                self.postBody = childPost.body
-                self.postDate = childPost.date
-                self.postLols = childPost.lols
-                
-                self.replies = thread?.posts.filter({ return $0.parentId == self.postId }) ?? [ChatPosts]()
-            } else {
-                self.postAuthor = "none"
-            }
-        
-            self.richTextBody = RichTextBuilder.getRichText(postBody: self.postBody)
+            setThreadData(thread)
         } else {
             let thread = chatStore.threads.filter { !$0.posts.isEmpty && $0.posts.contains(where: { post in post.id == self.postId }) }.first
-            
-            print("we found \(thread?.threadId ?? 0)")
-                        
-            if let childPost = thread?.posts.filter({ return $0.id == self.postId }).first {
-                self.postCategory = childPost.category
-                self.postAuthor = childPost.author
-                self.postBody = childPost.body
-                self.postDate = childPost.date
-                self.postLols = childPost.lols
-                
-                self.replies = thread?.posts.filter({ return $0.parentId == self.postId }) ?? [ChatPosts]()
-            } else {
-                self.postAuthor = "none"
-            }
-        
+            setThreadData(thread)
+        }
+    }
+    
+    private func setThreadData(_ thread: ChatThread?) {
+        if let childPost = thread?.posts.filter({ return $0.id == self.postId }).first {
+            self.postCategory = childPost.category
+            self.postAuthor = childPost.author
+            self.postBody = childPost.body
+            self.postDate = childPost.date
+            self.postLols = childPost.lols
+            self.replies = thread?.posts.filter({ return $0.parentId == self.postId }) ?? [ChatPosts]()
             self.richTextBody = RichTextBuilder.getRichText(postBody: self.postBody)
         }
     }
@@ -79,7 +63,7 @@ struct watchOsPostDetail: View {
                         AuthorNameView(name: self.postAuthor, postId: self.postId)
                         ContributedView(contributed: self.contributed)
                         Spacer()
-                        LolView(lols: self.postLols)
+                        LolView(lols: self.postLols, postId: self.postId)
                     }
                     .padding(.bottom, 2)
                     
@@ -102,6 +86,8 @@ struct watchOsPostDetail: View {
                         watchOSPostPreview(postId: .constant(reply.id), replyText: .constant(String(reply.body.getPreview.prefix(100))))
                             .environmentObject(chatStore)
                     }
+                } else {
+                    EmptyView()
                 }
                 
             }

@@ -20,6 +20,7 @@ struct SettingsView: View {
     }
     
     var body: some View {
+        GoToPostView()
         Form {
             Section(header: Text("PREFERENCES")) {
                 PreferencesView()
@@ -27,8 +28,9 @@ struct SettingsView: View {
             Section(header: Text("ACCOUNT")) {
                 AccountView()
             }
-            Section(header: Text("CATEGORIES")) {
+            Section(header: Text("FILTERS")) {
                 CategoriesView()
+                ClearHiddenView()
             }
             Section(header: Text("ABOUT")) {
                 HStack {

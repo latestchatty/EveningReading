@@ -20,12 +20,24 @@
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>IMGUR_KEY</key>
+	<string>$(IMGUR_KEY)</string>
+	<key>LOL_KEY</key>
+	<string>$(LOL_KEY)</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>youtube</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>You can take photos to post to the forum.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>You can upload photos to post on the forum.</string>
+	<key>SHACK_ERPASS</key>
+	<string>$(SHACK_ERPASS)</string>
+	<key>SHACK_ERUSER</key>
+	<string>$(SHACK_ERUSER)</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>replylines.ttf</string>
@@ -57,9 +69,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>IMGUR_KEY</key>
-	<string>$(IMGUR_KEY)</string>
-	<key>LOL_KEY</key>
-	<string>$(LOL_KEY)</string>
 </dict>
 </plist>

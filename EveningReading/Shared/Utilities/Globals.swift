@@ -81,6 +81,26 @@ enum PostTag: String, CaseIterable {
     case aww = "aww"
 }
 
+enum PostTagKey: Int, CaseIterable {
+    case lol = 1
+    case wtf = 2
+    case unf = 3
+    case inf = 4
+    case tag = 5
+    case wow = 6
+    case aww = 7
+}
+
+let PostTagCode: [String: String] = [
+    "1": "lol",
+    "2": "wtf",
+    "4": "inf",
+    "3": "unf",
+    "5": "tag",
+    "6": "wow",
+    "7": "aww"
+]
+
 let PostWeight: [Double: Font.Weight] = [
     0.95: .heavy,
     0.90: .bold,

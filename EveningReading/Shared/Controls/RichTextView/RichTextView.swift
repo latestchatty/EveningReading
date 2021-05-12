@@ -113,38 +113,68 @@ struct SpoilerView: View {
 
 struct LinkView: View {
     @Environment(\.colorScheme) var colorScheme
+    @EnvironmentObject var appSessionStore: AppSessionStore
     var hyperlink: String = ""
     var description: String = ""
     
     @State private var showingSafariSheet = false
     @State private var hyperlinkUrl: URL?
     
+    //@State private var hyperlinkUrl: String?
+    //@State private var showingLinkWebView = false
+    
     #if os(iOS)
     var body: some View {
+        
+        //LinkViewerSheet(hyperlinkUrl: self.$hyperlinkUrl, showingWebView: self.$showingLinkWebView)
+        
         Text(self.description)
             .underline()
             .foregroundColor(colorScheme == .dark ? Color(UIColor.systemTeal) : Color(UIColor.black))
             .onTapGesture(count: 1) {
-                if self.hyperlink.starts(with: "https://www.shacknews.com/chatty?id=")
+                // YouTube
+                if self.appSessionStore.useYoutubeApp && (self.hyperlink.starts(with: "https://www.youtube.com/") || self.hyperlink.starts(with: "https://youtube.com/") || self.hyperlink.starts(with: "https://youtu.be/")) {
+                    let url = URL(string: self.hyperlink.replacingOccurrences(of: "https", with: "youtube"))!
+                    if !UIApplication.shared.canOpenURL(url)  {
+                        //self.hyperlinkUrl = self.hyperlink
+                        //self.showingLinkWebView = true
+                        if let url = URL(string: self.hyperlink) {
+                            self.hyperlinkUrl = url
+                            self.showingSafariSheet = true
+                        }
+                    } else {
+                        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                    }
+                }
+                // Shack link
+                else if self.hyperlink.starts(with: "https://www.shacknews.com/chatty?id=")
                 {
-                    // TODO: Go to specified thread/post
                     if let url = URL(string: self.hyperlink) {
                         print("it is a valid url")
-                        //if let linkPostId = Int(url.queryParameters!["id"]!) {
-                            //self.goToPostId = linkPostId
-                            //self.appSessionStore.goToPost = true
-                        //}
+                        let components = URLComponents(url: url, resolvingAgainstBaseURL: false)
+                        if let queryItems = components?.queryItems {
+                            for queryItem in queryItems {
+                                if queryItem.name == "id" {
+                                    appSessionStore.setLink(postId: queryItem.value ?? "")
+                                }
+                            }
+                        }
                     }
+                // Everything else
                 } else {
                     // A random link in a thread
+                    //self.hyperlinkUrl = self.hyperlink
+                    //self.showingLinkWebView = true
+                    
                     if let url = URL(string: self.hyperlink) {
-                        print("got here")
                         self.hyperlinkUrl = url
                         self.showingSafariSheet = true
                     }
+                    
                 }
             }
-        // summon the Safari sheet
+        
+        // Better Safari View
         .sheet(isPresented: self.$showingSafariSheet) {
             SafariView(
                 url: URL(string: self.hyperlink)!,
@@ -157,6 +187,8 @@ struct LinkView: View {
             .preferredControlAccentColor(.accentColor)
             .dismissButtonStyle(.done)
         }
+        
+        
     }
     #endif
     
@@ -193,6 +225,8 @@ struct RichTextView: View {
 }
 
 struct TextBlockView: View {
+    @Environment(\.colorScheme) var colorScheme
+    
     let block: RichTextBlock
     
     var body: some View {
@@ -273,7 +307,8 @@ struct TextBlockView: View {
             }
             if t.attributes.contains(.yellow) {
                 #if os(iOS)
-                atomView = atomView.foregroundColor(Color(UIColor.systemYellow))
+                atomView = atomView.foregroundColor(Color("YellowText"))
+                // atomView = atomView.foregroundColor(colorScheme == .dark ?  Color(UIColor.systemYellow) : Color("LightSchemeYellow"))
                 #endif
                 #if os(OSX)
                 atomView = atomView.foregroundColor(Color(NSColor.systemYellow))

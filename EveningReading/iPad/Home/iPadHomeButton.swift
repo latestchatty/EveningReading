@@ -32,6 +32,7 @@ struct iPadHomeButton: View {
                 .foregroundColor(.black)
                 .frame(width: 36)
                 .padding(.trailing, 20)
+                .padding(.top, title == "Inbox" ? 7 : 0)
         }
         .background(buttonBackground)
         .cornerRadius(10)

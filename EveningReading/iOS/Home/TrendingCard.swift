@@ -16,6 +16,7 @@ struct TrendingCard: View {
     @State private var postCount: Int = 0
     @State private var postAuthor: String = ""
     @State private var percentRemaining: CGFloat = 0.0
+    @State private var showingHideAlert = false
     
     func getCardData() {
         // get root post
@@ -32,6 +33,15 @@ struct TrendingCard: View {
     
     var body: some View {
         return VStack(alignment: .leading) {
+            Spacer().frame(width: 0, height: 0)
+            .alert(isPresented: self.$showingHideAlert) {
+                Alert(title: Text("Hide thread?"), message: Text(""), primaryButton: .default(Text("Yes")) {
+                    // collapse thread
+                    self.appSessionStore.collapsedThreads.append(thread.threadId)
+                }, secondaryButton: .cancel() {
+                    
+                })
+            }
             HStack {
                 Spacer()
                 VStack {
@@ -119,6 +129,9 @@ struct TrendingCard: View {
                 Spacer()
                 Image(systemName: "eye.slash")
                     .foregroundColor(Color.white).opacity(/*@START_MENU_TOKEN@*/0.8/*@END_MENU_TOKEN@*/)
+                    .onTapGesture {
+                        self.showingHideAlert = true
+                    }
             }
             
             Spacer().frame(height: 20)

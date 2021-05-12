@@ -9,14 +9,21 @@ import SwiftUI
 
 struct AccountView: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
-
+    @EnvironmentObject var messageStore: MessageStore
 
     @State private var showingSignIn = false
     @State private var showingSignOut = false
     
+    private func user() -> String {
+        let username: String? = KeychainWrapper.standard.string(forKey: "Username")
+        return username ?? ""
+    }
+    
     var body: some View {
         HStack {
             Spacer()
+            
+            // Sign in/out button
             Button(action: {
                 if self.appSessionStore.isSignedIn {
                     self.showingSignOut = true
@@ -25,7 +32,7 @@ struct AccountView: View {
                 }
             }) {
                 if self.appSessionStore.isSignedIn {
-                    Text("Sign Out")
+                    Text("Sign Out As \(user())")
                         .foregroundColor(Color(UIColor.link))
                 } else {
                     Text("Sign In")
@@ -33,14 +40,22 @@ struct AccountView: View {
                 }
             }
             .buttonStyle(DefaultButtonStyle())
+            
+            // Sign In
             .fullScreenCover(isPresented: self.$showingSignIn, content: SignInView.init)
+            
+            // Sign Out?
             .alert(isPresented: self.$showingSignOut) {
                 Alert(title: Text("Sign Out?"), message: Text(""), primaryButton: .destructive(Text("Yes")) {
                     self.appSessionStore.isSignedIn = false
+                    _ = KeychainWrapper.standard.removeObject(forKey: "Username")
+                    _ = KeychainWrapper.standard.removeObject(forKey: "Password")
+                    self.messageStore.clearMessages()
                 }, secondaryButton: .cancel() {
                     
                 })
             }
+            
             Spacer()
         }
     }
@@ -51,5 +66,6 @@ struct AccountView_Previews: PreviewProvider {
         AccountView()
             .environment(\.colorScheme, .dark)
             .environmentObject(AppSessionStore(service: AuthService()))
+            .environmentObject(MessageStore(service: MessageService()))
     }
 }

@@ -116,7 +116,7 @@ struct FullThreadView: View {
                         
                         ContributedView(contributed: self.contributed)
                         
-                        LolView(lols: self.rootPostLols, capsule: true)
+                        LolView(lols: self.rootPostLols, capsule: true, postId: self.threadId)
 
                         Spacer()
 
@@ -184,7 +184,7 @@ struct FullThreadView: View {
                                                 .lineLimit(1)
                                             Spacer()
                                             AuthorNameView(name: post.author, postId: post.id)
-                                            LolView(lols: post.lols)
+                                            LolView(lols: post.lols, postId: post.id)
                                         }
                                         .padding(.top, 2)
                                     }
@@ -271,7 +271,7 @@ struct FullThreadView: View {
                                                 Spacer()
                                                 
                                                 // Lols
-                                                LolView(lols: post.lols, expanded: true)
+                                                LolView(lols: post.lols, expanded: true, postId: post.id)
                                                     .padding(.top, 5)
                                             }
                                             HStack {
@@ -343,7 +343,7 @@ struct FullThreadView: View {
                                             AuthorNameView(name: post.author, postId: post.id)
                                             
                                             // Lols
-                                            LolView(lols: post.lols)
+                                            LolView(lols: post.lols, postId: post.id)
                                         }
                                         .onTapGesture(count: 1) {
                                             withAnimation {

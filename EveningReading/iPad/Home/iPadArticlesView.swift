@@ -24,6 +24,7 @@ struct iPadArticlesView: View {
         {
             return Array(articlesData)
         }
+        // Top 10 articles in two rows
         if articleStore.articles.count > 0 {
             let articlesChunked = articleStore.articles.chunked(into: 5)
             if articlesChunked.count > 0 && row == 1 {
@@ -40,6 +41,7 @@ struct iPadArticlesView: View {
 
     var body: some View {
         VStack {
+            
             // Heading
             VStack {
                 HStack {

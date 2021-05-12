@@ -55,7 +55,7 @@ class ArticleService {
                 do {
                     let data = data ?? Data()
                     var dataAsString = String(data: data, encoding: .utf8)
-                    dataAsString = "{\"articles\": " + (dataAsString ?? "") + "}" // hacky way to turn this into json JSONDecoder can handle... help?
+                    dataAsString = "{\"articles\": " + (dataAsString ?? "") + "}"
                     let articleData: Data? = dataAsString?.data(using: .utf8)
                     let response = try self?.decoder.decode(ArticleWrapper.self, from: articleData ?? Data())
                     handler(.success(response?.articles ?? []))

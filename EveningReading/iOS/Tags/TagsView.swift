@@ -23,7 +23,7 @@ struct TagsView: View {
 
     var body: some View {
         VStack {
-            Text("")
+            GoToPostView()
             if self.webViewLoading {
                 ProgressView(value: self.webViewProgress, total: 1.0)
                     .progressViewStyle(LinearProgressViewStyle(tint: Color(UIColor.systemBlue)))

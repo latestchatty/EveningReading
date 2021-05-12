@@ -15,6 +15,7 @@ struct SearchView: View {
     @State var author = ""
     @State var parent = ""
     @State var clearCriteria = true
+    @State var showingNoCriteraAlert = false
     
     func searchAppear() {
         if self.populateTerms != "" {
@@ -37,10 +38,26 @@ struct SearchView: View {
     }
     
     func search() {
+        if self.terms != "" || self.author != "" || self.parent != "" {
+            self.clearCriteria = false
+            self.showingResults = true
+        } else {
+            self.showingNoCriteraAlert = true
+        }
     }
-        
+    
+    @State private var showingResults = false
+    
     var body: some View {
-        VStack {
+        VStack {            
+            //GoToPostView()
+            
+            NavigationLink(destination: SearchResultsView(terms: self.terms, author: self.author, parentAuthor: self.parent),
+                isActive: self.$showingResults) {
+                EmptyView()
+            }
+            
+            // General terms
             HStack(alignment: .center) {
                 Text("Terms")
                     .frame(width: 80)
@@ -52,6 +69,7 @@ struct SearchView: View {
                     .padding(EdgeInsets(top: 0, leading: 0, bottom: 15, trailing: 0))
             }.padding(.top, 10)
 
+            // Author
             HStack(alignment: .center) {
                 Text("Author")
                     .frame(width: 80)
@@ -63,6 +81,7 @@ struct SearchView: View {
                     .padding(EdgeInsets(top: 0, leading: 0, bottom: 15, trailing: 0))
             }
             
+            // Parent Author
             HStack(alignment: .center) {
                 Text("Parent")
                     .frame(width: 80)
@@ -91,6 +110,9 @@ struct SearchView: View {
         .navigationViewStyle(StackNavigationViewStyle())
         .navigationBarTitle("Search", displayMode: .inline)
         .navigationBarItems(leading: Spacer().frame(width: 16, height: 16))
+        .alert(isPresented: self.$showingNoCriteraAlert) {
+            Alert(title: Text("No Criteria"), message: Text("Enter search criteria"), dismissButton: .default(Text("OK")))
+        }
     }
 }
 
