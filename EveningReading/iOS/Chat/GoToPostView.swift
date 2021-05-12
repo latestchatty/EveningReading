@@ -14,7 +14,7 @@ struct GoToPostView: View {
     @State private var showingGoTo: Bool = false
 
     var body: some View {
-        NavigationLink(destination: ThreadDetailView(threadId: .constant(0), postId: self.$goToPostId), isActive: self.$showingGoTo) {
+        NavigationLink(destination: ThreadDetailView(threadId: .constant(0), postId: self.$goToPostId, replyCount: .constant(-1)), isActive: self.$showingGoTo) {
             EmptyView()
         }
         .onReceive(appSessionStore.$showingShackLink) { value in

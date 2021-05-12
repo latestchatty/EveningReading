@@ -11,10 +11,13 @@ struct ThreadDetailView: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var chatStore: ChatStore
-    
+        
     @Binding var threadId: Int
     @Binding var postId: Int
+    @Binding var replyCount: Int
     
+    @State private var loadingLimit = 100
+
     @State private var rootPostCategory: String = "ontopic"
     @State private var rootPostAuthor: String = ""
     @State private var rootPostBody: String = ""
@@ -211,7 +214,6 @@ struct ThreadDetailView: View {
         VStack {
             
             GoToPostView()
-            
             if self.showThread {
                 
                 RefreshableScrollView(height: 70, refreshing: self.$chatStore.gettingThread, scrollTarget: self.$chatStore.scrollTargetThread, scrollTargetTop: self.$chatStore.scrollTargetThreadTop) {
@@ -318,7 +320,7 @@ struct ThreadDetailView: View {
                 .environmentObject(chatStore)
             } else {
                 LazyVStack {
-                    if self.postId > 0 {
+                    if self.postId > 0 || self.replyCount >= self.loadingLimit {
                         LoadingView(show: .constant(true), title: .constant(""))
                     } else {
                         Text(" ")
@@ -378,14 +380,30 @@ struct ThreadDetailView: View {
         
         // Fetch data and settings on load
         .onAppear(perform: {
-            // Let the view load so we don't get stuck on the thread list screen
-            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1)) {
+            if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil {
+                getUserData()
+                getThreadData()
+                getPostList(parentId: self.threadId)
+                return
+            }
+            
+            func getData() -> Void {
                 getUserData()
                 getThreadData()
                 if UIDevice.current.userInterfaceIdiom == .phone {
                     getPostList(parentId: self.threadId)
                 }
                 self.threadNavigationLocation = CGPoint(x: self.appSessionStore.threadNavigationLocationX, y: self.appSessionStore.threadNavigationLocationY)
+            }
+            
+            if self.replyCount >= self.loadingLimit {
+                // Let the view load so we don't get stuck on the list screen
+                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1)) {
+                    getData()
+                }
+            } else {
+                // Load immediately
+                getData()
             }
         })
         
@@ -459,7 +477,7 @@ struct ThreadDetailView: View {
 
 struct ThreadDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        ThreadDetailView(threadId: .constant(999999992), postId: .constant(0))
+        ThreadDetailView(threadId: .constant(999999992), postId: .constant(0), replyCount: .constant(20))
             .environment(\.colorScheme, .dark)
             .environmentObject(AppSessionStore(service: AuthService()))
             .environmentObject(ChatStore(service: ChatService()))

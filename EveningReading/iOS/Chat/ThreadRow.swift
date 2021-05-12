@@ -36,27 +36,27 @@ struct ThreadRow: View {
     private func getThreadData() {
         if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
         {
-            if let thread = chatData.threads.filter({ return $0.threadId == self.threadId }).first {
-                let rootPost = thread.posts.filter({ return $0.parentId == 0 }).first
+            if let currentThread = chatData.threads.filter({ return $0.threadId == self.threadId }).first {
+                let rootPost = currentThread.posts.filter({ return $0.parentId == 0 }).first
                 self.rootPostCategory = rootPost?.category ?? "ontopic"
                 self.rootPostAuthor = rootPost?.author ?? ""
                 self.rootPostBodyPreview = rootPost?.body.getPreview ?? ""
                 self.rootPostDate = rootPost?.date ?? "2020-08-14T21:05:00Z"
                 self.rootPostLols = rootPost?.lols ?? [ChatLols]()
-                self.replyCount = thread.posts.count - 1
+                self.replyCount = currentThread.posts.count - 1
             }
         } else {
             let threads = chatStore.threads.filter({ return self.appSessionStore.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !self.appSessionStore.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
             
-            if let thread = threads.filter({ return $0.threadId == self.threadId }).first {
-                let rootPost = thread.posts.filter({ return $0.parentId == 0 }).first
+            if let currentThread = threads.filter({ return $0.threadId == self.threadId }).first {
+                let rootPost = currentThread.posts.filter({ return $0.parentId == 0 }).first
                 self.rootPostCategory = rootPost?.category ?? "ontopic"
                 self.rootPostAuthor = rootPost?.author ?? ""
                 self.rootPostBodyPreview = rootPost?.body.getPreview ?? ""
                 self.rootPostDate = rootPost?.date ?? "2020-08-14T21:05:00Z"
                 self.rootPostLols = rootPost?.lols ?? [ChatLols]()
-                self.replyCount = thread.posts.count - 1
-                self.contributed = PostDecorator.checkParticipatedStatus(thread: thread, author: self.rootPostAuthor)
+                self.replyCount = currentThread.posts.count - 1
+                self.contributed = PostDecorator.checkParticipatedStatus(thread: currentThread, author: self.rootPostAuthor)
             }
         }
     }
@@ -101,6 +101,7 @@ struct ThreadRow: View {
                             TimeRemainingIndicator(percent: .constant(self.rootPostDate.getTimeRemaining()))
                                     .frame(width: 10, height: 10)
                         }
+                        
                         
                         // Post Preview
                         ZStack {
