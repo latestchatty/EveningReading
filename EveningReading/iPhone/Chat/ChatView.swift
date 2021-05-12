@@ -42,7 +42,7 @@ struct ChatView: View {
                             .environmentObject(appSessionStore)
                             .environmentObject(chatStore)
                     }
-                    .padding(.bottom, -10)
+                    .padding(.bottom, -15)
                     .id(thread.threadId)
                 }
                 
