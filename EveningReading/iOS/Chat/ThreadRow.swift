@@ -46,9 +46,7 @@ struct ThreadRow: View {
                 self.replyCount = currentThread.posts.count - 1
             }
         } else {
-            let threads = chatStore.threads.filter({ return self.appSessionStore.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !self.appSessionStore.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
-            
-            if let currentThread = threads.filter({ return $0.threadId == self.threadId }).first {
+            if let currentThread = chatStore.threads.filter({ return $0.threadId == self.threadId }).first {
                 let rootPost = currentThread.posts.filter({ return $0.parentId == 0 }).first
                 self.rootPostCategory = rootPost?.category ?? "ontopic"
                 self.rootPostAuthor = rootPost?.author ?? ""
