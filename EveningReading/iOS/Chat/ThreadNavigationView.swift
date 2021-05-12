@@ -1,5 +1,5 @@
 //
-//  PaginateView.swift
+//  ThreadNavigationView.swift
 //  EveningReading (iOS)
 //
 //  Created by Chris Hodge on 5/9/21.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct PaginateView: View {
+struct ThreadNavigationView: View {
     @Binding var icon: String
     var action: () -> Void = {}
     @State private var doWiggle = false
@@ -21,7 +21,7 @@ struct PaginateView: View {
     }
 }
 
-struct DisabledPaginateView: View {
+struct DisabledThreadNavigationView: View {
     var body: some View {
         HStack {
             HStack {

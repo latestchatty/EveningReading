@@ -125,16 +125,16 @@ class AppSessionStore : ObservableObject {
     
     // Thread Navigation
     #if os(iOS)
-    @Published var paginateLocationX: CGFloat = UIScreen.main.bounds.width - 50 {
+    @Published var threadNavigationLocationX: CGFloat = UIScreen.main.bounds.width - 50 {
         didSet {
             let defaults = UserDefaults.standard
-            defaults.set(paginateLocationX, forKey: "PaginateLocationX")
+            defaults.set(threadNavigationLocationX, forKey: "PaginateLocationX")
         }
     }
-    @Published var paginateLocationY: CGFloat = UIScreen.main.bounds.height - 120 {
+    @Published var threadNavigationLocationY: CGFloat = UIScreen.main.bounds.height - 120 {
         didSet {
             let defaults = UserDefaults.standard
-            defaults.set(paginateLocationY, forKey: "PaginateLocationY")
+            defaults.set(threadNavigationLocationY, forKey: "PaginateLocationY")
         }
     }
     #endif
@@ -189,11 +189,11 @@ class AppSessionStore : ObservableObject {
         // Navigation
         #if os(iOS)
         if UIDevice.current.userInterfaceIdiom == .pad {
-            self.paginateLocationX = 0
-            self.paginateLocationY = 0
+            self.threadNavigationLocationX = 0
+            self.threadNavigationLocationY = 0
         } else {
-            self.paginateLocationX = defaults.object(forKey: "PaginateLocationX") as? CGFloat ?? UIScreen.main.bounds.width - 50
-            self.paginateLocationY = defaults.object(forKey: "PaginateLocationY") as? CGFloat ?? UIScreen.main.bounds.height - 120
+            self.threadNavigationLocationX = defaults.object(forKey: "PaginateLocationX") as? CGFloat ?? UIScreen.main.bounds.width - 50
+            self.threadNavigationLocationY = defaults.object(forKey: "PaginateLocationY") as? CGFloat ?? UIScreen.main.bounds.height - 120
         }
         #endif
         

@@ -48,7 +48,7 @@ struct ThreadDetailView: View {
     
     @State private var canRefresh = true
     
-    @State private var paginateLocation: CGPoint = CGPoint(x: UIScreen.main.bounds.width - 50, y: UIScreen.main.bounds.height - 120)
+    @State private var threadNavigationLocation: CGPoint = CGPoint(x: UIScreen.main.bounds.width - 50, y: UIScreen.main.bounds.height - 120)
 
     // For highlighting
     private func getUserData() {
@@ -150,11 +150,11 @@ struct ThreadDetailView: View {
     private var paginateDrag: some Gesture {
         DragGesture()
         .onChanged { value in
-            self.paginateLocation = value.location
+            self.threadNavigationLocation = value.location
         }
         .onEnded { value in
-            self.appSessionStore.paginateLocationX = self.paginateLocation.x
-            self.appSessionStore.paginateLocationY = self.paginateLocation.y
+            self.appSessionStore.threadNavigationLocationX = self.threadNavigationLocation.x
+            self.appSessionStore.threadNavigationLocationY = self.threadNavigationLocation.y
         }
     }
 
@@ -378,13 +378,14 @@ struct ThreadDetailView: View {
         
         // Fetch data and settings on load
         .onAppear(perform: {
+            // Let the view load so we don't get stuck on the thread list screen
             DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1)) {
                 getUserData()
                 getThreadData()
                 if UIDevice.current.userInterfaceIdiom == .phone {
                     getPostList(parentId: self.threadId)
                 }
-                self.paginateLocation = CGPoint(x: self.appSessionStore.paginateLocationX, y: self.appSessionStore.paginateLocationY)
+                self.threadNavigationLocation = CGPoint(x: self.appSessionStore.threadNavigationLocationX, y: self.appSessionStore.threadNavigationLocationY)
             }
         })
         
@@ -410,20 +411,20 @@ struct ThreadDetailView: View {
                     EmptyView()
                 }
                 else if self.isGettingThread {
-                    DisabledPaginateView()
-                        .position(paginateLocation)
+                    DisabledThreadNavigationView()
+                        .position(threadNavigationLocation)
                         .gesture(paginateDrag)
                 } else {
                     HStack {
                         HStack {
-                            PaginateView(icon: Binding.constant("arrow.up"), action: {
+                            ThreadNavigationView(icon: Binding.constant("arrow.up"), action: {
                                 print("arrow.up")
                                 showPreviousReply()
                             })
                             Rectangle()
                                 .fill(Color(UIColor.label))
                                 .frame(width: 1, height: 20)
-                            PaginateView(icon: Binding.constant("arrow.down"), action: { print("arrow.down")
+                            ThreadNavigationView(icon: Binding.constant("arrow.down"), action: { print("arrow.down")
                                 showNextReply()
                             })
                         }
@@ -433,7 +434,7 @@ struct ThreadDetailView: View {
                     .clipped()
                     .padding(.init(top: 0, leading: 0, bottom: 50, trailing: 50))
                     .shadow(radius: 5)
-                    .position(paginateLocation)
+                    .position(threadNavigationLocation)
                     .gesture(paginateDrag)
                 }
             }.frame(maxWidth: .infinity, maxHeight: .infinity)

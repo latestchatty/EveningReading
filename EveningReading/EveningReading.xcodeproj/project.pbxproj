@@ -174,7 +174,7 @@
 		83AA19BE26485B2000556E69 /* MessageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA199F264821D100556E69 /* MessageService.swift */; };
 		83AA19C026485B9100556E69 /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19BF26485B9100556E69 /* ColorExtensions.swift */; };
 		83AA19C2264862A000556E69 /* NewMessageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19C1264862A000556E69 /* NewMessageButton.swift */; };
-		83AA19C4264870BC00556E69 /* PaginateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19C3264870BC00556E69 /* PaginateView.swift */; };
+		83AA19C4264870BC00556E69 /* ThreadNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19C3264870BC00556E69 /* ThreadNavigationView.swift */; };
 		83AA19C62648829E00556E69 /* NewMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19C52648829E00556E69 /* NewMessageView.swift */; };
 		83AA19C7264884F300556E69 /* Messages.json in Resources */ = {isa = PBXBuildFile; fileRef = 83AA19AB264852F400556E69 /* Messages.json */; };
 		83AA19C92648952400556E69 /* PostContextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19C82648952400556E69 /* PostContextView.swift */; };
@@ -349,7 +349,7 @@
 		83AA19B926485AAE00556E69 /* Stylesheet.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = Stylesheet.css; sourceTree = "<group>"; };
 		83AA19BF26485B9100556E69 /* ColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtensions.swift; sourceTree = "<group>"; };
 		83AA19C1264862A000556E69 /* NewMessageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageButton.swift; sourceTree = "<group>"; };
-		83AA19C3264870BC00556E69 /* PaginateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginateView.swift; sourceTree = "<group>"; };
+		83AA19C3264870BC00556E69 /* ThreadNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadNavigationView.swift; sourceTree = "<group>"; };
 		83AA19C52648829E00556E69 /* NewMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageView.swift; sourceTree = "<group>"; };
 		83AA19C82648952400556E69 /* PostContextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostContextView.swift; sourceTree = "<group>"; };
 		83AA19CA2648A3AD00556E69 /* DarkModeViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkModeViewModifier.swift; sourceTree = "<group>"; };
@@ -789,7 +789,7 @@
 				83AA19702646DE7100556E69 /* TagPostView.swift */,
 				83AA19742646DEA100556E69 /* ComposePostView.swift */,
 				83AA199B2647964000556E69 /* WhosTaggingView.swift */,
-				83AA19C3264870BC00556E69 /* PaginateView.swift */,
+				83AA19C3264870BC00556E69 /* ThreadNavigationView.swift */,
 				83AA19C82648952400556E69 /* PostContextView.swift */,
 				83AA19CF2649B72D00556E69 /* GoToPostView.swift */,
 			);
@@ -1163,7 +1163,7 @@
 				83398140263F525F005614E8 /* iPadHomeButton.swift in Sources */,
 				833980D0263C914D005614E8 /* iPadContentView.swift in Sources */,
 				83AA19712646DE7100556E69 /* TagPostView.swift in Sources */,
-				83AA19C4264870BC00556E69 /* PaginateView.swift in Sources */,
+				83AA19C4264870BC00556E69 /* ThreadNavigationView.swift in Sources */,
 				8339811A263F26CA005614E8 /* PreviewService.swift in Sources */,
 				833980F2263F08C1005614E8 /* SettingsButton.swift in Sources */,
 				83AA19C026485B9100556E69 /* ColorExtensions.swift in Sources */,
