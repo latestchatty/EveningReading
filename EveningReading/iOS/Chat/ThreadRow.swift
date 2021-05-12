@@ -128,8 +128,6 @@ struct ThreadRow: View {
                     .padding(.vertical, 10)
                 }
             }
-            .frame(minHeight: 70)
-            .border(Color.clear)
             // Actions
             .contextMenu {
                 PostContextView(showingWhosTaggingView: self.$showingWhosTaggingView, showingNewMessageView: self.$showingNewMessageView, messageRecipient: self.$messageRecipient, messageSubject: self.$messageSubject, messageBody: self.$messageBody, collapsed: self.$collapseThread, author: self.rootPostAuthor, postId: self.threadId, threadId: self.threadId)
