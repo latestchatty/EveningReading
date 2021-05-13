@@ -28,6 +28,7 @@ struct TagPostView: View {
         
         // Find out if we are tagging or untagging then proceed
         chatStore.getRaters(postId: postId, completionSuccess: {
+                // Check if user already tagged
                 for rater in chatStore.raters {
                     for username in rater.usernames {
                         if username == user {
@@ -37,6 +38,8 @@ struct TagPostView: View {
                         }
                     }
                 }
+            
+                // Tag or untag
                 if (userTagsForPost[tag] ?? 0 < 1) {
                     chatStore.tag(postId: self.postId, tag: tag, untag: "0")
                     chatStore.taggingNoticeText = "Tagged!"
@@ -44,7 +47,11 @@ struct TagPostView: View {
                     chatStore.tag(postId: self.postId, tag: tag, untag: "1")
                     chatStore.taggingNoticeText = "Untagged!"
                 }
-                chatStore.didTagPost = true
+                
+                // Show notice
+                DispatchQueue.main.async {
+                    chatStore.didTagPost = true
+                }
             }, completionFail: {
                 if !(userTagsForPost[tag] ?? 0 > 0) {
                     chatStore.tag(postId: self.postId, tag: tag, untag: "0")
