@@ -19,6 +19,9 @@ struct PreferencesView: View {
             Toggle(isOn: self.$appSessionStore.abbreviateThreads) {
                 Text("Abbreviate Threads")
             }
+            Toggle(isOn: self.$appSessionStore.isDarkMode) {
+                Text("Dark Mode")
+            }
             #if os(iOS)
             if UIDevice.current.userInterfaceIdiom == .phone {
                 Toggle(isOn: self.$appSessionStore.threadNavigation) {
@@ -31,9 +34,6 @@ struct PreferencesView: View {
                 Text("Thread Navigation")
             }
             #endif
-            Toggle(isOn: self.$appSessionStore.isDarkMode) {
-                Text("Dark Mode")
-            }
             #if os(iOS)
             Toggle(isOn: self.$appSessionStore.useYoutubeApp) {
                 Text("Use YouTube App")
