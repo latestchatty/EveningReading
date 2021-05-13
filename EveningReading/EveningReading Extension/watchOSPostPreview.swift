@@ -17,7 +17,6 @@ struct watchOSPostPreview: View {
     @State private var showingPost: Bool = false
     
     var body: some View {
-        // Single line post preview
         HStack {
             Button(action: {
                 self.showingPost.toggle()
@@ -35,7 +34,14 @@ struct watchOSPostPreview: View {
             .background(Color("ThreadBubbleSecondary"))
             .cornerRadius(5)
             
-            NavigationLink(destination: watchOsPostDetail(postId: self.$postId).environmentObject(chatStore), isActive: self.$showingPost) {
+            NavigationLink(destination: watchOsPostDetail(postId: .constant(self.postId)).environmentObject(chatStore), isActive: self.$showingPost) {
+                EmptyView()
+            }
+            .frame(width: 0, height: 0)
+            
+            // Fixes NavLink bug in SwiftUI?
+            // https://developer.apple.com/forums/thread/677333
+            NavigationLink(destination: EmptyView()) {
                 EmptyView()
             }
             .frame(width: 0, height: 0)

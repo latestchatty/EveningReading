@@ -70,10 +70,6 @@ struct watchOsPostDetail: View {
                     HStack {
                         RichTextView(topBlocks: self.richTextBody)
                             .fixedSize(horizontal: false, vertical: true)
-                        /*
-                        Text(postBody)
-                            .font(.footnote)
-                        */
                     }
                 }
                 .padding()
