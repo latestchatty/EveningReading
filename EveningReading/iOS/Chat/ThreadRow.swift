@@ -66,7 +66,7 @@ struct ThreadRow: View {
                     self.threadRowDetail
                 }
             } else {
-                // No NavLink needed on iPad
+                // No NavLink needed on iPad, uses chatStore.activeThreadId
                 self.threadRowDetail
             }
         } else {
@@ -93,53 +93,51 @@ struct ThreadRow: View {
             }
             
             // Author, Contribution, Lols, Replies, Time, Preview
-            HStack {
-                VStack {
+            VStack {
+                
+                HStack (alignment: .center) {
+                    WhosTaggingView(showingWhosTaggingView: self.$showingWhosTaggingView)
                     
-                    HStack (alignment: .center) {
-                        WhosTaggingView(showingWhosTaggingView: self.$showingWhosTaggingView)
-                        
-                        NewMessageView(showingNewMessageSheet: self.$showingNewMessageView, messageId: Binding.constant(0), recipientName: self.$messageRecipient, subjectText: self.$messageSubject, bodyText: self.$messageBody)
-                        
-                        AuthorNameView(name: self.rootPostAuthor, postId: self.threadId)
-
-                        ContributedView(contributed: self.contributed)
-
-                        Spacer()
-
-                        LolView(lols: self.rootPostLols, expanded: true, postId: self.threadId)
-
-                        ReplyCountView(replyCount: self.replyCount)
-                        
-                        TimeRemainingIndicator(percent: .constant(self.rootPostDate.getTimeRemaining()))
-                                .frame(width: 10, height: 10)
-                    }
+                    NewMessageView(showingNewMessageSheet: self.$showingNewMessageView, messageId: Binding.constant(0), recipientName: self.$messageRecipient, subjectText: self.$messageSubject, bodyText: self.$messageBody)
                     
-                    // Post Preview
-                    ZStack {
-                        HStack (alignment: .top) {
-                            Text(rootPostBodyPreview)
-                                .font(.callout)
-                                .foregroundColor(Color(UIColor.label))
-                                .lineLimit(appSessionStore.abbreviateThreads ? 3 : 8)
-                                .frame(minHeight: 30)
-                                .padding(10)
-                            Spacer()
-                            Image(systemName: "chevron.right")
-                                .font(.callout)
-                                .foregroundColor(Color(UIColor.systemGray))
-                                .padding(.trailing, 20)
-                                    .padding(.top, 17)
-                        }
-                    }
-                    .frame(maxWidth: .infinity)
-                    .background(RoundedCornersView(color: (self.activeThreadId == self.threadId ? Color("ChatBubbleSecondary") : Color("ChatBubblePrimary"))))
-                    .padding(.bottom, 5)
+                    AuthorNameView(name: self.rootPostAuthor, postId: self.threadId)
+
+                    ContributedView(contributed: self.contributed)
+
+                    Spacer()
+
+                    LolView(lols: self.rootPostLols, expanded: true, postId: self.threadId)
+
+                    ReplyCountView(replyCount: self.replyCount)
                     
+                    TimeRemainingIndicator(percent: .constant(self.rootPostDate.getTimeRemaining()))
+                            .frame(width: 10, height: 10)
                 }
-                .padding(.horizontal, 10)
-                .padding(.vertical, 10)
+                
+                // Post Preview
+                ZStack {
+                    HStack (alignment: .top) {
+                        Text(rootPostBodyPreview)
+                            .font(.callout)
+                            .foregroundColor(Color(UIColor.label))
+                            .lineLimit(appSessionStore.abbreviateThreads ? 3 : 8)
+                            .frame(minHeight: 30)
+                            .padding(10)
+                        Spacer()
+                        Image(systemName: "chevron.right")
+                            .font(.callout)
+                            .foregroundColor(Color(UIColor.systemGray))
+                            .padding(.trailing, 20)
+                                .padding(.top, 17)
+                    }
+                }
+                .frame(maxWidth: .infinity)
+                .background(RoundedCornersView(color: (self.activeThreadId == self.threadId ? Color("ChatBubbleSecondary") : Color("ChatBubblePrimary"))))
+                .padding(.bottom, 5)
+                
             }
+            .padding(.horizontal, 10)
+            .padding(.vertical, 10)
             
         }
         
