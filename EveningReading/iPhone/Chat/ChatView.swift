@@ -37,12 +37,9 @@ struct ChatView: View {
                 
                 // All non-hidden threads
                 ForEach(filteredThreads(), id: \.threadId) { thread in
-                    NavigationLink(destination: ThreadDetailView(threadId: .constant(thread.threadId), postId: .constant(0), replyCount: .constant(thread.posts.count - 1))) {
-                        ThreadRow(threadId: .constant(thread.threadId), activeThreadId: .constant(0))
-                    }
-                    .frame(minHeight: 130)
-                    .padding(.bottom, -25)
-                    .id(thread.threadId)
+                    ThreadRow(threadId: .constant(thread.threadId), activeThreadId: .constant(0))
+                        .padding(.bottom, -25)
+                        .id(thread.threadId)
                 }
                 
                 // Scroll to bottom / padding
