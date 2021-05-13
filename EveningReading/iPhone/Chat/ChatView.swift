@@ -12,6 +12,8 @@ struct ChatView: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var chatStore: ChatStore
     
+    //@State private var rootPosts: [ChatPosts] = [ChatPosts]()
+    
     @State private var isGettingChat: Bool = false
     
     private func filteredThreads() -> [ChatThread] {
@@ -19,9 +21,21 @@ struct ChatView: View {
         {
             return Array(chatData.threads)
         }
-        let threads = chatStore.threads.filter({ return self.appSessionStore.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !self.appSessionStore.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})        
+        let threads = chatStore.threads.filter({ return self.appSessionStore.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !self.appSessionStore.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
         return Array(threads)
     }
+    
+    /*
+    private func getRootPostData() {
+        let threads = chatStore.threads.filter({ return self.appSessionStore.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !self.appSessionStore.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
+        
+        for thread in threads {
+            if let rootPost = thread.posts.filter({ return $0.parentId == 0 }).first {
+                rootPosts.append(rootPost)
+            }
+        }
+    }
+    */
     
     var body: some View {
         VStack {
