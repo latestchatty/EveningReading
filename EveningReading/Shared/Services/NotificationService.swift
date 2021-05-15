@@ -22,7 +22,6 @@ class NotificationService {
     }
     
     public func register(deviceUUID: String, deviceTokenClean: String, deviceName: String, deviceModel: String, deviceVersion: String, clientId: String, appName: String, appVersion: String, handler: @escaping (Result<RegisterReponse, Error>) -> Void) {
-        handler(.success(RegisterReponse(status: 0)))
         let task = "register"
 
         guard
