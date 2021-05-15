@@ -19,7 +19,7 @@ struct GoToPostView: View {
 
     var body: some View {
         VStack {
-            Text("\(self.goToPostId) \(self.showingPost.description)")
+            //Text("\(self.goToPostId) \(self.showingPost.description)")
             
             // Fixes navigation bug
             // https://developer.apple.com/forums/thread/677333
