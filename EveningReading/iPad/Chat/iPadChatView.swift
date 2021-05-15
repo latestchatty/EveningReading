@@ -29,7 +29,7 @@ struct iPadChatView: View {
     var body: some View {
         GeometryReader { geometry in
             
-            GoToPostView()
+            //GoToPostView()
             
             HStack (alignment: .top, spacing: 0) {
                 
@@ -62,7 +62,7 @@ struct iPadChatView: View {
                 // Detail
                 VStack {
                     if chatStore.activeThreadId > 0 {
-                        ThreadDetailView(threadId: $chatStore.activeThreadId, postId: .constant(0), replyCount: .constant(-1))
+                        ThreadDetailView(threadId: $chatStore.activeThreadId, postId: .constant(0), replyCount: .constant(-1), isSearchResult: .constant(false))
                             .environmentObject(appSessionStore)
                             .environmentObject(chatStore)
                     } else {

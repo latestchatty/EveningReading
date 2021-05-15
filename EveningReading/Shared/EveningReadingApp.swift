@@ -10,6 +10,7 @@ import SwiftUI
 @main
 struct EveningReadingApp: App {
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.scenePhase) var phase
     
     @StateObject var appSessionStore = AppSessionStore(service: .init())
     @StateObject var chatStore = ChatStore(service: .init())
@@ -17,7 +18,7 @@ struct EveningReadingApp: App {
     @StateObject var messageStore = MessageStore(service: .init())
 
     #if os(iOS)
-    @StateObject var notifications = Notifications()
+    @StateObject var notifications = Notifications.shared //Notifications()
     @UIApplicationDelegateAdaptor private var appDelegate: AppDelegate
     #endif
     
@@ -49,75 +50,67 @@ struct EveningReadingApp: App {
                     .environmentObject(articleStore)
             #endif
         }
+        .onChange(of: phase) { newPhase in
+            if newPhase == .active {
+                UIApplication.shared.applicationIconBadgeNumber = 0
+            }
+        }
     }
 }
+
 
 // Push notifications
 #if os(iOS)
-extension UIApplicationDelegate {
-    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        print("Successfully registered for notifications!")
-    }
-
-    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-        print("Failed to register for notifications: \(error.localizedDescription)")
-    }
-}
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        registerForPushNotifications()
         return true
     }
-    //No callback in simulator -- must use device to get valid push token
+    
+    // No callback in simulator, must use device to get valid push token
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        print(deviceToken)
+        let tokenParts = deviceToken.map { data in String(format: "%02.2hhx", data) }
+        let token = tokenParts.joined()
+        print("Device Token Raw: \(deviceToken)")
+        print("Device Token: \(token)")
+
+        let deviceUUID = UUID().uuidString
+        let deviceTokenClean = token.replacingOccurrences(of: "<", with: "").replacingOccurrences(of: ">", with: "").replacingOccurrences(of: " ", with: "")
+        var deviceName = UIDevice.current.name
+        let deviceModel = UIDevice.current.model
+        let deviceVersion = UIDevice.current.systemVersion
+        
+        let alphabetOnly = "[^A-Za-z0-9]+"
+        deviceName = deviceName.replacingOccurrences(of: alphabetOnly, with: "", options: [.regularExpression])
+        
+        let defaults = UserDefaults.standard
+        defaults.set(deviceUUID, forKey: "PushNotificationUUID")
+        defaults.set(deviceTokenClean, forKey: "PushNotificationToken")
+        defaults.set(deviceName, forKey: "PushNotificationName")
+        defaults.set(deviceModel, forKey: "PushNotificationModel")
+        defaults.set(deviceVersion, forKey: "PushNotificationVersion")
     }
     
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
         print(error.localizedDescription)
     }
-}
-class Notifications: NSObject, ObservableObject, UNUserNotificationCenterDelegate {
-    @Published var notificationData: UNNotificationResponse?
     
-    override init() {
-        super.init()
-        UNUserNotificationCenter.current().delegate = self
-    }
-}
-extension Notifications {
-    public func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        completionHandler([.alert, .sound, .badge])
-    }
-
-    public func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        notificationData = response
-        completionHandler()
-    }
-
-    public func userNotificationCenter(_ center: UNUserNotificationCenter, openSettingsFor notification: UNNotification?) { }
-}
-class ERNotification: ObservableObject {
-    init() {
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { (allowed, error) in
-            //This callback does not trigger on main loop be careful
-            if allowed {
-                print("PushNotification Allowed")
-            } else {
-                print("PushNotification Not allowed")
-            }
+    func registerForPushNotifications() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { [weak self] granted, _ in
+            print("Permission granted: \(granted)")
+            guard granted else { return }
+            self?.getNotificationSettings()
         }
     }
     
-    func setERNotification(title: String, subtitle: String, body: String, when: Double) {
-        let content = UNMutableNotificationContent()
-        content.title = title
-        content.subtitle = subtitle
-        content.body = body
-        
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: when, repeats: false)
-        let request = UNNotificationRequest.init(identifier: "ERNotification", content: content, trigger: trigger)
-        UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
-        
+    func getNotificationSettings() {
+        UNUserNotificationCenter.current().getNotificationSettings { settings in
+            print("Notification settings: \(settings)")
+            guard settings.authorizationStatus == .authorized else { return }
+            DispatchQueue.main.async {
+              UIApplication.shared.registerForRemoteNotifications()
+            }
+        }
     }
 }
 #endif

@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+// NOTE: Comment line 218 to enable preview
+
 struct ThreadDetailView: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var appSessionStore: AppSessionStore
@@ -15,6 +17,7 @@ struct ThreadDetailView: View {
     @Binding var threadId: Int
     @Binding var postId: Int
     @Binding var replyCount: Int
+    @Binding var isSearchResult: Bool
     
     @State private var loadingLimit = 100
 
@@ -213,7 +216,12 @@ struct ThreadDetailView: View {
     var body: some View {
         VStack {
             
-            GoToPostView()
+            // Comment out to see preview
+            if UIDevice.current.userInterfaceIdiom == .phone {
+                GoToPostView()
+            }
+            
+            
             if self.showThread {
                 
                 RefreshableScrollView(height: 70, refreshing: self.$chatStore.gettingThread, scrollTarget: self.$chatStore.scrollTargetThread, scrollTargetTop: self.$chatStore.scrollTargetThreadTop) {
@@ -477,7 +485,7 @@ struct ThreadDetailView: View {
 
 struct ThreadDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        ThreadDetailView(threadId: .constant(999999992), postId: .constant(0), replyCount: .constant(20))
+        ThreadDetailView(threadId: .constant(999999992), postId: .constant(0), replyCount: .constant(20), isSearchResult: .constant(false))
             .environment(\.colorScheme, .dark)
             .environmentObject(AppSessionStore(service: AuthService()))
             .environmentObject(ChatStore(service: ChatService()))

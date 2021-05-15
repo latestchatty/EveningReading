@@ -25,6 +25,10 @@ class AppSessionStore : ObservableObject {
     @Published var showingTagsView = false
     @Published var showingSettingsView = false
     
+    // Deep linking to posts
+    @Published var showingPost = false
+    @Published var showingPostId = 0
+    
     // Preferences
     @Published var displayPostAuthor: Bool = true {
         didSet {

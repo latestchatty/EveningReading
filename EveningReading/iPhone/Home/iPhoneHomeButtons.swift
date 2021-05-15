@@ -50,27 +50,27 @@ struct iPhoneHomeButtons: View {
                 // go to chat
                 NavigationLink(destination: ChatView(), isActive: $appSessionStore.showingChatView) {
                     EmptyView()
-                }
+                }.isDetailLink(false)
                 
                 // go to inbox
                 NavigationLink(destination: InboxView(), isActive: $appSessionStore.showingInboxView) {
                     EmptyView()
-                }
+                }.isDetailLink(false)
                 
                 // go to search
                 NavigationLink(destination: SearchView(populateTerms: .constant(""), populateAuthor: .constant(""), populateParent: .constant("")), isActive: $appSessionStore.showingSearchView) {
                     EmptyView()
-                }
+                }.isDetailLink(false)
                 
                 // go to tags
                 NavigationLink(destination: TagsView(), isActive: $appSessionStore.showingTagsView) {
                     EmptyView()
-                }
+                }.isDetailLink(false)
                 
                 // go to settings
                 NavigationLink(destination: SettingsView(), isActive: $appSessionStore.showingSettingsView) {
                     EmptyView()
-                }
+                }.isDetailLink(false)
             }
             
         }

@@ -39,7 +39,8 @@ struct RefreshableScrollView<Content: View>: View {
                 ZStack(alignment: .top) {
                     MovingView()
                     
-                    LazyVStack { self.content }.alignmentGuide(.top, computeValue: { d in (self.refreshing && self.frozen) ? -self.threshold : 0.0 })
+                    LazyVStack { self.content }
+                    .alignmentGuide(.top, computeValue: { d in (self.refreshing && self.frozen) ? -self.threshold : 0.0 })
                     .onChange(of: scrollTarget) { target in
                         if let target = target {
                             self.scrollTarget = nil
@@ -198,6 +199,13 @@ struct RefreshableKeyTypes {
         static var defaultValue: [PrefData] = []
 
         static func reduce(value: inout [PrefData], nextValue: () -> [PrefData]) {
+            /*
+            for val in nextValue() {
+                if !value.contains(val) {
+                    value.append(val)
+                }
+            }
+            */
             value.append(contentsOf: nextValue())
         }
 

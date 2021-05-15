@@ -14,13 +14,15 @@ struct iPhoneContentView: View {
     @EnvironmentObject var articleStore: ArticleStore
     @EnvironmentObject var messageStore: MessageStore
     @EnvironmentObject var notifications: Notifications
+    //@EnvironmentObject var notificationStore: NotificationStore
     
     @State private var showingGuidelinesView = false
-    
+        
     var body: some View {
-        NavigationView {            
+        NavigationView {
             ScrollView {
                 VStack {
+                    GoToPostView()
                     GuidelinesView(showingGuidelinesView: $showingGuidelinesView)
                     .onAppear() {
                         DispatchQueue.main.async {
@@ -46,6 +48,13 @@ struct iPhoneContentView: View {
         }
         .navigationViewStyle(StackNavigationViewStyle())
         .accentColor(colorScheme == .dark ? Color.white : Color(UIColor.systemBlue))
+        .onAppear() {
+            if Notifications.shared.notificationLink != "" {
+                // Respond to push notification
+                print("responding to notficationlink \(Notifications.shared.notificationLink)")
+                Notifications.shared.notificationLink = ""
+            }
+        }
     }
 }
 
@@ -58,5 +67,6 @@ struct iPhoneContentView_Previews: PreviewProvider {
             .environmentObject(ArticleStore(service: ArticleService()))
             .environmentObject(MessageStore(service: MessageService()))
             .environmentObject(Notifications())
+            //.environmentObject(NotificationStore(service: NotificationService()))
     }
 }

@@ -29,38 +29,39 @@ struct MessageDetailView: View {
     }
     
     var body: some View {
-        
-        GoToPostView()
+        VStack {
+            // GoToPostView() // Doesn't work
+                
+            NewMessageView(showingNewMessageSheet: self.$showingNewMessageSheet, messageId: $messageId, recipientName: self.$messageRecipient, subjectText: Binding.constant("Re: \(self.messageSubject)"), bodyText: Binding.constant("\(self.messageBody.stringByDecodingHTMLEntities.newlineToBR) "))
             
-        NewMessageView(showingNewMessageSheet: self.$showingNewMessageSheet, messageId: $messageId, recipientName: self.$messageRecipient, subjectText: Binding.constant("Re: \(self.messageSubject)"), bodyText: Binding.constant("\(self.messageBody.stringByDecodingHTMLEntities.newlineToBR) "))
-        
-        ScrollView {
-            VStack {
-                HStack(alignment: .center) {
-                    Text("From: ") +
-                    Text("\(messageRecipient)")
-                        .foregroundColor(Color(UIColor.systemOrange))
+            ScrollView {
+                VStack {
+                    HStack(alignment: .center) {
+                        Text("From: ") +
+                        Text("\(messageRecipient)")
+                            .foregroundColor(Color(UIColor.systemOrange))
+                        Spacer()
+                    }
+                    .padding(.horizontal, 10)
+                    Divider()
+                    HStack(alignment: .center) {
+                        Text(messageSubject)
+                            .foregroundColor(Color(UIColor.systemBlue))
+                        Spacer()
+                    }
+                    .padding(.horizontal, 10)
+                    Divider()
+                }
+                .padding(.top, 10)
+                VStack {
+                    HStack {
+                        MessageWebView(viewModel: MessageViewModel(body: messageBody, colorScheme: colorScheme), hyperlinkUrl: $hyperlinkUrl, showingWebView: $showingWebView, dynamicHeight: $messageWebViewHeight, templateA: self.$messageStore.messageTemplateBegin, templateB: self.$messageStore.messageTemplateEnd)
+                    }
+                    .frame(height: self.messageWebViewHeight)
                     Spacer()
                 }
                 .padding(.horizontal, 10)
-                Divider()
-                HStack(alignment: .center) {
-                    Text(messageSubject)
-                        .foregroundColor(Color(UIColor.systemBlue))
-                    Spacer()
-                }
-                .padding(.horizontal, 10)
-                Divider()
             }
-            .padding(.top, 10)
-            VStack {
-                HStack {
-                    MessageWebView(viewModel: MessageViewModel(body: messageBody, colorScheme: colorScheme), hyperlinkUrl: $hyperlinkUrl, showingWebView: $showingWebView, dynamicHeight: $messageWebViewHeight, templateA: self.$messageStore.messageTemplateBegin, templateB: self.$messageStore.messageTemplateEnd)
-                }
-                .frame(height: self.messageWebViewHeight)
-                Spacer()
-            }
-            .padding(.horizontal, 10)
         }
         .frame(maxWidth: .infinity)
         .onAppear(perform: markMessage)

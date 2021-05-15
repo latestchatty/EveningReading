@@ -51,7 +51,8 @@ struct watchOSThreadRow: View {
     var body: some View {
         VStack {
             
-            // Fixes SwiftUI/watchOS/simulator navigation bug?
+            // Fixes navigation bug
+            // https://developer.apple.com/forums/thread/677333
             NavigationLink(destination: EmptyView(), isActive: .constant(false)) {
                 EmptyView()
             }.frame(width: 0, height: 0)

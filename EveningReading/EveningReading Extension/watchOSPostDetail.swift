@@ -50,7 +50,7 @@ struct watchOsPostDetail: View {
     var body: some View {
         ScrollView {
             
-            // Fixes SwiftUI/watchOS/simulator navigation bug?
+            // Fixes navigation bug
             // https://developer.apple.com/forums/thread/677333
             NavigationLink(destination: EmptyView(), isActive: .constant(false)) {
                 EmptyView()

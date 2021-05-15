@@ -14,6 +14,7 @@ struct iPadContentView: View {
     @EnvironmentObject var articleStore: ArticleStore
     @EnvironmentObject var messageStore: MessageStore
     @EnvironmentObject var notifications: Notifications
+    //@EnvironmentObject var notificationStore: NotificationStore
     
     @State private var showingGuidelinesView = false
     
@@ -22,6 +23,7 @@ struct iPadContentView: View {
             ScrollViewReader { scrollProxy in
                 ScrollView {
                     VStack {
+                        GoToPostView()
                         GuidelinesView(showingGuidelinesView: self.$showingGuidelinesView)
                         .onAppear() {
                             DispatchQueue.main.async {
@@ -61,5 +63,6 @@ struct iPadContentView_Previews: PreviewProvider {
             .environmentObject(ArticleStore(service: ArticleService()))
             .environmentObject(MessageStore(service: MessageService()))
             .environmentObject(Notifications())
+            //.environmentObject(NotificationStore(service: NotificationService()))
     }
 }

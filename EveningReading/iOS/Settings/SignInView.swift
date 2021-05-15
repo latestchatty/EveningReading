@@ -41,14 +41,14 @@ struct SignInView: View {
                     Text("Lamp, Sand, Lime.").font(.subheadline)
                         .padding(EdgeInsets(top: 0, leading: 0, bottom: 70, trailing: 0))
                     
-                    TextField("Username", text: self.$appSessionStore.signInUsername)
+                    TextField("Username", text: $appSessionStore.signInUsername)
                         .padding()
                         .textContentType(.username)
                         .background(Color("SignInField"))
                         .cornerRadius(4.0)
                         .padding(EdgeInsets(top: 0, leading: 0, bottom: 15, trailing: 0))
             
-                    SecureField("Password", text: self.$appSessionStore.signInPassword) {
+                    SecureField("Password", text: $appSessionStore.signInPassword) {
                     }
                     .padding()
                     .textContentType(.password)
@@ -71,17 +71,18 @@ struct SignInView: View {
                 }
                 .padding()
                 
-                .alert(isPresented: self.$appSessionStore.showingSignInWarning) {
+                .alert(isPresented: $appSessionStore.showingSignInWarning) {
                     Alert(title: Text("Sign In Failed"), message: Text("Incorrect username or password."), dismissButton: .default(Text("Okay")))
                 }
                 
             }
             .padding()
             .background(Color("SignInBackground").frame(height: 2600).offset(y: -80))
-            .disabled(self.appSessionStore.isAuthenticating)
-            .overlay(AuthenticatingView(isVisible: self.$appSessionStore.isAuthenticating))
+            .disabled(appSessionStore.isAuthenticating)
+            .overlay(AuthenticatingView(isVisible: $appSessionStore.isAuthenticating))
             .onReceive(timer) { _ in
-                if self.appSessionStore.isSignedIn {
+                if appSessionStore.isSignedIn {
+                    NotificationStore(service: .init()).register()
                     DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(50)) {
                         presentationMode.wrappedValue.dismiss()
                     }
