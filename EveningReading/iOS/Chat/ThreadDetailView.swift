@@ -220,6 +220,13 @@ struct ThreadDetailView: View {
             if UIDevice.current.userInterfaceIdiom == .phone {
                 GoToPostView()
             }
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                WhosTaggingView(showingWhosTaggingView: self.$showingWhosTaggingView)
+                    .frame(width: 0, height: 0)
+                NewMessageView(showingNewMessageSheet: self.$showingNewMessageView, messageId: Binding.constant(0), recipientName: self.$messageRecipient, subjectText: self.$messageSubject, bodyText: self.$messageBody)
+                    .frame(width: 0, height: 0)
+            }
+            // End comment out to preview
             
             if self.showThread {
                 
