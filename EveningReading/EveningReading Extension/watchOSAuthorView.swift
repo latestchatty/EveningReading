@@ -36,7 +36,7 @@ struct watchOSAuthorView: View {
                 }
             } else if self.showMessageSent {
                 // Author was reported
-                Text("Author Reported!")
+                Text("User Reported!")
                     .onAppear() {
                         msgStore.submitComplaint(author: self.name, postId: self.postId)
                     }
@@ -51,7 +51,7 @@ struct watchOSAuthorView: View {
                     .padding(.top)
                 
                 Spacer()
-                Button("Report Author") {
+                Button("Report User") {
                     // Show message
                     withAnimation {
                         self.showReportUserMessage = true

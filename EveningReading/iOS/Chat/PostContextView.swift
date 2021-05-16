@@ -64,7 +64,7 @@ struct PostContextView: View {
             self.messageBody = messageStore.getComplaintText(author: self.author, postId: self.postId)
             self.showingNewMessageView = true
         }) {
-            Text("Report Author")
+            Text("Report User")
             Image(systemName: "exclamationmark.circle")
         }
         .onAppear() {

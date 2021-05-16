@@ -17,11 +17,10 @@ struct GoToPostView: View {
     @State private var showingPost: Bool = false
     @State private var showingAlert: Bool = false
     
-    @State private var updateState: Bool = false
-
     var body: some View {
         VStack {
             /*
+            Text("\(appSessionStore.showingPostId)")
             Text("\(self.goToPostId) \(self.showingPost.description)")
             Button(action: {
                 // send message
@@ -51,6 +50,7 @@ struct GoToPostView: View {
                         print("showing link")
                         self.appSessionStore.showingShackLink = false
                         self.goToPostId = Int(appSessionStore.shackLinkPostId) ?? 0
+                        appSessionStore.showingPostId = Int(appSessionStore.shackLinkPostId) ?? 0
                         self.showingPost = true
                     }
                 }
@@ -72,7 +72,7 @@ struct GoToPostView: View {
             */
             
             // Push ThreadDetailView
-            NavigationLink(destination: ThreadDetailView(threadId: .constant(0), postId: self.$goToPostId, replyCount: .constant(-1), isSearchResult: .constant(true)), isActive: self.$showingPost) {
+            NavigationLink(destination: ThreadDetailView(threadId: .constant(0), postId: $appSessionStore.showingPostId, replyCount: .constant(-1), isSearchResult: .constant(true)), isActive: self.$showingPost) {
                 EmptyView()
             }.isDetailLink(false).hidden().allowsHitTesting(false)
             
