@@ -153,7 +153,7 @@ struct ThreadDetailView: View {
     }
     
     // Drag the thread navigation buttons
-    private var paginateDrag: some Gesture {
+    private var threadNavigationDrag: some Gesture {
         DragGesture()
         .onChanged { value in
             self.threadNavigationLocation = value.location
@@ -217,10 +217,9 @@ struct ThreadDetailView: View {
         VStack {
             
             // Comment out to see preview
-            if UIDevice.current.userInterfaceIdiom == .phone {
-                GoToPostView()
-            }
-            
+            //if UIDevice.current.userInterfaceIdiom == .phone {
+            //    GoToPostView()
+            //}
             
             if self.showThread {
                 
@@ -439,7 +438,7 @@ struct ThreadDetailView: View {
                 else if self.isGettingThread {
                     DisabledThreadNavigationView()
                         .position(threadNavigationLocation)
-                        .gesture(paginateDrag)
+                        .gesture(threadNavigationDrag)
                 } else {
                     HStack {
                         HStack {
@@ -461,7 +460,7 @@ struct ThreadDetailView: View {
                     .padding(.init(top: 0, leading: 0, bottom: 50, trailing: 50))
                     .shadow(radius: 5)
                     .position(threadNavigationLocation)
-                    .gesture(paginateDrag)
+                    .gesture(threadNavigationDrag)
                 }
             }.frame(maxWidth: .infinity, maxHeight: .infinity)
         )
