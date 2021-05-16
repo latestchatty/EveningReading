@@ -217,9 +217,9 @@ struct ThreadDetailView: View {
         VStack {
             
             // Comment out to see preview
-            //if UIDevice.current.userInterfaceIdiom == .phone {
-            //    GoToPostView()
-            //}
+            if UIDevice.current.userInterfaceIdiom == .phone {
+                GoToPostView()
+            }
             
             if self.showThread {
                 

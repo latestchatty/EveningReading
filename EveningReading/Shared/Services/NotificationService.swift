@@ -142,6 +142,7 @@ extension Notifications {
     }
 
     public func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        print("UNNotificationResponse received")
         notificationData = response
         let userInfo = response.notification.request.content.userInfo
         if let aps = userInfo["aps"] as? [String: AnyObject] {
@@ -149,7 +150,6 @@ extension Notifications {
             Notifications.shared.notificationLink = aps.description
         }
         completionHandler()
-        print("got here 2")
     }
 
     public func userNotificationCenter(_ center: UNUserNotificationCenter, openSettingsFor notification: UNNotification?) { }

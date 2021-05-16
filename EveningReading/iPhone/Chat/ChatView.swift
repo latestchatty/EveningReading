@@ -37,6 +37,8 @@ struct ChatView: View {
     }
     */
     
+    @State private var isPushAlertShowing: Bool = false
+    
     var body: some View {
         VStack {
             
@@ -62,7 +64,8 @@ struct ChatView: View {
                 }.id(9999999999993)
                 
             }
-            
+            //.overlay(PushNotificationView(isAlertShowing: self.$isPushAlertShowing))
+
         }
         
         // View settings
