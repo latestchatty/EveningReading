@@ -127,6 +127,14 @@ class AppSessionStore : ObservableObject {
         }
     }
     
+    // Authors
+    @Published var blockedAuthors: [String] = [""] {
+        didSet {
+            let defaults = UserDefaults.standard
+            defaults.set(blockedAuthors, forKey: "BlockedAuthors")
+        }
+    }
+    
     // Thread Navigation
     #if os(iOS)
     @Published var threadNavigationLocationX: CGFloat = UIScreen.main.bounds.width - 50 {
@@ -186,6 +194,9 @@ class AppSessionStore : ObservableObject {
         self.showPolitical = defaults.object(forKey: "ShowPolitical") as? Bool ?? false
         self.showStupid = defaults.object(forKey: "ShowStupid") as? Bool ?? false
         self.showNWS = defaults.object(forKey: "ShowNWS") as? Bool ?? false
+        
+        // Authors
+        self.blockedAuthors = defaults.object(forKey: "BlockedAuthors") as? [String] ?? [""]
         
         // Collapsed
         self.collapsedThreads = defaults.object(forKey: "CollapsedThreads") as? [Int] ?? [0]

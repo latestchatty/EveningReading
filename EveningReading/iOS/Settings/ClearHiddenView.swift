@@ -25,6 +25,7 @@ struct ClearHiddenView: View {
             .alert(isPresented: self.$showingClearHiddenAlert) {
                 Alert(title: Text("Clear Hidden?"), message: Text(""), primaryButton: .destructive(Text("Yes")) {
                     appSessionStore.collapsedThreads.removeAll()
+                    appSessionStore.blockedAuthors.removeAll()
                 }, secondaryButton: .cancel() {
                     
                 })

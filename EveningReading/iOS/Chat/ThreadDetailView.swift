@@ -229,7 +229,7 @@ struct ThreadDetailView: View {
                     VStack {
                         // Post details
                         HStack (alignment: .center) {
-                            AuthorNameView(name: self.rootPostAuthor, postId: self.threadId)
+                            AuthorNameView(name: appSessionStore.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : self.rootPostAuthor, postId: self.threadId)
 
                             ContributedView(contributed: self.contributed)
 
@@ -244,12 +244,22 @@ struct ThreadDetailView: View {
                         
                         // Full root post body and bubble
                         VStack {
-                            HStack () {
-                                RichTextView(topBlocks: self.rootPostRichText).fixedSize(horizontal: false, vertical: true)
-                                Spacer()
+                            if appSessionStore.blockedAuthors.contains(self.rootPostAuthor) {
+                                HStack () {
+                                    Text("[blocked]")
+                                        .fixedSize(horizontal: false, vertical: true)
+                                    Spacer()
+                                }
+                                .padding(.horizontal, 10)
+                                .padding(.vertical, 10)
+                            } else {
+                                HStack () {
+                                    RichTextView(topBlocks: self.rootPostRichText).fixedSize(horizontal: false, vertical: true)
+                                    Spacer()
+                                }
+                                .padding(.horizontal, 10)
+                                .padding(.vertical, 10)
                             }
-                            .padding(.horizontal, 10)
-                            .padding(.vertical, 10)
                             
                             // Tag and Reply
                             if appSessionStore.isSignedIn {

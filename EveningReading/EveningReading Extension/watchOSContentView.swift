@@ -26,7 +26,7 @@ struct watchOSContentView: View {
         {
             return Array(chatData.threads)
         }
-        let threads = self.chatStore.threads.filter({ return self.appSessionStore.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !self.appSessionStore.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
+        var threads = self.chatStore.threads.filter({ return self.appSessionStore.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !self.appSessionStore.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
         return Array(threads)
     }
     
@@ -59,6 +59,8 @@ struct watchOSContentView: View {
                 LazyVStack (alignment: .leading) {
                     ForEach(filteredThreads(), id: \.threadId) { thread in
                         watchOSThreadRow(threadId: .constant(thread.threadId))
+                            .environmentObject(appSessionStore)
+                            .environmentObject(chatStore)
                     }
                 }
             } else {

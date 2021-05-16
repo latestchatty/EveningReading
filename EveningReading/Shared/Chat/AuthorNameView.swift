@@ -9,6 +9,7 @@ import SwiftUI
 
 struct AuthorNameView: View {
     @Environment(\.colorScheme) var colorScheme
+    @EnvironmentObject var appSessionStore: AppSessionStore
     @StateObject var msgStore = MessageStore(service: .init())
     
     var name: String = ""
@@ -110,7 +111,7 @@ struct AuthorNameView: View {
                 }
                 .buttonStyle(PlainButtonStyle())
 
-                NavigationLink(destination: watchOSAuthorView(name: .constant(self.name), postId: .constant(self.postId)), isActive: self.$showingAuthor) {
+                NavigationLink(destination: watchOSAuthorView(name: .constant(self.name), postId: .constant(self.postId)).environmentObject(appSessionStore), isActive: self.$showingAuthor) {
                         EmptyView()
                 }.frame(width: 0, height: 0)
             } else {
@@ -127,13 +128,36 @@ struct AuthorNameView: View {
                     .buttonStyle(PlainButtonStyle())
                 }
                 .alert(isPresented: self.$showingAuthor) {
-                    Alert(title: Text("Report \(self.name)"), message: Text("For post \(self.postId)"),
+                    Alert(title: Text("Block \(self.name)"), message: Text("For post \(self.postId)?"),
+                          primaryButton: .default (Text("OK")) {
+                            // report user
+                            appSessionStore.blockedAuthors.append(self.name)
+                          }, secondaryButton: .cancel()
+                    )
+                }
+                /*
+                // Block user
+                VStack {
+                    Button(action: {
+                        self.showingAuthor.toggle()
+                    }) {
+                        Text("\(self.name)")
+                            .font(.footnote)
+                            .bold()
+                            .foregroundColor(Color.orange)
+                            .lineLimit(1)
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                }
+                .alert(isPresented: self.$showingAuthor) {
+                    Alert(title: Text("Report \(self.name)"), message: Text("For post \(self.postId)?"),
                           primaryButton: .default (Text("OK")) {
                             // report user
                             msgStore.submitComplaint(author: self.name, postId: self.postId)
                           }, secondaryButton: .cancel()
                     )
                 }
+                */
             }
         #endif
     }
@@ -143,6 +167,7 @@ struct AuthorNameView_Previews: PreviewProvider {
     static var previews: some View {
         AuthorNameView(name: "tamzyn", postId: 999999996, bold: false)
             .environment(\.colorScheme, .light)
+            .environmentObject(AppSessionStore(service: AuthService()))
             .environmentObject(MessageStore(service: MessageService()))
     }
 }

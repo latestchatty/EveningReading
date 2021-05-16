@@ -61,7 +61,7 @@ struct watchOSThreadRow: View {
                 VStack (alignment: .leading) {
                     // Thread details
                     HStack {
-                        AuthorNameView(name: self.rootPostAuthor, postId: self.threadId, navLink: true)
+                        AuthorNameView(name: appSessionStore.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : self.rootPostAuthor, postId: self.threadId, navLink: true)
                         ContributedView(contributed: self.contributed)
                         Spacer()
                         LolView(lols: self.rootPostLols, postId: self.threadId)
@@ -69,7 +69,7 @@ struct watchOSThreadRow: View {
                     }
                     // Thread body preview
                     HStack {
-                        Text(rootPostBodyPreview)
+                        Text(appSessionStore.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : rootPostBodyPreview)
                             .font(.footnote)
                             .lineLimit(3)
                             .onTapGesture(count: 1) {
@@ -78,7 +78,7 @@ struct watchOSThreadRow: View {
                             .onLongPressGesture {
                                 self.showingCollapseAlert.toggle()
                             }
-                        NavigationLink(destination: watchOsPostDetail(postId: .constant(self.threadId)).environmentObject(chatStore), isActive: self.$showingPost) {
+                        NavigationLink(destination: watchOSPostDetail(postId: .constant(self.threadId)).environmentObject(appSessionStore).environmentObject(chatStore), isActive: self.$showingPost) {
                             EmptyView()
                         }.frame(width: 0, height: 0)
                         Spacer()

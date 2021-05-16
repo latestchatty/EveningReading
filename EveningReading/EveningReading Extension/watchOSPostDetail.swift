@@ -1,5 +1,5 @@
 //
-//  watchOsPostDetail.swift
+//  watchOSPostDetail.swift
 //  EveningReading Extension
 //
 //  Created by Chris Hodge on 5/4/21.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct watchOsPostDetail: View {
+struct watchOSPostDetail: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var chatStore: ChatStore
     
@@ -43,7 +43,12 @@ struct watchOsPostDetail: View {
             self.postDate = childPost.date
             self.postLols = childPost.lols
             self.replies = thread?.posts.filter({ return $0.parentId == self.postId }) ?? [ChatPosts]()
-            self.richTextBody = RichTextBuilder.getRichText(postBody: self.postBody)
+            
+            if appSessionStore.blockedAuthors.contains(self.postAuthor) {
+                self.richTextBody = RichTextBuilder.getRichText(postBody: "[blocked]")
+            } else {
+                self.richTextBody = RichTextBuilder.getRichText(postBody: self.postBody)
+            }
         }
     }
     
@@ -61,7 +66,7 @@ struct watchOsPostDetail: View {
                 // Post
                 VStack (alignment: .leading) {
                     HStack {
-                        AuthorNameView(name: self.postAuthor, postId: self.postId)
+                        AuthorNameView(name: appSessionStore.blockedAuthors.contains(self.postAuthor) ? "[blocked]" : self.postAuthor, postId: self.postId)
                         ContributedView(contributed: self.contributed)
                         Spacer()
                         LolView(lols: self.postLols, postId: self.postId)
@@ -80,7 +85,8 @@ struct watchOsPostDetail: View {
                 // Replies
                 if self.replies.count > 0 {
                     ForEach(self.replies, id: \.id) { reply in
-                        watchOSPostPreview(postId: .constant(reply.id), replyText: .constant(String(reply.body.getPreview.prefix(100))))
+                        watchOSPostPreview(postId: .constant(reply.id), replyText: .constant(String(reply.body.getPreview.prefix(100))), author: .constant(reply.author))
+                            .environmentObject(appSessionStore)
                             .environmentObject(chatStore)
                     }
                 } else {
@@ -94,9 +100,9 @@ struct watchOsPostDetail: View {
     }
 }
 
-struct watchOsPostDetail_Previews: PreviewProvider {
+struct watchOSPostDetail_Previews: PreviewProvider {
     static var previews: some View {
-        watchOsPostDetail(postId: .constant(999999992))
+        watchOSPostDetail(postId: .constant(999999992))
             .previewDevice(PreviewDevice(rawValue: "Apple Watch Series 5 - 44mm"))
             .environmentObject(AppSessionStore(service: AuthService()))
             .environmentObject(ChatStore(service: ChatService()))

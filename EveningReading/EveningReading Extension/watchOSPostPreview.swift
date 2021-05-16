@@ -13,6 +13,7 @@ struct watchOSPostPreview: View {
     
     @Binding var postId: Int
     @Binding var replyText: String
+    @Binding var author: String
     
     @State private var showingPost: Bool = false
     
@@ -22,7 +23,7 @@ struct watchOSPostPreview: View {
                 self.showingPost.toggle()
             }) {
                 HStack {
-                    Text("\(self.replyText)")
+                    Text("\(appSessionStore.blockedAuthors.contains(author) ? "[blocked]" : self.replyText)")
                         .font(.footnote)
                         .lineLimit(1)
                         .truncationMode(.tail)
@@ -34,7 +35,7 @@ struct watchOSPostPreview: View {
             .background(Color("ThreadBubbleSecondary"))
             .cornerRadius(5)
             
-            NavigationLink(destination: watchOsPostDetail(postId: .constant(self.postId)).environmentObject(chatStore), isActive: self.$showingPost) {
+            NavigationLink(destination: watchOSPostDetail(postId: .constant(self.postId)).environmentObject(appSessionStore).environmentObject(chatStore), isActive: self.$showingPost) {
                 EmptyView()
             }
             .frame(width: 0, height: 0)
@@ -51,8 +52,9 @@ struct watchOSPostPreview: View {
 
 struct watchOSPostPreview_Previews: PreviewProvider {
     static var previews: some View {
-        watchOSPostPreview(postId: .constant(999999992), replyText: .constant("Quis hendrerit dolor magna eget."))
+        watchOSPostPreview(postId: .constant(999999992), replyText: .constant("Quis hendrerit dolor magna eget."), author: .constant("Tim"))
             .previewDevice(PreviewDevice(rawValue: "Apple Watch Series 5 - 44mm"))
+            .environmentObject(AppSessionStore(service: AuthService()))
             .environmentObject(ChatStore(service: ChatService()))
     }
 }

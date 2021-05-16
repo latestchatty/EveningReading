@@ -32,7 +32,7 @@ struct PostExpandedView: View {
                     .foregroundColor(Color("replyLines"))
                 
                 // Author name (in blue if author)
-                AuthorNameView(name: self.postAuthor, postId: self.postId)
+                AuthorNameView(name: appSessionStore.blockedAuthors.contains(self.postAuthor) ? "[blocked]" : self.postAuthor, postId: self.postId)
                 
                 Spacer()
                 
@@ -41,13 +41,23 @@ struct PostExpandedView: View {
             }
             VStack {
                 // Post body
-                HStack {
-                    RichTextView(topBlocks: self.postRichText)
-                        .fixedSize(horizontal: false, vertical: true)
-                    Spacer()
+                if appSessionStore.blockedAuthors.contains(self.postAuthor) {
+                    HStack {
+                        Text("[blocked]")
+                            .fixedSize(horizontal: false, vertical: true)
+                        Spacer()
+                    }
+                    .padding(10)
+                    .frame(maxWidth: .infinity)
+                } else {
+                    HStack {
+                        RichTextView(topBlocks: self.postRichText)
+                            .fixedSize(horizontal: false, vertical: true)
+                        Spacer()
+                    }
+                    .padding(10)
+                    .frame(maxWidth: .infinity)
                 }
-                .padding(10)
-                .frame(maxWidth: .infinity)
                 
                 // Tag and reply
                 if appSessionStore.isSignedIn {

@@ -51,7 +51,7 @@ struct PostPreviewView: View {
             }
             
             // One line preview of body
-            Text(self.postBody.getPreview)
+            Text(appSessionStore.blockedAuthors.contains(self.postAuthor) ? "[blocked]" : self.postBody.getPreview)
                 .fontWeight(postStrength != nil ? PostWeight[postStrength!] : .regular)
                 .lineLimit(1)
                 .truncationMode(.tail)
@@ -62,9 +62,19 @@ struct PostPreviewView: View {
          
             
             // Maybe show post author
-            if self.appSessionStore.displayPostAuthor {
+            if appSessionStore.blockedAuthors.contains(self.postAuthor) && self.appSessionStore.displayPostAuthor {
+                Text("[blocked]")
+                    .font(.footnote)
+                    .bold()
+                    .foregroundColor(Color(UIColor.systemOrange))
+                    .lineLimit(1)
+                    .truncationMode(.tail)
+                    .fixedSize()
+            }
+            else if self.appSessionStore.displayPostAuthor {
                 AuthorNameView(name: postAuthor, postId: postId)
             }
+            
             
             // Tags/Lols
             LolView(lols: postLols, postId: postId)

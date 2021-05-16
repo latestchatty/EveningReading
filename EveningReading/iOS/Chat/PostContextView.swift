@@ -59,6 +59,12 @@ struct PostContextView: View {
         }
         */
         Button(action: {
+            appSessionStore.blockedAuthors.append(self.author)
+        }) {
+            Text("Block User")
+            Image(systemName: "exclamationmark.circle")
+        }
+        Button(action: {
             self.messageRecipient = "Duke Nuked"
             self.messageSubject = "Reporting Author of Post"
             self.messageBody = messageStore.getComplaintText(author: self.author, postId: self.postId)

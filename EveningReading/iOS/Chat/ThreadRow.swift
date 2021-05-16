@@ -100,7 +100,7 @@ struct ThreadRow: View {
                     
                     NewMessageView(showingNewMessageSheet: self.$showingNewMessageView, messageId: Binding.constant(0), recipientName: self.$messageRecipient, subjectText: self.$messageSubject, bodyText: self.$messageBody)
                     
-                    AuthorNameView(name: self.rootPostAuthor, postId: self.threadId)
+                    AuthorNameView(name: appSessionStore.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : self.rootPostAuthor, postId: self.threadId)
 
                     ContributedView(contributed: self.contributed)
 
@@ -117,7 +117,7 @@ struct ThreadRow: View {
                 // Post Preview
                 ZStack {
                     HStack (alignment: .top) {
-                        Text(rootPostBodyPreview)
+                        Text(appSessionStore.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : rootPostBodyPreview)
                             .font(.callout)
                             .foregroundColor(Color(UIColor.label))
                             .lineLimit(appSessionStore.abbreviateThreads ? 3 : 8)
