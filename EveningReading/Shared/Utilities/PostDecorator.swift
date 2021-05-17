@@ -23,15 +23,27 @@ class PostDecorator {
     
     // Check if participated in thread
     static func checkParticipatedStatus(thread: ChatThread, author: String) -> Bool {
-        let username: String? = KeychainWrapper.standard.string(forKey: "Username")
-
-        let contributedReplies = thread.posts.filter({ return $0.author == username }).count
+        let username: String? = KeychainWrapper.standard.string(forKey: "Username")?.lowercased()
         
-        if username == author || contributedReplies > 0 {
+        let contributedReplies = thread.posts.filter({ return $0.author.lowercased() == username }).count
+        
+        if username == author.lowercased() || contributedReplies > 0 {
             return true
         } else {
             return false
         }
     }
-    
+    static func getAuthorType(threadRootAuthor: String, author: String) -> AuthorType {
+        let username: String? = KeychainWrapper.standard.string(forKey: "Username")?.lowercased()
+        switch author.lowercased() {
+            case username:
+                return AuthorType.currentUser
+            case "Shacknews":
+                return AuthorType.shacknews
+            case threadRootAuthor.lowercased():
+                return AuthorType.threadOp
+            default:
+                return AuthorType.unknown
+        }
+    }
 }

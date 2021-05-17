@@ -16,6 +16,7 @@ struct AuthorNameView: View {
     var postId: Int = 0
     var bold: Bool = false
     var navLink: Bool = false
+    var authorType: AuthorType = AuthorType.unknown
     
     #if os(iOS)
     @State private var showingNewMessageView = false
@@ -35,7 +36,7 @@ struct AuthorNameView: View {
             Text("\(self.name)")
                 .font(.footnote)
                 .bold()
-                .foregroundColor(Color(UIColor.systemOrange))
+                .foregroundColor(AuthorColor[self.authorType])
                 .lineLimit(1)
                 .truncationMode(.tail)
                 .fixedSize()
@@ -75,7 +76,8 @@ struct AuthorNameView: View {
         #if os(OSX)
             Text("\(self.name)")
                 .font(self.bold ? .headline : .body)
-                .foregroundColor(colorScheme == .dark ? Color(NSColor.systemOrange) : Color(NSColor.systemPurple))
+                // Light theme needs author type handling
+                .foregroundColor(colorScheme == .dark ? AuthorColor[self.authorType] : Color(NSColor.systemPurple))
                 .lineLimit(1)
                 .contextMenu {
                     Button(action: {
@@ -106,7 +108,7 @@ struct AuthorNameView: View {
                     Text("\(self.name)")
                         .font(.footnote)
                         .bold()
-                        .foregroundColor(Color.orange)
+                        .foregroundColor(AuthorColor[self.authorType])
                         .lineLimit(1)
                 }
                 .buttonStyle(PlainButtonStyle())
@@ -122,7 +124,7 @@ struct AuthorNameView: View {
                         Text("\(self.name)")
                             .font(.footnote)
                             .bold()
-                            .foregroundColor(Color.orange)
+                            .foregroundColor(AuthorColor[self.authorType])
                             .lineLimit(1)
                     }
                     .buttonStyle(PlainButtonStyle())

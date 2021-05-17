@@ -21,6 +21,7 @@ struct watchOSPostDetail: View {
     @State private var postDate: String = "2020-08-14T21:05:00Z"
     @State private var postLols: [ChatLols] = [ChatLols]()
     @State private var replies: [ChatPosts] = [ChatPosts]()
+    @State private var rootPostAuthor: String = ""
     
     @State private var isRootPost: Bool = false
     
@@ -43,6 +44,7 @@ struct watchOSPostDetail: View {
             self.postDate = childPost.date
             self.postLols = childPost.lols
             self.replies = thread?.posts.filter({ return $0.parentId == self.postId }) ?? [ChatPosts]()
+            self.rootPostAuthor = thread?.posts.first?.author ?? ""
             
             if appSessionStore.blockedAuthors.contains(self.postAuthor) {
                 self.richTextBody = RichTextBuilder.getRichText(postBody: "[blocked]")
@@ -66,7 +68,8 @@ struct watchOSPostDetail: View {
                 // Post
                 VStack (alignment: .leading) {
                     HStack {
-                        AuthorNameView(name: appSessionStore.blockedAuthors.contains(self.postAuthor) ? "[blocked]" : self.postAuthor, postId: self.postId)
+                        AuthorNameView(name: appSessionStore.blockedAuthors.contains(self.postAuthor) ? "[blocked]" : self.postAuthor, postId: self.postId,
+                                       authorType: PostDecorator.getAuthorType(threadRootAuthor: self.rootPostAuthor, author: self.postAuthor))
                         ContributedView(contributed: self.contributed)
                         Spacer()
                         LolView(lols: self.postLols, postId: self.postId)

@@ -27,6 +27,12 @@ let PostTagColor: [String: Color] = [
     "wow": Color(UIColor.systemGray),
     "aww": Color(UIColor.systemTeal)
 ]
+let AuthorColor: [AuthorType: Color] = [
+    AuthorType.shacknews: Color(UIColor.systemPurple),
+    AuthorType.currentUser: Color(UIColor.systemTeal),
+    AuthorType.unknown: Color(UIColor.systemOrange),
+    AuthorType.threadOp: Color(UIColor.systemGreen)
+]
 #endif
 
 #if os(OSX)
@@ -48,6 +54,13 @@ let PostTagColor: [String: Color] = [
     "wow": Color(NSColor.systemGray),
     "aww": Color(NSColor.systemTeal)
 ]
+let AuthorColor: [AuthorType: Color] = [
+    AuthorType.shacknews: Color(NSColor.systemPurple),
+    AuthorType.currentUser: Color(NSColor.systemTeal),
+    AuthorType.unknown: Color(NSColor.systemOrange),
+    AuthorType.threadOp: Color(NSColor.systemGreen)
+]
+
 #endif
 
 #if os(watchOS)
@@ -69,7 +82,20 @@ let PostTagColor: [String: Color] = [
     "wow": Color.gray,
     "aww": Color.purple
 ]
+let AuthorColor: [AuthorType: Color] = [
+    AuthorType.shacknews: Color.purple,
+    AuthorType.currentUser: Color.teal,
+    AuthorType.unknown: Color.orange,
+    AuthorType.threadOp: Color.green
+]
 #endif
+
+enum AuthorType {
+    case currentUser
+    case shacknews
+    case threadOp
+    case unknown
+}
 
 enum PostTag: String, CaseIterable {
     case lol = "lol"
