@@ -60,7 +60,6 @@ let AuthorColor: [AuthorType: Color] = [
     AuthorType.unknown: Color(NSColor.systemOrange),
     AuthorType.threadOp: Color(NSColor.systemGreen)
 ]
-
 #endif
 
 #if os(watchOS)
@@ -84,7 +83,7 @@ let PostTagColor: [String: Color] = [
 ]
 let AuthorColor: [AuthorType: Color] = [
     AuthorType.shacknews: Color.purple,
-    AuthorType.currentUser: Color.teal,
+    AuthorType.currentUser: Color.blue,
     AuthorType.unknown: Color.orange,
     AuthorType.threadOp: Color.green
 ]
