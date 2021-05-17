@@ -51,7 +51,7 @@ struct FullThreadView: View {
                 self.rootPostLols = rootPost?.lols ?? [ChatLols]()
                 self.replyCount = thread.posts.count - 1
                 self.recentPosts = thread.posts.filter({ return $0.parentId != 0 }).sorted(by: { $0.id > $1.id })
-                
+            
             }
         } else {
             let threads = chatStore.threads.filter({ return self.appSessionStore.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !self.appSessionStore.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
@@ -112,7 +112,8 @@ struct FullThreadView: View {
                     ThreadCategoryColor[self.rootPostCategory].frame(height: 5)
                     
                     HStack {
-                        AuthorNameView(name: self.rootPostAuthor, postId: self.threadId, bold: true)
+                        AuthorNameView(name: self.rootPostAuthor, postId: self.threadId, bold: true,
+                                       authorType: PostDecorator.getAuthorType(threadRootAuthor: "", author: self.rootPostAuthor))
                         
                         ContributedView(contributed: self.contributed)
                         
@@ -183,7 +184,8 @@ struct FullThreadView: View {
                                                 .font(.body)
                                                 .lineLimit(1)
                                             Spacer()
-                                            AuthorNameView(name: post.author, postId: post.id)
+                                            AuthorNameView(name: post.author, postId: post.id,
+                                                           authorType: PostDecorator.getAuthorType(threadRootAuthor: self.rootPostAuthor, author: post.author))
                                             LolView(lols: post.lols, postId: post.id)
                                         }
                                         .padding(.top, 2)
@@ -266,7 +268,8 @@ struct FullThreadView: View {
                                                     .foregroundColor(Color("replyLines"))
                                                 
                                                 // Author
-                                                AuthorNameView(name: post.author, postId: post.id)
+                                                AuthorNameView(name: post.author, postId: post.id,
+                                                               authorType: PostDecorator.getAuthorType(threadRootAuthor: self.rootPostAuthor, author: post.author))
                                                 
                                                 Spacer()
                                                 
@@ -340,7 +343,8 @@ struct FullThreadView: View {
                                             Spacer()
                                             
                                             // Author
-                                            AuthorNameView(name: post.author, postId: post.id)
+                                            AuthorNameView(name: post.author, postId: post.id,
+                                                           authorType: PostDecorator.getAuthorType(threadRootAuthor: self.rootPostAuthor, author: post.author))
                                             
                                             // Lols
                                             LolView(lols: post.lols, postId: post.id)

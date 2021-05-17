@@ -19,6 +19,7 @@ struct PostPreviewView: View {
     var postStrength: Double?
     var postAuthor: String
     var postLols: [ChatLols]
+    var postAuthorType: AuthorType = AuthorType.unknown
     
     var body: some View {
         HStack {
@@ -72,7 +73,7 @@ struct PostPreviewView: View {
                     .fixedSize()
             }
             else if self.appSessionStore.displayPostAuthor {
-                AuthorNameView(name: postAuthor, postId: postId)
+                AuthorNameView(name: postAuthor, postId: postId, authorType: self.postAuthorType)
             }
             
             

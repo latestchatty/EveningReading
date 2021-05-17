@@ -33,5 +33,17 @@ class PostDecorator {
             return false
         }
     }
-    
+    static func getAuthorType(threadRootAuthor: String, author: String) -> AuthorType {
+        let username: String? = KeychainWrapper.standard.string(forKey: "Username")?.lowercased()
+        switch author.lowercased() {
+            case username:
+                return AuthorType.currentUser
+            case "Shacknews":
+                return AuthorType.shacknews
+            case threadRootAuthor.lowercased():
+                return AuthorType.threadOp
+            default:
+                return AuthorType.unknown
+        }
+    }
 }

@@ -236,7 +236,8 @@ struct ThreadDetailView: View {
                     VStack {
                         // Post details
                         HStack (alignment: .center) {
-                            AuthorNameView(name: appSessionStore.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : self.rootPostAuthor, postId: self.threadId)
+                            AuthorNameView(name: appSessionStore.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : self.rootPostAuthor, postId: self.threadId,
+                                           authorType: PostDecorator.getAuthorType(threadRootAuthor: "", author: self.rootPostAuthor))
 
                             ContributedView(contributed: self.contributed)
 
@@ -307,7 +308,7 @@ struct ThreadDetailView: View {
                                     
                                     // Reply preview
                                     if self.selectedPost != post.id {
-                                        PostPreviewView(username: self.username, postId: post.id, postBody: post.body, replyLines: self.replyLines[post.id] == nil ? String(repeating: " ", count: 5) : self.replyLines[post.id]!, postCategory: post.category, postStrength: postStrength[post.id], postAuthor: post.author, postLols: post.lols)
+                                        PostPreviewView(username: self.username, postId: post.id, postBody: post.body, replyLines: self.replyLines[post.id] == nil ? String(repeating: " ", count: 5) : self.replyLines[post.id]!, postCategory: post.category, postStrength: postStrength[post.id], postAuthor: post.author, postLols: post.lols, postAuthorType: PostDecorator.getAuthorType(threadRootAuthor: self.rootPostAuthor, author: post.author))
                                     }
                                     
                                     // Reply expanded
