@@ -29,7 +29,7 @@ struct iPadChatView: View {
     var body: some View {
         GeometryReader { geometry in
             
-            GoToPostView()
+            //GoToPostView()
             
             HStack (alignment: .top, spacing: 0) {
                 

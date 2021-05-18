@@ -22,7 +22,7 @@ struct iPhoneContentView: View {
         NavigationView {
             ScrollView {
                 VStack {
-                    GoToPostView()
+                    //GoToPostView()
                     GuidelinesView(showingGuidelinesView: $showingGuidelinesView)
                     .onAppear() {
                         DispatchQueue.main.async {

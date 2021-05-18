@@ -42,7 +42,7 @@ struct ChatView: View {
     var body: some View {
         VStack {
             
-            GoToPostView()
+            //GoToPostView()
             
             RefreshableScrollView(height: 70, refreshing: self.$chatStore.gettingChat, scrollTarget: self.$chatStore.scrollTargetChat, scrollTargetTop: self.$chatStore.scrollTargetChatTop) {
                 
