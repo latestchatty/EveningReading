@@ -8,6 +8,11 @@
 import Foundation
 import SwiftUI
 
+struct RegisterPushResponse {
+    var status: Int
+    var message: String
+}
+
 struct RegisterUserReponse {
     var status: Int
 }
@@ -25,7 +30,7 @@ class NotificationService {
         self.decoder = decoder
     }
 
-    public func registerUser(clientId: String, handler: @escaping (Result<RegisterUserReponse, Error>) -> Void) {
+    public func registerUserWoggle(clientId: String, handler: @escaping (Result<RegisterUserReponse, Error>) -> Void) {
         guard
             var urlComponents = URLComponents(string: "https://www.woggle.net/lcappnotification/change_new.php")
             else { preconditionFailure("Can't create url components...") }
@@ -62,7 +67,7 @@ class NotificationService {
         }.resume()
     }
     
-    public func registerDevice(deviceUUID: String, deviceTokenClean: String, deviceName: String, deviceModel: String, deviceVersion: String, clientId: String, appName: String, appVersion: String, handler: @escaping (Result<RegisterDeviceReponse, Error>) -> Void) {
+    public func registerDeviceWoggle(deviceUUID: String, deviceTokenClean: String, deviceName: String, deviceModel: String, deviceVersion: String, clientId: String, appName: String, appVersion: String, handler: @escaping (Result<RegisterDeviceReponse, Error>) -> Void) {
 
         guard
             var urlComponents = URLComponents(string: "https://www.woggle.net/lcappnotification/apns_new.php")
@@ -108,6 +113,48 @@ class NotificationService {
             }
         }.resume()
     }
+    
+    public func register(username: String, deviceName: String, deviceToken: String, handler: @escaping (Result<RegisterPushResponse, Error>) -> Void) {
+        if let apnsKey = Bundle.main.infoDictionary?["APNS_KEY"] as? String {
+            guard
+                var urlComponents = URLComponents(string: "https://www.erapns.com/APNS/adduser.php")
+                else { preconditionFailure("Can't create url components...") }
+
+            urlComponents.queryItems = [
+             URLQueryItem(name: "key", value: apnsKey),
+             URLQueryItem(name: "username", value: username),
+             URLQueryItem(name: "device", value: deviceName),
+             URLQueryItem(name: "token", value: deviceToken)
+            ]
+            
+            guard
+                let url = urlComponents.url
+                else { preconditionFailure("Can't create url from url components...") }
+            
+            let urlSession: URLSession = .shared
+            
+            urlSession.dataTask(with: url) { [weak self] data, _, error in
+                if let error = error {
+                    print("push register user error \(error)")
+                    //handler(.failure(error))
+                    handler(.success(RegisterPushResponse(status: 0, message: "fail")))
+                } else {
+                    do {
+                        let data = data ?? Data()
+                        print("push register user success")
+                        print("\(data)")
+                        handler(.success(RegisterPushResponse(status: 1, message: "success")))
+                    } catch {
+                        //handler(.failure(error))
+                        print("push register user error \(error)")
+                        handler(.success(RegisterPushResponse(status: 0, message: "fail")))
+                    }
+                }
+            }.resume()
+        } else {
+            handler(.success(RegisterPushResponse(status: 0, message: "fail")))
+        }
+    }
 }
 
 class NotificationStore: ObservableObject {
@@ -117,10 +164,36 @@ class NotificationStore: ObservableObject {
         self.service = service
     }
     
+    
+    @Published private(set) var registerPushResponse: RegisterPushResponse = RegisterPushResponse(status: 0, message: "")
     @Published private(set) var registerUserResponse: RegisterUserReponse = RegisterUserReponse(status: 0)
     @Published private(set) var registerDeviceResponse: RegisterDeviceReponse = RegisterDeviceReponse(status: 0)
     
     func register() {
+        let username: String? = KeychainWrapper.standard.string(forKey: "Username")
+        let defaults = UserDefaults.standard
+        let deviceTokenClean = defaults.object(forKey: "PushNotificationToken") as? String ?? ""
+        let deviceName = defaults.object(forKey: "PushNotificationName") as? String ?? ""
+
+        if username != nil && username != "" && deviceTokenClean != "" {
+            let alphaNumericOnly = "[^A-Za-z0-9]+"
+            if let cleanUsername = username?.replacingOccurrences(of: alphaNumericOnly, with: "", options: [.regularExpression]) {
+                print("registering user for push")
+                service.register(username: cleanUsername, deviceName: deviceName, deviceToken: deviceTokenClean) { [weak self] result in
+                    DispatchQueue.main.async {
+                        switch result {
+                        case .success(let response):
+                            self?.registerPushResponse = response
+                        case .failure:
+                            self?.registerPushResponse = RegisterPushResponse(status: 0, message: "error")
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    func registerWoggle() {
         let username: String? = KeychainWrapper.standard.string(forKey: "Username")
         let defaults = UserDefaults.standard
         let deviceUUID = defaults.object(forKey: "PushNotificationUUID") as? String ?? ""
@@ -134,8 +207,8 @@ class NotificationStore: ObservableObject {
             var appVersion = ""
             let clientId = username
             
-            let alphabetOnly = "[^A-Za-z0-9]+"
-            if let clientIdClean = clientId?.replacingOccurrences(of: alphabetOnly, with: "", options: [.regularExpression]) {
+            let alphaNumericOnly = "[^A-Za-z0-9]+"
+            if let clientIdClean = clientId?.replacingOccurrences(of: alphaNumericOnly, with: "", options: [.regularExpression]) {
                 
                 let dict = Bundle.main.infoDictionary!
                 if let name = dict["CFBundleName"] as? String {
@@ -146,7 +219,7 @@ class NotificationStore: ObservableObject {
                 }
                 
                 print("registering user for push")
-                service.registerUser(clientId: clientIdClean) { [weak self] result in
+                service.registerUserWoggle(clientId: clientIdClean) { [weak self] result in
                     DispatchQueue.main.async {
                         switch result {
                         case .success(let response):
@@ -159,7 +232,7 @@ class NotificationStore: ObservableObject {
 
                 print("registering device for push")
                 DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5)) {
-                    self.service.registerDevice(deviceUUID: deviceUUID, deviceTokenClean: deviceTokenClean, deviceName: deviceName, deviceModel: deviceModel, deviceVersion: deviceVersion, clientId: clientIdClean, appName: appName, appVersion: appVersion) { [weak self] result in
+                    self.service.registerDeviceWoggle(deviceUUID: deviceUUID, deviceTokenClean: deviceTokenClean, deviceName: deviceName, deviceModel: deviceModel, deviceVersion: deviceVersion, clientId: clientIdClean, appName: appName, appVersion: appVersion) { [weak self] result in
                         DispatchQueue.main.async {
                             switch result {
                             case .success(let response):

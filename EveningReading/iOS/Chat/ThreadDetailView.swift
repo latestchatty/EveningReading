@@ -422,7 +422,7 @@ struct ThreadDetailView: View {
             }
             
             if self.replyCount >= self.loadingLimit {
-                // Let the view load so we don't get stuck on the list screen
+                // Let the view load so we don't get stuck on the thread list screen
                 DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1)) {
                     getData()
                 }

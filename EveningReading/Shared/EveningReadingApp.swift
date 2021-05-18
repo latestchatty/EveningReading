@@ -80,8 +80,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         let deviceModel = UIDevice.current.model
         let deviceVersion = UIDevice.current.systemVersion
         
-        let alphabetOnly = "[^A-Za-z0-9]+"
-        deviceName = deviceName.replacingOccurrences(of: alphabetOnly, with: "", options: [.regularExpression])
+        let alphaNumericOnly = "[^A-Za-z0-9]+"
+        deviceName = deviceName.replacingOccurrences(of: alphaNumericOnly, with: "", options: [.regularExpression])
         
         let defaults = UserDefaults.standard
         defaults.set(deviceUUID, forKey: "PushNotificationUUID")

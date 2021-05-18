@@ -24,6 +24,8 @@
 	<string>$(IMGUR_KEY)</string>
 	<key>LOL_KEY</key>
 	<string>$(LOL_KEY)</string>
+	<key>APNS_KEY</key>
+	<string>$(APNS_KEY)</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>youtube</string>
