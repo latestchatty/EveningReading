@@ -23,10 +23,8 @@ struct PreferencesView: View {
                 Text("Dark Mode")
             }
             #if os(iOS)
-            if UIDevice.current.userInterfaceIdiom == .phone {
-                Toggle(isOn: self.$appSessionStore.threadNavigation) {
-                    Text("Thread Navigation")
-                }
+            Toggle(isOn: self.$appSessionStore.threadNavigation) {
+                Text("Thread Navigation")
             }
             #endif
             #if os(OSX)
@@ -46,6 +44,6 @@ struct PreferencesView: View {
 struct PreferencesView_Previews: PreviewProvider {
     static var previews: some View {
         PreferencesView()
-            .environmentObject(AppSessionStore(service: AuthService()))
+                .environmentObject(AppSessionStore(service: AuthService()))
     }
 }

@@ -9,14 +9,28 @@ import Foundation
 import SwiftUI
 import Combine
 
-class AppSessionStore : ObservableObject {
+class AppSessionStore: ObservableObject {
     // Init
     private let service: AuthService
+    private var orientationChanged: AnyCancellable? = nil
+
     init(service: AuthService) {
         self.service = service
+
+        #if os(iOS)
+        self.orientationChanged = NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)
+                .sink { _ in
+                    let defaults = UserDefaults.standard
+                    self.ensureNavigationIsInBounds(defaults: defaults)
+                }
+        #endif
         loadDefaults()
     }
-    
+
+    deinit {
+        orientationChanged?.cancel()
+    }
+
     // Navigation
     @Published var showingHomeScreen = true
     @Published var showingChatView = false
@@ -24,11 +38,11 @@ class AppSessionStore : ObservableObject {
     @Published var showingSearchView = false
     @Published var showingTagsView = false
     @Published var showingSettingsView = false
-    
+
     // Deep linking to posts
     @Published var showingPost = false
     @Published var showingPostId = 0
-    
+
     // Preferences
     @Published var displayPostAuthor: Bool = true {
         didSet {
@@ -60,7 +74,7 @@ class AppSessionStore : ObservableObject {
             defaults.set(useYoutubeApp, forKey: "UseYoutubeApp")
         }
     }
-    
+
     // Category Filters
     @Published var threadFilters: [String] = ["informative", "ontopic"]
     @Published var showInformative: Bool = true {
@@ -70,7 +84,9 @@ class AppSessionStore : ObservableObject {
             if self.showInformative && !self.threadFilters.contains("informative") {
                 self.threadFilters.append("informative")
             } else if !self.showInformative {
-                self.threadFilters = self.threadFilters.filter { $0 != "informative" }
+                self.threadFilters = self.threadFilters.filter {
+                    $0 != "informative"
+                }
             }
         }
     }
@@ -81,7 +97,9 @@ class AppSessionStore : ObservableObject {
             if self.showOffTopic && !self.threadFilters.contains("offtopic") {
                 self.threadFilters.append("offtopic")
             } else if !self.showOffTopic {
-                self.threadFilters = self.threadFilters.filter { $0 != "offtopic" }
+                self.threadFilters = self.threadFilters.filter {
+                    $0 != "offtopic"
+                }
             }
         }
     }
@@ -92,7 +110,9 @@ class AppSessionStore : ObservableObject {
             if self.showPolitical && !self.threadFilters.contains("political") {
                 self.threadFilters.append("political")
             } else if !self.showPolitical {
-                self.threadFilters = self.threadFilters.filter { $0 != "political" }
+                self.threadFilters = self.threadFilters.filter {
+                    $0 != "political"
+                }
             }
         }
     }
@@ -103,7 +123,9 @@ class AppSessionStore : ObservableObject {
             if self.showStupid && !self.threadFilters.contains("stupid") {
                 self.threadFilters.append("stupid")
             } else if !self.showStupid {
-                self.threadFilters = self.threadFilters.filter { $0 != "stupid" }
+                self.threadFilters = self.threadFilters.filter {
+                    $0 != "stupid"
+                }
             }
         }
     }
@@ -114,11 +136,13 @@ class AppSessionStore : ObservableObject {
             if self.showNWS && !self.threadFilters.contains("nws") {
                 self.threadFilters.append("nws")
             } else if !self.showNWS {
-                self.threadFilters = self.threadFilters.filter { $0 != "nws" }
+                self.threadFilters = self.threadFilters.filter {
+                    $0 != "nws"
+                }
             }
         }
-    }    
-    
+    }
+
     // Collapsed
     @Published var collapsedThreads: [Int] = [0] {
         didSet {
@@ -126,7 +150,7 @@ class AppSessionStore : ObservableObject {
             defaults.set(collapsedThreads, forKey: "CollapsedThreads")
         }
     }
-    
+
     // Authors
     @Published var blockedAuthors: [String] = [""] {
         didSet {
@@ -134,7 +158,7 @@ class AppSessionStore : ObservableObject {
             defaults.set(blockedAuthors, forKey: "BlockedAuthors")
         }
     }
-    
+
     // Thread Navigation
     #if os(iOS)
     @Published var threadNavigationLocationX: CGFloat = UIScreen.main.bounds.width - 50 {
@@ -150,7 +174,7 @@ class AppSessionStore : ObservableObject {
         }
     }
     #endif
-    
+
     // Auth
     @Published var signInUsername = ""
     @Published var signInPassword = ""
@@ -168,25 +192,26 @@ class AppSessionStore : ObservableObject {
             }
         }
     }
-    
+
     // Search & Push
     @Published var showingShackLink: Bool = false
     @Published var shackLinkPostId: String = ""
+
     func setLink(postId: String) {
         shackLinkPostId = postId
         showingShackLink = true
     }
-    
+
     func loadDefaults() {
         let defaults = UserDefaults.standard
-        
+
         // Preferences
         self.displayPostAuthor = defaults.object(forKey: "DisplayPostAuthor") as? Bool ?? true
         self.abbreviateThreads = defaults.object(forKey: "AbbreviateThreads") as? Bool ?? true
         self.threadNavigation = defaults.object(forKey: "ThreadNavigation") as? Bool ?? false
         self.isDarkMode = defaults.object(forKey: "IsDarkMode") as? Bool ?? true
         self.useYoutubeApp = defaults.object(forKey: "UseYoutubeApp") as? Bool ?? false
-        
+
         // Filters
         self.threadFilters = defaults.object(forKey: "ThreadFilters") as? [String] ?? ["informative", "ontopic"]
         self.showInformative = defaults.object(forKey: "ShowInformative") as? Bool ?? true
@@ -194,27 +219,21 @@ class AppSessionStore : ObservableObject {
         self.showPolitical = defaults.object(forKey: "ShowPolitical") as? Bool ?? false
         self.showStupid = defaults.object(forKey: "ShowStupid") as? Bool ?? false
         self.showNWS = defaults.object(forKey: "ShowNWS") as? Bool ?? false
-        
+
         // Authors
         self.blockedAuthors = defaults.object(forKey: "BlockedAuthors") as? [String] ?? [""]
-        
+
         // Collapsed
         self.collapsedThreads = defaults.object(forKey: "CollapsedThreads") as? [Int] ?? [0]
-        
+
         // Navigation
         #if os(iOS)
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            self.threadNavigationLocationX = 0
-            self.threadNavigationLocationY = 0
-        } else {
-            self.threadNavigationLocationX = defaults.object(forKey: "PaginateLocationX") as? CGFloat ?? UIScreen.main.bounds.width - 50
-            self.threadNavigationLocationY = defaults.object(forKey: "PaginateLocationY") as? CGFloat ?? UIScreen.main.bounds.height - 120
-        }
+        ensureNavigationIsInBounds(defaults: defaults)
         #endif
-        
+
         // Auth
         self.isSignedIn = defaults.object(forKey: "IsSignedIn") as? Bool ?? false
-        
+
 /*
 // Reset on startup
 let resetDarkMode = defaults.object(forKey: "ResetDarkMode") as? Bool ?? false
@@ -223,9 +242,33 @@ if !resetDarkMode {
     defaults.set(true, forKey: "ResetDarkMode")
 }
 */
-        
+
     }
-    
+
+    #if os(iOS)
+    private func ensureNavigationIsInBounds(defaults: UserDefaults) {
+        print("Orientation: ", UIDevice.current.orientation.isLandscape ? "Landscape" : "Portrait",
+        "\nWidth:", UIScreen.main.bounds.width,
+                "\nHeight: ", UIScreen.main.bounds.height)
+        var maxWidth = UIScreen.main.bounds.width
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            maxWidth = maxWidth * 0.65
+        }
+        var x = defaults.object(forKey: "PaginateLocationX") as? CGFloat ?? maxWidth - 50
+        var y = defaults.object(forKey: "PaginateLocationY") as? CGFloat ?? UIScreen.main.bounds.height - 120
+
+        if (x < 0 || x > maxWidth) {
+            x = maxWidth - 50
+        }
+        if (y < 0 || y > UIScreen.main.bounds.height) {
+            y = UIScreen.main.bounds.height - 120
+        }
+
+        self.threadNavigationLocationX = x
+        self.threadNavigationLocationY = y
+    }
+    #endif
+
     func resetNavigation() {
         self.showingChatView = false
         self.showingInboxView = false
@@ -233,14 +276,14 @@ if !resetDarkMode {
         self.showingTagsView = false
         self.showingSettingsView = false
     }
-    
+
     func clearAuth() {
         _ = KeychainWrapper.standard.removeObject(forKey: "Username")
         _ = KeychainWrapper.standard.removeObject(forKey: "Password")
         self.isSignedIn = false
         self.showingSignInWarning = true
     }
-    
+
     func authenticate() {
         self.isAuthenticating = true
         service.auth(username: self.signInUsername, password: self.signInPassword) { [weak self] result in
