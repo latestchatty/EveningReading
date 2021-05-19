@@ -82,6 +82,7 @@ struct SignInView: View {
             .overlay(AuthenticatingView(isVisible: $appSessionStore.isAuthenticating))
             .onReceive(timer) { _ in
                 if appSessionStore.isSignedIn {
+                    self.timer.upstream.connect().cancel()
                     NotificationStore(service: .init()).register()
                     DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(50)) {
                         presentationMode.wrappedValue.dismiss()
