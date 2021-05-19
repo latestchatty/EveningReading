@@ -55,6 +55,20 @@ struct EveningReadingApp: App {
                 UIApplication.shared.applicationIconBadgeNumber = 0
             }
         }
+        /*
+        .onChange(of: phase) { newPhase in
+            switch newPhase {
+            case .active:
+                // App became active
+            case .inactive:
+                // App became inactive
+            case .background:
+                // App is running in the background
+            @unknown default:
+                // Fallback for future cases
+            }
+        }
+        */
     }
 }
 
