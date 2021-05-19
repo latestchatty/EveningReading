@@ -30,8 +30,6 @@ struct AuthorNameView: View {
     
     var body: some View {
         #if os(iOS)
-        //NewMessageView(showingNewMessageSheet: $showingNewMessageView, messageId: Binding.constant(postId), recipientName: self.$messageRecipient, subjectText: self.$messageSubject, bodyText: self.$messageBody)
-        
             Text("\(self.name)")
                 .font(.footnote)
                 .bold()
@@ -39,38 +37,6 @@ struct AuthorNameView: View {
                 .lineLimit(1)
                 .truncationMode(.tail)
                 .fixedSize()
-                /*
-                .contextMenu {
-                    Button(action: {
-                        // send message
-                        self.messageRecipient = self.name
-                        self.messageSubject = ""
-                        self.messageBody = ""
-                        self.showingNewMessageView = true
-                    }) {
-                        Text("Send Message")
-                        Image(systemName: "envelope.circle")
-                    }
-                    /*
-                    Button(action: {
-                        // search posts
-                    }) {
-                        Text("Search Post History")
-                        Image(systemName: "magnifyingglass.circle")
-                    }
-                    */
-                    Button(action: {
-                        // report user
-                        self.messageRecipient = "Duke Nuked"
-                        self.messageSubject = "Reporting Author of Post"
-                        self.messageBody = msgStore.getComplaintText(author: self.name, postId: self.postId)
-                        self.showingNewMessageView = true
-                    }) {
-                        Text("Report User")
-                        Image(systemName: "exclamationmark.circle")
-                    }
-                }
-                */
         #endif
         #if os(OSX)
             Text("\(self.name)")

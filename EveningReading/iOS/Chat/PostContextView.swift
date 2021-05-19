@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import MobileCoreServices
 
 struct PostContextView: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
@@ -58,6 +59,14 @@ struct PostContextView: View {
             Image(systemName: "magnifyingglass.circle")
         }
         */
+        Button(action: {
+            let shackURL = "https://www.shacknews.com/chatty?id=\(self.postId)#item_\(self.postId)"
+            UIPasteboard.general.setValue(shackURL,
+                        forPasteboardType: kUTTypePlainText as String)
+        }) {
+            Text("Copy Link")
+            Image(systemName: "doc.on.clipboard")
+        }
         Button(action: {
             appSessionStore.blockedAuthors.append(self.author)
         }) {

@@ -8,8 +8,9 @@
 import Foundation
 import SwiftUI
 
-struct RegisterReponse {
+struct RegisterPushResponse {
     var status: Int
+    var message: String
 }
 
 class NotificationService {
@@ -21,50 +22,46 @@ class NotificationService {
         self.decoder = decoder
     }
     
-    public func register(deviceUUID: String, deviceTokenClean: String, deviceName: String, deviceModel: String, deviceVersion: String, clientId: String, appName: String, appVersion: String, handler: @escaping (Result<RegisterReponse, Error>) -> Void) {
-        let task = "register"
+    public func register(username: String, deviceName: String, deviceToken: String, handler: @escaping (Result<RegisterPushResponse, Error>) -> Void) {
+        if let apnsKey = Bundle.main.infoDictionary?["APNS_KEY"] as? String {
+            guard
+                var urlComponents = URLComponents(string: "https://www.erapns.com/APNS/adduser.php")
+                else { preconditionFailure("Can't create url components...") }
 
-        guard
-            var urlComponents = URLComponents(string: "https://www.woggle.net/lcappnotification/apns_new.php")
-            else { preconditionFailure("Can't create url components...") }
-                 
-        urlComponents.queryItems = [
-         URLQueryItem(name: "task", value: task),
-         URLQueryItem(name: "appname", value: appName),
-         URLQueryItem(name: "appversion", value: appVersion),
-         URLQueryItem(name: "deviceuid", value: deviceUUID),
-         URLQueryItem(name: "devicetoken", value: deviceTokenClean),
-         URLQueryItem(name: "devicename", value: deviceName),
-         URLQueryItem(name: "devicemodel", value: deviceModel),
-         URLQueryItem(name: "deviceversion", value: deviceVersion),
-         URLQueryItem(name: "pushbadge", value: "enabled"),
-         URLQueryItem(name: "pushalert", value: "enabled"),
-         URLQueryItem(name: "pushsound", value: "enabled"),
-         URLQueryItem(name: "clientid", value: clientId)
-        ]
-
-        guard
-            let url = urlComponents.url
-            else { preconditionFailure("Can't create url from url components...") }
-             
-        let urlSession: URLSession = .shared
-
-        urlSession.dataTask(with: url) { [weak self] data, _, error in
-            if let error = error {
-                print("push register error \(error)")
-                //handler(.failure(error))
-            } else {
-                do {
-                    let data = data ?? Data()
-                    print("push register success")
-                    print("\(data)")
-                    handler(.success(RegisterReponse(status: 1)))
-                } catch {
-                    handler(.failure(error))
-                    print("push register error \(error)")
+            urlComponents.queryItems = [
+             URLQueryItem(name: "key", value: apnsKey),
+             URLQueryItem(name: "username", value: username),
+             URLQueryItem(name: "device", value: deviceName),
+             URLQueryItem(name: "token", value: deviceToken)
+            ]
+            
+            guard
+                let url = urlComponents.url
+                else { preconditionFailure("Can't create url from url components...") }
+            
+            let urlSession: URLSession = .shared
+            
+            urlSession.dataTask(with: url) { [weak self] data, _, error in
+                if let error = error {
+                    print("push register user error \(error)")
+                    //handler(.failure(error))
+                    handler(.success(RegisterPushResponse(status: 0, message: "fail")))
+                } else {
+                    do {
+                        let data = data ?? Data()
+                        print("push register user success")
+                        print("\(data)")
+                        handler(.success(RegisterPushResponse(status: 1, message: "success")))
+                    } catch {
+                        //handler(.failure(error))
+                        print("push register user error \(error)")
+                        handler(.success(RegisterPushResponse(status: 0, message: "fail")))
+                    }
                 }
-            }
-        }.resume()
+            }.resume()
+        } else {
+            handler(.success(RegisterPushResponse(status: 0, message: "fail")))
+        }
     }
 }
 
@@ -75,48 +72,31 @@ class NotificationStore: ObservableObject {
         self.service = service
     }
     
-    @Published private(set) var registerResponse: RegisterReponse = RegisterReponse(status: 0)
+    @Published private(set) var registerPushResponse: RegisterPushResponse = RegisterPushResponse(status: 0, message: "")
         
     func register() {
-        let username: String? = KeychainWrapper.standard.string(forKey: "Username")
-        let defaults = UserDefaults.standard
-        let deviceUUID = defaults.object(forKey: "PushNotificationUUID") as? String ?? ""
-        let deviceTokenClean = defaults.object(forKey: "PushNotificationToken") as? String ?? ""
-        let deviceName = defaults.object(forKey: "PushNotificationName") as? String ?? ""
-        let deviceModel = defaults.object(forKey: "PushNotificationModel") as? String ?? ""
-        let deviceVersion = defaults.object(forKey: "PushNotificationVersion") as? String ?? ""
-        
-        if username != nil && username != "" && deviceTokenClean != "" {
-            var appName = ""
-            var appVersion = ""
-            let clientId = username
-            
-            let alphabetOnly = "[^A-Za-z0-9]+"
-            if let clientIdClean = clientId?.replacingOccurrences(of: alphabetOnly, with: "", options: [.regularExpression]) {
-                
-                let dict = Bundle.main.infoDictionary!
-                if let name = dict["CFBundleName"] as? String {
-                    appName = name
-                }
-                if let version = dict["CFBundleShortVersionString"] as? String {
-                    appVersion = version
-                }
-                
-                print("registering for push")
-                service.register(deviceUUID: deviceUUID, deviceTokenClean: deviceTokenClean, deviceName: deviceName, deviceModel: deviceModel, deviceVersion: deviceVersion, clientId: clientIdClean, appName: appName, appVersion: appVersion) { [weak self] result in
-                    DispatchQueue.main.async {
-                        switch result {
-                        case .success(let response):
-                            self?.registerResponse = response
-                        case .failure:
-                            self?.registerResponse = RegisterReponse(status: 0)
-                        }
-                    }
-                }
-                
-            }
-        }
-    }
+       let username: String? = KeychainWrapper.standard.string(forKey: "Username")
+       let defaults = UserDefaults.standard
+       let deviceTokenClean = defaults.object(forKey: "PushNotificationToken") as? String ?? ""
+       let deviceName = defaults.object(forKey: "PushNotificationName") as? String ?? ""
+
+       if username != nil && username != "" && deviceTokenClean != "" {
+           let alphaNumericOnly = "[^A-Za-z0-9]+"
+           if let cleanUsername = username?.replacingOccurrences(of: alphaNumericOnly, with: "", options: [.regularExpression]) {
+               print("registering user for push")
+               service.register(username: cleanUsername, deviceName: deviceName, deviceToken: deviceTokenClean) { [weak self] result in
+                   DispatchQueue.main.async {
+                       switch result {
+                       case .success(let response):
+                           self?.registerPushResponse = response
+                       case .failure:
+                           self?.registerPushResponse = RegisterPushResponse(status: 0, message: "error")
+                       }
+                   }
+               }
+           }
+       }
+   }
 }
 
 #if os(iOS)

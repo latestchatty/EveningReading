@@ -220,6 +220,13 @@ struct ThreadDetailView: View {
             if UIDevice.current.userInterfaceIdiom == .phone {
                 GoToPostView()
             }
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                WhosTaggingView(showingWhosTaggingView: self.$showingWhosTaggingView)
+                    .frame(width: 0, height: 0)
+                NewMessageView(showingNewMessageSheet: self.$showingNewMessageView, messageId: Binding.constant(0), recipientName: self.$messageRecipient, subjectText: self.$messageSubject, bodyText: self.$messageBody)
+                    .frame(width: 0, height: 0)
+            }
+            // End comment out to preview
             
             if self.showThread {
                 
@@ -441,38 +448,68 @@ struct ThreadDetailView: View {
         
         // Thread Navigation
         .overlay(
-            VStack (alignment: .trailing) {
-                if !self.appSessionStore.threadNavigation || self.postCount < 2 {
-                    EmptyView()
-                }
-                else if self.isGettingThread {
-                    DisabledThreadNavigationView()
-                        .position(threadNavigationLocation)
-                        .gesture(threadNavigationDrag)
-                } else {
-                    HStack {
-                        HStack {
-                            ThreadNavigationView(icon: Binding.constant("arrow.up"), action: {
-                                print("arrow.up")
-                                showPreviousReply()
-                            })
-                            Rectangle()
-                                .fill(Color(UIColor.label))
-                                .frame(width: 1, height: 20)
-                            ThreadNavigationView(icon: Binding.constant("arrow.down"), action: { print("arrow.down")
-                                showNextReply()
-                            })
+            GeometryReader { geometry in
+                VStack (alignment: .trailing) {
+                    if !self.appSessionStore.threadNavigation || self.postCount < 2 {
+                        EmptyView()
+                    }
+                    else if self.isGettingThread {
+                        if UIDevice.current.userInterfaceIdiom == .phone {
+                            DisabledThreadNavigationView()
+                                .position(threadNavigationLocation)
+                                .gesture(threadNavigationDrag)
+                        } else if UIDevice.current.userInterfaceIdiom == .pad {
+                            DisabledThreadNavigationView()
+                                .position(CGPoint(x: geometry.size.width - 80, y: geometry.size.height - 50))
+                        }
+                    } else {
+                        if UIDevice.current.userInterfaceIdiom == .phone {
+                            HStack {
+                                HStack {
+                                    ThreadNavigationView(icon: Binding.constant("arrow.up"), action: {
+                                        print("arrow.up")
+                                        showPreviousReply()
+                                    })
+                                    Rectangle()
+                                        .fill(Color(UIColor.label))
+                                        .frame(width: 1, height: 20)
+                                    ThreadNavigationView(icon: Binding.constant("arrow.down"), action: { print("arrow.down")
+                                        showNextReply()
+                                    })
+                                }
+                            }
+                            .background(Color(UIColor.systemBlue).opacity(0.9))
+                            .cornerRadius(12)
+                            .clipped()
+                            .padding(.init(top: 0, leading: 0, bottom: 50, trailing: 50))
+                            .shadow(radius: 5)
+                            .position(threadNavigationLocation)
+                            .gesture(threadNavigationDrag)
+                        } else if UIDevice.current.userInterfaceIdiom == .pad {
+                            HStack {
+                                HStack {
+                                    ThreadNavigationView(icon: Binding.constant("arrow.up"), action: {
+                                        print("arrow.up")
+                                        showPreviousReply()
+                                    })
+                                    Rectangle()
+                                        .fill(Color(UIColor.label))
+                                        .frame(width: 1, height: 20)
+                                    ThreadNavigationView(icon: Binding.constant("arrow.down"), action: { print("arrow.down")
+                                        showNextReply()
+                                    })
+                                }
+                            }
+                            .background(Color(UIColor.systemBlue).opacity(0.9))
+                            .cornerRadius(12)
+                            .clipped()
+                            .padding(EdgeInsets(top: 0, leading: 0, bottom: 50, trailing: 50))
+                            .shadow(radius: 5)
+                            .position(CGPoint(x: geometry.size.width - 80, y: geometry.size.height - 50))
                         }
                     }
-                    .background(Color(UIColor.systemBlue).opacity(0.9))
-                    .cornerRadius(12)
-                    .clipped()
-                    .padding(.init(top: 0, leading: 0, bottom: 50, trailing: 50))
-                    .shadow(radius: 5)
-                    .position(threadNavigationLocation)
-                    .gesture(threadNavigationDrag)
-                }
-            }.frame(maxWidth: .infinity, maxHeight: .infinity)
+                }.frame(maxWidth: .infinity, maxHeight: .infinity)
+            }
         )
 
         // View settings
