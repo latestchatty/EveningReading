@@ -37,6 +37,7 @@ struct NotificationsView: View {
 
                             }.isDetailLink(false)
                         }
+                        NotificationsClearView()
                         Spacer().frame(width: 25)
                     }
                 }

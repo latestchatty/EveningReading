@@ -126,6 +126,7 @@
 		83A85CEF26551087007EBAC3 /* GoToShackLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A85CEE26551087007EBAC3 /* GoToShackLinkView.swift */; };
 		83A85CF326556F60007EBAC3 /* NotificationPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A85CF226556F60007EBAC3 /* NotificationPreviewView.swift */; };
 		83A85CF5265570BD007EBAC3 /* NotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A85CF4265570BD007EBAC3 /* NotificationsView.swift */; };
+		83A85CF726558FB5007EBAC3 /* NotificationsClearView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A85CF626558FB5007EBAC3 /* NotificationsClearView.swift */; };
 		83AA19272645C43500556E69 /* PostDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19262645C43500556E69 /* PostDecorator.swift */; };
 		83AA19282645C43500556E69 /* PostDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19262645C43500556E69 /* PostDecorator.swift */; };
 		83AA19292645C43500556E69 /* PostDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19262645C43500556E69 /* PostDecorator.swift */; };
@@ -321,6 +322,7 @@
 		83A85CEE26551087007EBAC3 /* GoToShackLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoToShackLinkView.swift; sourceTree = "<group>"; };
 		83A85CF226556F60007EBAC3 /* NotificationPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPreviewView.swift; sourceTree = "<group>"; };
 		83A85CF4265570BD007EBAC3 /* NotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsView.swift; sourceTree = "<group>"; };
+		83A85CF626558FB5007EBAC3 /* NotificationsClearView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsClearView.swift; sourceTree = "<group>"; };
 		83AA19262645C43500556E69 /* PostDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDecorator.swift; sourceTree = "<group>"; };
 		83AA19312645E36600556E69 /* RefreshNoticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshNoticeView.swift; sourceTree = "<group>"; };
 		83AA19352645F4A700556E69 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
@@ -672,6 +674,7 @@
 				833980F1263F08C1005614E8 /* SettingsButton.swift */,
 				83A85CF4265570BD007EBAC3 /* NotificationsView.swift */,
 				83A85CF226556F60007EBAC3 /* NotificationPreviewView.swift */,
+				83A85CF626558FB5007EBAC3 /* NotificationsClearView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -1214,6 +1217,7 @@
 				83398135263F324C005614E8 /* PreferencesView.swift in Sources */,
 				83AA1965264656BD00556E69 /* KeychainWrapperSubscript.swift in Sources */,
 				83A85CEB26515CBB007EBAC3 /* PushNotificationView.swift in Sources */,
+				83A85CF726558FB5007EBAC3 /* NotificationsClearView.swift in Sources */,
 				8339811E263F288D005614E8 /* ArticleCard.swift in Sources */,
 				83398143263F526A005614E8 /* iPadHomeButtons.swift in Sources */,
 				833EE9E426454DFB00345A1D /* WebAuthenticationSession.swift in Sources */,
