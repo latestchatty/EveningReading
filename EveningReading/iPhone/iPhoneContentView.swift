@@ -34,6 +34,7 @@ struct iPhoneContentView: View {
                     iPhoneHomeButtons()
                         .environmentObject(appSessionStore)
                         .environmentObject(chatStore)
+                    NotificationsView()
                     TrendingView()
                     iPhoneArticlesView()
                         .environmentObject(articleStore)

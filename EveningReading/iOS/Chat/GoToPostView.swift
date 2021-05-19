@@ -17,6 +17,8 @@ struct GoToPostView: View {
     @State private var showingPost: Bool = false
     @State private var showingAlert: Bool = false
     
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    
     var body: some View {
         VStack {
             /*
@@ -117,23 +119,22 @@ struct GoToPostView: View {
             })
             */
             
-            
             // Deep link to post from push notification
             .onReceive(notifications.$notificationData) { value in
                 print(".onReceive(notifications.$notificationData)")
-                if let postId = value?.notification.request.content.userInfo["postid"] {
+                
+                if let postId = value?.notification.request.content.userInfo["postid"], let body = value?.notification.request.content.body, let title = value?.notification.request.content.title {
                     print("got postId \(postId), previously showed \(appSessionStore.showingPostId)")
                     if String("\(postId)").isInt && appSessionStore.showingPostId != Int(String("\(postId)")) ?? 0 {
                         print("setting postID \(postId)")
                         appSessionStore.showingPostId = Int(String("\(postId)")) ?? 0
-                        DispatchQueue.main.async {
-                            print("going to post \(Int(String("\(postId)")) ?? 0)")
-                            notifications.notificationData = nil
-                            self.goToPostId = Int(String("\(postId)")) ?? 0
-                            self.showingPost = true
-                            //self.showingAlert = true
-                            //self.presentationMode.wrappedValue.dismiss()
-                        }
+                        print("going to post \(Int(String("\(postId)")) ?? 0)")
+                        notifications.notificationData = nil
+                        self.goToPostId = Int(String("\(postId)")) ?? 0
+                        //self.showingPost = true
+                        //self.showingAlert = true
+                        //self.presentationMode.wrappedValue.dismiss()
+                        appSessionStore.pushNotifications.append(PushNotification(title: title, body: body, postId: Int(String("\(postId)")) ?? 0))
                     }
                     /*
                     if !self.disabled && String("\(postId)").isInt {

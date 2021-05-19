@@ -35,6 +35,7 @@ struct iPadContentView: View {
                         iPadHomeButtons()
                             .environmentObject(appSessionStore)
                             .environmentObject(chatStore)
+                        NotificationsView()
                         TrendingView()
                         iPadArticlesView()
                             .environmentObject(articleStore)

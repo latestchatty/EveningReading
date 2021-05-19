@@ -27,7 +27,10 @@ class AppSessionStore : ObservableObject {
     
     // Deep linking to posts
     @Published var showingPost = false
-    @Published var showingPostId = 0    
+    @Published var showingPostId = 0
+    
+    // Push Notifications
+    @Published var pushNotifications = [PushNotification]()
     
     // Preferences
     @Published var displayPostAuthor: Bool = true {
@@ -265,4 +268,10 @@ if !resetDarkMode {
             }
         }
     }
+}
+
+struct PushNotification : Hashable {
+    var title = ""
+    var body = ""
+    var postId = 0
 }
