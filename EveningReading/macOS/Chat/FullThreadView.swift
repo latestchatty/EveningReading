@@ -112,8 +112,7 @@ struct FullThreadView: View {
                     ThreadCategoryColor[self.rootPostCategory].frame(height: 5)
                     
                     HStack {
-                        AuthorNameView(name: self.rootPostAuthor, postId: self.threadId, bold: true,
-                                       authorType: PostDecorator.getAuthorType(threadRootAuthor: "", author: self.rootPostAuthor))
+                        AuthorNameView(name: self.rootPostAuthor, postId: self.threadId, bold: true, authorType: PostDecorator.getAuthorType(threadRootAuthor: "", author: self.rootPostAuthor))
                         
                         ContributedView(contributed: self.contributed)
                         
@@ -184,8 +183,7 @@ struct FullThreadView: View {
                                                 .font(.body)
                                                 .lineLimit(1)
                                             Spacer()
-                                            AuthorNameView(name: post.author, postId: post.id,
-                                                           authorType: PostDecorator.getAuthorType(threadRootAuthor: self.rootPostAuthor, author: post.author))
+                                            AuthorNameView(name: post.author, postId: post.id, authorType: PostDecorator.getAuthorType(threadRootAuthor: self.rootPostAuthor, author: post.author))
                                             LolView(lols: post.lols, postId: post.id)
                                         }
                                         .padding(.top, 2)
@@ -268,8 +266,7 @@ struct FullThreadView: View {
                                                     .foregroundColor(Color("replyLines"))
                                                 
                                                 // Author
-                                                AuthorNameView(name: post.author, postId: post.id,
-                                                               authorType: PostDecorator.getAuthorType(threadRootAuthor: self.rootPostAuthor, author: post.author))
+                                                AuthorNameView(name: post.author, postId: post.id, authorType: PostDecorator.getAuthorType(threadRootAuthor: self.rootPostAuthor, author: post.author))
                                                 
                                                 Spacer()
                                                 
@@ -343,8 +340,7 @@ struct FullThreadView: View {
                                             Spacer()
                                             
                                             // Author
-                                            AuthorNameView(name: post.author, postId: post.id,
-                                                           authorType: PostDecorator.getAuthorType(threadRootAuthor: self.rootPostAuthor, author: post.author))
+                                            AuthorNameView(name: post.author, postId: post.id, authorType: PostDecorator.getAuthorType(threadRootAuthor: self.rootPostAuthor, author: post.author))
                                             
                                             // Lols
                                             LolView(lols: post.lols, postId: post.id)

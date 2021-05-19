@@ -236,8 +236,7 @@ struct ThreadDetailView: View {
                     VStack {
                         // Post details
                         HStack (alignment: .center) {
-                            AuthorNameView(name: appSessionStore.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : self.rootPostAuthor, postId: self.threadId,
-                                           authorType: PostDecorator.getAuthorType(threadRootAuthor: "", author: self.rootPostAuthor))
+                            AuthorNameView(name: appSessionStore.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : self.rootPostAuthor, postId: self.threadId, authorType: PostDecorator.getAuthorType(threadRootAuthor: "", author: self.rootPostAuthor))
 
                             ContributedView(contributed: self.contributed)
 

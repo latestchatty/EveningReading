@@ -61,8 +61,7 @@ struct watchOSThreadRow: View {
                 VStack (alignment: .leading) {
                     // Thread details
                     HStack {
-                        AuthorNameView(name: appSessionStore.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : self.rootPostAuthor, postId: self.threadId, navLink: true,
-                                       authorType: PostDecorator.getAuthorType(threadRootAuthor: "", author: self.rootPostAuthor))
+                        AuthorNameView(name: appSessionStore.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : self.rootPostAuthor, postId: self.threadId, navLink: true, authorType: PostDecorator.getAuthorType(threadRootAuthor: "", author: self.rootPostAuthor))
                         ContributedView(contributed: self.contributed)
                         Spacer()
                         LolView(lols: self.rootPostLols, postId: self.threadId)

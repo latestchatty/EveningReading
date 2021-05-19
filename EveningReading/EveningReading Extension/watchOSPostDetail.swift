@@ -68,8 +68,7 @@ struct watchOSPostDetail: View {
                 // Post
                 VStack (alignment: .leading) {
                     HStack {
-                        AuthorNameView(name: appSessionStore.blockedAuthors.contains(self.postAuthor) ? "[blocked]" : self.postAuthor, postId: self.postId,
-                                       authorType: PostDecorator.getAuthorType(threadRootAuthor: self.rootPostAuthor, author: self.postAuthor))
+                        AuthorNameView(name: appSessionStore.blockedAuthors.contains(self.postAuthor) ? "[blocked]" : self.postAuthor, postId: self.postId, authorType: PostDecorator.getAuthorType(threadRootAuthor: self.rootPostAuthor, author: self.postAuthor))
                         ContributedView(contributed: self.contributed)
                         Spacer()
                         LolView(lols: self.postLols, postId: self.postId)

@@ -100,8 +100,7 @@ struct ThreadRow: View {
                     
                     NewMessageView(showingNewMessageSheet: self.$showingNewMessageView, messageId: Binding.constant(0), recipientName: self.$messageRecipient, subjectText: self.$messageSubject, bodyText: self.$messageBody)
                     
-                    AuthorNameView(name: appSessionStore.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : self.rootPostAuthor, postId: self.threadId,
-                                   authorType: PostDecorator.getAuthorType(threadRootAuthor: "", author: self.rootPostAuthor))
+                    AuthorNameView(name: appSessionStore.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : self.rootPostAuthor, postId: self.threadId, authorType: PostDecorator.getAuthorType(threadRootAuthor: "", author: self.rootPostAuthor))
 
                     ContributedView(contributed: self.contributed)
 

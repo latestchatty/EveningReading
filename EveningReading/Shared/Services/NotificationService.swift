@@ -164,8 +164,8 @@ class NotificationStore: ObservableObject {
         self.service = service
     }
     
-    
     @Published private(set) var registerPushResponse: RegisterPushResponse = RegisterPushResponse(status: 0, message: "")
+    
     @Published private(set) var registerUserResponse: RegisterUserReponse = RegisterUserReponse(status: 0)
     @Published private(set) var registerDeviceResponse: RegisterDeviceReponse = RegisterDeviceReponse(status: 0)
     
