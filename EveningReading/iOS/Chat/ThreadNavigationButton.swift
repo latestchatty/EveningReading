@@ -8,6 +8,33 @@
 import SwiftUI
 
 struct ThreadNavigationView: View {
+    var nextAction: () -> Void = {}
+    var previousAction: () -> Void = {}
+    
+    var body: some View {
+        HStack {
+            HStack {
+                ThreadNavigationButton(icon: Binding.constant("arrow.up"), action: {
+                    previousAction()
+                })
+                Rectangle()
+                    .fill(Color(UIColor.label))
+                    .frame(width: 1, height: 20)
+                ThreadNavigationButton(icon: Binding.constant("arrow.down"), action: { print("arrow.down")
+                    nextAction()
+                })
+            }
+        }
+        .background(Color(UIColor.systemBlue).opacity(0.9))
+        .cornerRadius(12)
+        .clipped()
+        .padding(EdgeInsets(top: 0, leading: 0, bottom: 50, trailing: 50))
+        .shadow(radius: 5)
+    }
+}
+
+
+struct ThreadNavigationButton: View {
     @Binding var icon: String
     var action: () -> Void = {}
     @State private var doWiggle = false

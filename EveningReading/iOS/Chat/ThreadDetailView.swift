@@ -216,7 +216,7 @@ struct ThreadDetailView: View {
     var body: some View {
         VStack {
             
-            // Comment out to see preview
+            // Comment out to see preview (as well as overlay below)
             if UIDevice.current.userInterfaceIdiom == .phone {
                 GoToPostView()
                 GoToShackLinkView()
@@ -465,47 +465,11 @@ struct ThreadDetailView: View {
                         }
                     } else {
                         if UIDevice.current.userInterfaceIdiom == .phone {
-                            HStack {
-                                HStack {
-                                    ThreadNavigationView(icon: Binding.constant("arrow.up"), action: {
-                                        print("arrow.up")
-                                        showPreviousReply()
-                                    })
-                                    Rectangle()
-                                        .fill(Color(UIColor.label))
-                                        .frame(width: 1, height: 20)
-                                    ThreadNavigationView(icon: Binding.constant("arrow.down"), action: { print("arrow.down")
-                                        showNextReply()
-                                    })
-                                }
-                            }
-                            .background(Color(UIColor.systemBlue).opacity(0.9))
-                            .cornerRadius(12)
-                            .clipped()
-                            .padding(.init(top: 0, leading: 0, bottom: 50, trailing: 50))
-                            .shadow(radius: 5)
+                            ThreadNavigationView(nextAction: showNextReply, previousAction: showPreviousReply)
                             .position(threadNavigationLocation)
                             .gesture(threadNavigationDrag)
                         } else if UIDevice.current.userInterfaceIdiom == .pad {
-                            HStack {
-                                HStack {
-                                    ThreadNavigationView(icon: Binding.constant("arrow.up"), action: {
-                                        print("arrow.up")
-                                        showPreviousReply()
-                                    })
-                                    Rectangle()
-                                        .fill(Color(UIColor.label))
-                                        .frame(width: 1, height: 20)
-                                    ThreadNavigationView(icon: Binding.constant("arrow.down"), action: { print("arrow.down")
-                                        showNextReply()
-                                    })
-                                }
-                            }
-                            .background(Color(UIColor.systemBlue).opacity(0.9))
-                            .cornerRadius(12)
-                            .clipped()
-                            .padding(EdgeInsets(top: 0, leading: 0, bottom: 50, trailing: 50))
-                            .shadow(radius: 5)
+                            ThreadNavigationView(nextAction: showNextReply, previousAction: showPreviousReply)
                             .position(CGPoint(x: geometry.size.width - 80, y: geometry.size.height - 50))
                         }
                     }
