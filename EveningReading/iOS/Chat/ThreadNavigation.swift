@@ -1,5 +1,5 @@
 //
-//  ThreadNavigationView.swift
+//  ThreadNavigation.swift
 //  EveningReading (iOS)
 //
 //  Created by Chris Hodge on 5/9/21.
