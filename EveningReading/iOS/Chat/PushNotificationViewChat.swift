@@ -18,7 +18,7 @@ struct PushNotificationViewChat: View {
 
     var body: some View {
         VStack {
-            if self.isAlertShowing {
+            if appSessionStore.showingPostChat {
                 VStack {
                     Spacer()
                     Text("View post?")
@@ -33,7 +33,8 @@ struct PushNotificationViewChat: View {
                     HStack {
                         Button(action: {
                             withAnimation(.easeOut(duration: 0.1)) {
-                                self.isAlertShowing.toggle()
+                                //self.isAlertShowing.toggle()
+                                appSessionStore.showingPostChat = false
                             }
                         }) {
                             Text("Close")
@@ -45,7 +46,7 @@ struct PushNotificationViewChat: View {
                         Rectangle()
                             .fill(Color(UIColor.systemGray2))
                             .frame(width: 1)                        
-                        NavigationLink(destination: ThreadDetailView(threadId: .constant(0), postId: $appSessionStore.showingPostId, replyCount: .constant(-1), isSearchResult: .constant(true))) {
+                        NavigationLink(destination: ThreadDetailView(threadId: .constant(0), postId: $appSessionStore.showingPostIdChat, replyCount: .constant(-1), isSearchResult: .constant(true))) {
                             Text("Yes")
                                 .foregroundColor(Color(UIColor.link))
                         }
@@ -66,15 +67,26 @@ struct PushNotificationViewChat: View {
         // Deep link to post from push notification
         .onReceive(notifications.$notificationData) { value in
             print(".onReceive(notifications.$notificationData) Chat")
-            if let postId = value?.notification.request.content.userInfo["postid"] {
-                print("got postId \(postId), previously showed \(appSessionStore.showingPostId)")
-                if String("\(postId)").isInt && appSessionStore.showingPostIdChat != Int(String("\(postId)")) ?? 0 {
-                    print("prompting for postID \(postId)")
-                    //appSessionStore.showingPostId = Int(String("\(postId)")) ?? 0
-                    appSessionStore.showingPostIdChat = Int(String("\(postId)")) ?? 0
-                    self.isAlertShowing = true
+            if self.enabled {
+                if let postId = value?.notification.request.content.userInfo["postid"] {
+                    print("got postId \(postId), previously showed \(appSessionStore.showingPostId)")
+                    if String("\(postId)").isInt && appSessionStore.showingPostIdChat != Int(String("\(postId)")) ?? 0 {
+                        print("prompting for postID \(postId)")
+                        //appSessionStore.showingPostId = Int(String("\(postId)")) ?? 0
+                        appSessionStore.showingPostIdChat = Int(String("\(postId)")) ?? 0
+                        if appSessionStore.showingPostIdChat != 0 && appSessionStore.showingPostIdChat != appSessionStore.showingPostIdThread && appSessionStore.showingPostIdChat != appSessionStore.showingPostIdHome {
+                            appSessionStore.showingPostChat = true
+                            self.isAlertShowing = true
+                        }
+                    }
                 }
             }
+        }
+        .onAppear() {
+            self.enabled = true
+        }
+        .onDisappear() {
+            self.enabled = false
         }
     }
 }

@@ -73,7 +73,6 @@ struct RefreshableScrollView<Content: View>: View {
                 self.refreshLogic(values: values)
             }
         }
-        
     }
     
     func refreshLogic(values: [RefreshableKeyTypes.PrefData]) {

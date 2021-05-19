@@ -41,6 +41,7 @@ struct GoToPostView: View {
                 EmptyView()
             }.hidden().disabled(true).allowsHitTesting(false)
             
+            /*
             // Deep link to specific shack post
             .onChange(of: appSessionStore.showingShackLink, perform: { value in
                 print(".onReceive(appSessionStore.$showingShackLink)")
@@ -55,7 +56,7 @@ struct GoToPostView: View {
                     }
                 }
             })
-            
+            */
             /*
             .onReceive(appSessionStore.$showingShackLink) { value in
                 print(".onReceive(appSessionStore.$showingShackLink)")
@@ -75,6 +76,12 @@ struct GoToPostView: View {
             NavigationLink(destination: ThreadDetailView(threadId: .constant(0), postId: $appSessionStore.showingPostId, replyCount: .constant(-1), isSearchResult: .constant(true)), isActive: self.$showingPost) {
                 EmptyView()
             }.isDetailLink(false).hidden().allowsHitTesting(false)
+              
+            /*
+            NavigationLink(destination: ThreadDetailView(threadId: .constant(0), postId: $appSessionStore.showingPostId, replyCount: .constant(-1), isSearchResult: .constant(true)), tag: "GoToPost", selection: self.$selection) {
+                EmptyView()
+            }.isDetailLink(false).hidden().allowsHitTesting(false)
+            */
             
             /*
             .onChange(of: notifications.notificationData, perform: { value in
@@ -100,6 +107,17 @@ struct GoToPostView: View {
             })
             */
             
+            /*
+            .onChange(of: appSessionStore.showingPostId, perform: { value in
+                if value != 0 {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
+                        self.showingPost = true
+                    }
+                }
+            })
+            */
+            
+            
             // Deep link to post from push notification
             .onReceive(notifications.$notificationData) { value in
                 print(".onReceive(notifications.$notificationData)")
@@ -114,6 +132,7 @@ struct GoToPostView: View {
                             self.goToPostId = Int(String("\(postId)")) ?? 0
                             self.showingPost = true
                             //self.showingAlert = true
+                            //self.presentationMode.wrappedValue.dismiss()
                         }
                     }
                     /*
@@ -136,6 +155,7 @@ struct GoToPostView: View {
                 */
             }
             
+            
             /*
             .alert(isPresented: self.$showingAlert) {
                 Alert(title: Text("Notification Received"), message: Text("PostId"),
@@ -149,7 +169,7 @@ struct GoToPostView: View {
             */
             
         }
-        //.frame(width: 0, height: 0)
+        .frame(width: 0, height: 0)
     }
 }
 

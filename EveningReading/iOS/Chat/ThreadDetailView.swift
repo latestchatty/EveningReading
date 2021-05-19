@@ -219,6 +219,7 @@ struct ThreadDetailView: View {
             // Comment out to see preview
             if UIDevice.current.userInterfaceIdiom == .phone {
                 GoToPostView()
+                GoToShackLinkView()
             }
             if UIDevice.current.userInterfaceIdiom == .pad {
                 WhosTaggingView(showingWhosTaggingView: self.$showingWhosTaggingView)
