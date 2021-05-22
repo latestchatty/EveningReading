@@ -287,6 +287,9 @@ struct ThreadDetailView: View {
                     }
                     .padding(EdgeInsets(top: 0, leading: 10, bottom: -5, trailing: 10))
                     .id(9999999999991)
+                    .contextMenu {
+                        PostContextView(showingWhosTaggingView: self.$showingWhosTaggingView, showingNewMessageView: self.$showingNewMessageView, messageRecipient: self.$messageRecipient, messageSubject: self.$messageSubject, messageBody: self.$messageBody, collapsed: self.$collapsePost, author: self.rootPostAuthor, postId: self.threadId, isRootPost: true)
+                    }
                     
                     // No replies yet
                     if postList.count < 1 {

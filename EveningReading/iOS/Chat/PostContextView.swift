@@ -25,6 +25,7 @@ struct PostContextView: View {
     var author: String = ""
     var postId: Int = 0
     var threadId: Int = 0
+    var isRootPost: Bool = false
     
     var body: some View {
         Button(action: {
@@ -33,7 +34,7 @@ struct PostContextView: View {
             Text("Who's Tagging?")
             Image(systemName: "tag.circle")
         }
-        if self.threadId > 0 {
+        if self.threadId > 0 && !self.isRootPost {
             Button(action: {
                 self.collapsed = true
                 appSessionStore.collapsedThreads.append(self.threadId)
