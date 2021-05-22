@@ -30,7 +30,7 @@ struct NotificationsView: View {
                 ScrollView(.horizontal) {
                     HStack {
                         Spacer().frame(width: 25)
-                        ForEach(appSessionStore.pushNotifications, id: \.self) { notification in
+                        ForEach(appSessionStore.pushNotifications.reversed(), id: \.self) { notification in
                             NavigationLink(destination: ThreadDetailView(threadId: .constant(0), postId: .constant(notification.postId), replyCount: .constant(-1), isSearchResult: .constant(true))) {
                             
                                 NotificationPreviewView(title: notification.title, postBody: notification.body, postId: notification.postId)
