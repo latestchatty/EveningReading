@@ -175,7 +175,8 @@ struct LinkView: View {
             }
         
         // Better Safari View
-        .sheet(isPresented: self.$showingSafariSheet) {
+        //.sheet(isPresented: self.$showingSafariSheet) {
+        .safariView(isPresented: self.$showingSafariSheet) {
             SafariView(
                 url: URL(string: self.hyperlink)!,
                 configuration: SafariView.Configuration(

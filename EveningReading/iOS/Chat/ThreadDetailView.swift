@@ -79,6 +79,7 @@ struct ThreadDetailView: View {
                 chatStore.getThreadByPost(postId: self.postId) {
                     if let thread = chatStore.searchedThreads.first {
                         setThreadData(thread)
+                        postList.removeAll()
                         getPostList(parentId: self.threadId)
                         if let searchedPost = thread.posts.filter({ return $0.id == self.postId }).first {
                             self.selectedPostRichText = RichTextBuilder.getRichText(postBody: searchedPost.body)
