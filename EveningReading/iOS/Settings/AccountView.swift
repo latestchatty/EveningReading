@@ -47,10 +47,11 @@ struct AccountView: View {
             // Sign Out?
             .alert(isPresented: self.$showingSignOut) {
                 Alert(title: Text("Sign Out?"), message: Text(""), primaryButton: .destructive(Text("Yes")) {
-                    self.appSessionStore.isSignedIn = false
+                    appSessionStore.isSignedIn = false
                     _ = KeychainWrapper.standard.removeObject(forKey: "Username")
                     _ = KeychainWrapper.standard.removeObject(forKey: "Password")
-                    self.messageStore.clearMessages()
+                    appSessionStore.clearNotifications()
+                    messageStore.clearMessages()
                 }, secondaryButton: .cancel() {
                     
                 })

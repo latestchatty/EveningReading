@@ -29,38 +29,30 @@ class AppSessionStore : ObservableObject {
     @Published var showingPost = false
     @Published var showingPostId = 0
     
-    // Push Notifications
-    @Published var pushNotifications = [PushNotification]()
-    
     // Preferences
     @Published var displayPostAuthor: Bool = true {
         didSet {
-            let defaults = UserDefaults.standard
-            defaults.set(displayPostAuthor, forKey: "DisplayPostAuthor")
+            UserDefaults.standard.set(displayPostAuthor, forKey: "DisplayPostAuthor")
         }
     }
     @Published var abbreviateThreads: Bool = true {
         didSet {
-            let defaults = UserDefaults.standard
-            defaults.set(abbreviateThreads, forKey: "AbbreviateThreads")
+            UserDefaults.standard.set(abbreviateThreads, forKey: "AbbreviateThreads")
         }
     }
     @Published var threadNavigation: Bool = false {
         didSet {
-            let defaults = UserDefaults.standard
-            defaults.set(threadNavigation, forKey: "ThreadNavigation")
+            UserDefaults.standard.set(threadNavigation, forKey: "ThreadNavigation")
         }
     }
     @Published var isDarkMode: Bool = true {
         didSet {
-            let defaults = UserDefaults.standard
-            defaults.set(isDarkMode, forKey: "IsDarkMode")
+            UserDefaults.standard.set(isDarkMode, forKey: "IsDarkMode")
         }
     }
     @Published var useYoutubeApp: Bool = false {
         didSet {
-            let defaults = UserDefaults.standard
-            defaults.set(useYoutubeApp, forKey: "UseYoutubeApp")
+            UserDefaults.standard.set(useYoutubeApp, forKey: "UseYoutubeApp")
         }
     }
     
@@ -68,8 +60,7 @@ class AppSessionStore : ObservableObject {
     @Published var threadFilters: [String] = ["informative", "ontopic"]
     @Published var showInformative: Bool = true {
         didSet {
-            let defaults = UserDefaults.standard
-            defaults.set(showInformative, forKey: "ShowInformative")
+            UserDefaults.standard.set(showInformative, forKey: "ShowInformative")
             if self.showInformative && !self.threadFilters.contains("informative") {
                 self.threadFilters.append("informative")
             } else if !self.showInformative {
@@ -79,8 +70,7 @@ class AppSessionStore : ObservableObject {
     }
     @Published var showOffTopic: Bool = false {
         didSet {
-            let defaults = UserDefaults.standard
-            defaults.set(showOffTopic, forKey: "ShowOffTopic")
+            UserDefaults.standard.set(showOffTopic, forKey: "ShowOffTopic")
             if self.showOffTopic && !self.threadFilters.contains("offtopic") {
                 self.threadFilters.append("offtopic")
             } else if !self.showOffTopic {
@@ -90,8 +80,7 @@ class AppSessionStore : ObservableObject {
     }
     @Published var showPolitical: Bool = false {
         didSet {
-            let defaults = UserDefaults.standard
-            defaults.set(showPolitical, forKey: "ShowPolitical")
+            UserDefaults.standard.set(showPolitical, forKey: "ShowPolitical")
             if self.showPolitical && !self.threadFilters.contains("political") {
                 self.threadFilters.append("political")
             } else if !self.showPolitical {
@@ -101,8 +90,7 @@ class AppSessionStore : ObservableObject {
     }
     @Published var showStupid: Bool = false {
         didSet {
-            let defaults = UserDefaults.standard
-            defaults.set(showStupid, forKey: "ShowStupid")
+            UserDefaults.standard.set(showStupid, forKey: "ShowStupid")
             if self.showStupid && !self.threadFilters.contains("stupid") {
                 self.threadFilters.append("stupid")
             } else if !self.showStupid {
@@ -112,8 +100,7 @@ class AppSessionStore : ObservableObject {
     }
     @Published var showNWS: Bool = false {
         didSet {
-            let defaults = UserDefaults.standard
-            defaults.set(showNWS, forKey: "ShowNWS")
+            UserDefaults.standard.set(showNWS, forKey: "ShowNWS")
             if self.showNWS && !self.threadFilters.contains("nws") {
                 self.threadFilters.append("nws")
             } else if !self.showNWS {
@@ -125,16 +112,14 @@ class AppSessionStore : ObservableObject {
     // Collapsed
     @Published var collapsedThreads: [Int] = [0] {
         didSet {
-            let defaults = UserDefaults.standard
-            defaults.set(collapsedThreads, forKey: "CollapsedThreads")
+            UserDefaults.standard.set(collapsedThreads, forKey: "CollapsedThreads")
         }
     }
     
     // Authors
     @Published var blockedAuthors: [String] = [""] {
         didSet {
-            let defaults = UserDefaults.standard
-            defaults.set(blockedAuthors, forKey: "BlockedAuthors")
+            UserDefaults.standard.set(blockedAuthors, forKey: "BlockedAuthors")
         }
     }
     
@@ -142,14 +127,12 @@ class AppSessionStore : ObservableObject {
     #if os(iOS)
     @Published var threadNavigationLocationX: CGFloat = UIScreen.main.bounds.width - 50 {
         didSet {
-            let defaults = UserDefaults.standard
-            defaults.set(threadNavigationLocationX, forKey: "PaginateLocationX")
+            UserDefaults.standard.set(threadNavigationLocationX, forKey: "PaginateLocationX")
         }
     }
     @Published var threadNavigationLocationY: CGFloat = UIScreen.main.bounds.height - 120 {
         didSet {
-            let defaults = UserDefaults.standard
-            defaults.set(threadNavigationLocationY, forKey: "PaginateLocationY")
+            UserDefaults.standard.set(threadNavigationLocationY, forKey: "PaginateLocationY")
         }
     }
     #endif
@@ -161,13 +144,21 @@ class AppSessionStore : ObservableObject {
     @Published var isAuthenticating: Bool = false
     @Published var isSignedIn: Bool = false {
         didSet {
-            let defaults = UserDefaults.standard
-            defaults.set(isSignedIn, forKey: "IsSignedIn")
+            UserDefaults.standard.set(isSignedIn, forKey: "IsSignedIn")
             if !isSignedIn {
                 self.signInUsername = ""
                 self.signInPassword = ""
                 _ = KeychainWrapper.standard.removeObject(forKey: "Username")
                 _ = KeychainWrapper.standard.removeObject(forKey: "Password")
+            }
+        }
+    }
+    
+    // Push Notifications
+    @Published var pushNotifications = [PushNotification]() {
+        didSet {
+            if let data = try? PropertyListEncoder().encode(pushNotifications) {
+                UserDefaults.standard.set(data, forKey: "PushNotifications")
             }
         }
     }
@@ -218,14 +209,19 @@ class AppSessionStore : ObservableObject {
         // Auth
         self.isSignedIn = defaults.object(forKey: "IsSignedIn") as? Bool ?? false
         
-/*
 // Reset on startup
-let resetDarkMode = defaults.object(forKey: "ResetDarkMode") as? Bool ?? false
-if !resetDarkMode {
-    self.isDarkMode = tue
-    defaults.set(true, forKey: "ResetDarkMode")
+// ResetDarkMode
+// ResetNotifications
+let resetNotifications = defaults.object(forKey: "ResetNotifications") as? Bool ?? false
+if !resetNotifications {
+    UserDefaults.standard.removeObject(forKey: "PushNotifications")
+    defaults.set(true, forKey: "ResetNotifications")
 }
-*/
+        
+        // Push Notifications
+        if let data = defaults.data(forKey: "PushNotifications") {
+            self.pushNotifications = try! PropertyListDecoder().decode([PushNotification].self, from: data)
+        }
         
     }
     
@@ -235,6 +231,10 @@ if !resetDarkMode {
         self.showingSearchView = false
         self.showingTagsView = false
         self.showingSettingsView = false
+    }
+    
+    func clearNotifications() {
+        self.pushNotifications = [PushNotification]()
     }
     
     func clearAuth() {
@@ -270,7 +270,7 @@ if !resetDarkMode {
     }
 }
 
-struct PushNotification : Hashable {
+struct PushNotification : Hashable, Codable {
     var title = ""
     var body = ""
     var postId = 0
