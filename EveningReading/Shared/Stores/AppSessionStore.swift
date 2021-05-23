@@ -28,6 +28,7 @@ class AppSessionStore : ObservableObject {
     // Deep linking to posts
     @Published var showingPost = false
     @Published var showingPostId = 0
+    @Published var showingPostWithId: [Int : Bool] = [:]
     
     // Preferences
     @Published var displayPostAuthor: Bool = true {

@@ -165,12 +165,10 @@ struct LinkView: View {
                     // A random link in a thread
                     //self.hyperlinkUrl = self.hyperlink
                     //self.showingLinkWebView = true
-                    
                     if let url = URL(string: self.hyperlink) {
                         self.hyperlinkUrl = url
                         self.showingSafariSheet = true
-                    }
-                    
+                    }                    
                 }
             }
         
