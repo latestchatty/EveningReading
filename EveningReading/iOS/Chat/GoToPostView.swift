@@ -19,8 +19,9 @@ struct GoToPostView: View {
     
     var body: some View {
         VStack {
+            //Text("\(appSessionStore.showingPostId)")
+            //Text("\(self.goToPostId) \(self.showingPost.description)")
             /*
-            Text("\(self.goToPostId) \(self.showingPost.description)")
             Button(action: {
                 print("self.goToPostId = \(self.goToPostId)")
             }) {
@@ -147,9 +148,12 @@ struct GoToPostView: View {
                         //appSessionStore.showingPostWithId[appSessionStore.showingPostId] = true
                         
                         //self.showingPost = true
+                        
                         //self.showingAlert = true
                         //self.presentationMode.wrappedValue.dismiss()
                         appSessionStore.pushNotifications.append(PushNotification(title: title, body: body, postId: Int(String("\(postId)")) ?? 0))
+                        
+                        appSessionStore.showingNotificationReceiveNotice = true
                         
                     }
                     /*

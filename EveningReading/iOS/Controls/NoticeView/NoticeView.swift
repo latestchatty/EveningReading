@@ -9,6 +9,7 @@ import SwiftUI
 
 struct NoticeView : View {
     @Binding public var show: Bool
+    @Binding public var message: String
     @EnvironmentObject var chatStore: ChatStore
     
     var body: some View {
@@ -18,7 +19,7 @@ struct NoticeView : View {
                     .resizable()
                     .frame(width: 30, height: 30)
                     .foregroundColor(Color.primary)
-                Text(chatStore.taggingNoticeText)
+                Text(self.message)
                     .foregroundColor(Color.primary)
             }
             .frame(width: 120, height: 120)
@@ -39,7 +40,7 @@ struct NoticeView : View {
 
 struct NoticeView_Previews: PreviewProvider {
     static var previews: some View {
-        NoticeView(show: .constant(true))
+        NoticeView(show: .constant(true), message: .constant("Tagged!"))
             .environmentObject(ChatStore(service: ChatService()))
     }
 }

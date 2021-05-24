@@ -90,6 +90,9 @@ struct iPadChatView: View {
         
         // New thread button
         .navigationBarItems(leading: Spacer().frame(width: 26, height: 16), trailing: ComposePostView(isRootPost: true))
+        
+        // If push notification was received and touched
+        .overlay(NoticeView(show: $appSessionStore.showingNotificationReceiveNotice, message: .constant("Added!")))
     }
 }
 

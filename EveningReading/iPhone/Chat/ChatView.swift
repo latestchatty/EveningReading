@@ -80,6 +80,9 @@ struct ChatView: View {
         // If refreshing thread after posting
         .overlay(LoadingView(show: self.$isGettingChat, title: .constant("")))
         
+        // If push notification was received and touched
+        .overlay(NoticeView(show: $appSessionStore.showingNotificationReceiveNotice, message: .constant("Added!")))
+        
         // Fetching chat data
         .onReceive(chatStore.$didGetChatStart) { value in
             if value && self.chatStore.didSubmitPost {

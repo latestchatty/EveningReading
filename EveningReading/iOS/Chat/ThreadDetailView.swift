@@ -399,7 +399,8 @@ struct ThreadDetailView: View {
         // A post was tagged
         .onReceive(chatStore.$didTagPost) { value in
             if value && chatStore.activeThreadId == self.threadId {
-                self.didTagPost = true
+                //self.didTagPost = true
+                chatStore.showingTagNotice = true
                 chatStore.didTagPost = false
             }
         }
@@ -443,13 +444,16 @@ struct ThreadDetailView: View {
             self.chatStore.didGetThreadStart = false
             self.chatStore.didGetThreadFinish = false
             self.isGettingThread = false
-            self.didTagPost = false
+            //self.didTagPost = false
+            chatStore.showingTagNotice = false
             chatStore.didTagPost = false
         }
         
         // Loading and Alerts
         .overlay(LoadingView(show: self.$isGettingThread, title: .constant("")))
-        .overlay(NoticeView(show: self.$didTagPost))
+        //.overlay(NoticeView(show: self.$didTagPost))
+        .overlay(NoticeView(show: $chatStore.showingTagNotice, message: $chatStore.taggingNoticeText))
+        .overlay(NoticeView(show: $appSessionStore.showingNotificationReceiveNotice, message: .constant("Added!")))
         
         // Thread Navigation
         .overlay(
