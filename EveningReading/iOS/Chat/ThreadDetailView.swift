@@ -41,7 +41,6 @@ struct ThreadDetailView: View {
     @State private var username: String = ""
     
     @State private var isGettingThread: Bool = false
-    @State private var didTagPost: Bool = false
     
     @State private var showingWhosTaggingView = false
     
@@ -396,15 +395,6 @@ struct ThreadDetailView: View {
             }
         }
         
-        // A post was tagged
-        .onReceive(chatStore.$didTagPost) { value in
-            if value && chatStore.activeThreadId == self.threadId {
-                //self.didTagPost = true
-                chatStore.showingTagNotice = true
-                chatStore.didTagPost = false
-            }
-        }
-        
         // Disable while getting new data
         .disabled(self.isGettingThread || chatStore.gettingThread)
         
@@ -444,14 +434,11 @@ struct ThreadDetailView: View {
             self.chatStore.didGetThreadStart = false
             self.chatStore.didGetThreadFinish = false
             self.isGettingThread = false
-            //self.didTagPost = false
             chatStore.showingTagNotice = false
-            chatStore.didTagPost = false
         }
         
         // Loading and Alerts
         .overlay(LoadingView(show: self.$isGettingThread, title: .constant("")))
-        //.overlay(NoticeView(show: self.$didTagPost))
         .overlay(NoticeView(show: $chatStore.showingTagNotice, message: $chatStore.taggingNoticeText))
         .overlay(NoticeView(show: $appSessionStore.showingNotificationReceiveNotice, message: .constant("Added!")))
         

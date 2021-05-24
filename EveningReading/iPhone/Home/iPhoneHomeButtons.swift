@@ -25,6 +25,12 @@ struct iPhoneHomeButtons: View {
                 .onTapGesture(count: 1) {
                     navigateTo(&appSessionStore.showingChatView)
                 }
+                /*
+                iPhoneHomeButton(title: .constant("Chat"), imageName: .constant("glyphicons-basic-238-chat-message"), buttonBackground: .constant(Color("HomeButtonChat")))
+                .onTapGesture(count: 1) {
+                    navigateTo(&appSessionStore.showingChatView)
+                }
+                */
                 Spacer()
                 iPhoneHomeButton(title: .constant("Inbox"), imageName: .constant("glyphicons-basic-122-envelope-empty"), buttonBackground: .constant(Color("HomeButtonInbox")))
                 .onTapGesture(count: 1) {

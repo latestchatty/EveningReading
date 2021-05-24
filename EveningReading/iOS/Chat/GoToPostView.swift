@@ -16,7 +16,7 @@ struct GoToPostView: View {
     @State private var goToPostId: Int = 0
     @State private var showingPost: Bool = false
     @State private var showingAlert: Bool = false
-    
+        
     var isHomeScreen = false
     
     var body: some View {
@@ -130,6 +130,42 @@ struct GoToPostView: View {
                     }
                 }
             })
+            */
+            
+            /*
+            .onAppear() {
+                DispatchQueue.main.async {
+                    notifications.notificationData.publisher.sink { value in
+                        let postId = value.notification.request.content.userInfo["postid"]!
+                        let body = value.notification.request.content.body
+                        let title = value.notification.request.content.title
+                        
+                        print("got postId \(postId), previously showed \(appSessionStore.showingPostId)")
+                        if String("\(postId)").isInt && appSessionStore.showingPostId != Int(String("\(postId)")) ?? 0 {
+                            
+                            notifications.notificationData = nil
+                            print("setting postID \(postId)")
+                            appSessionStore.showingPostId = Int(String("\(postId)")) ?? 0
+                            print("going to post \(Int(String("\(postId)")) ?? 0)")
+                            self.goToPostId = Int(String("\(postId)")) ?? 0
+                            print("self.goToPostId = \(self.goToPostId)")
+                            
+                            appSessionStore.pushNotifications.append(PushNotification(title: title, body: body, postId: Int(String("\(postId)")) ?? 0))
+                                                    
+                            if !self.isHomeScreen {
+                                appSessionStore.showingNotificationReceiveNotice = true
+                            }
+                            
+                            self.showingPost = false
+                            
+                            DispatchQueue.main.async {
+                                self.showingPost = true
+                            }
+                            
+                        }
+                    }
+                }
+            }
             */
             
             // Deep link to post from push notification

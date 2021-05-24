@@ -51,6 +51,7 @@ struct TagPostView: View {
                 // Show notice
                 DispatchQueue.main.async {
                     chatStore.didTagPost = true
+                    chatStore.showingTagNotice = true
                 }
             }, completionFail: {
                 if !(userTagsForPost[tag] ?? 0 > 0) {
