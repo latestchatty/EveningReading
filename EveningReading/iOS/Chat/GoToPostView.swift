@@ -17,6 +17,8 @@ struct GoToPostView: View {
     @State private var showingPost: Bool = false
     @State private var showingAlert: Bool = false
     
+    var isHomeScreen = false
+    
     var body: some View {
         VStack {
             //Text("\(appSessionStore.showingPostId)")
@@ -153,8 +155,9 @@ struct GoToPostView: View {
                         //self.presentationMode.wrappedValue.dismiss()
                         appSessionStore.pushNotifications.append(PushNotification(title: title, body: body, postId: Int(String("\(postId)")) ?? 0))
                         
-                        appSessionStore.showingNotificationReceiveNotice = true
-                        
+                        if !self.isHomeScreen {
+                            appSessionStore.showingNotificationReceiveNotice = true
+                        }
                     }
                     /*
                     if !self.disabled && String("\(postId)").isInt {
