@@ -231,7 +231,7 @@ struct ComposePostView: View {
                                 }
                             }
                             .frame(width: 70, height: 30)
-                            .foregroundColor(self.showingLoading ? Color(UIColor.systemGray3) : Color(UIColor.link))
+                            .foregroundColor(self.showingLoading || self.postBody.count < 5 ? Color(UIColor.systemGray3) : Color(UIColor.link))
                             
                             Spacer().frame(width: 10)
                         }
@@ -243,19 +243,19 @@ struct ComposePostView: View {
                     ZStack {
                         // no way to change the background yet :(
                         if appSessionStore.isDarkMode {
-                            TextEditor(text: $postBody)
+                            TextEditor(text: self.$postBody)
                                 .border(Color(UIColor.systemGray5))
                                 .cornerRadius(4.0)
                                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                                 .padding(EdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5))
                         } else if colorScheme == .light {
-                            TextEditor(text: $postBody)
+                            TextEditor(text: self.$postBody)
                                 .border(Color(UIColor.systemGray5))
                                 .cornerRadius(4.0)
                                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                                 .padding(EdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5))
                         } else {
-                            TextEditor(text: $postBody)
+                            TextEditor(text: self.$postBody)
                                 .border(Color(UIColor.systemGray5))
                                 .cornerRadius(4.0)
                                 .colorInvert()
