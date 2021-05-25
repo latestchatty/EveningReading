@@ -42,7 +42,7 @@ struct ChatView: View {
     var body: some View {
         VStack {
             
-            GoToPostView()
+            GoToPostView(currentViewName: "ChatView")
             
             RefreshableScrollView(height: 70, refreshing: self.$chatStore.gettingChat, scrollTarget: self.$chatStore.scrollTargetChat, scrollTargetTop: self.$chatStore.scrollTargetChatTop) {
                 
@@ -79,10 +79,7 @@ struct ChatView: View {
 
         // If refreshing thread after posting
         .overlay(LoadingView(show: self.$isGettingChat, title: .constant("")))
-        
-        // If push notification was received and touched
-        .overlay(NoticeView(show: $appSessionStore.showingNotificationReceiveNotice, message: .constant("Added!")))
-        
+                
         // Fetching chat data
         .onReceive(chatStore.$didGetChatStart) { value in
             if value && self.chatStore.didSubmitPost {
@@ -105,6 +102,7 @@ struct ChatView: View {
         
         // Reset active thread on iPhone
         .onAppear() {
+            appSessionStore.currentViewName = "ChatView"
             if UIDevice.current.userInterfaceIdiom == .phone {
                 chatStore.activeThreadId = 0
             }

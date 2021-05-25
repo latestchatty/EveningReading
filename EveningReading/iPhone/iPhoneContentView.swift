@@ -17,12 +17,18 @@ struct iPhoneContentView: View {
     //@EnvironmentObject var notificationStore: NotificationStore
     
     @State private var showingGuidelinesView = false
-        
+    @State private var showingPost: Bool = false
+    
     var body: some View {
         NavigationView {
             ScrollView {
                 VStack {
-                    GoToPostView(isHomeScreen: true)
+                    /*
+                    NavigationLink(destination: ThreadDetailView(threadId: .constant(0), postId: $appSessionStore.showingPostId, replyCount: .constant(-1), isSearchResult: .constant(true)), isActive: self.$showingPost) {
+                        EmptyView()
+                    }.isDetailLink(false).hidden().allowsHitTesting(false)
+                    */
+                    GoToPostViewHome()
                     GuidelinesView(showingGuidelinesView: $showingGuidelinesView)
                     .onAppear() {
                         DispatchQueue.main.async {
@@ -30,6 +36,19 @@ struct iPhoneContentView: View {
                             let guidelinesAccepted = defaults.object(forKey: "GuidelinesAccepted") as? Bool ?? false
                             self.showingGuidelinesView = !guidelinesAccepted
                         }
+                        
+                        // Respond to push notification
+                        appSessionStore.currentViewName = "HomeView"
+                        /*
+                        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5)) {
+                            print("showingPost =  \(appSessionStore.showingPost.description)")
+                            if appSessionStore.showingPost {
+                                print("will show post")
+                                self.showingPost = true
+                            }
+                        }
+                        */
+                        
                     }
                     iPhoneHomeButtons()
                         .environmentObject(appSessionStore)
@@ -49,12 +68,14 @@ struct iPhoneContentView: View {
         }
         .navigationViewStyle(StackNavigationViewStyle())
         .accentColor(colorScheme == .dark ? Color.white : Color(UIColor.systemBlue))
+        //.overlay(appSessionStore.showingPost ? Color("PrimaryBackground").frame(width: 2600, height: 2600).offset(y: -80) : Color.clear.frame(width: 0, height: 0).offset(y: 0))
         .onAppear() {
+            /*
             if Notifications.shared.notificationLink != "" {
-                // Respond to push notification
                 print("responding to notficationlink \(Notifications.shared.notificationLink)")
                 Notifications.shared.notificationLink = ""
             }
+            */
         }
     }
 }

@@ -24,15 +24,12 @@ class AppSessionStore : ObservableObject {
     @Published var showingSearchView = false
     @Published var showingTagsView = false
     @Published var showingSettingsView = false
+    @Published var currentViewName = ""
     
     // Deep linking to posts
-    @Published var showingNotificationReceiveNotice = false
     @Published var showingPost = false
     @Published var showingPostId = 0
     @Published var showingPostWithId: [Int : Bool] = [:]
-    @Published var showingPostWithHome: [Int : Bool] = [:]
-    @Published var showingPostWithChat: [Int : Bool] = [:]
-    @Published var showingPostWithThread: [Int : Bool] = [:]
     
     // Preferences
     @Published var displayPostAuthor: Bool = true {

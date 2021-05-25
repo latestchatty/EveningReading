@@ -218,7 +218,7 @@ struct ThreadDetailView: View {
             
             // Comment out to see preview (as well as overlay below)
             if UIDevice.current.userInterfaceIdiom == .phone {
-                GoToPostView()
+                GoToPostView(currentViewName: "ThreadView")
                 GoToShackLinkView()
             }
             if UIDevice.current.userInterfaceIdiom == .pad {
@@ -425,6 +425,12 @@ struct ThreadDetailView: View {
                 // Load immediately
                 getData()
             }
+            
+            // Reset showing post for push notification
+            appSessionStore.currentViewName = "ThreadView"
+            if appSessionStore.showingPost {
+                appSessionStore.showingPost = false
+            }
         })
         
         // Stop posting, refreshing or tagging
@@ -440,7 +446,6 @@ struct ThreadDetailView: View {
         // Loading and Alerts
         .overlay(LoadingView(show: self.$isGettingThread, title: .constant("")))
         .overlay(NoticeView(show: $chatStore.showingTagNotice, message: $chatStore.taggingNoticeText))
-        .overlay(NoticeView(show: $appSessionStore.showingNotificationReceiveNotice, message: .constant("Added!")))
         
         // Thread Navigation
         .overlay(

@@ -17,7 +17,8 @@ struct GoToPostView: View {
     @State private var showingPost: Bool = false
     @State private var showingAlert: Bool = false
         
-    var isHomeScreen = false
+    var isHomeView = false
+    var currentViewName = ""
     
     var body: some View {
         VStack {
@@ -173,15 +174,15 @@ struct GoToPostView: View {
                 print(".onReceive(notifications.$notificationData)")
                 
                 if let postId = value?.notification.request.content.userInfo["postid"], let body = value?.notification.request.content.body, let title = value?.notification.request.content.title {
-                    print("got postId \(postId), previously showed \(appSessionStore.showingPostId)")
+                    //print("got postId \(postId), previously showed \(appSessionStore.showingPostId)")
                     if String("\(postId)").isInt && appSessionStore.showingPostId != Int(String("\(postId)")) ?? 0 {
 
                         notifications.notificationData = nil
-                        print("setting postID \(postId)")
+                        //print("setting postID \(postId)")
                         appSessionStore.showingPostId = Int(String("\(postId)")) ?? 0
-                        print("going to post \(Int(String("\(postId)")) ?? 0)")
-                        self.goToPostId = Int(String("\(postId)")) ?? 0
-                        print("self.goToPostId = \(self.goToPostId)")
+                        //print("going to post \(Int(String("\(postId)")) ?? 0)")
+                        //self.goToPostId = Int(String("\(postId)")) ?? 0
+                        print("showingPostId = \(appSessionStore.showingPostId)")
                                                 
                         //appSessionStore.showingPostWithId[appSessionStore.showingPostId] = true
                         
@@ -191,9 +192,21 @@ struct GoToPostView: View {
                         //self.presentationMode.wrappedValue.dismiss()
                         appSessionStore.pushNotifications.append(PushNotification(title: title, body: body, postId: Int(String("\(postId)")) ?? 0))
                         
+                        /*
                         if !self.isHomeScreen {
                             appSessionStore.showingNotificationReceiveNotice = true
                         }
+                        */
+                        
+                        print("\(appSessionStore.currentViewName) == \(self.currentViewName)")
+                        
+                        //if appSessionStore.currentViewName == self.currentViewName {
+                            appSessionStore.showingPost = true
+                            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
+                                print("going to home screen")
+                                appSessionStore.showingChatView = false
+                            }
+                        //}
                     }
                     /*
                     if !self.disabled && String("\(postId)").isInt {

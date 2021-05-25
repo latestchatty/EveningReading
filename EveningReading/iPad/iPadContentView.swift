@@ -23,7 +23,7 @@ struct iPadContentView: View {
             ScrollViewReader { scrollProxy in
                 ScrollView {
                     VStack {
-                        GoToPostView(isHomeScreen: true)
+                        GoToPostViewHome()
                         GuidelinesView(showingGuidelinesView: self.$showingGuidelinesView)
                         .onAppear() {
                             DispatchQueue.main.async {

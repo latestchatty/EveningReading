@@ -29,7 +29,7 @@ struct iPadChatView: View {
     var body: some View {
         GeometryReader { geometry in
             
-            GoToPostView()
+            GoToPostView(currentViewName: "ChatView")
             
             HStack (alignment: .top, spacing: 0) {
                 
@@ -89,10 +89,7 @@ struct iPadChatView: View {
         .navigationBarTitle("Chat", displayMode: .inline)
         
         // New thread button
-        .navigationBarItems(leading: Spacer().frame(width: 26, height: 16), trailing: ComposePostView(isRootPost: true))
-        
-        // If push notification was received and touched
-        .overlay(NoticeView(show: $appSessionStore.showingNotificationReceiveNotice, message: .constant("Added!")))
+        .navigationBarItems(leading: Spacer().frame(width: 26, height: 16), trailing: ComposePostView(isRootPost: true))        
     }
 }
 
