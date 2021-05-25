@@ -37,11 +37,12 @@ struct ChatView: View {
     }
     */
     
-    @State private var isPushAlertShowing: Bool = false
+    //@State private var isPushAlertShowing: Bool = false
     
     var body: some View {
         VStack {
             
+            // Comment out to preview
             GoToPostView(currentViewName: "ChatView")
             
             RefreshableScrollView(height: 70, refreshing: self.$chatStore.gettingChat, scrollTarget: self.$chatStore.scrollTargetChat, scrollTargetTop: self.$chatStore.scrollTargetChatTop) {

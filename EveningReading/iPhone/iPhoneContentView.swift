@@ -23,11 +23,14 @@ struct iPhoneContentView: View {
         NavigationView {
             ScrollView {
                 VStack {
+                    
                     /*
+                    // Push thread detail view
                     NavigationLink(destination: ThreadDetailView(threadId: .constant(0), postId: $appSessionStore.showingPostId, replyCount: .constant(-1), isSearchResult: .constant(true)), isActive: self.$showingPost) {
                         EmptyView()
                     }.isDetailLink(false).hidden().allowsHitTesting(false)
                     */
+                    
                     GoToPostViewHome()
                     GuidelinesView(showingGuidelinesView: $showingGuidelinesView)
                     .onAppear() {
