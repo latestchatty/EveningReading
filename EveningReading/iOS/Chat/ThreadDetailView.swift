@@ -322,6 +322,7 @@ struct ThreadDetailView: View {
                                 }
                                 .padding(.horizontal, 10)
                                 .frame(maxWidth: .infinity)
+                                .contentShape(Rectangle())
                                 .contextMenu {
                                     PostContextView(showingWhosTaggingView: self.$showingWhosTaggingView, showingNewMessageView: self.$showingNewMessageView, messageRecipient: self.$messageRecipient, messageSubject: self.$messageSubject, messageBody: self.$messageBody, collapsed: self.$collapsePost, author: post.author, postId: post.id)
                                 }
@@ -332,7 +333,6 @@ struct ThreadDetailView: View {
                                         self.selectedPost = post.id
                                     }
                                 }
-                                
                                 
                             }
                             .id(post.id)
