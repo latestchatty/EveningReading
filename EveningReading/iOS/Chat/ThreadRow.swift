@@ -132,7 +132,7 @@ struct ThreadRow: View {
                     }
                 }
                 .frame(maxWidth: .infinity)
-                .background(RoundedCornersView(color: (self.activeThreadId == self.threadId ? Color("ChatBubbleSecondary") : Color("ChatBubblePrimary"))))
+                .background(RoundedCornersView(color: (self.contributed ? (self.activeThreadId == self.threadId ? Color("ChatBubbleSecondaryContributed") : Color("ChatBubblePrimaryContributed")) : (self.activeThreadId == self.threadId ? Color("ChatBubbleSecondary") : Color("ChatBubblePrimary")))))
                 .padding(.bottom, 5)
                 
             }
