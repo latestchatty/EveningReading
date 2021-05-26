@@ -18,12 +18,17 @@ struct ComposePostView: View {
     public var postId: Int = 0
     
     @State private var postBody = ""
+    @State private var postStyle = UIFont.TextStyle.body
+
     @State private var showingComposeSheet = false
+
     @State private var showingLoading = false
     @State private var loadingMessage = "Loading"
+
     @State private var showingImageSheet = false
     @State private var uploadImage: UIImage?
     @State private var uploadImageFail = false
+
     @State private var showingSubmitAlert = false
     @State private var showingSubmitError = false
     
@@ -241,6 +246,12 @@ struct ComposePostView: View {
                     
                     // TextEditor
                     ZStack {
+                        TextView(text: self.$postBody, textStyle: self.$postStyle)
+                            .border(Color(UIColor.systemGray5))
+                            .cornerRadius(4.0)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                            .padding(EdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5))
+                        /*
                         // no way to change the background yet :(
                         if appSessionStore.isDarkMode {
                             TextEditor(text: self.$postBody)
@@ -262,6 +273,7 @@ struct ComposePostView: View {
                                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                                 .padding(EdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5))
                         }
+                        */
 
                         // Loading indicator
                         LoadingView(show: self.$showingLoading, title: self.$loadingMessage)

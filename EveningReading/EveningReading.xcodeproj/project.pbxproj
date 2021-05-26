@@ -129,6 +129,7 @@
 		83A85CF726558FB5007EBAC3 /* NotificationsClearView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A85CF626558FB5007EBAC3 /* NotificationsClearView.swift */; };
 		83A85CFF265B1C5E007EBAC3 /* BindingExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A85CFE265B1C5E007EBAC3 /* BindingExtensions.swift */; };
 		83A85D28265BBC98007EBAC3 /* GoToPostViewHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A85D27265BBC98007EBAC3 /* GoToPostViewHome.swift */; };
+		83A85D48265EC177007EBAC3 /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A85D47265EC177007EBAC3 /* TextView.swift */; };
 		83AA19272645C43500556E69 /* PostDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19262645C43500556E69 /* PostDecorator.swift */; };
 		83AA19282645C43500556E69 /* PostDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19262645C43500556E69 /* PostDecorator.swift */; };
 		83AA19292645C43500556E69 /* PostDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19262645C43500556E69 /* PostDecorator.swift */; };
@@ -327,6 +328,7 @@
 		83A85CF626558FB5007EBAC3 /* NotificationsClearView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsClearView.swift; sourceTree = "<group>"; };
 		83A85CFE265B1C5E007EBAC3 /* BindingExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BindingExtensions.swift; sourceTree = "<group>"; };
 		83A85D27265BBC98007EBAC3 /* GoToPostViewHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoToPostViewHome.swift; sourceTree = "<group>"; };
+		83A85D47265EC177007EBAC3 /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
 		83AA19262645C43500556E69 /* PostDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDecorator.swift; sourceTree = "<group>"; };
 		83AA19312645E36600556E69 /* RefreshNoticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshNoticeView.swift; sourceTree = "<group>"; };
 		83AA19352645F4A700556E69 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
@@ -875,6 +877,14 @@
 			path = WebAuthenticationSession;
 			sourceTree = "<group>";
 		};
+		83A85D46265EC16E007EBAC3 /* TextView */ = {
+			isa = PBXGroup;
+			children = (
+				83A85D47265EC177007EBAC3 /* TextView.swift */,
+			);
+			path = TextView;
+			sourceTree = "<group>";
+		};
 		83AA19452646308C00556E69 /* Guidelines */ = {
 			isa = PBXGroup;
 			children = (
@@ -894,6 +904,7 @@
 		83AA195426464FA600556E69 /* Controls */ = {
 			isa = PBXGroup;
 			children = (
+				83A85D46265EC16E007EBAC3 /* TextView */,
 				8339816D2640588B005614E8 /* RefreshableScrollView */,
 				83AA19D1264ADDE900556E69 /* LinkViewer */,
 				833EE9CE26454D7C00345A1D /* BetterSafariView */,
@@ -1182,6 +1193,7 @@
 				83A85D28265BBC98007EBAC3 /* GoToPostViewHome.swift in Sources */,
 				83AA1962264656BD00556E69 /* KeychainWrapper.swift in Sources */,
 				83A85CFF265B1C5E007EBAC3 /* BindingExtensions.swift in Sources */,
+				83A85D48265EC177007EBAC3 /* TextView.swift in Sources */,
 				833EE9CB2644DB2100345A1D /* RichTextView.swift in Sources */,
 				83AA19782646E49A00556E69 /* ComposePostView.swift in Sources */,
 				83398140263F525F005614E8 /* iPadHomeButton.swift in Sources */,
