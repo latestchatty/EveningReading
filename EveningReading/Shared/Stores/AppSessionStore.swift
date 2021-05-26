@@ -57,6 +57,11 @@ class AppSessionStore : ObservableObject {
             UserDefaults.standard.set(useYoutubeApp, forKey: "UseYoutubeApp")
         }
     }
+    @Published var disableAnimation: Bool = false {
+        didSet {
+            UserDefaults.standard.set(disableAnimation, forKey: "DisableAnimation")
+        }
+    }
     
     // Category Filters
     @Published var threadFilters: [String] = ["informative", "ontopic"]
@@ -182,6 +187,7 @@ class AppSessionStore : ObservableObject {
         self.threadNavigation = defaults.object(forKey: "ThreadNavigation") as? Bool ?? false
         self.isDarkMode = defaults.object(forKey: "IsDarkMode") as? Bool ?? true
         self.useYoutubeApp = defaults.object(forKey: "UseYoutubeApp") as? Bool ?? false
+        self.disableAnimation = defaults.object(forKey: "DisableAnimation") as? Bool ?? false
         
         // Filters
         self.threadFilters = defaults.object(forKey: "ThreadFilters") as? [String] ?? ["informative", "ontopic"]

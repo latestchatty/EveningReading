@@ -29,6 +29,9 @@ struct PreferencesView: View {
             Toggle(isOn: self.$appSessionStore.useYoutubeApp) {
                 Text("Use YouTube App")
             }
+            Toggle(isOn: self.$appSessionStore.disableAnimation) {
+                Text("Disable Animation")
+            }
             #endif
         }
     }

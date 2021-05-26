@@ -329,8 +329,12 @@ struct ThreadDetailView: View {
                                 .onTapGesture(count: 1) {
                                     chatStore.activePostId = post.id
                                     self.selectedPostRichText = RichTextBuilder.getRichText(postBody: post.body)
-                                    withAnimation {
+                                    if appSessionStore.disableAnimation {
                                         self.selectedPost = post.id
+                                    } else {
+                                        withAnimation {
+                                            self.selectedPost = post.id
+                                        }
                                     }
                                 }
                                 
