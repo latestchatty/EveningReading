@@ -104,9 +104,10 @@ class TagMenuItemTextView: UITextView {
         
     }
     
-    // Show TagTextView
+    // Show TagTextView and update tagAction
     @objc func tagText() {
         if (self.selectedRange.location != NSNotFound ) {
+            // Show TagTextView
             ShackTags.shared.doTagText = true
             
             // Replace selected text with tagged text
@@ -131,10 +132,8 @@ class TagMenuItemTextView: UITextView {
                             let taggedText = tagBegin + selectedText + tagEnd
                             self.text.replaceSubrange(range, with: taggedText)
                             
-                            // Move cursor
-                            print("location = \(selectedLocation) and length = \(selectedLength)")
+                            // Update the currently selected text
                             if let positionStart = self.position(from: self.beginningOfDocument, offset: selectedLocation), let positionEnd = self.position(from: self.beginningOfDocument, offset: selectedLocation + selectedLength + 4) {
-                                print("setting cursor position")
                                 self.selectedTextRange = self.textRange(from: positionStart, to: positionEnd)
                             }
                         }
