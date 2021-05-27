@@ -75,22 +75,16 @@ class TagMenuItemTextView: UITextView {
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
 
         // Keep most of the default actions
-        if action == #selector(cut(_:)) {
+        // action == Selector(("_define:"))
+        if action == #selector(cut(_:)) ||
+            action == #selector(copy(_:)) ||
+            action == #selector(select(_:)) ||
+            action == #selector(selectAll(_:)) ||
+            action == #selector(paste(_:))
+        {
             return true
         }
-        if action == #selector(copy(_:)) {
-            return true
-        }
-        if action == #selector(select(_:)) {
-            return true
-        }
-        if action == #selector(paste(_:)) {
-            return true
-        }
-        if action == #selector(selectAll(_:)) {
-            return true
-        }
-
+        
         // Add a custom "Tag" action
         let tagMenuItem = UIMenuItem(title: "Tag", action:#selector(tagText))
         UIMenuController.shared.menuItems = [tagMenuItem]
