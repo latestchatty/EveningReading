@@ -21,6 +21,14 @@ class ShackTags: NSObject, ObservableObject {
     var tagAction: () -> Void = {}
 }
 
+extension UITextView {
+    func textRangeFromNSRange(range:NSRange) -> UITextRange? {
+        let beginning = beginningOfDocument
+        guard let start = position(from: beginning, offset: range.location), let end = position(from: start, offset: range.length) else { return nil }
+        return textRange(from: start, to: end)
+    }
+}
+
 struct ShackTagsTextView: UIViewRepresentable {
     
     @Binding var text: String
@@ -112,14 +120,23 @@ class TagMenuItemTextView: UITextView {
                             ShackTags.shared.tagWith.insert(";", at: index)
                             let result = ShackTags.shared.tagWith.split(separator: ";")
                             let tagBegin = result[0]
-                            let tagEnd = result[1] + " "
+                            let tagEnd = result[1]
                             
                             // Insert tag text
+                            let selectedLocation = self.selectedRange.location
+                            let selectedLength = self.selectedRange.length
                             let indexStart = self.text.index(self.text.startIndex, offsetBy: self.selectedRange.location)
-                            let indexEnd = self.text.index(self.text.startIndex, offsetBy: self.selectedRange.location + self.selectedRange.length)
+                            let indexEnd = self.text.index(self.text.startIndex, offsetBy: self.selectedRange.location + self.selectedRange.length - 1)
                             let range = indexStart...indexEnd
                             let taggedText = tagBegin + selectedText + tagEnd
                             self.text.replaceSubrange(range, with: taggedText)
+                            
+                            // Move cursor
+                            print("location = \(selectedLocation) and length = \(selectedLength)")
+                            if let positionStart = self.position(from: self.beginningOfDocument, offset: selectedLocation), let positionEnd = self.position(from: self.beginningOfDocument, offset: selectedLocation + selectedLength + 4) {
+                                print("setting cursor position")
+                                self.selectedTextRange = self.textRange(from: positionStart, to: positionEnd)
+                            }
                         }
                     }
                 }

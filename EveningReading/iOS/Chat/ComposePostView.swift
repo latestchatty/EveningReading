@@ -201,6 +201,7 @@ struct ComposePostView: View {
                                     self.showingLoading = false
                                     self.uploadImageFail = false
                                     self.showingComposeSheet = false
+                                    self.showingTagMenu = false
                                 }
                             }
                             
@@ -208,7 +209,7 @@ struct ComposePostView: View {
 
                             // Imgur Button
                             Button(action: {
-                                if self.showingLoading {
+                                if self.showingLoading || self.showingTagMenu {
                                     return
                                 }
                                 DispatchQueue.main.async {
@@ -231,7 +232,7 @@ struct ComposePostView: View {
                             
                             // Submit Post
                             Button("Submit") {
-                                if self.showingLoading {
+                                if self.showingLoading || self.postBody.count < 5 || self.showingTagMenu {
                                     return
                                 }
                                 withAnimation(.easeIn(duration: 0.05)) {
@@ -361,7 +362,6 @@ struct ComposePostView: View {
             // Tag text
             .onReceive(self.shackTags.$doTagText) { value in
                 if value {
-                    print("doTagText")
                     self.showingTagMenu = true
                 }
             }
