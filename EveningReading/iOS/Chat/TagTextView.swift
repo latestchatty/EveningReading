@@ -69,7 +69,7 @@ struct TagTextView: View {
                             Text("Italic")
                                 .bold()
                                 .italic()
-                                .foregroundColor(.white)
+                                .foregroundColor(.primary)
                         }
                         .frame(width: 60, height: 30)
                         .foregroundColor(.white)
@@ -83,7 +83,7 @@ struct TagTextView: View {
                         }) {
                             Text("Bold")
                                 .bold()
-                                .foregroundColor(.white)
+                                .foregroundColor(.primary)
                         }
                         .frame(width: 60, height: 30)
                         .foregroundColor(.white)
@@ -98,7 +98,7 @@ struct TagTextView: View {
                             Text("Under")
                                 .bold()
                                 .underline()
-                                .foregroundColor(.white)
+                                .foregroundColor(.primary)
                         }
                         .frame(width: 60, height: 30)
                         .foregroundColor(.white)
@@ -112,7 +112,7 @@ struct TagTextView: View {
                         }) {
                             Text("Quote")
                                 .bold()
-                                .foregroundColor(.white)
+                                .foregroundColor(.primary)
                         }
                         .frame(width: 60, height: 30)
                         .foregroundColor(.white)
@@ -128,7 +128,7 @@ struct TagTextView: View {
                         }) {
                             Text("Code")
                                 .bold()
-                                .foregroundColor(.white)
+                                .foregroundColor(.primary)
                         }
                         .frame(width: 60, height: 30)
                         .foregroundColor(.white)
@@ -142,7 +142,7 @@ struct TagTextView: View {
                         }) {
                             Text("Sample")
                                 .bold()
-                                .foregroundColor(.white)
+                                .foregroundColor(.primary)
                         }
                         .frame(width: 60, height: 30)
                         .foregroundColor(.white)
@@ -157,7 +157,7 @@ struct TagTextView: View {
                             Text("Strike")
                                 .bold()
                                 .strikethrough()
-                                .foregroundColor(.white)
+                                .foregroundColor(.primary)
                         }
                         .frame(width: 60, height: 30)
                         .foregroundColor(.white)
@@ -171,7 +171,7 @@ struct TagTextView: View {
                         }) {
                             Text("Spoiler")
                                 .bold()
-                                .foregroundColor(.white)
+                                .foregroundColor(.primary)
                         }
                         .frame(width: 60, height: 30)
                         .foregroundColor(.white)
@@ -191,7 +191,7 @@ struct TagTextView: View {
                 }) {
                     Text("Cancel")
                         .bold()
-                        .foregroundColor(.white)
+                        .foregroundColor(.primary)
                 }
                 .frame(width: 260, height: 30)
                 .foregroundColor(.white)

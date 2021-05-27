@@ -359,11 +359,16 @@ struct ComposePostView: View {
                 }
             }
 
-            // Tag text
+            // Tag some text
             .onReceive(self.shackTags.$doTagText) { value in
                 if value {
                     self.showingTagMenu = true
                 }
+            }
+            
+            // Hide TagTextView
+            .onAppear() {
+                self.showingTagMenu = false
             }
             
             // Button style is different depending on context
