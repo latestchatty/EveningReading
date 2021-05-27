@@ -128,13 +128,15 @@ class TagMenuItemTextView: UITextView {
                             let selectedLength = self.selectedRange.length
                             let indexStart = self.text.index(self.text.startIndex, offsetBy: self.selectedRange.location)
                             let indexEnd = self.text.index(self.text.startIndex, offsetBy: self.selectedRange.location + self.selectedRange.length - 1)
-                            let range = indexStart...indexEnd
-                            let taggedText = tagBegin + selectedText + tagEnd
-                            self.text.replaceSubrange(range, with: taggedText)
-                            
-                            // Update the currently selected text
-                            if let positionStart = self.position(from: self.beginningOfDocument, offset: selectedLocation), let positionEnd = self.position(from: self.beginningOfDocument, offset: selectedLocation + selectedLength + 4) {
-                                self.selectedTextRange = self.textRange(from: positionStart, to: positionEnd)
+                            if indexStart <= indexEnd {
+                                let range = indexStart...indexEnd
+                                let taggedText = tagBegin + selectedText + tagEnd
+                                self.text.replaceSubrange(range, with: taggedText)
+                                 
+                                // Update the currently selected text
+                                if let positionStart = self.position(from: self.beginningOfDocument, offset: selectedLocation), let positionEnd = self.position(from: self.beginningOfDocument, offset: selectedLocation + selectedLength + 4) {
+                                    self.selectedTextRange = self.textRange(from: positionStart, to: positionEnd)
+                                }
                             }
                         }
                     }
