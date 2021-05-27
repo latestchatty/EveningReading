@@ -21,14 +21,6 @@ class ShackTags: NSObject, ObservableObject {
     var tagAction: () -> Void = {}
 }
 
-extension UITextView {
-    func textRangeFromNSRange(range:NSRange) -> UITextRange? {
-        let beginning = beginningOfDocument
-        guard let start = position(from: beginning, offset: range.location), let end = position(from: start, offset: range.length) else { return nil }
-        return textRange(from: start, to: end)
-    }
-}
-
 struct ShackTagsTextView: UIViewRepresentable {
     
     @Binding var text: String
