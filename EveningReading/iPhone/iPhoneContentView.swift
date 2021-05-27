@@ -14,23 +14,14 @@ struct iPhoneContentView: View {
     @EnvironmentObject var articleStore: ArticleStore
     @EnvironmentObject var messageStore: MessageStore
     @EnvironmentObject var notifications: Notifications
-    //@EnvironmentObject var notificationStore: NotificationStore
+    @EnvironmentObject var shackTags: ShackTags
     
     @State private var showingGuidelinesView = false
-    @State private var showingPost: Bool = false
     
     var body: some View {
         NavigationView {
             ScrollView {
                 VStack {
-                    
-                    /*
-                    // Push thread detail view
-                    NavigationLink(destination: ThreadDetailView(threadId: .constant(0), postId: $appSessionStore.showingPostId, replyCount: .constant(-1), isSearchResult: .constant(true)), isActive: self.$showingPost) {
-                        EmptyView()
-                    }.isDetailLink(false).hidden().allowsHitTesting(false)
-                    */
-                    
                     GoToPostViewHome()
                     GuidelinesView(showingGuidelinesView: $showingGuidelinesView)
                     .onAppear() {
@@ -39,19 +30,7 @@ struct iPhoneContentView: View {
                             let guidelinesAccepted = defaults.object(forKey: "GuidelinesAccepted") as? Bool ?? false
                             self.showingGuidelinesView = !guidelinesAccepted
                         }
-                        
-                        // Respond to push notification
                         appSessionStore.currentViewName = "HomeView"
-                        /*
-                        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5)) {
-                            print("showingPost =  \(appSessionStore.showingPost.description)")
-                            if appSessionStore.showingPost {
-                                print("will show post")
-                                self.showingPost = true
-                            }
-                        }
-                        */
-                        
                     }
                     iPhoneHomeButtons()
                         .environmentObject(appSessionStore)
@@ -92,6 +71,6 @@ struct iPhoneContentView_Previews: PreviewProvider {
             .environmentObject(ArticleStore(service: ArticleService()))
             .environmentObject(MessageStore(service: MessageService()))
             .environmentObject(Notifications())
-            //.environmentObject(NotificationStore(service: NotificationService()))
+            .environmentObject(ShackTags())
     }
 }

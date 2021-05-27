@@ -14,7 +14,7 @@ struct iPadContentView: View {
     @EnvironmentObject var articleStore: ArticleStore
     @EnvironmentObject var messageStore: MessageStore
     @EnvironmentObject var notifications: Notifications
-    //@EnvironmentObject var notificationStore: NotificationStore
+    @EnvironmentObject var shackTags: ShackTags
     
     @State private var showingGuidelinesView = false
     
@@ -31,6 +31,7 @@ struct iPadContentView: View {
                                 let guidelinesAccepted = defaults.object(forKey: "GuidelinesAccepted") as? Bool ?? false
                                 self.showingGuidelinesView = !guidelinesAccepted
                             }
+                            appSessionStore.currentViewName = "HomeView"
                         }
                         iPadHomeButtons()
                             .environmentObject(appSessionStore)
@@ -64,6 +65,6 @@ struct iPadContentView_Previews: PreviewProvider {
             .environmentObject(ArticleStore(service: ArticleService()))
             .environmentObject(MessageStore(service: MessageService()))
             .environmentObject(Notifications())
-            //.environmentObject(NotificationStore(service: NotificationService()))
+            .environmentObject(ShackTags())
     }
 }

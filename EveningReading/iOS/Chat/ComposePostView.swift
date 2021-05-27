@@ -13,6 +13,7 @@ struct ComposePostView: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var shackTags: ShackTags
     
     public var isRootPost: Bool = false
     public var postId: Int = 0
@@ -31,6 +32,8 @@ struct ComposePostView: View {
 
     @State private var showingSubmitAlert = false
     @State private var showingSubmitError = false
+    
+    @State private var showingTagMenu = false
     
     private func submitPost() {
         self.loadingMessage = "Submitting"
@@ -246,11 +249,11 @@ struct ComposePostView: View {
                     
                     // TextEditor
                     ZStack {
-                        TextView(text: self.$postBody, textStyle: self.$postStyle)
+                        ShackTagsTextView(text: self.$postBody, textStyle: self.$postStyle, doTagText: self.$showingTagMenu)
                             .border(Color(UIColor.systemGray5))
-                            .cornerRadius(4.0)
                             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                             .padding(EdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5))
+
                         /*
                         // no way to change the background yet :(
                         if appSessionStore.isDarkMode {
@@ -278,7 +281,7 @@ struct ComposePostView: View {
                         // Loading indicator
                         LoadingView(show: self.$showingLoading, title: self.$loadingMessage)
                         
-                        // Block the text editor
+                        // Dim the text editor
                         if self.showingLoading || self.showingSubmitAlert {
                             Rectangle()
                                 .fill(Color(UIColor.systemGray))
@@ -287,6 +290,9 @@ struct ComposePostView: View {
                                 .cornerRadius(5)
                                 .opacity(0.1)
                         }
+                        
+                        // Shack tags
+                        TagTextView(shown: self.$showingTagMenu)
                         
                         // Can't show a real alert on top of a sheet
                         AlertView(shown: self.$showingSubmitAlert, alertAction: .constant(.others), message: "Submit post?", cancelOnly: false, confirmAction: {
@@ -351,6 +357,14 @@ struct ComposePostView: View {
                     }
                 }
             }
+
+            // Tag text
+            .onReceive(self.shackTags.$doTagText) { value in
+                if value {
+                    print("doTagText")
+                    self.showingTagMenu = true
+                }
+            }
             
             // Button style is different depending on context
             if self.appSessionStore.isSignedIn || ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil {
@@ -382,5 +396,6 @@ struct ComposePostView_Previews: PreviewProvider {
         ComposePostView(isRootPost: false)
             .environmentObject(AppSessionStore(service: AuthService()))
             .environmentObject(ChatStore(service: ChatService()))
+            .environmentObject(ShackTags())
     }
 }

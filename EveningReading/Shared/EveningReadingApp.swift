@@ -20,6 +20,7 @@ struct EveningReadingApp: App {
     #if os(iOS)
     @StateObject var notifications = Notifications.shared //Notifications()
     @UIApplicationDelegateAdaptor private var appDelegate: AppDelegate
+    @StateObject var shackTags = ShackTags.shared
     #endif
     
     var body: some Scene {
@@ -32,6 +33,7 @@ struct EveningReadingApp: App {
                     .environmentObject(articleStore)
                     .environmentObject(messageStore)
                     .environmentObject(notifications)
+                    .environmentObject(shackTags)
                     .preferredColorScheme(appSessionStore.isDarkMode ? .dark : .light)
 
             } else {
@@ -41,6 +43,7 @@ struct EveningReadingApp: App {
                     .environmentObject(articleStore)
                     .environmentObject(messageStore)
                     .environmentObject(notifications)
+                    .environmentObject(shackTags)
                     .preferredColorScheme(appSessionStore.isDarkMode ? .dark : .light)
             }
             #else
