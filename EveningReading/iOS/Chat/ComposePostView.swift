@@ -46,9 +46,17 @@ struct ComposePostView: View {
             self.chatStore.didGetThreadStart = true
         }
 
+        // Grab the text for the body from ShackTags if it exists
+        var body = self.postBody
+        if ShackTags.shared.taggedText != "" {
+            self.postBody = ShackTags.shared.taggedText
+            body = ShackTags.shared.taggedText
+        }
+        
         // Let the loading indicator show for at least a short time
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(200)) {
-            self.chatStore.submitPost(postBody: self.postBody, postId: self.postId)
+            self.chatStore.submitPost(postBody: body, postId: self.postId)
+            ShackTags.shared.taggedText = ""
         }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(8)) {

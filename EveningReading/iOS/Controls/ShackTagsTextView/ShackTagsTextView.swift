@@ -18,6 +18,7 @@ class ShackTags: NSObject, ObservableObject {
     
     @Published var doTagText: Bool = false
     @Published var tagWith: String = ""
+    @Published var taggedText: String = ""
     var tagAction: () -> Void = {}
 }
 
@@ -41,7 +42,11 @@ struct ShackTagsTextView: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: UITextView, context: Context) {
-        uiView.text = text
+        if ShackTags.shared.taggedText != "" {
+            uiView.text = ShackTags.shared.taggedText
+        } else {
+            uiView.text = text
+        }
         uiView.font = UIFont.preferredFont(forTextStyle: textStyle)
     }
     
@@ -119,6 +124,9 @@ class TagMenuItemTextView: UITextView {
                                 let taggedText = tagBegin + selectedText + tagEnd
                                 self.text.replaceSubrange(range, with: taggedText)
                                  
+                                // Store the tagged text
+                                ShackTags.shared.taggedText = self.text
+                                
                                 // Update the currently selected text
                                 if let positionStart = self.position(from: self.beginningOfDocument, offset: selectedLocation), let positionEnd = self.position(from: self.beginningOfDocument, offset: selectedLocation + selectedLength + 4) {
                                     self.selectedTextRange = self.textRange(from: positionStart, to: positionEnd)
