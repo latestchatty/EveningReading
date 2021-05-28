@@ -11,10 +11,12 @@ struct ChatView: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var chatStore: ChatStore
-    
-    //@State private var rootPosts: [ChatPosts] = [ChatPosts]()
-    
+
     @State private var isGettingChat: Bool = false
+
+    //@State private var rootPosts: [ChatPosts] = [ChatPosts]()
+
+    //@State private var isPushNotificationAlertShowing: Bool = false
     
     private func filteredThreads() -> [ChatThread] {
         if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
@@ -36,8 +38,6 @@ struct ChatView: View {
         }
     }
     */
-    
-    //@State private var isPushAlertShowing: Bool = false
     
     var body: some View {
         VStack {
@@ -65,7 +65,7 @@ struct ChatView: View {
                 }.id(9999999999993)
                 
             }
-            //.overlay(PushNotificationView(isAlertShowing: self.$isPushAlertShowing))
+            //.overlay(PushNotificationView(isAlertShowing: self.$isPushNotificationAlertShowing))
 
         }
         

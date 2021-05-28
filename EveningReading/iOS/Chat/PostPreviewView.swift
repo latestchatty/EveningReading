@@ -50,7 +50,7 @@ struct PostPreviewView: View {
                     .foregroundColor(Color(UIColor.systemBlue))
             }
             
-            // One line preview of body
+            // One line preview of post body
             Text(appSessionStore.blockedAuthors.contains(self.postAuthor) ? "[blocked]" : self.postBody.getPreview)
                 .fontWeight(postStrength != nil ? PostWeight[postStrength!] : .regular)
                 .lineLimit(1)
