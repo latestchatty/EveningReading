@@ -55,7 +55,9 @@ struct EveningReadingApp: App {
         }
         .onChange(of: phase) { newPhase in
             if newPhase == .active {
+                #if os(iOS)
                 UIApplication.shared.applicationIconBadgeNumber = 0
+                #endif
             }
         }
         /*
