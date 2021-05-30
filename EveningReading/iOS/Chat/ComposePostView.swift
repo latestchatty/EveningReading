@@ -378,7 +378,8 @@ struct ComposePostView: View {
                     self.showingTagMenu = true
                 }
             }
-                
+            
+            // If shack tags were added
             .onReceive(ShackTags.shared.$taggedText) { value in
                 if value != "" {
                     self.postBody = value
