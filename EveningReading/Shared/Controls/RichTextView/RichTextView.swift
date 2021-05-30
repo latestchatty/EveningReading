@@ -175,16 +175,24 @@ struct LinkView: View {
         // Better Safari View
         //.safariView(isPresented: self.$showingSafariSheet) {
         .sheet(isPresented: self.$showingSafariSheet) {
-            SafariView(
-                url: URL(string: self.hyperlink)!,
-                configuration: SafariView.Configuration(
-                    entersReaderIfAvailable: false,
-                    barCollapsingEnabled: true
+            VStack {
+                RoundedRectangle(cornerRadius: 8)
+                    .foregroundColor(Color(UIColor.systemFill))
+                    .frame(width: 40, height: 5)
+                    .cornerRadius(3)
+                    .opacity(0.5)
+                    .padding(.top, 8)
+                SafariView(
+                    url: URL(string: self.hyperlink)!,
+                    configuration: SafariView.Configuration(
+                        entersReaderIfAvailable: false,
+                        barCollapsingEnabled: true
+                    )
                 )
-            )
-            .preferredBarAccentColor(.clear)
-            .preferredControlAccentColor(.accentColor)
-            .dismissButtonStyle(.done)
+                .preferredBarAccentColor(.clear)
+                .preferredControlAccentColor(.accentColor)
+                .dismissButtonStyle(.done)
+            }
         }
         
         
