@@ -206,6 +206,7 @@ struct ComposePostView: View {
                                     chatStore.submitPostSuccessMessage = ""
                                     chatStore.submitPostErrorMessage = ""
                                     self.postBody = ""
+                                    ShackTags.shared.taggedText = ""
                                     self.showingLoading = false
                                     self.uploadImageFail = false
                                     self.showingComposeSheet = false
