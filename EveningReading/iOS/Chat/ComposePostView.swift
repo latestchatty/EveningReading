@@ -48,10 +48,12 @@ struct ComposePostView: View {
 
         // Grab the text for the body from ShackTags if it exists
         var body = self.postBody
+        /*
         if ShackTags.shared.taggedText != "" {
             self.postBody = ShackTags.shared.taggedText
             body = ShackTags.shared.taggedText
         }
+        */
         
         // Let the loading indicator show for at least a short time
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(200)) {
@@ -178,7 +180,7 @@ struct ComposePostView: View {
             Spacer().frame(width: 0, height: 0)
 
             // Compose Post Sheet
-                .sheet(isPresented: self.$showingComposeSheet,
+            .sheet(isPresented: self.$showingComposeSheet,
                onDismiss: {
                     print("Modal Dismissed")
                }) {
@@ -218,6 +220,7 @@ struct ComposePostView: View {
 
                             // Imgur Button
                             Button(action: {
+                                print("got here")
                                 if self.showingLoading || self.showingTagMenu {
                                     return
                                 }
@@ -317,8 +320,8 @@ struct ComposePostView: View {
                     }
                     Spacer()                    
                 }
-                .allowAutoDismiss { false }
-                //.background(appSessionStore.isDarkMode ? Color("PrimaryBackgroundDarkMode").frame(height: 2600).offset(y: -80) : Color.clear.frame(height: 2600).offset(y: -80))
+                //.allowAutoDismiss { false }
+                .background(appSessionStore.isDarkMode ? Color("PrimaryBackgroundDarkMode").frame(height: 2600).offset(y: -80) : Color.clear.frame(height: 2600).offset(y: -80))
             }
             // End Compose Post Sheet
             
@@ -373,6 +376,12 @@ struct ComposePostView: View {
             .onReceive(self.shackTags.$doTagText) { value in
                 if value {
                     self.showingTagMenu = true
+                }
+            }
+                
+            .onReceive(ShackTags.shared.$taggedText) { value in
+                if value != "" {
+                    self.postBody = value
                 }
             }
             

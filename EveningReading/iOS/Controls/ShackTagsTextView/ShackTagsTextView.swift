@@ -42,11 +42,7 @@ struct ShackTagsTextView: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: UITextView, context: Context) {
-        if ShackTags.shared.taggedText != "" {
-            uiView.text = ShackTags.shared.taggedText
-        } else {
-            uiView.text = text
-        }
+        uiView.text = text
         uiView.font = UIFont.preferredFont(forTextStyle: textStyle)
     }
     
