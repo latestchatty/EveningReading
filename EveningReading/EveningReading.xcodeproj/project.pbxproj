@@ -131,6 +131,7 @@
 		83A85D28265BBC98007EBAC3 /* GoToPostViewHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A85D27265BBC98007EBAC3 /* GoToPostViewHome.swift */; };
 		83A85D48265EC177007EBAC3 /* ShackTagsTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A85D47265EC177007EBAC3 /* ShackTagsTextView.swift */; };
 		83A85D4A265EE813007EBAC3 /* TagTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A85D49265EE813007EBAC3 /* TagTextView.swift */; };
+		83A85D4D2663C128007EBAC3 /* MbModalHackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A85D4C2663C128007EBAC3 /* MbModalHackView.swift */; };
 		83AA19272645C43500556E69 /* PostDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19262645C43500556E69 /* PostDecorator.swift */; };
 		83AA19282645C43500556E69 /* PostDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19262645C43500556E69 /* PostDecorator.swift */; };
 		83AA19292645C43500556E69 /* PostDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19262645C43500556E69 /* PostDecorator.swift */; };
@@ -331,6 +332,7 @@
 		83A85D27265BBC98007EBAC3 /* GoToPostViewHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoToPostViewHome.swift; sourceTree = "<group>"; };
 		83A85D47265EC177007EBAC3 /* ShackTagsTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShackTagsTextView.swift; sourceTree = "<group>"; };
 		83A85D49265EE813007EBAC3 /* TagTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagTextView.swift; sourceTree = "<group>"; };
+		83A85D4C2663C128007EBAC3 /* MbModalHackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MbModalHackView.swift; sourceTree = "<group>"; };
 		83AA19262645C43500556E69 /* PostDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDecorator.swift; sourceTree = "<group>"; };
 		83AA19312645E36600556E69 /* RefreshNoticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshNoticeView.swift; sourceTree = "<group>"; };
 		83AA19352645F4A700556E69 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
@@ -888,6 +890,14 @@
 			path = ShackTagsTextView;
 			sourceTree = "<group>";
 		};
+		83A85D4B2663C11E007EBAC3 /* MbModalHackView */ = {
+			isa = PBXGroup;
+			children = (
+				83A85D4C2663C128007EBAC3 /* MbModalHackView.swift */,
+			);
+			path = MbModalHackView;
+			sourceTree = "<group>";
+		};
 		83AA19452646308C00556E69 /* Guidelines */ = {
 			isa = PBXGroup;
 			children = (
@@ -907,6 +917,7 @@
 		83AA195426464FA600556E69 /* Controls */ = {
 			isa = PBXGroup;
 			children = (
+				83A85D4B2663C11E007EBAC3 /* MbModalHackView */,
 				83A85D46265EC16E007EBAC3 /* ShackTagsTextView */,
 				8339816D2640588B005614E8 /* RefreshableScrollView */,
 				83AA19D1264ADDE900556E69 /* LinkViewer */,
@@ -1243,6 +1254,7 @@
 				83A85CEB26515CBB007EBAC3 /* PushNotificationView.swift in Sources */,
 				83A85CF726558FB5007EBAC3 /* NotificationsClearView.swift in Sources */,
 				8339811E263F288D005614E8 /* ArticleCard.swift in Sources */,
+				83A85D4D2663C128007EBAC3 /* MbModalHackView.swift in Sources */,
 				83398143263F526A005614E8 /* iPadHomeButtons.swift in Sources */,
 				833EE9E426454DFB00345A1D /* WebAuthenticationSession.swift in Sources */,
 				833980EB263F07DC005614E8 /* iPhoneHomeButton.swift in Sources */,

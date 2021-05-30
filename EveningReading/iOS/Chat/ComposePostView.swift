@@ -316,7 +316,8 @@ struct ComposePostView: View {
                     }
                     Spacer()                    
                 }
-                .background(appSessionStore.isDarkMode ? Color("PrimaryBackgroundDarkMode").frame(height: 2600).offset(y: -80) : Color.clear.frame(height: 2600).offset(y: -80))
+                .allowAutoDismiss { false }
+                //.background(appSessionStore.isDarkMode ? Color("PrimaryBackgroundDarkMode").frame(height: 2600).offset(y: -80) : Color.clear.frame(height: 2600).offset(y: -80))
             }
             // End Compose Post Sheet
             
