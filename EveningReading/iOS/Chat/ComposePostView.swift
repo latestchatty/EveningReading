@@ -46,18 +46,9 @@ struct ComposePostView: View {
             self.chatStore.didGetThreadStart = true
         }
 
-        // Grab the text for the body from ShackTags if it exists
-        var body = self.postBody
-        /*
-        if ShackTags.shared.taggedText != "" {
-            self.postBody = ShackTags.shared.taggedText
-            body = ShackTags.shared.taggedText
-        }
-        */
-        
         // Let the loading indicator show for at least a short time
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(200)) {
-            self.chatStore.submitPost(postBody: body, postId: self.postId)
+            self.chatStore.submitPost(postBody: self.postBody, postId: self.postId)
             ShackTags.shared.taggedText = ""
         }
         
@@ -328,9 +319,7 @@ struct ComposePostView: View {
             // Image Picker Sheet
             .sheet(isPresented: $showingImageSheet,
                    onDismiss: {
-                        print("Image Sheet Dismissed")
                         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(20)) {
-                            print("show composing sheet")
                             self.showingComposeSheet = true
                             if self.uploadImage != nil {
                                 uploadImageToImgur(image: self.uploadImage!)
