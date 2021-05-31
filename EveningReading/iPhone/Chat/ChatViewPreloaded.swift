@@ -1,18 +1,26 @@
 //
-//  ChatView.swift
-//  EveningReading
+//  ChatViewPreloaded.swift
+//  EveningReading (iOS)
 //
-//  Created by Chris Hodge on 5/2/21.
+//  Created by Chris Hodge on 5/31/21.
 //
 
 import SwiftUI
 
-struct ChatView: View {
+struct ChatViewPreloaded: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var chatStore: ChatStore
 
     @State private var isGettingChat: Bool = false
+    
+    @State private var username: String = ""
+
+    @State private var rootPosts: [ChatPosts] = [ChatPosts]()
+    @State private var rootPostsBody: [Int : String] = [:]
+    @State private var rootPostsDate: [Int : Double] = [:]
+    @State private var rootPostsReplyCount: [Int : Int] = [:]
+    @State private var rootPostsContributed: [Int : Bool] = [:]
 
     //@State private var isPushNotificationAlertShowing: Bool = false
     
@@ -25,6 +33,31 @@ struct ChatView: View {
         return Array(threads)
     }
     
+    private func getRootPostData() {
+        rootPosts.removeAll()
+        rootPostsBody.removeAll()
+        rootPostsDate.removeAll()
+        rootPostsReplyCount.removeAll()
+        rootPostsContributed.removeAll()
+        
+        let threads = chatStore.threads.filter({ return self.appSessionStore.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !self.appSessionStore.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
+        
+        for thread in threads {
+            if let rootPost = thread.posts.filter({ return $0.parentId == 0 }).first {
+                rootPosts.append(rootPost)
+                rootPostsBody[rootPost.id] = rootPost.body.getPreview
+                rootPostsDate[rootPost.id] = rootPost.date.getTimeRemaining()
+                rootPostsReplyCount[rootPost.id] = thread.posts.count - 1
+                rootPostsContributed[rootPost.id] = PostDecorator.checkParticipatedStatus(thread: thread, author: rootPost.author)
+            }
+        }
+    }
+    
+    private func getUserData() {
+        let user: String? = KeychainWrapper.standard.string(forKey: "Username")
+        self.username = user ?? ""
+    }
+
     var body: some View {
         VStack {
             
@@ -38,11 +71,20 @@ struct ChatView: View {
                     Spacer().frame(maxWidth: .infinity).frame(height: 1)
                 }.id(9999999999991)
                 
+                /*
                 // All non-hidden threads
                 ForEach(filteredThreads(), id: \.threadId) { thread in
                     ThreadRow(threadId: .constant(thread.threadId), activeThreadId: .constant(0))
                         .padding(.bottom, -25)
                         .id(thread.threadId)
+                }
+                */
+                
+                // All non-hidden threads
+                ForEach(rootPosts, id: \.self) { post in
+                    ThreadPreviewView(activeThreadId: .constant(0), rootPost: post, rootPostBodyPreview: rootPostsBody[post.id] ?? "", rootPostDate: rootPostsDate[post.id] ?? 0, replyCount: rootPostsReplyCount[post.id] ?? 0, contributed: rootPostsContributed[post.id] ?? false)
+                        .padding(.bottom, -25)
+                        .id(post.threadId)
                 }
                 
                 // Scroll to bottom / padding
@@ -82,6 +124,7 @@ struct ChatView: View {
         // Finished getting chat data
         .onReceive(chatStore.$didGetChatFinish) { value in
             self.isGettingChat = false
+            getRootPostData()
         }
         
         // Disable while getting new data
@@ -90,6 +133,7 @@ struct ChatView: View {
         // Reset active thread on iPhone
         .onAppear() {
             appSessionStore.currentViewName = "ChatView"
+            getUserData()
             if UIDevice.current.userInterfaceIdiom == .phone {
                 chatStore.activeThreadId = 0
             }
@@ -97,9 +141,9 @@ struct ChatView: View {
     }
 }
 
-struct ChatView_Previews: PreviewProvider {
+struct ChatViewPreloaded_Previews: PreviewProvider {
     static var previews: some View {
-        ChatView()
+        ChatViewPreloaded()
             .environment(\.colorScheme, .dark)
             .environmentObject(AppSessionStore(service: AuthService()))
             .environmentObject(ChatStore(service: ChatService()))

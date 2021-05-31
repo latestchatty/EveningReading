@@ -171,8 +171,7 @@ struct GoToPostView: View {
             
             // Deep link to post from push notification
             .onReceive(notifications.$notificationData) { value in
-                print(".onReceive(notifications.$notificationData)")
-                
+
                 if let postId = value?.notification.request.content.userInfo["postid"], let body = value?.notification.request.content.body, let title = value?.notification.request.content.title {
                     //print("got postId \(postId), previously showed \(appSessionStore.showingPostId)")
                     if String("\(postId)").isInt && appSessionStore.showingPostId != Int(String("\(postId)")) ?? 0 {
@@ -203,7 +202,7 @@ struct GoToPostView: View {
                         //if appSessionStore.currentViewName == self.currentViewName {
                             appSessionStore.showingPost = true
                             DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
-                                print("going to home screen")
+                                // go to home screen
                                 appSessionStore.showingChatView = false
                             }
                         //}

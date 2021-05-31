@@ -132,6 +132,8 @@
 		83A85D48265EC177007EBAC3 /* ShackTagsTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A85D47265EC177007EBAC3 /* ShackTagsTextView.swift */; };
 		83A85D4A265EE813007EBAC3 /* TagTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A85D49265EE813007EBAC3 /* TagTextView.swift */; };
 		83A85D4D2663C128007EBAC3 /* MbModalHackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A85D4C2663C128007EBAC3 /* MbModalHackView.swift */; };
+		83A85D512665084A007EBAC3 /* ThreadPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A85D5026650849007EBAC3 /* ThreadPreviewView.swift */; };
+		83A85D5326651638007EBAC3 /* ChatViewPreloaded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A85D5226651638007EBAC3 /* ChatViewPreloaded.swift */; };
 		83AA19272645C43500556E69 /* PostDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19262645C43500556E69 /* PostDecorator.swift */; };
 		83AA19282645C43500556E69 /* PostDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19262645C43500556E69 /* PostDecorator.swift */; };
 		83AA19292645C43500556E69 /* PostDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19262645C43500556E69 /* PostDecorator.swift */; };
@@ -333,6 +335,8 @@
 		83A85D47265EC177007EBAC3 /* ShackTagsTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShackTagsTextView.swift; sourceTree = "<group>"; };
 		83A85D49265EE813007EBAC3 /* TagTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagTextView.swift; sourceTree = "<group>"; };
 		83A85D4C2663C128007EBAC3 /* MbModalHackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MbModalHackView.swift; sourceTree = "<group>"; };
+		83A85D5026650849007EBAC3 /* ThreadPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadPreviewView.swift; sourceTree = "<group>"; };
+		83A85D5226651638007EBAC3 /* ChatViewPreloaded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewPreloaded.swift; sourceTree = "<group>"; };
 		83AA19262645C43500556E69 /* PostDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDecorator.swift; sourceTree = "<group>"; };
 		83AA19312645E36600556E69 /* RefreshNoticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshNoticeView.swift; sourceTree = "<group>"; };
 		83AA19352645F4A700556E69 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
@@ -604,6 +608,7 @@
 			isa = PBXGroup;
 			children = (
 				83398129263F2E60005614E8 /* ChatView.swift */,
+				83A85D5226651638007EBAC3 /* ChatViewPreloaded.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -807,6 +812,7 @@
 			isa = PBXGroup;
 			children = (
 				8339818026406402005614E8 /* ThreadRow.swift */,
+				83A85D5026650849007EBAC3 /* ThreadPreviewView.swift */,
 				8339817D264063E8005614E8 /* ThreadDetailView.swift */,
 				83AA19D7264B367100556E69 /* PostPreviewView.swift */,
 				83AA19D9264BFBF100556E69 /* PostExpandedView.swift */,
@@ -1212,6 +1218,7 @@
 				83AA19782646E49A00556E69 /* ComposePostView.swift in Sources */,
 				83398140263F525F005614E8 /* iPadHomeButton.swift in Sources */,
 				833980D0263C914D005614E8 /* iPadContentView.swift in Sources */,
+				83A85D512665084A007EBAC3 /* ThreadPreviewView.swift in Sources */,
 				83AA19712646DE7100556E69 /* TagPostView.swift in Sources */,
 				83AA19C4264870BC00556E69 /* ThreadNavigation.swift in Sources */,
 				8339811A263F26CA005614E8 /* PreviewService.swift in Sources */,
@@ -1241,6 +1248,7 @@
 				8339816F26405899005614E8 /* RefreshableScrollView.swift in Sources */,
 				83398124263F2E4E005614E8 /* SearchView.swift in Sources */,
 				8339812A263F2E60005614E8 /* ChatView.swift in Sources */,
+				83A85D5326651638007EBAC3 /* ChatViewPreloaded.swift in Sources */,
 				83AA19A0264821D100556E69 /* MessageService.swift in Sources */,
 				833980DF263CAB93005614E8 /* AppSessionStore.swift in Sources */,
 				8339818C264098D5005614E8 /* ReplyCountView.swift in Sources */,
