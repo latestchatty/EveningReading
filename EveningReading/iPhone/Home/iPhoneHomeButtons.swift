@@ -10,10 +10,15 @@ import SwiftUI
 struct iPhoneHomeButtons: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var messageStore: MessageStore
     
     private func navigateTo(_ goToDestination: inout Bool) {
         appSessionStore.resetNavigation()
         goToDestination = true
+    }
+    
+    private func getMessageCount() {
+        messageStore.getCount()
     }
     
     var body: some View {
@@ -28,8 +33,12 @@ struct iPhoneHomeButtons: View {
                 }
                 Spacer()
                 iPhoneHomeButton(title: .constant("Inbox"), imageName: .constant("glyphicons-basic-122-envelope-empty"), buttonBackground: .constant(Color("HomeButtonInbox")))
+                    .overlay(NewMessageBadgeView(notificationNumber: self.$messageStore.messageCount.unread), alignment: .top)
                 .onTapGesture(count: 1) {
                     navigateTo(&appSessionStore.showingInboxView)
+                }
+                .onAppear() {
+                    getMessageCount()
                 }
                 Spacer()
                 iPhoneHomeButton(title: .constant("Search"), imageName: .constant("glyphicons-basic-28-search"), buttonBackground: .constant(Color("HomeButtonSearch")))
@@ -83,5 +92,6 @@ struct iPhoneHomeButtons_Previews: PreviewProvider {
         iPhoneHomeButtons()
             .environmentObject(AppSessionStore(service: AuthService()))
             .environmentObject(ChatStore(service: ChatService()))
+            .environmentObject(MessageStore(service: MessageService()))
     }
 }
