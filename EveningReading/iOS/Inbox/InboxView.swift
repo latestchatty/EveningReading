@@ -88,14 +88,14 @@ struct InboxView: View {
                            }
                            HStack {
                                Spacer()
-                               ChatBubble(direction: .left, bgcolor: (message.unread && !self.messageStore.markedMessages.contains(message.id) ? Color("ChatBubbleSecondary") :  Color("ChatBubblePrimary"))) {
+                               ChatBubble(direction: .left, bgcolor: (message.unread && !self.messageStore.markedMessages.contains(message.id) ? Color("ChatBubblePrimaryUnread") :  Color("ChatBubblePrimary"))) {
                                    VStack(alignment: .leading) {
                                        HStack {
                                            Text(message.subject)
                                                .bold()
                                                .lineLimit(1)
                                                .font(.caption)
-                                               .foregroundColor(Color(UIColor.systemBlue))
+                                            .foregroundColor(message.unread && !self.messageStore.markedMessages.contains(message.id) ? Color(UIColor.systemYellow) :  Color(UIColor.systemBlue))
                                                .padding(.init(top: 20, leading: 20, bottom: 5, trailing: 20))
                                            Spacer()
                                            Image(systemName: "chevron.right")

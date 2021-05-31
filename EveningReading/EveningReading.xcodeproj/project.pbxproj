@@ -1519,7 +1519,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = EveningReading.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 76;
+				CURRENT_PROJECT_VERSION = 77;
 				DEVELOPMENT_TEAM = U3SY428MXR;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
@@ -1528,7 +1528,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.933;
+				MARKETING_VERSION = 1.934;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrishodge.eveningreading;
 				PRODUCT_NAME = EveningReading;
 				SDKROOT = iphoneos;
@@ -1544,7 +1544,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = EveningReading.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 76;
+				CURRENT_PROJECT_VERSION = 77;
 				DEVELOPMENT_TEAM = U3SY428MXR;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
@@ -1553,7 +1553,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.933;
+				MARKETING_VERSION = 1.934;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrishodge.eveningreading;
 				PRODUCT_NAME = EveningReading;
 				SDKROOT = iphoneos;
@@ -1571,7 +1571,7 @@
 				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 76;
+				CURRENT_PROJECT_VERSION = 77;
 				DEVELOPMENT_TEAM = U3SY428MXR;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -1581,7 +1581,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 1.933;
+				MARKETING_VERSION = 1.934;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrishodge.eveningreading;
 				PRODUCT_NAME = EveningReading;
 				SDKROOT = macosx;
@@ -1597,7 +1597,7 @@
 				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 76;
+				CURRENT_PROJECT_VERSION = 77;
 				DEVELOPMENT_TEAM = U3SY428MXR;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -1607,7 +1607,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 1.933;
+				MARKETING_VERSION = 1.934;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrishodge.eveningreading;
 				PRODUCT_NAME = EveningReading;
 				SDKROOT = macosx;
@@ -1622,11 +1622,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 76;
+				CURRENT_PROJECT_VERSION = 77;
 				DEVELOPMENT_TEAM = U3SY428MXR;
 				IBSC_MODULE = EveningReading_Extension;
 				INFOPLIST_FILE = EveningReading/Info.plist;
-				MARKETING_VERSION = 1.933;
+				MARKETING_VERSION = 1.934;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrishodge.eveningreading.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -1644,11 +1644,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 76;
+				CURRENT_PROJECT_VERSION = 77;
 				DEVELOPMENT_TEAM = U3SY428MXR;
 				IBSC_MODULE = EveningReading_Extension;
 				INFOPLIST_FILE = EveningReading/Info.plist;
-				MARKETING_VERSION = 1.933;
+				MARKETING_VERSION = 1.934;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrishodge.eveningreading.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -1664,7 +1664,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 76;
+				CURRENT_PROJECT_VERSION = 77;
 				DEVELOPMENT_ASSET_PATHS = "\"EveningReading Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = U3SY428MXR;
 				ENABLE_PREVIEWS = YES;
@@ -1674,7 +1674,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.933;
+				MARKETING_VERSION = 1.934;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrishodge.eveningreading.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
@@ -1689,7 +1689,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 76;
+				CURRENT_PROJECT_VERSION = 77;
 				DEVELOPMENT_ASSET_PATHS = "\"EveningReading Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = U3SY428MXR;
 				ENABLE_PREVIEWS = YES;
@@ -1699,7 +1699,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.933;
+				MARKETING_VERSION = 1.934;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrishodge.eveningreading.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
