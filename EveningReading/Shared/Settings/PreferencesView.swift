@@ -15,7 +15,6 @@ struct PreferencesView: View {
             Toggle(isOn: self.$appSessionStore.displayPostAuthor) {
                 Text("Display Authors")
             }
-            #endif
             Toggle(isOn: self.$appSessionStore.abbreviateThreads) {
                 Text("Abbreviate Threads")
             }
@@ -25,14 +24,13 @@ struct PreferencesView: View {
             Toggle(isOn: self.$appSessionStore.threadNavigation) {
                 Text("Thread Navigation")
             }
-            #if os(iOS)
             Toggle(isOn: self.$appSessionStore.useYoutubeApp) {
                 Text("Use YouTube App")
             }
+            #endif
             Toggle(isOn: self.$appSessionStore.disableAnimation) {
                 Text("Disable Animation")
             }
-            #endif
         }
     }
 }
