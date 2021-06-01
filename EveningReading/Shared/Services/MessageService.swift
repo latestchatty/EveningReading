@@ -346,7 +346,9 @@ class MessageStore: ObservableObject {
                     } else {
                         self?.messages.append(contentsOf: msgReponse.messages)
                     }
-                    
+                    DispatchQueue.main.async {
+                        self?.getCount()
+                    }
                 case .failure:
                     self?.messages = []
                     self?.fetchComplete = true
@@ -432,6 +434,9 @@ class MessageStore: ObservableObject {
                         // MessageService markMessage message marked
                     } else {
                         // MessageService markMessage message not marked
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+                        self?.getCount()
                     }
                 case .failure:
                     // MessageService markMessage failure
