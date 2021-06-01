@@ -10,10 +10,15 @@ import SwiftUI
 struct iPadHomeButtons: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var messageStore: MessageStore
     
     private func navigateTo(_ goToDestination: inout Bool) {
         appSessionStore.resetNavigation()
         goToDestination = true
+    }
+    
+    private func getMessageCount() {
+        messageStore.getCount()
     }
 
     var body: some View {
@@ -27,11 +32,16 @@ struct iPadHomeButtons: View {
                     navigateTo(&appSessionStore.showingChatView)
                 }
             
-            iPadHomeButton(title: .constant("Inbox"), imageName: .constant("glyphicons-basic-122-envelope-empty"), buttonBackground: .constant(Color("HomeButtonInbox")))
-                .onTapGesture(count: 1) {
-                    navigateTo(&appSessionStore.showingInboxView)
-                }
-            
+            GeometryReader { geometry in
+                iPadHomeButton(title: .constant("Inbox"), imageName: .constant("glyphicons-basic-122-envelope-empty"), buttonBackground: .constant(Color("HomeButtonInbox")))
+                    .overlay(NewMessageBadgeView(notificationNumber: self.$messageStore.messageCount.unread, width: geometry.size.width), alignment: .top)
+                    .onTapGesture(count: 1) {
+                        navigateTo(&appSessionStore.showingInboxView)
+                    }
+                    .onAppear() {
+                        getMessageCount()
+                    }
+            }
             iPadHomeButton(title: .constant("Search"), imageName: .constant("glyphicons-basic-28-search"), buttonBackground: .constant(Color("HomeButtonSearch")))
                 .onTapGesture(count: 1) {
                     navigateTo(&appSessionStore.showingSearchView)
@@ -82,5 +92,6 @@ struct iPadHomeButtons_Previews: PreviewProvider {
         iPadHomeButtons()
             .environmentObject(AppSessionStore(service: AuthService()))
             .environmentObject(ChatStore(service: ChatService()))
+            .environmentObject(MessageStore(service: MessageService()))
     }
 }

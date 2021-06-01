@@ -10,6 +10,7 @@ import SwiftUI
 struct NewMessageBadgeView: View {
     @ScaledMetric(relativeTo: .body) var imageSize: CGFloat = 24
     @Binding var notificationNumber: Int
+    var width: CGFloat = 0.0
     
     var body: some View {
         if notificationNumber > 0 {
@@ -24,15 +25,16 @@ struct NewMessageBadgeView: View {
                     .bold()
             }
             .padding(.top, -12)
-            .padding(.leading, 60)
+            .padding(.leading, width > 0 ? width - 25 : 60)
         } else {
             EmptyView()
         }
     }
 }
 
+
 struct NewMessageBadgeView_Previews: PreviewProvider {
     static var previews: some View {
-        NewMessageBadgeView(notificationNumber: Binding.constant(13))
+        NewMessageBadgeView(notificationNumber: Binding.constant(13), width: 0.0)
     }
 }
