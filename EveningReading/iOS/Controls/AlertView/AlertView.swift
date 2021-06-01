@@ -48,36 +48,35 @@ struct AlertView: View {
                                 .bold()
                                 .foregroundColor(Color(UIColor.link))
                         }
-                        .frame(width: 120, height: 30)
+                        .frame(width: 200, height: 30)
                         .foregroundColor(.white)
                     } else {
-                        Button(action: {
-                            alertAction = .cancel
-                            withAnimation(.easeOut(duration: 0.1)) {
-                                shown.toggle()
+                        Text("Cancel")
+                            .bold()
+                            .foregroundColor(Color(UIColor.link))
+                            .frame(width: 120, height: 30)
+                            .contentShape(Rectangle())
+                            .onTapGesture(count: 1) {
+                                alertAction = .cancel
+                                withAnimation(.easeOut(duration: 0.1)) {
+                                    shown.toggle()
+                                }
                             }
-                        }) {
-                            Text("Cancel")
-                                .bold()
-                                .foregroundColor(Color(UIColor.link))
-                        }
-                        .frame(width: 120, height: 30)
-                        .foregroundColor(.white)
                         Rectangle()
                             .fill(Color(UIColor.systemGray2))
                             .frame(width: 1)
-                        Button(action: {
-                            alertAction = .ok
-                            confirmAction()
-                            withAnimation(.easeOut(duration: 0.1)) {
-                                shown.toggle()
+                        Text("Yes")
+                            .bold()
+                            .foregroundColor(Color(UIColor.link))
+                            .frame(width: 120, height: 30)
+                            .contentShape(Rectangle())
+                            .onTapGesture(count: 1) {
+                                alertAction = .ok
+                                confirmAction()
+                                withAnimation(.easeOut(duration: 0.1)) {
+                                    shown.toggle()
+                                }
                             }
-                        }) {
-                            Text("Yes")
-                                .foregroundColor(Color(UIColor.link))
-                        }
-                        .frame(width: 120, height: 30)
-                        .foregroundColor(.white)
                     }
                 }
                 .frame(height: 50)
@@ -97,7 +96,7 @@ struct AlertView: View {
 struct AlertView_Previews: PreviewProvider {
     
     static var previews: some View {
-        AlertView(shown: .constant(true), alertAction: .constant(.others), message: "Submit post?", cancelOnly: true)
+        AlertView(shown: .constant(true), alertAction: .constant(.others), message: "Submit post?", cancelOnly: false)
             .environment(\.colorScheme, .dark)
     }
 }
