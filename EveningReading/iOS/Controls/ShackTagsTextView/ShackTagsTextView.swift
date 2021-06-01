@@ -73,7 +73,8 @@ class TagMenuItemTextView: UITextView {
             action == #selector(copy(_:)) ||
             action == #selector(select(_:)) ||
             action == #selector(selectAll(_:)) ||
-            action == #selector(paste(_:))
+            action == #selector(paste(_:)) ||
+            action == Selector(("_promptForReplace:"))
         {
             return true
         }
