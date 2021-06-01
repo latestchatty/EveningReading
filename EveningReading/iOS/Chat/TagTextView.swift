@@ -184,18 +184,18 @@ struct TagTextView: View {
                     .fill(Color(UIColor.systemGray2))
                     .frame(height: 1)
             
-                Button(action: {
-                    withAnimation(.easeOut(duration: 0.1)) {
-                        shown.toggle()
+                Text("Cancel")
+                    .bold()
+                    .foregroundColor(.white)
+                    .frame(width: 260, height: 30)
+                    .contentShape(Rectangle())
+                    .offset(x: 0, y: 2)
+                    .onTapGesture(count: 1) {
+                        withAnimation(.easeOut(duration: 0.1)) {
+                            shown.toggle()
+                        }
                     }
-                }) {
-                    Text("Cancel")
-                        .bold()
-                        .foregroundColor(.primary)
-                }
-                .frame(width: 260, height: 30)
-                .foregroundColor(.white)
-                .offset(x: 0, y: 2)
+                
                 
                 Spacer()
             }
