@@ -38,15 +38,22 @@ struct GoToPostViewHome: View {
                 if let postId = value?.notification.request.content.userInfo["postid"], let body = value?.notification.request.content.body, let title = value?.notification.request.content.title {
                     if String("\(postId)").isInt && appSessionStore.showingPostId != Int(String("\(postId)")) ?? 0 {
 
-                        notifications.notificationData = nil
+                        //notifications.notificationData = nil
                         appSessionStore.showingPostId = Int(String("\(postId)")) ?? 0
-                        appSessionStore.pushNotifications.append(PushNotification(title: title, body: body, postId: Int(String("\(postId)")) ?? 0))
                         
-                        //self.showingPost = true
+                        //appSessionStore.pushNotifications.append(PushNotification(title: title, body: body, postId: Int(String("\(postId)")) ?? 0))
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1500)) {
+                            self.showingPost = true
+                        }
+                        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1600)) {
+                            notifications.notificationData = nil
+                        }
                         appSessionStore.showingChatView = false
                     }
                 }
             }
+            
         }
         .frame(width: 0, height: 0)
     }

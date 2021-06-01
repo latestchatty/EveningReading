@@ -35,7 +35,7 @@ struct iPhoneContentView: View {
                     iPhoneHomeButtons()
                         .environmentObject(appSessionStore)
                         .environmentObject(chatStore)
-                    NotificationsView()
+                    //NotificationsView()
                     TrendingView()
                     iPhoneArticlesView()
                         .environmentObject(articleStore)
@@ -43,14 +43,14 @@ struct iPhoneContentView: View {
                 .background(Color("PrimaryBackground").frame(height: 2600).offset(y: -80))
             }
             .edgesIgnoringSafeArea(.bottom)
-            .navigationBarTitle("Evening Reading")
+            .navigationBarTitle(notifications.notificationData != nil ? "" : "Evening Reading")
             .navigationBarHidden(false)
             .navigationBarBackButtonHidden(true)
             .navigationBarItems(trailing: SettingsButton())
+            .overlay(LoadingPushNotificationView())
         }
         .navigationViewStyle(StackNavigationViewStyle())
         .accentColor(colorScheme == .dark ? Color.white : Color(UIColor.systemBlue))
-        //.overlay(appSessionStore.showingPost ? Color("PrimaryBackground").frame(width: 2600, height: 2600).offset(y: -80) : Color.clear.frame(width: 0, height: 0).offset(y: 0))
         .onAppear() {
             /*
             if Notifications.shared.notificationLink != "" {

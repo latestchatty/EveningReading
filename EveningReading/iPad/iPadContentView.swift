@@ -36,7 +36,7 @@ struct iPadContentView: View {
                         iPadHomeButtons()
                             .environmentObject(appSessionStore)
                             .environmentObject(chatStore)
-                        NotificationsView()
+                        //NotificationsView()
                         TrendingView()
                         iPadArticlesView()
                             .environmentObject(articleStore)
@@ -45,10 +45,11 @@ struct iPadContentView: View {
                 }
             }
             .edgesIgnoringSafeArea(.bottom)
-            .navigationBarTitle("Evening Reading")
+            .navigationBarTitle(notifications.notificationData != nil ? "" : "Evening Reading")
             .navigationBarHidden(false)
             .navigationBarBackButtonHidden(true)
             .navigationBarItems(trailing: SettingsButton())
+            .overlay(LoadingPushNotificationView())
         }
         .navigationViewStyle(StackNavigationViewStyle())
         .accentColor(colorScheme == .dark ? Color.white : Color(UIColor.systemBlue))

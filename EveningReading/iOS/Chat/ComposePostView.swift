@@ -14,6 +14,7 @@ struct ComposePostView: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var chatStore: ChatStore
     @EnvironmentObject var shackTags: ShackTags
+    @EnvironmentObject var notifications: Notifications
     
     public var isRootPost: Bool = false
     public var postId: Int = 0
@@ -374,6 +375,20 @@ struct ComposePostView: View {
                     self.postBody = value
                 }
             }
+                
+            // If push notification tapped
+            .onReceive(notifications.$notificationData) { value in
+                if value != nil {
+                    chatStore.submitPostSuccessMessage = ""
+                    chatStore.submitPostErrorMessage = ""
+                    self.postBody = ""
+                    ShackTags.shared.taggedText = ""
+                    self.showingLoading = false
+                    self.uploadImageFail = false
+                    self.showingComposeSheet = false
+                    self.showingTagMenu = false
+                }
+            }
             
             // Hide TagTextView
             .onAppear() {
@@ -411,5 +426,6 @@ struct ComposePostView_Previews: PreviewProvider {
             .environmentObject(AppSessionStore(service: AuthService()))
             .environmentObject(ChatStore(service: ChatService()))
             .environmentObject(ShackTags())
+            .environmentObject(Notifications())
     }
 }
