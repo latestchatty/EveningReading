@@ -293,6 +293,7 @@ class MessageStore: ObservableObject {
     #if os(iOS)
     @Published var messageTemplateBegin = ""
     @Published var messageTemplateEnd = ""
+    private var messageCountTimer: Timer? = nil
     #endif
     
     @Published private(set) var submitMessageResponse: SubmitMessageResponseContainer = SubmitMessageResponseContainer(success: SubmitMessageResponse(result: ""), fail: SubmitMessageError(error: false, code: "ERR_NONE", message: "No error."))
@@ -317,10 +318,10 @@ class MessageStore: ObservableObject {
     private let service: MessageService
     init(service: MessageService) {
         self.service = service
-        //timer = Timer.scheduledTimer(withTimeInterval: 30, repeats: true) { timer in
-        //    self.getCount()
-        //}
         #if os(iOS)
+        messageCountTimer = Timer.scheduledTimer(withTimeInterval: 30, repeats: true) { timer in
+            self.getCount()
+        }
         loadPostTemplate()
         #endif
     }
@@ -361,6 +362,9 @@ class MessageStore: ObservableObject {
                 switch result {
                 case .success(let msgCount):
                     self?.messageCount = msgCount
+                    #if os(iOS)
+                    UIApplication.shared.applicationIconBadgeNumber = msgCount.unread
+                    #endif
                 case .failure:
                     self?.messageCount = MessageCount(total: 0, unread: 0)
                 }

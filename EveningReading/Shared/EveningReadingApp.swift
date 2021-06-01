@@ -53,6 +53,7 @@ struct EveningReadingApp: App {
                     .environmentObject(articleStore)
             #endif
         }
+        /*
         .onChange(of: phase) { newPhase in
             if newPhase == .active {
                 #if os(iOS)
@@ -60,6 +61,7 @@ struct EveningReadingApp: App {
                 #endif
             }
         }
+        */
         /*
         .onChange(of: phase) { newPhase in
             switch newPhase {

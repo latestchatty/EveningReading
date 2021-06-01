@@ -120,13 +120,13 @@ struct LinkView: View {
     @State private var showingSafariSheet = false
     @State private var hyperlinkUrl: URL?
     
-    //@State private var hyperlinkUrl: String?
+    //@State private var hyperlinkUrlStr: String?
     //@State private var showingLinkWebView = false
     
     #if os(iOS)
     var body: some View {
         
-        //LinkViewerSheet(hyperlinkUrl: self.$hyperlinkUrl, showingWebView: self.$showingLinkWebView)
+        //LinkViewerSheet(hyperlinkUrl: self.$hyperlinkUrlStr, showingWebView: self.$showingLinkWebView)
         
         Text(self.description)
             .underline()
@@ -136,7 +136,7 @@ struct LinkView: View {
                 if self.appSessionStore.useYoutubeApp && (self.hyperlink.starts(with: "https://www.youtube.com/") || self.hyperlink.starts(with: "https://youtube.com/") || self.hyperlink.starts(with: "https://youtu.be/")) {
                     let url = URL(string: self.hyperlink.replacingOccurrences(of: "https", with: "youtube"))!
                     if !UIApplication.shared.canOpenURL(url)  {
-                        //self.hyperlinkUrl = self.hyperlink
+                        //self.hyperlinkUrlStr = self.hyperlink
                         //self.showingLinkWebView = true
                         if let url = URL(string: self.hyperlink) {
                             self.hyperlinkUrl = url
@@ -163,12 +163,12 @@ struct LinkView: View {
                 // Everything else
                 } else {
                     // A random link in a thread
-                    //self.hyperlinkUrl = self.hyperlink
+                    //self.hyperlinkUrlStr = self.hyperlink
                     //self.showingLinkWebView = true
                     if let url = URL(string: self.hyperlink) {
                         self.hyperlinkUrl = url
                         self.showingSafariSheet = true
-                    }                    
+                    }
                 }
             }
         
@@ -194,7 +194,6 @@ struct LinkView: View {
                 .dismissButtonStyle(.done)
             }
         }
-        
         
     }
     #endif

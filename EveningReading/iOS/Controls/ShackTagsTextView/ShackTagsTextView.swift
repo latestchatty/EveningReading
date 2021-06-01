@@ -68,7 +68,6 @@ class TagMenuItemTextView: UITextView {
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
 
         // Keep most of the default actions
-        // action == Selector(("_define:"))
         if action == #selector(cut(_:)) ||
             action == #selector(copy(_:)) ||
             action == #selector(select(_:)) ||
