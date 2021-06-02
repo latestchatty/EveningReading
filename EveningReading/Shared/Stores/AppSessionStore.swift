@@ -216,7 +216,8 @@ class AppSessionStore : ObservableObject {
         
         // Auth
         self.isSignedIn = defaults.object(forKey: "IsSignedIn") as? Bool ?? false
-        
+  
+/*
 // Reset on startup
 // ResetDarkMode
 // ResetNotifications
@@ -225,7 +226,7 @@ if !resetNotifications {
     UserDefaults.standard.removeObject(forKey: "PushNotifications")
     defaults.set(true, forKey: "ResetNotifications")
 }
-        
+*/
         // Push Notifications
         if let data = defaults.data(forKey: "PushNotifications") {
             self.pushNotifications = try! PropertyListDecoder().decode([PushNotification].self, from: data)

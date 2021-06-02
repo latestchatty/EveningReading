@@ -204,11 +204,7 @@ struct GoToPostView: View {
                             appSessionStore.showingPost = true
                             DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
                                 // go to home screen
-                                if appSessionStore.showingChatView {
-                                    appSessionStore.showingChatView = false
-                                } else {
-                                    presentationMode.wrappedValue.dismiss()
-                                }
+                                appSessionStore.resetNavigation()
                             }
                         //}
                     }
