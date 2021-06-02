@@ -42,7 +42,7 @@ struct InboxView: View {
     
     var body: some View {
         VStack {
-            //GoToPostView()
+            //GoToPostView() // Doesn't work, navigation link bug
             
             NewMessageView(showingNewMessageSheet: self.$showingNewMessageSheet, messageId: Binding.constant(0), recipientName: Binding.constant(""), subjectText: Binding.constant(""), bodyText: Binding.constant(""))
 

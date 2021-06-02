@@ -50,7 +50,7 @@ struct SearchView: View {
     
     var body: some View {
         VStack {            
-            //GoToPostView()
+            //GoToPostView() // Doesn't work, navigation link bug
             
             NavigationLink(destination: SearchResultsView(terms: self.terms, author: self.author, parentAuthor: self.parent),
                 isActive: self.$showingResults) {
