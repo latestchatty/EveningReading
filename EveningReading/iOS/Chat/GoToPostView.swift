@@ -181,7 +181,7 @@ struct GoToPostView: View {
                         //appSessionStore.showingPostId = Int(String("\(postId)")) ?? 0
                         //print("going to post \(Int(String("\(postId)")) ?? 0)")
                         //self.goToPostId = Int(String("\(postId)")) ?? 0
-                        print("showingPostId = \(appSessionStore.showingPostId)")
+                        //print("showingPostId = \(appSessionStore.showingPostId)")
                                                 
                         //appSessionStore.showingPostWithId[appSessionStore.showingPostId] = true
                         
@@ -198,7 +198,7 @@ struct GoToPostView: View {
                         }
                         */
                         
-                        print("\(appSessionStore.currentViewName) == \(self.currentViewName)")
+                        //print("\(appSessionStore.currentViewName) == \(self.currentViewName)")
                         
                         //if appSessionStore.currentViewName == self.currentViewName {
                             appSessionStore.showingPost = true

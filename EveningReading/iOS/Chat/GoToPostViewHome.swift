@@ -28,7 +28,7 @@ struct GoToPostViewHome: View {
             }.hidden().disabled(true).allowsHitTesting(false)
             
             // Push ThreadDetailView
-            NavigationLink(destination: ThreadDetailView(threadId: .constant(0), postId: $appSessionStore.showingPostId, replyCount: .constant(-1), isSearchResult: .constant(true)), isActive: self.$showingPost) {
+            NavigationLink(destination: ThreadDetailView(threadId: .constant(0), postId: $appSessionStore.showingPostId, replyCount: .constant(-1), isSearchResult: .constant(true)), isActive: $appSessionStore.showingPushNotificationThread) {
                             EmptyView()
             }.isDetailLink(false).hidden().allowsHitTesting(false)
             
@@ -44,7 +44,8 @@ struct GoToPostViewHome: View {
                         //appSessionStore.pushNotifications.append(PushNotification(title: title, body: body, postId: Int(String("\(postId)")) ?? 0))
                         
                         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1500)) {
-                            self.showingPost = true
+                            //self.showingPost = true
+                            appSessionStore.showingPushNotificationThread = true
                         }
                         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1600)) {
                             notifications.notificationData = nil

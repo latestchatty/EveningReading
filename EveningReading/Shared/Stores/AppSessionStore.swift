@@ -24,6 +24,7 @@ class AppSessionStore : ObservableObject {
     @Published var showingSearchView = false
     @Published var showingTagsView = false
     @Published var showingSettingsView = false
+    @Published var showingPushNotificationThread = false
     @Published var currentViewName = ""
     
     // Deep linking to posts
@@ -240,6 +241,7 @@ if !resetNotifications {
         self.showingSearchView = false
         self.showingTagsView = false
         self.showingSettingsView = false
+        self.showingPushNotificationThread = false
     }
     
     func clearNotifications() {
