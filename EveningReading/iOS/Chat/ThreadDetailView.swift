@@ -218,7 +218,7 @@ struct ThreadDetailView: View {
             
             // Comment out to see preview (as well as overlay below)
             if UIDevice.current.userInterfaceIdiom == .phone {
-                GoToPostView(currentViewName: "ThreadView")
+                //GoToPostView(currentViewName: "ThreadView")
                 GoToShackLinkView()
             }
             if UIDevice.current.userInterfaceIdiom == .pad {
@@ -420,7 +420,7 @@ struct ThreadDetailView: View {
                 self.threadNavigationLocation = CGPoint(x: self.appSessionStore.threadNavigationLocationX, y: self.appSessionStore.threadNavigationLocationY)
             }
             
-            if self.replyCount >= self.loadingLimit {
+            if self.postId > 0 || self.replyCount >= self.loadingLimit {
                 // Let the view load so we don't get stuck on the list screen
                 DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1)) {
                     getData()
