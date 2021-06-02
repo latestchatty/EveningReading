@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct GoToPostViewHome: View {
+    @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var notifications: Notifications
     @EnvironmentObject var chatStore: ChatStore
@@ -37,20 +38,32 @@ struct GoToPostViewHome: View {
                 print(".onReceive(notifications.$notificationData) Home")
                 if let postId = value?.notification.request.content.userInfo["postid"], let body = value?.notification.request.content.body, let title = value?.notification.request.content.title {
                     if String("\(postId)").isInt && appSessionStore.showingPostId != Int(String("\(postId)")) ?? 0 {
-
+                        
                         //notifications.notificationData = nil
+                        
                         appSessionStore.showingPostId = Int(String("\(postId)")) ?? 0
                         
-                        //appSessionStore.pushNotifications.append(PushNotification(title: title, body: body, postId: Int(String("\(postId)")) ?? 0))
+                        let newNotification = PushNotification(title: title, body: body, postId: Int(String("\(postId)")) ?? 0)
                         
-                        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1500)) {
-                            //self.showingPost = true
-                            appSessionStore.showingPushNotificationThread = true
+                        if !appSessionStore.pushNotifications.contains(newNotification) {
+                            appSessionStore.pushNotifications.append(newNotification)
+                            
+                            appSessionStore.resetNavigation()
+                            
+                            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1500)) {
+                                //self.showingPost = true
+                                appSessionStore.showingPushNotificationThread = true
+                            }
+                            
+                            //if appSessionStore.currentViewName == "HomeView" {
+                            //    appSessionStore.showingPushNotificationThread = true
+                            //}
                         }
-                        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1600)) {
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(2000)) {
                             notifications.notificationData = nil
                         }
-                        appSessionStore.showingChatView = false
+
                     }
                 }
             }

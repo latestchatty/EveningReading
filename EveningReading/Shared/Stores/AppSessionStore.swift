@@ -163,6 +163,8 @@ class AppSessionStore : ObservableObject {
     }
     
     // Push Notifications
+    @Published var pushNotifications = [PushNotification]()
+    /*
     @Published var pushNotifications = [PushNotification]() {
         didSet {
             if let data = try? PropertyListEncoder().encode(pushNotifications) {
@@ -170,6 +172,7 @@ class AppSessionStore : ObservableObject {
             }
         }
     }
+    */
     
     // Search & Push
     @Published var showingShackLink: Bool = false
@@ -229,9 +232,11 @@ if !resetNotifications {
 }
 */
         // Push Notifications
+        /*
         if let data = defaults.data(forKey: "PushNotifications") {
             self.pushNotifications = try! PropertyListDecoder().decode([PushNotification].self, from: data)
         }
+        */
         
     }
     

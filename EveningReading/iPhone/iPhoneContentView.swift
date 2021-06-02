@@ -44,6 +44,7 @@ struct iPhoneContentView: View {
             }
             .edgesIgnoringSafeArea(.bottom)
             .navigationBarTitle(notifications.notificationData != nil ? "" : "Evening Reading")
+            //.navigationBarTitle("Evening Reading")
             .navigationBarHidden(false)
             .navigationBarBackButtonHidden(true)
             .navigationBarItems(trailing: SettingsButton())
