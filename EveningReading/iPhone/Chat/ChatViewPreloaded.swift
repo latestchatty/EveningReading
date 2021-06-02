@@ -62,7 +62,7 @@ struct ChatViewPreloaded: View {
         VStack {
             
             // Comment out to preview
-            GoToPostView(currentViewName: "ChatView")
+            //GoToPostView(currentViewName: "ChatView")
             
             RefreshableScrollView(height: 70, refreshing: self.$chatStore.gettingChat, scrollTarget: self.$chatStore.scrollTargetChat, scrollTargetTop: self.$chatStore.scrollTargetChatTop) {
                 
