@@ -50,7 +50,7 @@ struct PostContextView: View {
             self.messageBody = " "
             self.showingNewMessageView = true
         }) {
-            Text("Message Author")
+            Text("Message User")
             Image(systemName: "envelope.circle")
         }
         Button(action: {
