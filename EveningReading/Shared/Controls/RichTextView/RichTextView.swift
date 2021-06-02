@@ -521,6 +521,11 @@ class RichTextBuilder {
                     linkHref = linkHref.replacingOccurrences(of: #"">"#, with: "")
                     hrefOpen = true
                 }
+                else if markup.postMarkup.starts(with: #"<a href="https://www.shacknews.com/cortex/"#) {
+                    linkHref = markup.postMarkup.replacingOccurrences(of: #"<a href=""#, with: "")
+                    linkHref = linkHref.replacingOccurrences(of: #"" target="_blank">"#, with: "")
+                    hrefOpen = true
+                }
                 
                 // Close tags
                 if markup.postMarkup == #"</span>"# {
@@ -597,9 +602,10 @@ class RichTextBuilder {
                     // Still within spoiler tags
                     spoilerText += markup.postMarkup + " "
                 } else if hrefOpen && linkHref != "" {
-                    // Article
+                    // Article or Cortex
                     richText.append(.plainTextBlock(lineOfText))
                     lineOfText = [InlineText]()
+                    print("linkHref \(linkHref)")
                     richText.append(.link([LinkBlock(hyperlink: linkHref, description: markup.postMarkup)]))
                 }
             } else {
