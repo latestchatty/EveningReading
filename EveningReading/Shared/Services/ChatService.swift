@@ -137,6 +137,13 @@ class ChatService {
     }
     
     public func getThread(threadId: Int, handler: @escaping (Result<[ChatThread], Error>) -> Void) {
+        let sessionConfig = URLSessionConfiguration.default
+        #if os(iOS)
+        sessionConfig.waitsForConnectivity = false
+        sessionConfig.timeoutIntervalForResource = 10.0
+        #endif
+        let shortSession = URLSession(configuration: sessionConfig)
+        
         guard
             var urlComponents = URLComponents(string: "https://winchatty.com/v2/getThread")
             else { preconditionFailure("Can't create url components...") }
@@ -149,7 +156,7 @@ class ChatService {
             let url = urlComponents.url
             else { preconditionFailure("Can't create url from url components...") }
 
-        session.dataTask(with: url) { [weak self] data, _, error in
+        shortSession.dataTask(with: url) { [weak self] data, _, error in
             if let error = error {
                 handler(.failure(error))
             } else {
