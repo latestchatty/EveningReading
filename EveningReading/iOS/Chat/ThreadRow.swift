@@ -14,10 +14,10 @@ struct ThreadRow: View {
     @Binding var threadId: Int
     @Binding var activeThreadId: Int
 
-    @State private var categoryWidth: CGFloat = 3
     @State private var rootPostCategory: String = "ontopic"
     @State private var rootPostAuthor: String = ""
     @State private var rootPostBodyPreview: String = ""
+    @State private var rootPostBody: String = ""
     @State private var rootPostDate: String = "2020-08-14T21:05:00Z"
     @State private var rootPostLols: [ChatLols] = [ChatLols]()
     @State private var contributed: Bool = false
@@ -52,6 +52,7 @@ struct ThreadRow: View {
             self.rootPostCategory = rootPost.category
             self.rootPostAuthor = rootPost.author
             self.rootPostBodyPreview = rootPost.body.getPreview
+            self.rootPostBody = rootPost.body
             self.rootPostDate = rootPost.date
             self.rootPostLols = rootPost.lols
             self.replyCount = currentThread.posts.count - 1
@@ -81,14 +82,14 @@ struct ThreadRow: View {
             HStack {
                 GeometryReader { categoryGeo in
                     Path { categoryPath in
-                        categoryPath.move(to: CGPoint(x: 0, y: 0))
-                        categoryPath.addLine(to: CGPoint(x: 0, y: categoryGeo.size.height))
-                        categoryPath.addLine(to: CGPoint(x: categoryGeo.size.width, y: categoryGeo.size.height))
-                        categoryPath.addLine(to: CGPoint(x: categoryGeo.size.width, y: 0))
+                        categoryPath.move(to: CGPoint(x: 0, y: 10))
+                        categoryPath.addLine(to: CGPoint(x: 0, y: categoryGeo.size.height - 10))
+                        categoryPath.addLine(to: CGPoint(x: categoryGeo.size.width, y: categoryGeo.size.height - 10))
+                        categoryPath.addLine(to: CGPoint(x: categoryGeo.size.width, y: 10))
                     }
                     .fill(ThreadCategoryColor[self.rootPostCategory]!)
                 }
-                .frame(width: self.categoryWidth)
+                .frame(width: 3)
                 Spacer()
             }
             
@@ -143,7 +144,7 @@ struct ThreadRow: View {
         
         // Actions
         .contextMenu {
-            PostContextView(showingWhosTaggingView: self.$showingWhosTaggingView, showingNewMessageView: self.$showingNewMessageView, messageRecipient: self.$messageRecipient, messageSubject: self.$messageSubject, messageBody: self.$messageBody, collapsed: self.$collapseThread, author: self.rootPostAuthor, postId: self.threadId, threadId: self.threadId)
+            PostContextView(showingWhosTaggingView: self.$showingWhosTaggingView, showingNewMessageView: self.$showingNewMessageView, messageRecipient: self.$messageRecipient, messageSubject: self.$messageSubject, messageBody: self.$messageBody, collapsed: self.$collapseThread, author: self.rootPostAuthor, postId: self.threadId, threadId: self.threadId, postBody: self.rootPostBody)
         }
         
         // Load thread data

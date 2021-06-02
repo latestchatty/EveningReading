@@ -349,6 +349,15 @@ extension String {
         return postPreview
     }
     
+    var getTextOnly: String {
+        var postText = self.replacingOccurrences(of: "<br />", with: "\n")
+        postText = postText.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil).stringByDecodingHTMLEntities
+        let components = postText.components(separatedBy: .whitespacesAndNewlines)
+        postText = components.filter { !$0.isEmpty }.joined(separator: " ")
+        postText = postText.trimmingCharacters(in: .whitespaces)
+        return postText
+    }
+    
     var newlineToBR: String {
         return self.replacingOccurrences(of: "<br />", with: "\n").replacingOccurrences(of: "<br>", with: "\n")
     }

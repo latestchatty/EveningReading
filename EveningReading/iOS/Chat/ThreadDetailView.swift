@@ -288,7 +288,7 @@ struct ThreadDetailView: View {
                     .padding(EdgeInsets(top: 0, leading: 10, bottom: -5, trailing: 10))
                     .id(9999999999991)
                     .contextMenu {
-                        PostContextView(showingWhosTaggingView: self.$showingWhosTaggingView, showingNewMessageView: self.$showingNewMessageView, messageRecipient: self.$messageRecipient, messageSubject: self.$messageSubject, messageBody: self.$messageBody, collapsed: self.$collapsePost, author: self.rootPostAuthor, postId: self.threadId, isRootPost: true)
+                        PostContextView(showingWhosTaggingView: self.$showingWhosTaggingView, showingNewMessageView: self.$showingNewMessageView, messageRecipient: self.$messageRecipient, messageSubject: self.$messageSubject, messageBody: self.$messageBody, collapsed: self.$collapsePost, author: self.rootPostAuthor, postId: self.threadId, isRootPost: true, postBody: self.rootPostBody)
                     }
                     
                     // No replies yet
@@ -324,7 +324,7 @@ struct ThreadDetailView: View {
                                 .frame(maxWidth: .infinity)
                                 .contentShape(Rectangle())
                                 .contextMenu {
-                                    PostContextView(showingWhosTaggingView: self.$showingWhosTaggingView, showingNewMessageView: self.$showingNewMessageView, messageRecipient: self.$messageRecipient, messageSubject: self.$messageSubject, messageBody: self.$messageBody, collapsed: self.$collapsePost, author: post.author, postId: post.id)
+                                    PostContextView(showingWhosTaggingView: self.$showingWhosTaggingView, showingNewMessageView: self.$showingNewMessageView, messageRecipient: self.$messageRecipient, messageSubject: self.$messageSubject, messageBody: self.$messageBody, collapsed: self.$collapsePost, author: post.author, postId: post.id, postBody: post.body)
                                 }
                                 .onTapGesture(count: 1) {
                                     chatStore.activePostId = post.id

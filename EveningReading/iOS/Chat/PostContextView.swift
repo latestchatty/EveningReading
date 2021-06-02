@@ -26,6 +26,7 @@ struct PostContextView: View {
     var postId: Int = 0
     var threadId: Int = 0
     var isRootPost: Bool = false
+    var postBody: String = ""
     
     var body: some View {
         Button(action: {
@@ -51,6 +52,13 @@ struct PostContextView: View {
         }) {
             Text("Message Author")
             Image(systemName: "envelope.circle")
+        }
+        Button(action: {
+            let board = UIPasteboard.general
+            board.string = self.postBody.getTextOnly
+        }) {
+            Text("Copy Post")
+            Image(systemName: "doc.on.doc")
         }
         /*
         Button(action: {
