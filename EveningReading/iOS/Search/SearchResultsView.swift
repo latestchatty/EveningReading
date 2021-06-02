@@ -100,7 +100,7 @@ struct SearchResultsView: View {
         .background(Color("PrimaryBackground").frame(height: 2600).offset(y: -80))
         .edgesIgnoringSafeArea(.bottom)
         .navigationViewStyle(StackNavigationViewStyle())
-        .navigationBarTitle("Inbox", displayMode: .inline)
+        .navigationBarTitle("Results", displayMode: .inline)
         .navigationBarItems(leading: Spacer().frame(width: 26, height: 16))
     }
 }
