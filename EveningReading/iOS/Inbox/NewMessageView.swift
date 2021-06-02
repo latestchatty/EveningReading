@@ -30,7 +30,7 @@ struct NewMessageView: View {
         }
         if self.bodyText != "" {
             var replySpacing = ""
-            if self.recipientName != "Duke Nuked" {
+            if self.recipientName != "Duke Nuked" && self.bodyText != " " {
                 replySpacing = "\n\n--------------------\n\n\(self.messageRecipient) Wrote:\n\n"
             }
             self.messageBodyText = replySpacing + self.bodyText.newlineToBR

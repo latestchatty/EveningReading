@@ -45,8 +45,8 @@ struct PostContextView: View {
         }
         Button(action: {
             self.messageRecipient = self.author
-            self.messageSubject = ""
-            self.messageBody = ""
+            self.messageSubject = " "
+            self.messageBody = " "
             self.showingNewMessageView = true
         }) {
             Text("Message Author")
