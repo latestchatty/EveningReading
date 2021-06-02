@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct NewMessageView: View {
+    @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var messageStore: MessageStore
-    @Environment(\.colorScheme) var colorScheme
+    @EnvironmentObject var notifications: Notifications
     @Binding public var showingNewMessageSheet: Bool
     @Binding public var messageId: Int
     @Binding public var recipientName: String
@@ -36,6 +37,14 @@ struct NewMessageView: View {
         }
     }
     
+    private func clearNewMessageSheet() {
+        DispatchQueue.main.async {
+            self.messageRecipient = ""
+            self.messageBodyText = ""
+            self.showingNewMessageSheet = false
+        }
+    }
+    
     var body: some View {
         EmptyView()
         .sheet(isPresented: $showingNewMessageSheet) {
@@ -46,11 +55,7 @@ struct NewMessageView: View {
                     Spacer().frame(width: 10)
                     // Cancel
                     Button("Cancel") {
-                        DispatchQueue.main.async {
-                            self.messageRecipient = ""
-                            self.messageBodyText = ""
-                            self.showingNewMessageSheet = false
-                        }
+                        clearNewMessageSheet()
                     }
                     Spacer()
                     
@@ -124,7 +129,14 @@ struct NewMessageView: View {
                 
             }
         }
-
+        
+            // If push notification tapped
+        .onReceive(notifications.$notificationData) { value in
+            if value != nil {
+                clearNewMessageSheet()
+            }
+        }
+        
     }
 }
 
@@ -133,5 +145,6 @@ struct NewMessageView_Previews: PreviewProvider {
         NewMessageView(showingNewMessageSheet: .constant(false), messageId: Binding.constant(0), recipientName: Binding.constant(""), subjectText: Binding.constant(""), bodyText: Binding.constant(""))
             .environmentObject(AppSessionStore(service: AuthService()))
             .environmentObject(MessageStore(service: MessageService()))
+            .environmentObject(Notifications())
     }
 }

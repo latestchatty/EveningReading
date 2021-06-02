@@ -167,6 +167,19 @@ struct ComposePostView: View {
         }
     }
     
+    private func clearComposeSheet() {
+        DispatchQueue.main.async {
+            chatStore.submitPostSuccessMessage = ""
+            chatStore.submitPostErrorMessage = ""
+            self.postBody = ""
+            ShackTags.shared.taggedText = ""
+            self.showingLoading = false
+            self.uploadImageFail = false
+            self.showingComposeSheet = false
+            self.showingTagMenu = false
+        }
+    }
+    
     var body: some View {
         VStack {
             Spacer().frame(width: 0, height: 0)
@@ -196,16 +209,7 @@ struct ComposePostView: View {
                             
                             // Bail!
                             Button("Cancel") {
-                                DispatchQueue.main.async {
-                                    chatStore.submitPostSuccessMessage = ""
-                                    chatStore.submitPostErrorMessage = ""
-                                    self.postBody = ""
-                                    ShackTags.shared.taggedText = ""
-                                    self.showingLoading = false
-                                    self.uploadImageFail = false
-                                    self.showingComposeSheet = false
-                                    self.showingTagMenu = false
-                                }
+                                clearComposeSheet()
                             }
                             
                             Spacer()
@@ -379,14 +383,7 @@ struct ComposePostView: View {
             // If push notification tapped
             .onReceive(notifications.$notificationData) { value in
                 if value != nil {
-                    chatStore.submitPostSuccessMessage = ""
-                    chatStore.submitPostErrorMessage = ""
-                    self.postBody = ""
-                    ShackTags.shared.taggedText = ""
-                    self.showingLoading = false
-                    self.uploadImageFail = false
-                    self.showingComposeSheet = false
-                    self.showingTagMenu = false
+                    clearComposeSheet()
                 }
             }
             
