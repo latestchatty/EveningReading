@@ -176,9 +176,10 @@ struct GoToPostView: View {
                     //print("got postId \(postId), previously showed \(appSessionStore.showingPostId)")
                     if String("\(postId)").isInt && appSessionStore.showingPostId !=        Int(String("\(postId)")) ?? 0 {
 
-                        //notifications.notificationData = nil
+                        notifications.notificationData = nil
+                        
                         //print("setting postID \(postId)")
-                        //appSessionStore.showingPostId = Int(String("\(postId)")) ?? 0
+                        appSessionStore.showingPostId = Int(String("\(postId)")) ?? 0
                         //print("going to post \(Int(String("\(postId)")) ?? 0)")
                         //self.goToPostId = Int(String("\(postId)")) ?? 0
                         //print("showingPostId = \(appSessionStore.showingPostId)")
@@ -190,7 +191,11 @@ struct GoToPostView: View {
                         //self.showingAlert = true
                         //self.presentationMode.wrappedValue.dismiss()
                         
-                        //appSessionStore.pushNotifications.append(PushNotification(title: title, body: body, postId: Int(String("\(postId)")) ?? 0))
+                        let newNotification = PushNotification(title: title, body: body, postId: Int(String("\(postId)")) ?? 0)
+                        
+                        if !appSessionStore.pushNotifications.contains(newNotification) {
+                            appSessionStore.pushNotifications.append(newNotification)
+                        }
                         
                         /*
                         if !self.isHomeScreen {
@@ -201,11 +206,11 @@ struct GoToPostView: View {
                         //print("\(appSessionStore.currentViewName) == \(self.currentViewName)")
                         
                         //if appSessionStore.currentViewName == self.currentViewName {
-                            appSessionStore.showingPost = true
-                            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
-                                // go to home screen
+                            //appSessionStore.showingPost = true
+                            //DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
+                                // try going to home screen, NavigationLink is broken so it doesn't always work
                                 appSessionStore.resetNavigation()
-                            }
+                            //}
                         //}
                     }
                     /*
