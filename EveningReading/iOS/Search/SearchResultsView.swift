@@ -32,7 +32,7 @@ struct SearchResultsView: View {
     
     var body: some View {
         VStack {            
-            // GoToPostView() // Doesn't work, navigation link bug
+            //GoToPostView()
             
             if !showingLoading && searchResults.count < 1 {
                 LazyVStack {

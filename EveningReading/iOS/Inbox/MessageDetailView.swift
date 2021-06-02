@@ -30,7 +30,7 @@ struct MessageDetailView: View {
     
     var body: some View {
         VStack {
-            // GoToPostView() // Doesn't work, navigation link bug
+            //GoToPostView()
             
             NewMessageView(showingNewMessageSheet: self.$showingNewMessageSheet, messageId: $messageId, recipientName: self.$messageRecipient, subjectText: Binding.constant("Re: \(self.messageSubject)"), bodyText: Binding.constant("\(self.messageBody.stringByDecodingHTMLEntities.newlineToBR) "))
             
