@@ -38,6 +38,7 @@ struct TagsView: View {
                 self.tagsWebViewStore.loadUrlWithShackAuth(urlStr: "https://www.shacknews.com/tags-user", username: user ?? "", password: pass ?? "")
             }
         }
+        /*
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
             DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) {
                 let user: String? = KeychainWrapper.standard.string(forKey: "Username")
@@ -45,6 +46,7 @@ struct TagsView: View {
                 self.tagsWebViewStore.loadUrlWithShackAuth(urlStr: "https://www.shacknews.com/tags-user", username: user ?? "", password: pass ?? "")
             }
         }
+        */
         .background(Color("PrimaryBackground").frame(height: 2600).offset(y: -80))
         .edgesIgnoringSafeArea(.bottom)
         .navigationViewStyle(StackNavigationViewStyle())

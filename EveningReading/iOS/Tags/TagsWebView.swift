@@ -112,7 +112,31 @@ public class TagsWebViewStore: ObservableObject {
                         .secure: "TRUE",
                         .expires: NSDate(timeIntervalSinceNow: 604800)
                     ])!
-
+                    
+                    /*
+                    let task = URLSession.shared.dataTask(with: URL(string: urlStr)!) { data, response, error in
+                        if let error = error {
+                            print("TagsWebView error")
+                            return
+                        }
+                        guard let httpResponse = response as? HTTPURLResponse,
+                            (200...299).contains(httpResponse.statusCode) else {
+                            print("TagsWebView server error")
+                            return
+                        }
+                        if let mimeType = httpResponse.mimeType, mimeType == "text/html",
+                            let data = data,
+                            let string = String(data: data, encoding: .utf8) {
+                            DispatchQueue.main.async {
+                                let removedTargets = string.replacingOccurrences(of: #"target="_blank""#, with: "")
+                                self.webView.loadHTMLString(removedTargets, baseURL: URL(string: "https://www.shacknews.com"))
+                            }
+                        }
+                    }
+                    task.resume()
+                    */
+                    
+                    
                     self.webView.configuration.websiteDataStore.httpCookieStore.setCookie(cookieLI) {
                         self.webView.configuration.websiteDataStore.httpCookieStore.setCookie(cookieINT) {
                             var cookieLength = 0
@@ -121,9 +145,12 @@ public class TagsWebViewStore: ObservableObject {
                                     cookieLength += record.displayName.count
                                 }
                             }
+                            
                             self.webView.load(req)
                         }
                     }
+                    
+                    
                 }
             })
             task.resume()
@@ -167,13 +194,16 @@ public struct TagsWebView: View, UIViewRepresentable {
         if uiView.contentView !== webView {
             DispatchQueue.main.async {
                 uiView.contentView = webView
+                uiView.contentView?.navigationDelegate = context.coordinator
             }
         }
         
+        /*
         if webView.url?.description == "about:blank" {
             let req = URLRequest(url: URL(string: loadUrl)!)
             webView.load(req)
         }
+        */
         
         if self.webView.estimatedProgress >= 1.0 {
             DispatchQueue.main.async {
@@ -214,7 +244,31 @@ public struct TagsWebView: View, UIViewRepresentable {
         
         private func webViewWebContentProcessDidTerminate() {
             
-        }        
+        }
+        
+        public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+            switch navigationAction.navigationType {
+            case .linkActivated:
+                print("linkActivated")
+                if let url = navigationAction.request.url {
+                    if url.absoluteString.contains("chatty?id") {
+                        let shared = UIApplication.shared
+                        if shared.canOpenURL(url) {
+                            shared.open(url, options: [:], completionHandler: nil)
+                        }
+                        decisionHandler(.cancel)
+                    } else {
+                        decisionHandler(.allow)
+                    }
+                } else {
+                    decisionHandler(.allow)
+                }
+            default:
+                print("otherAction")
+                decisionHandler(.allow)
+            }
+        }
+        
     }
 }
 
