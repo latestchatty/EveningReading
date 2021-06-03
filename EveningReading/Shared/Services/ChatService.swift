@@ -109,7 +109,7 @@ class ChatService {
         let sessionConfig = URLSessionConfiguration.default
         #if os(iOS)
         sessionConfig.waitsForConnectivity = false
-        sessionConfig.timeoutIntervalForResource = 5.0
+        sessionConfig.timeoutIntervalForResource = 10.0
         #endif
         let shortSession = URLSession(configuration: sessionConfig)
         
