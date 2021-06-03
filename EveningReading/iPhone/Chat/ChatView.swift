@@ -70,6 +70,7 @@ struct ChatView: View {
         // Fetching chat data
         .onReceive(chatStore.$didGetChatStart) { value in
             if value && self.chatStore.didSubmitPost {
+                self.chatStore.scrollTargetChatTop = 9999999999991
                 chatStore.didGetChatStart = false
                 self.isGettingChat = true
                 self.chatStore.gettingChat = true
