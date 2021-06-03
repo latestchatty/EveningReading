@@ -58,7 +58,7 @@ struct ThreadDetailView: View {
     // For highlighting
     private func getUserData() {
         let user: String? = KeychainWrapper.standard.string(forKey: "Username")
-        self.username = user ?? ""
+        self.username = user?.lowercased() ?? ""
     }
     
     // Get thread data from the appropriate source
@@ -239,7 +239,7 @@ struct ThreadDetailView: View {
                         HStack (alignment: .center) {
                             AuthorNameView(name: appSessionStore.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : self.rootPostAuthor, postId: self.threadId)
 
-                            ContributedView(contributed: self.contributed)
+                            //ContributedView(contributed: self.contributed)
 
                             Spacer()
 
@@ -404,6 +404,8 @@ struct ThreadDetailView: View {
         
         // Fetch data and settings on load
         .onAppear(perform: {
+            appSessionStore.currentViewName = "ThreadView"
+            
             if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil {
                 getUserData()
                 getThreadData()
@@ -428,12 +430,6 @@ struct ThreadDetailView: View {
             } else {
                 // Load immediately
                 getData()
-            }
-            
-            // Reset showing post for push notification
-            appSessionStore.currentViewName = "ThreadView"
-            if appSessionStore.showingPost {
-                appSessionStore.showingPost = false
             }
         })
         

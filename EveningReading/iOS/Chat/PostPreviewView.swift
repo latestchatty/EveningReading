@@ -50,13 +50,13 @@ struct PostPreviewView: View {
                     .foregroundColor(Color(UIColor.systemBlue))
             }
             
-            // One line preview of post body
+            // One line preview of post body, blue if it is the users post
             Text(appSessionStore.blockedAuthors.contains(self.postAuthor) ? "[blocked]" : self.postBody.getPreview)
                 .fontWeight(postStrength != nil ? PostWeight[postStrength!] : .regular)
                 .lineLimit(1)
                 .truncationMode(.tail)
                 .font(.callout)
-                .foregroundColor(self.username == self.postAuthor ? Color(UIColor.systemTeal) : (colorScheme == .dark ? Color(UIColor.white) : Color(UIColor.black)))
+                .foregroundColor(self.username == self.postAuthor.lowercased() ? Color(UIColor.systemTeal) : (colorScheme == .dark ? Color(UIColor.white) : Color(UIColor.black)))
                 .opacity(postStrength != nil ? postStrength! : 0.75)
                 .frame(maxWidth: .infinity, alignment: .leading)
          

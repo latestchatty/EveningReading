@@ -89,7 +89,12 @@ struct iPadChatView: View {
         .navigationBarTitle("Chat", displayMode: .inline)
         
         // New thread button
-        .navigationBarItems(leading: Spacer().frame(width: 26, height: 16), trailing: ComposePostView(isRootPost: true))        
+        .navigationBarItems(leading: Spacer().frame(width: 26, height: 16), trailing: ComposePostView(isRootPost: true))
+        
+        // Track current view
+        .onAppear() {
+            appSessionStore.currentViewName = "ChatView"
+        }
     }
 }
 

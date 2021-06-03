@@ -31,7 +31,7 @@ struct PostExpandedView: View {
                     .font(.custom("replylines", size: 25, relativeTo: .callout))
                     .foregroundColor(Color("replyLines"))
                 
-                // Author name (in blue if author)
+                // Author name
                 AuthorNameView(name: appSessionStore.blockedAuthors.contains(self.postAuthor) ? "[blocked]" : self.postAuthor, postId: self.postId)
                 
                 Spacer()

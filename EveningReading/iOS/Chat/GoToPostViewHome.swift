@@ -15,6 +15,7 @@ struct GoToPostViewHome: View {
     
     @State private var goToPostId: Int = 0
     @State private var showingPost: Bool = false
+    @State private var disableNotificaitonResponse: Bool = false
     
     var body: some View {
         VStack {
@@ -33,9 +34,27 @@ struct GoToPostViewHome: View {
                             EmptyView()
             }.isDetailLink(false).hidden().allowsHitTesting(false)
             
+            /*
+            .onAppear() {
+                print("GoToPostViewHome onApppear()")
+                self.disableNotificaitonResponse = false
+            }
+            
+            .onDisappear() {
+                print("GoToPostViewHome onDisappear()")
+                self.disableNotificaitonResponse = true
+            }
+            */
+            
             // Deep link to post from push notification
             .onReceive(notifications.$notificationData) { value in
                 print(".onReceive(notifications.$notificationData) Home")
+                print("appSessionStore.currentViewName \(appSessionStore.currentViewName)")
+                /*
+                if self.disableNotificaitonResponse {
+                    return
+                }
+                */
                 if let postId = value?.notification.request.content.userInfo["postid"], let body = value?.notification.request.content.body, let title = value?.notification.request.content.title {
                     if String("\(postId)").isInt && appSessionStore.showingPostId != Int(String("\(postId)")) ?? 0 {
                         
