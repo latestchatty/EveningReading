@@ -47,11 +47,14 @@ struct SignInView: View {
                         .background(Color("SignInField"))
                         .cornerRadius(4.0)
                         .padding(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0))
+                    
+                    /*
                     HStack() {
                         Spacer()
                         Text("Case Sensitive")
                             .foregroundColor(Color.primary)
                     }.padding(.bottom, 20)
+                    */
                     
                     SecureField("Password", text: $appSessionStore.signInPassword) {
                     }
