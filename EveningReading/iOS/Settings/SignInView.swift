@@ -44,6 +44,7 @@ struct SignInView: View {
                     TextField("Username", text: $appSessionStore.signInUsername)
                         .padding()
                         .textContentType(.username)
+                        .autocapitalization(.none)
                         .background(Color("SignInField"))
                         .cornerRadius(4.0)
                         .padding(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0))
