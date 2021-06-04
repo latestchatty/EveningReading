@@ -82,7 +82,11 @@ struct TagsWebView: UIViewRepresentable {
         override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
             if let o = object as? WKWebView, o == parent.webView {
                 if keyPath == #keyPath(WKWebView.estimatedProgress) {
-                    parent.webViewProgress = parent.webView?.estimatedProgress ?? 0
+                    let progress = parent.webView?.estimatedProgress ?? 0.25
+                    parent.webViewProgress = progress > 0.25 ? progress : 0.25
+                    if progress == 1.0 {
+                        parent.webViewLoading = false
+                    }
                 }
             }
         }
@@ -164,7 +168,6 @@ struct TagsWebView: UIViewRepresentable {
                                 }
                                 
                                 self.webView?.load(req)
-                                self.webViewLoading = false
                             }
                         }
                         
