@@ -19,7 +19,7 @@ struct TagsView: View {
             if self.webViewLoading {
                 ProgressView(value: self.webViewProgress, total: 1.0)
                     .progressViewStyle(LinearProgressViewStyle(tint: Color(UIColor.systemBlue)))
-                    .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
+                    .frame(maxWidth: .infinity)
             }
             
             // Push ThreadDetailView
@@ -27,7 +27,7 @@ struct TagsView: View {
                 EmptyView()
             }.isDetailLink(false).hidden().allowsHitTesting(false)
             
-            TagsWebView(webViewLoading: self.$webViewLoading, webViewProgress: self.$webViewProgress)
+            TagsWebView(webViewLoading: self.$webViewLoading, webViewProgress: self.$webViewProgress, goToPostId: self.$goToPostId, showingPost: self.$showingPost)
         }
 
         // View settings

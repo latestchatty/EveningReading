@@ -58,7 +58,7 @@ struct iPhoneHomeButtons: View {
             // Home Screen Navigation
             VStack {
                 // go to chat
-                NavigationLink(destination: ChatView(), isActive: $appSessionStore.showingChatView) {
+                NavigationLink(destination: ChatViewPreloaded(), isActive: $appSessionStore.showingChatView) {
                     EmptyView()
                 }.isDetailLink(false)
                 

@@ -14,9 +14,11 @@ import UIKit
 struct TagsWebView: UIViewRepresentable {
     @Binding var webViewLoading: Bool
     @Binding var webViewProgress: Double
+    @Binding var goToPostId: Int
+    @Binding var showingPost: Bool
     var webView: WKWebView?
 
-    init(webViewLoading: Binding<Bool>, webViewProgress: Binding<Double>) {
+    init(webViewLoading: Binding<Bool>, webViewProgress: Binding<Double>, goToPostId: Binding<Int>, showingPost: Binding<Bool>) {
         let processPool = WKProcessPool()
         let configuration = WKWebViewConfiguration()
         configuration.websiteDataStore = WKWebsiteDataStore.nonPersistent()
@@ -24,6 +26,8 @@ struct TagsWebView: UIViewRepresentable {
         self.webView = WKWebView(frame: CGRect.zero, configuration: configuration)
         self._webViewLoading = webViewLoading
         self._webViewProgress = webViewProgress
+        self._goToPostId = goToPostId
+        self._showingPost = showingPost
     }
 
     class Coordinator: NSObject, WKNavigationDelegate, WKUIDelegate {
@@ -38,11 +42,25 @@ struct TagsWebView: UIViewRepresentable {
             case .linkActivated:
                 if let url = navigationAction.request.url {
                     if url.absoluteString.contains("chatty?id") {
+                        // Open natively
+                        let postId = url.absoluteString.replacingOccurrences(of: "https://www.shacknews.com/chatty?id=", with: "")
+                        if postId.isInt {
+                            parent.goToPostId = Int(postId) ?? 0
+                            parent.showingPost = true
+                            decisionHandler(.cancel)
+                        } else {
+                            decisionHandler(.allow)
+                        }
+                        
+                        /*
+                        // Open in Safari
                         let shared = UIApplication.shared
                         if shared.canOpenURL(url) {
                             shared.open(url, options: [:], completionHandler: nil)
                         }
                         decisionHandler(.cancel)
+                        */
+                        
                     } else {
                         decisionHandler(.allow)
                     }
