@@ -21,8 +21,6 @@ struct ChatViewPreloaded: View {
     @State private var rootPostsDate: [Int : Double] = [:]
     @State private var rootPostsReplyCount: [Int : Int] = [:]
     @State private var rootPostsContributed: [Int : Bool] = [:]
-
-    //@State private var isPushNotificationAlertShowing: Bool = false
     
     private func filteredThreads() -> [ChatThread] {
         if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
@@ -55,7 +53,7 @@ struct ChatViewPreloaded: View {
     
     private func getUserData() {
         let user: String? = KeychainWrapper.standard.string(forKey: "Username")
-        self.username = user ?? ""
+        self.username = user?.lowercased() ?? ""
     }
 
     var body: some View {
@@ -71,15 +69,6 @@ struct ChatViewPreloaded: View {
                     Spacer().frame(maxWidth: .infinity).frame(height: 1)
                 }.id(9999999999991)
                 
-                /*
-                // All non-hidden threads
-                ForEach(filteredThreads(), id: \.threadId) { thread in
-                    ThreadRow(threadId: .constant(thread.threadId), activeThreadId: .constant(0))
-                        .padding(.bottom, -25)
-                        .id(thread.threadId)
-                }
-                */
-                
                 // All non-hidden threads
                 ForEach(rootPosts, id: \.self) { post in
                     ThreadPreviewView(activeThreadId: .constant(0), rootPost: post, rootPostBodyPreview: rootPostsBody[post.id] ?? "", rootPostDate: rootPostsDate[post.id] ?? 0, replyCount: rootPostsReplyCount[post.id] ?? 0, contributed: rootPostsContributed[post.id] ?? false)
@@ -93,7 +82,6 @@ struct ChatViewPreloaded: View {
                 }.id(9999999999993)
                 
             }
-            //.overlay(PushNotificationView(isAlertShowing: self.$isPushNotificationAlertShowing))
 
         }
         
