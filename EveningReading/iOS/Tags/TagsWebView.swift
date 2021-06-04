@@ -12,17 +12,21 @@ import WebKit
 import UIKit
 
 struct TagsWebView: UIViewRepresentable {
+    @Binding var webViewLoading: Bool
+    @Binding var webViewProgress: Double
     var webView: WKWebView?
 
-    init() {
+    init(webViewLoading: Binding<Bool>, webViewProgress: Binding<Double>) {
         let processPool = WKProcessPool()
         let configuration = WKWebViewConfiguration()
         configuration.websiteDataStore = WKWebsiteDataStore.nonPersistent()
         configuration.processPool = processPool
         self.webView = WKWebView(frame: CGRect.zero, configuration: configuration)
+        self._webViewLoading = webViewLoading
+        self._webViewProgress = webViewProgress
     }
 
-    class Coordinator: NSObject, WKUIDelegate, WKNavigationDelegate {
+    class Coordinator: NSObject, WKNavigationDelegate, WKUIDelegate {
         var parent: TagsWebView
 
         init(_ parent: TagsWebView) {
@@ -53,6 +57,18 @@ struct TagsWebView: UIViewRepresentable {
         func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
             //
         }
+        
+        func addProgressObserver() {
+            parent.webView?.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
+        }
+        
+        override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+            if let o = object as? WKWebView, o == parent.webView {
+                if keyPath == #keyPath(WKWebView.estimatedProgress) {
+                    parent.webViewProgress = parent.webView?.estimatedProgress ?? 0
+                }
+            }
+        }
     }
 
     func makeCoordinator() -> Coordinator {
@@ -63,6 +79,8 @@ struct TagsWebView: UIViewRepresentable {
         let tagsUrl = "https://www.shacknews.com/tags-user"
         let username: String = KeychainWrapper.standard.string(forKey: "Username") ?? ""
         let password: String = KeychainWrapper.standard.string(forKey: "Password") ?? ""
+        
+        context.coordinator.addProgressObserver()
         
         if username != "" && password != "" {
                     
@@ -129,6 +147,7 @@ struct TagsWebView: UIViewRepresentable {
                                 }
                                 
                                 self.webView?.load(req)
+                                self.webViewLoading = false
                             }
                         }
                         
@@ -144,7 +163,8 @@ struct TagsWebView: UIViewRepresentable {
         DispatchQueue.main.async {
             let url = URL(string: tagsUrl)!
             let request = URLRequest(url: url)
-            webView?.load(request)
+            self.webView?.load(request)
+            self.webViewLoading = false
         }
         
         return webView!

@@ -8,9 +8,8 @@
 import SwiftUI
 
 struct TagsView: View {
-    @State private var webViewProgress: Double = 0
     @State private var webViewLoading: Bool = true
-    @State private var hyperlinkUrl: String = "about:blank"
+    @State private var webViewProgress: Double = 0
     @State private var goToPostId: Int = 0
     @State private var showingPost: Bool = false
     
@@ -28,7 +27,7 @@ struct TagsView: View {
                 EmptyView()
             }.isDetailLink(false).hidden().allowsHitTesting(false)
             
-            TagsWebView()
+            TagsWebView(webViewLoading: self.$webViewLoading, webViewProgress: self.$webViewProgress)
         }
 
         // View settings
