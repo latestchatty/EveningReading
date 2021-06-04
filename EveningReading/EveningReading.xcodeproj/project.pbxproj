@@ -164,7 +164,6 @@
 		83AA1966264656BD00556E69 /* KeychainWrapperSubscript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA195E264656BD00556E69 /* KeychainWrapperSubscript.swift */; };
 		83AA1967264656BD00556E69 /* KeychainWrapperSubscript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA195E264656BD00556E69 /* KeychainWrapperSubscript.swift */; };
 		83AA196B2646648900556E69 /* watchOSGuidelines.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19682646648900556E69 /* watchOSGuidelines.swift */; };
-		83AA196D2646685500556E69 /* TagsWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA196C2646685500556E69 /* TagsWebView.swift */; };
 		83AA19712646DE7100556E69 /* TagPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19702646DE7100556E69 /* TagPostView.swift */; };
 		83AA19782646E49A00556E69 /* ComposePostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19742646DEA100556E69 /* ComposePostView.swift */; };
 		83AA198026470B0900556E69 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA197F26470B0900556E69 /* AlertView.swift */; };
@@ -199,6 +198,7 @@
 		83AA19D3264ADDFF00556E69 /* LinkViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19D2264ADDFF00556E69 /* LinkViewer.swift */; };
 		83AA19D8264B367100556E69 /* PostPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19D7264B367100556E69 /* PostPreviewView.swift */; };
 		83AA19DA264BFBF100556E69 /* PostExpandedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19D9264BFBF100556E69 /* PostExpandedView.swift */; };
+		83AB388D266A60BC000A67B6 /* TagsWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AB388C266A60BC000A67B6 /* TagsWebView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -356,7 +356,6 @@
 		83AA195D264656BD00556E69 /* KeychainWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainWrapper.swift; sourceTree = "<group>"; };
 		83AA195E264656BD00556E69 /* KeychainWrapperSubscript.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainWrapperSubscript.swift; sourceTree = "<group>"; };
 		83AA19682646648900556E69 /* watchOSGuidelines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = watchOSGuidelines.swift; sourceTree = "<group>"; };
-		83AA196C2646685500556E69 /* TagsWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsWebView.swift; sourceTree = "<group>"; };
 		83AA19702646DE7100556E69 /* TagPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagPostView.swift; sourceTree = "<group>"; };
 		83AA19742646DEA100556E69 /* ComposePostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposePostView.swift; sourceTree = "<group>"; };
 		83AA197F26470B0900556E69 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
@@ -387,6 +386,7 @@
 		83AA19D9264BFBF100556E69 /* PostExpandedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostExpandedView.swift; sourceTree = "<group>"; };
 		83AA19DD264C629600556E69 /* EveningReading.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EveningReading.entitlements; sourceTree = "<group>"; };
 		83AA19EA264F24FC00556E69 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		83AB388C266A60BC000A67B6 /* TagsWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsWebView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -642,7 +642,7 @@
 			isa = PBXGroup;
 			children = (
 				83398120263F2E39005614E8 /* TagsView.swift */,
-				83AA196C2646685500556E69 /* TagsWebView.swift */,
+				83AB388C266A60BC000A67B6 /* TagsWebView.swift */,
 			);
 			path = Tags;
 			sourceTree = "<group>";
@@ -1236,6 +1236,7 @@
 				83AA19932647110300556E69 /* ImagePickerView.swift in Sources */,
 				833980CE263C9137005614E8 /* iPhoneContentView.swift in Sources */,
 				83398127263F2E59005614E8 /* InboxView.swift in Sources */,
+				83AB388D266A60BC000A67B6 /* TagsWebView.swift in Sources */,
 				83398121263F2E39005614E8 /* TagsView.swift in Sources */,
 				833EE9E226454DFB00345A1D /* WebAuthenticationPresentationModifier.swift in Sources */,
 				833EE9DC26454DF100345A1D /* SafariViewPresenter.swift in Sources */,
@@ -1287,7 +1288,6 @@
 				83A85CF5265570BD007EBAC3 /* NotificationsView.swift in Sources */,
 				83AA195726464FBC00556E69 /* BlurView.swift in Sources */,
 				830292F12644C57F00B974B3 /* ReplyLineBuilder.swift in Sources */,
-				83AA196D2646685500556E69 /* TagsWebView.swift in Sources */,
 				833817922639AC18007A8B28 /* EveningReadingApp.swift in Sources */,
 				83AA19D3264ADDFF00556E69 /* LinkViewer.swift in Sources */,
 				83AA19A9264831D300556E69 /* ClearHiddenView.swift in Sources */,
