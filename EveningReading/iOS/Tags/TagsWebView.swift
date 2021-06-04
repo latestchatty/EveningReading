@@ -24,6 +24,7 @@ struct TagsWebView: UIViewRepresentable {
         configuration.websiteDataStore = WKWebsiteDataStore.nonPersistent()
         configuration.processPool = processPool
         self.webView = WKWebView(frame: CGRect.zero, configuration: configuration)
+        
         self._webViewLoading = webViewLoading
         self._webViewProgress = webViewProgress
         self._goToPostId = goToPostId
@@ -51,7 +52,6 @@ struct TagsWebView: UIViewRepresentable {
                         } else {
                             decisionHandler(.allow)
                         }
-                        
                         /*
                         // Open in Safari
                         let shared = UIApplication.shared
@@ -60,7 +60,6 @@ struct TagsWebView: UIViewRepresentable {
                         }
                         decisionHandler(.cancel)
                         */
-                        
                     } else {
                         decisionHandler(.allow)
                     }

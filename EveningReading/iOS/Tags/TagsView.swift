@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TagsView: View {
     @State private var webViewLoading: Bool = true
-    @State private var webViewProgress: Double = 0
+    @State private var webViewProgress: Double = 0.25
     @State private var goToPostId: Int = 0
     @State private var showingPost: Bool = false
     
@@ -22,7 +22,6 @@ struct TagsView: View {
                     .frame(maxWidth: .infinity)
             }
             
-            // Push ThreadDetailView
             NavigationLink(destination: ThreadDetailView(threadId: .constant(0), postId: self.$goToPostId, replyCount: .constant(-1), isSearchResult: .constant(true)), isActive: self.$showingPost) {
                 EmptyView()
             }.isDetailLink(false).hidden().allowsHitTesting(false)
