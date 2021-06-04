@@ -59,10 +59,10 @@ struct ThreadPreviewView: View {
             HStack {
                 GeometryReader { categoryGeo in
                     Path { categoryPath in
-                        categoryPath.move(to: CGPoint(x: 0, y: 0))
-                        categoryPath.addLine(to: CGPoint(x: 0, y: categoryGeo.size.height))
-                        categoryPath.addLine(to: CGPoint(x: categoryGeo.size.width, y: categoryGeo.size.height))
-                        categoryPath.addLine(to: CGPoint(x: categoryGeo.size.width, y: 0))
+                        categoryPath.move(to: CGPoint(x: 0, y: 18))
+                        categoryPath.addLine(to: CGPoint(x: 0, y: categoryGeo.size.height - 18))
+                        categoryPath.addLine(to: CGPoint(x: categoryGeo.size.width, y: categoryGeo.size.height - 18))
+                        categoryPath.addLine(to: CGPoint(x: categoryGeo.size.width, y: 18))
                     }
                     .fill(ThreadCategoryColor[self.rootPost.category]!)
                 }
@@ -84,11 +84,11 @@ struct ThreadPreviewView: View {
 
                     Spacer()
 
-                    //LolView(lols: self.rootPost.lols, expanded: true, postId: self.rootPost.threadId)
+                    LolView(lols: self.rootPost.lols, expanded: true, postId: self.rootPost.threadId)
 
                     ReplyCountView(replyCount: self.replyCount)
                     
-                    //TimeRemainingIndicator(percent: .constant(self.rootPostDate))
+                    TimeRemainingIndicator(percent: .constant(self.rootPostDate))
                             .frame(width: 10, height: 10)
                     
                 }
