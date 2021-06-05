@@ -319,9 +319,9 @@ class MessageStore: ObservableObject {
     init(service: MessageService) {
         self.service = service
         #if os(iOS)
-        messageCountTimer = Timer.scheduledTimer(withTimeInterval: 30, repeats: true) { timer in
-            self.getCount()
-        }
+        //messageCountTimer = Timer.scheduledTimer(withTimeInterval: 30, repeats: true) { timer in
+        //    self.getCount()
+        //}
         loadPostTemplate()
         #endif
     }

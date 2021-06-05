@@ -75,6 +75,7 @@ struct ThreadDetailView: View {
         } else {
             // Get thread data for a linked/pushed post
             if self.postId > 0 {
+                print("getThreadData by postId \(self.postId)")
                 chatStore.getThreadByPost(postId: self.postId) {
                     if let thread = chatStore.searchedThreads.first {
                         setThreadData(thread)
@@ -84,7 +85,9 @@ struct ThreadDetailView: View {
                             self.selectedPostRichText = RichTextBuilder.getRichText(postBody: searchedPost.body)
                             self.selectedPost = self.postId
                             if self.postId != self.threadId {
-                                self.chatStore.scrollTargetThread = self.postId
+                                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
+                                    self.chatStore.scrollTargetThread = self.postId
+                                }
                             }
                         }
                         self.showThread = true
@@ -94,6 +97,7 @@ struct ThreadDetailView: View {
                 }
             } else {
                 // Get thread data from the chatty
+                print("getThreadData by thread")
                 if let thread = chatStore.threads.filter({ return $0.threadId == self.threadId }).first {
                     setThreadData(thread)
                     if UIDevice.current.userInterfaceIdiom == .phone {
@@ -375,16 +379,25 @@ struct ThreadDetailView: View {
         
         // If refreshing thread after posting
         .onReceive(chatStore.$didGetThreadStart) { value in
+            print("chatStore.$didGetThreadStart \(chatStore.activeThreadId) == \(self.threadId)")
             if value && self.chatStore.didSubmitPost && chatStore.activeThreadId == self.threadId {
+                print("get thread")
                 chatStore.didGetThreadStart = false
                 self.selectedPost = 0
                 self.isGettingThread = true
+                /*
+                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(15)) {
+                    chatStore.didGetThreadFinish = true
+                }
+                */
             }
         }
         
         // When done refreshing (after posting or pull to refresh)
         .onReceive(chatStore.$didGetThreadFinish) { value in
+            print("chatStore.$didGetThreadFinish \(chatStore.activeThreadId) == \(self.threadId)")
             if value && chatStore.activeThreadId == self.threadId && canRefresh {
+                print("process thread")
                 self.canRefresh = false
                 self.chatStore.didSubmitPost = false
                 self.chatStore.didGetThreadStart = false
@@ -414,12 +427,14 @@ struct ThreadDetailView: View {
             }
             
             func getData() -> Void {
+                print("getData begin")
                 getUserData()
                 getThreadData()
                 if UIDevice.current.userInterfaceIdiom == .phone {
                     getPostList(parentId: self.threadId)
                 }
                 self.threadNavigationLocation = CGPoint(x: self.appSessionStore.threadNavigationLocationX, y: self.appSessionStore.threadNavigationLocationY)
+                print("getData end")
             }
             
             if self.postId > 0 || self.replyCount >= self.loadingLimit {
@@ -436,6 +451,7 @@ struct ThreadDetailView: View {
         // Stop posting, refreshing or tagging
         .onDisappear {
             self.postList = [ChatPosts]()
+            self.postStrength = [Int: Double]()
             self.chatStore.didSubmitPost = false
             self.chatStore.didGetThreadStart = false
             self.chatStore.didGetThreadFinish = false

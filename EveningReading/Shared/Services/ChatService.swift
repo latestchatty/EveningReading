@@ -569,6 +569,7 @@ class ChatStore: ObservableObject {
     // Load any thread
     @Published private(set) var searchedThreads: [ChatThread] = []
     func getThreadByPost(postId: Int, completion: @escaping ()->()) {
+        print("ChatService.getThreadByPost")
         service.getThreadByPost(postId: postId) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
