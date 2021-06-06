@@ -75,7 +75,6 @@ struct ThreadDetailView: View {
         } else {
             // Get thread data for a linked/pushed post
             if self.postId > 0 {
-                print("getThreadData by postId \(self.postId)")
                 chatStore.getThreadByPost(postId: self.postId) {
                     if let thread = chatStore.searchedThreads.first {
                         setThreadData(thread)
@@ -97,7 +96,6 @@ struct ThreadDetailView: View {
                 }
             } else {
                 // Get thread data from the chatty
-                print("getThreadData by thread")
                 if let thread = chatStore.threads.filter({ return $0.threadId == self.threadId }).first {
                     setThreadData(thread)
                     if UIDevice.current.userInterfaceIdiom == .phone {
@@ -379,9 +377,7 @@ struct ThreadDetailView: View {
         
         // If refreshing thread after posting
         .onReceive(chatStore.$didGetThreadStart) { value in
-            print("chatStore.$didGetThreadStart \(chatStore.activeThreadId) == \(self.threadId)")
             if value && self.chatStore.didSubmitPost && chatStore.activeThreadId == self.threadId {
-                print("get thread")
                 chatStore.didGetThreadStart = false
                 self.selectedPost = 0
                 self.isGettingThread = true
@@ -395,9 +391,7 @@ struct ThreadDetailView: View {
         
         // When done refreshing (after posting or pull to refresh)
         .onReceive(chatStore.$didGetThreadFinish) { value in
-            print("chatStore.$didGetThreadFinish \(chatStore.activeThreadId) == \(self.threadId)")
             if value && chatStore.activeThreadId == self.threadId && canRefresh {
-                print("process thread")
                 self.canRefresh = false
                 self.chatStore.didSubmitPost = false
                 self.chatStore.didGetThreadStart = false
