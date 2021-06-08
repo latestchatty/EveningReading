@@ -11,6 +11,7 @@
 		830292F22644C57F00B974B3 /* ReplyLineBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830292F02644C57F00B974B3 /* ReplyLineBuilder.swift */; };
 		830292F32644C57F00B974B3 /* ReplyLineBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830292F02644C57F00B974B3 /* ReplyLineBuilder.swift */; };
 		833685C2266FAB2B00ACE618 /* macOSGuidelinesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833685C1266FAB2B00ACE618 /* macOSGuidelinesView.swift */; };
+		833685C4266FB97A00ACE618 /* macOSAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833685C3266FB97A00ACE618 /* macOSAccountView.swift */; };
 		833817922639AC18007A8B28 /* EveningReadingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8338177F2639AC17007A8B28 /* EveningReadingApp.swift */; };
 		833817932639AC18007A8B28 /* EveningReadingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8338177F2639AC17007A8B28 /* EveningReadingApp.swift */; };
 		833817952639AC18007A8B28 /* macOSContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833817802639AC17007A8B28 /* macOSContentView.swift */; };
@@ -247,6 +248,7 @@
 /* Begin PBXFileReference section */
 		830292F02644C57F00B974B3 /* ReplyLineBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyLineBuilder.swift; sourceTree = "<group>"; };
 		833685C1266FAB2B00ACE618 /* macOSGuidelinesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSGuidelinesView.swift; sourceTree = "<group>"; };
+		833685C3266FB97A00ACE618 /* macOSAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSAccountView.swift; sourceTree = "<group>"; };
 		8338177F2639AC17007A8B28 /* EveningReadingApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EveningReadingApp.swift; sourceTree = "<group>"; };
 		833817802639AC17007A8B28 /* macOSContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSContentView.swift; sourceTree = "<group>"; };
 		833817812639AC18007A8B28 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -761,6 +763,7 @@
 			isa = PBXGroup;
 			children = (
 				833981672640439F005614E8 /* macOSSettingsView.swift */,
+				833685C3266FB97A00ACE618 /* macOSAccountView.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -1342,6 +1345,7 @@
 				833685C2266FAB2B00ACE618 /* macOSGuidelinesView.swift in Sources */,
 				833981692640439F005614E8 /* macOSSettingsView.swift in Sources */,
 				83AA19BD26485B1F00556E69 /* MessageService.swift in Sources */,
+				833685C4266FB97A00ACE618 /* macOSAccountView.swift in Sources */,
 				8339818526406814005614E8 /* Globals.swift in Sources */,
 				8339810F263F1028005614E8 /* StringExtensions.swift in Sources */,
 				83AA19332645E36600556E69 /* RefreshNoticeView.swift in Sources */,

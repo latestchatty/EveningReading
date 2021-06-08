@@ -27,7 +27,7 @@ class AppSessionStore : ObservableObject {
     @Published var showingPushNotificationThread = false
     @Published var currentViewName = ""
     
-    // Deep linking to posts
+    // Links and notifications open posts
     @Published var showingPost = false
     @Published var showingPostId = 0
     @Published var showingPostWithId: [Int : Bool] = [:]
@@ -146,6 +146,20 @@ class AppSessionStore : ObservableObject {
     #endif
     
     // Auth
+    #if os(macOS)
+    @Published var username: String = "" {
+        didSet {
+            let defaults = UserDefaults.standard
+            defaults.set(username, forKey: "Username")
+        }
+    }
+    @Published var password: String = "" {
+        didSet {
+            let defaults = UserDefaults.standard
+            defaults.set(password, forKey: "Password")
+        }
+    }
+    #endif
     @Published var signInUsername = ""
     @Published var signInPassword = ""
     @Published var showingSignInWarning = false
@@ -156,8 +170,14 @@ class AppSessionStore : ObservableObject {
             if !isSignedIn {
                 self.signInUsername = ""
                 self.signInPassword = ""
+                #if os(iOS)
                 _ = KeychainWrapper.standard.removeObject(forKey: "Username")
                 _ = KeychainWrapper.standard.removeObject(forKey: "Password")
+                #endif
+                #if os(macOS)
+                self.username = ""
+                self.password = ""
+                #endif
             }
         }
     }
@@ -221,7 +241,11 @@ class AppSessionStore : ObservableObject {
         
         // Auth
         self.isSignedIn = defaults.object(forKey: "IsSignedIn") as? Bool ?? false
-  
+        #if os(macOS)
+        self.username = defaults.object(forKey: "Username") as? String ?? ""
+        self.password = defaults.object(forKey: "Password") as? String ?? ""
+        #endif
+        
 /*
 // Reset on startup
 // ResetDarkMode
@@ -255,8 +279,14 @@ if !resetNotifications {
     }
     
     func clearAuth() {
+        #if os(iOS)
         _ = KeychainWrapper.standard.removeObject(forKey: "Username")
         _ = KeychainWrapper.standard.removeObject(forKey: "Password")
+        #endif
+        #if os(macOS)
+        self.username = ""
+        self.password = ""
+        #endif
         self.isSignedIn = false
         self.showingSignInWarning = true
     }
@@ -268,6 +298,7 @@ if !resetNotifications {
                 switch result {
                 case .success(let authSuccess):
                     if authSuccess {
+                        #if os(iOS)
                         let didSaveUser: Bool = KeychainWrapper.standard.set(self?.signInUsername ?? "", forKey: "Username")
                         let didSavePassword: Bool = KeychainWrapper.standard.set(self?.signInPassword ?? "", forKey: "Password")
                         if didSaveUser && didSavePassword {
@@ -275,6 +306,12 @@ if !resetNotifications {
                         } else {
                             self?.clearAuth()
                         }
+                        #endif
+                        #if os(macOS)
+                        self?.username = self?.signInUsername ?? ""
+                        self?.password = self?.signInPassword ?? ""
+                        self?.isSignedIn = true
+                        #endif
                     } else {
                         self?.clearAuth()
                     }
