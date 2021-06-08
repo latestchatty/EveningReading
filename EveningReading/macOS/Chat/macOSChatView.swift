@@ -11,7 +11,7 @@ struct macOSChatView: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var chatStore: ChatStore
     
-    @State private var showingGuidelinesView = true
+    @State private var showingGuidelinesView = false
     @State private var guidelinesAccepted = false
     
     private func fetchChat() {
@@ -32,18 +32,23 @@ struct macOSChatView: View {
     }
     
     var body: some View {
+        
+        // Check if guidelines accepted
+        Spacer().frame(width: 0, height: 0)
+        .onAppear() {
+            DispatchQueue.main.async {
+                let defaults = UserDefaults.standard
+                //defaults.removeObject(forKey: "GuidelinesAccepted")
+                self.guidelinesAccepted = defaults.object(forKey: "GuidelinesAccepted") as? Bool ?? false
+                self.showingGuidelinesView = !self.guidelinesAccepted
+            }
+        }
+        .navigationTitle("Chat")
+
+        
         // Guidelines
         if self.showingGuidelinesView {
             macOSGuidelinesView(showingGuidelinesView: $showingGuidelinesView, guidelinesAccepted: self.$guidelinesAccepted)
-            .onAppear() {
-                DispatchQueue.main.async {
-                    let defaults = UserDefaults.standard
-                    //defaults.removeObject(forKey: "GuidelinesAccepted")
-                    self.guidelinesAccepted = defaults.object(forKey: "GuidelinesAccepted") as? Bool ?? false
-                    self.showingGuidelinesView = !self.guidelinesAccepted
-                }
-            }
-            .navigationTitle("Chat")
         }
         
         // Threads
@@ -70,7 +75,6 @@ struct macOSChatView: View {
                 .onAppear(perform: fetchChat)
             }
             .frame(maxHeight: .infinity)
-            .navigationTitle("Chat")
         }
     }
 }
