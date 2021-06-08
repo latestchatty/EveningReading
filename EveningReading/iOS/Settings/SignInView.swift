@@ -93,6 +93,7 @@ struct SignInView: View {
                 if appSessionStore.isSignedIn {
                     self.timer.upstream.connect().cancel()
                     NotificationStore(service: .init()).register()
+                    NotificationStore(service: .init()).registernew()
                     DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(50)) {
                         presentationMode.wrappedValue.dismiss()
                     }

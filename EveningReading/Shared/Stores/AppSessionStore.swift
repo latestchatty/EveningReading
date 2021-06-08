@@ -164,6 +164,7 @@ class AppSessionStore : ObservableObject {
     
     // Push Notifications
     @Published var pushNotifications = [PushNotification]()
+    @Published var didRegisterForPush = false
     /*
     @Published var pushNotifications = [PushNotification]() {
         didSet {
