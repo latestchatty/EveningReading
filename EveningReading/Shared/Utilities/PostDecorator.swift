@@ -23,7 +23,18 @@ class PostDecorator {
     
     // Check if participated in thread
     static func checkParticipatedStatus(thread: ChatThread, author: String) -> Bool {
+        #if os(iOS)
         let username: String? = KeychainWrapper.standard.string(forKey: "Username")?.lowercased()
+        #endif
+        
+        #if os(macOS)
+        var username = UserDefaults.standard.object(forKey: "Username") as? String ?? ""
+        username = username.lowercased()
+        #endif
+        
+        #if os(watchOS)
+        let username = ""
+        #endif
 
         let contributedReplies = thread.posts.filter({ return $0.author.lowercased() == username }).count
         

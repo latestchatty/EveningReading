@@ -58,6 +58,7 @@ struct FullThreadView: View {
             let threads = chatStore.threads.filter({ return self.appSessionStore.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !self.appSessionStore.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
             
             if let thread = threads.filter({ return $0.threadId == self.threadId }).first {
+                self.contributed = PostDecorator.checkParticipatedStatus(thread: thread, author: self.rootPostAuthor)
                 if let rootPost = thread.posts.filter({ return $0.parentId == 0 }).first {
                     self.rootPostCategory = rootPost.category
                     self.rootPostAuthor = rootPost.author
@@ -338,6 +339,7 @@ struct FullThreadView: View {
                                                 .font(.body)
                                                 .fontWeight(postStrength[post.id] != nil ? PostWeight[postStrength[post.id]!] : .regular)
                                                 .opacity(postStrength[post.id] != nil ? postStrength[post.id]! : 0.75)
+                                                .foregroundColor(appSessionStore.username.lowercased() == post.author.lowercased() ? Color(NSColor.systemTeal) : Color.primary)
                                                 .lineLimit(1)
                                             Spacer()
                                             
