@@ -22,10 +22,12 @@ struct macOSSettingsView: View {
     var body: some View {
         VStack (alignment: .leading) {
             Form {
+                /*
                 Section(header: Text("PREFERENCES")) {
                     PreferencesView()
                         .environmentObject(appSessionStore)
                 }
+                */
                 Section(header: Text("CATEGORIES")) {
                     CategoriesView()
                         .environmentObject(appSessionStore)

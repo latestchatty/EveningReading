@@ -10,6 +10,7 @@
 		830292F12644C57F00B974B3 /* ReplyLineBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830292F02644C57F00B974B3 /* ReplyLineBuilder.swift */; };
 		830292F22644C57F00B974B3 /* ReplyLineBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830292F02644C57F00B974B3 /* ReplyLineBuilder.swift */; };
 		830292F32644C57F00B974B3 /* ReplyLineBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830292F02644C57F00B974B3 /* ReplyLineBuilder.swift */; };
+		833685C2266FAB2B00ACE618 /* macOSGuidelinesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833685C1266FAB2B00ACE618 /* macOSGuidelinesView.swift */; };
 		833817922639AC18007A8B28 /* EveningReadingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8338177F2639AC17007A8B28 /* EveningReadingApp.swift */; };
 		833817932639AC18007A8B28 /* EveningReadingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8338177F2639AC17007A8B28 /* EveningReadingApp.swift */; };
 		833817952639AC18007A8B28 /* macOSContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833817802639AC17007A8B28 /* macOSContentView.swift */; };
@@ -245,6 +246,7 @@
 
 /* Begin PBXFileReference section */
 		830292F02644C57F00B974B3 /* ReplyLineBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyLineBuilder.swift; sourceTree = "<group>"; };
+		833685C1266FAB2B00ACE618 /* macOSGuidelinesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSGuidelinesView.swift; sourceTree = "<group>"; };
 		8338177F2639AC17007A8B28 /* EveningReadingApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EveningReadingApp.swift; sourceTree = "<group>"; };
 		833817802639AC17007A8B28 /* macOSContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSContentView.swift; sourceTree = "<group>"; };
 		833817812639AC18007A8B28 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -717,6 +719,7 @@
 				83398153263F69E0005614E8 /* macOSChatView.swift */,
 				8339819D264128B2005614E8 /* FullThreadView.swift */,
 				83AA19312645E36600556E69 /* RefreshNoticeView.swift */,
+				833685C1266FAB2B00ACE618 /* macOSGuidelinesView.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -1336,6 +1339,7 @@
 				83AA1960264656BD00556E69 /* KeychainItemAccessibility.swift in Sources */,
 				83AA1963264656BD00556E69 /* KeychainWrapper.swift in Sources */,
 				833EE9CC2644DE1A00345A1D /* RichTextView.swift in Sources */,
+				833685C2266FAB2B00ACE618 /* macOSGuidelinesView.swift in Sources */,
 				833981692640439F005614E8 /* macOSSettingsView.swift in Sources */,
 				83AA19BD26485B1F00556E69 /* MessageService.swift in Sources */,
 				8339818526406814005614E8 /* Globals.swift in Sources */,
@@ -1527,7 +1531,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = EveningReading.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 86;
+				CURRENT_PROJECT_VERSION = 87;
 				DEVELOPMENT_TEAM = U3SY428MXR;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
@@ -1536,7 +1540,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.943;
+				MARKETING_VERSION = 1.944;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrishodge.eveningreading;
 				PRODUCT_NAME = EveningReading;
 				SDKROOT = iphoneos;
@@ -1552,7 +1556,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = EveningReading.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 86;
+				CURRENT_PROJECT_VERSION = 87;
 				DEVELOPMENT_TEAM = U3SY428MXR;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
@@ -1561,7 +1565,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.943;
+				MARKETING_VERSION = 1.944;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrishodge.eveningreading;
 				PRODUCT_NAME = EveningReading;
 				SDKROOT = iphoneos;
@@ -1579,7 +1583,7 @@
 				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 86;
+				CURRENT_PROJECT_VERSION = 87;
 				DEVELOPMENT_TEAM = U3SY428MXR;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -1589,7 +1593,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 1.943;
+				MARKETING_VERSION = 1.944;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrishodge.eveningreading;
 				PRODUCT_NAME = EveningReading;
 				SDKROOT = macosx;
@@ -1605,7 +1609,7 @@
 				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 86;
+				CURRENT_PROJECT_VERSION = 87;
 				DEVELOPMENT_TEAM = U3SY428MXR;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -1615,7 +1619,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 1.943;
+				MARKETING_VERSION = 1.944;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrishodge.eveningreading;
 				PRODUCT_NAME = EveningReading;
 				SDKROOT = macosx;
@@ -1630,11 +1634,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 86;
+				CURRENT_PROJECT_VERSION = 87;
 				DEVELOPMENT_TEAM = U3SY428MXR;
 				IBSC_MODULE = EveningReading_Extension;
 				INFOPLIST_FILE = EveningReading/Info.plist;
-				MARKETING_VERSION = 1.943;
+				MARKETING_VERSION = 1.944;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrishodge.eveningreading.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -1652,11 +1656,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 86;
+				CURRENT_PROJECT_VERSION = 87;
 				DEVELOPMENT_TEAM = U3SY428MXR;
 				IBSC_MODULE = EveningReading_Extension;
 				INFOPLIST_FILE = EveningReading/Info.plist;
-				MARKETING_VERSION = 1.943;
+				MARKETING_VERSION = 1.944;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrishodge.eveningreading.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -1672,7 +1676,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 86;
+				CURRENT_PROJECT_VERSION = 87;
 				DEVELOPMENT_ASSET_PATHS = "\"EveningReading Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = U3SY428MXR;
 				ENABLE_PREVIEWS = YES;
@@ -1682,7 +1686,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.943;
+				MARKETING_VERSION = 1.944;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrishodge.eveningreading.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
@@ -1697,7 +1701,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 86;
+				CURRENT_PROJECT_VERSION = 87;
 				DEVELOPMENT_ASSET_PATHS = "\"EveningReading Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = U3SY428MXR;
 				ENABLE_PREVIEWS = YES;
@@ -1707,7 +1711,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.943;
+				MARKETING_VERSION = 1.944;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrishodge.eveningreading.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;

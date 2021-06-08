@@ -43,12 +43,13 @@ struct FullThreadView: View {
         if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
         {
             if let thread = chatData.threads.filter({ return $0.threadId == self.threadId }).first {
-                let rootPost = thread.posts.filter({ return $0.parentId == 0 }).first
-                self.rootPostCategory = rootPost?.category ?? "ontopic"
-                self.rootPostAuthor = rootPost?.author ?? ""
-                self.rootPostBody = rootPost?.body ?? ""
-                self.rootPostDate = rootPost?.date ?? "2020-08-14T21:05:00Z"
-                self.rootPostLols = rootPost?.lols ?? [ChatLols]()
+                if let rootPost = thread.posts.filter({ return $0.parentId == 0 }).first {
+                    self.rootPostCategory = rootPost.category
+                    self.rootPostAuthor = rootPost.author
+                    self.rootPostBody = rootPost.body
+                    self.rootPostDate = rootPost.date
+                    self.rootPostLols = rootPost.lols
+                }
                 self.replyCount = thread.posts.count - 1
                 self.recentPosts = thread.posts.filter({ return $0.parentId != 0 }).sorted(by: { $0.id > $1.id })
                 
@@ -57,12 +58,13 @@ struct FullThreadView: View {
             let threads = chatStore.threads.filter({ return self.appSessionStore.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !self.appSessionStore.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
             
             if let thread = threads.filter({ return $0.threadId == self.threadId }).first {
-                let rootPost = thread.posts.filter({ return $0.parentId == 0 }).first
-                self.rootPostCategory = rootPost?.category ?? "ontopic"
-                self.rootPostAuthor = rootPost?.author ?? ""
-                self.rootPostBody = rootPost?.body ?? ""
-                self.rootPostDate = rootPost?.date ?? "2020-08-14T21:05:00Z"
-                self.rootPostLols = rootPost?.lols ?? [ChatLols]()
+                if let rootPost = thread.posts.filter({ return $0.parentId == 0 }).first {
+                    self.rootPostCategory = rootPost.category
+                    self.rootPostAuthor = rootPost.author
+                    self.rootPostBody = rootPost.body
+                    self.rootPostDate = rootPost.date
+                    self.rootPostLols = rootPost.lols
+                }
                 self.replyCount = thread.posts.count - 1
                 self.recentPosts = thread.posts.filter({ return $0.parentId != 0 }).sorted(by: { $0.id > $1.id })
             }

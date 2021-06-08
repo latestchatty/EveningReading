@@ -51,6 +51,7 @@ struct EveningReadingApp: App {
                     .environmentObject(appSessionStore)
                     .environmentObject(chatStore)
                     .environmentObject(articleStore)
+                    .environmentObject(messageStore)
             #endif
         }
         /*

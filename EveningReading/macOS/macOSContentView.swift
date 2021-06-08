@@ -16,6 +16,7 @@ struct macOSContentView: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var chatStore: ChatStore
     @EnvironmentObject var articleStore: ArticleStore
+    @EnvironmentObject var messageStore: MessageStore
         
     @State private var showingChatView = false
     
@@ -108,5 +109,6 @@ struct macOSContentView_Previews: PreviewProvider {
             .environmentObject(AppSessionStore(service: AuthService()))
             .environmentObject(ChatStore(service: ChatService()))
             .environmentObject(ArticleStore(service: ArticleService()))
+            .environmentObject(MessageStore(service: MessageService()))
     }
 }

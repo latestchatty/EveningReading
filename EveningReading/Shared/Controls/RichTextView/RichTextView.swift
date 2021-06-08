@@ -612,7 +612,6 @@ class RichTextBuilder {
                     // Article or Cortex
                     richText.append(.plainTextBlock(lineOfText))
                     lineOfText = [InlineText]()
-                    print("linkHref \(linkHref)")
                     richText.append(.link([LinkBlock(hyperlink: linkHref, description: markup.postMarkup)]))
                 }
             } else {

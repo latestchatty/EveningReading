@@ -11,6 +11,9 @@ struct macOSChatView: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var chatStore: ChatStore
     
+    @State private var showingGuidelinesView = true
+    @State private var guidelinesAccepted = false
+    
     private func fetchChat() {
         if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil || chatStore.threads.count > 0
         {
@@ -29,29 +32,46 @@ struct macOSChatView: View {
     }
     
     var body: some View {
-        ScrollView {
-            LazyVStack (alignment: .leading) {
-                ScrollViewReader { scrollProxy in
-                    VStack {
-                        Spacer().frame(maxWidth: .infinity).frame(height: 30)
-                    }.id(9999999999991)
-                    .onReceive(chatStore.$threads) { threads in
-                        if threads.count < 1 {
-                            scrollProxy.scrollTo(9999999999991)
-                        }
-                    }
-                    ForEach(filteredThreads(), id: \.threadId) { thread in
-                        FullThreadView(threadId: .constant(thread.threadId))
-                    }
-                    VStack {
-                        Spacer().frame(maxWidth: .infinity).frame(height: 30)
-                    }.id(9999999999993)
+        // Guidelines
+        if self.showingGuidelinesView {
+            macOSGuidelinesView(showingGuidelinesView: $showingGuidelinesView, guidelinesAccepted: self.$guidelinesAccepted)
+            .onAppear() {
+                DispatchQueue.main.async {
+                    let defaults = UserDefaults.standard
+                    //defaults.removeObject(forKey: "GuidelinesAccepted")
+                    self.guidelinesAccepted = defaults.object(forKey: "GuidelinesAccepted") as? Bool ?? false
+                    self.showingGuidelinesView = !self.guidelinesAccepted
                 }
             }
-            .onAppear(perform: fetchChat)
+            .navigationTitle("Chat")
         }
-        .frame(maxHeight: .infinity)
-        .navigationTitle("Chat")
+        
+        // Threads
+        if self.guidelinesAccepted {
+            ScrollView {
+                LazyVStack (alignment: .leading) {
+                    ScrollViewReader { scrollProxy in
+                        VStack {
+                            Spacer().frame(maxWidth: .infinity).frame(height: 30)
+                        }.id(9999999999991)
+                        .onReceive(chatStore.$threads) { threads in
+                            if threads.count < 1 {
+                                scrollProxy.scrollTo(9999999999991)
+                            }
+                        }
+                        ForEach(filteredThreads(), id: \.threadId) { thread in
+                            FullThreadView(threadId: .constant(thread.threadId))
+                        }
+                        VStack {
+                            Spacer().frame(maxWidth: .infinity).frame(height: 30)
+                        }.id(9999999999993)
+                    }
+                }
+                .onAppear(perform: fetchChat)
+            }
+            .frame(maxHeight: .infinity)
+            .navigationTitle("Chat")
+        }
     }
 }
 

@@ -20,14 +20,10 @@ struct ReplyCountView: View {
                     .foregroundColor(Color(UIColor.systemGray))
         #endif
         #if os(OSX)
-            if self.replyCount > 0 {
-                Text("\(self.replyCount)")
-                    .font(.body) +
-                Text(self.replyCount == 1 ? " Reply" : " Replies")
-                    .font(.body)
-            } else {
-                EmptyView()
-            }
+            Text("\(self.replyCount)")
+                .font(.body) +
+            Text(self.replyCount == 1 ? " Reply" : " Replies")
+                .font(.body)
         #endif
         #if os(watchOS)
             Text("(\(self.replyCount))")
