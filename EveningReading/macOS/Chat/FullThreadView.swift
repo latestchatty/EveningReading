@@ -173,7 +173,7 @@ struct FullThreadView: View {
                     Divider()
                     .padding(.init(top: 0, leading: 20, bottom: 10, trailing: 20))
 
-                    if !self.isThreadExpanded {
+                    if chatStore.activeThreadId != self.threadId {
                         
                         // Collapsed thread view
                         if self.replyCount > 0 {
@@ -202,6 +202,7 @@ struct FullThreadView: View {
                                     Button(action: {
                                         withAnimation {
                                             self.isThreadExpanded = true
+                                            chatStore.activeThreadId = self.threadId
                                         }
                                         if postList.count < 1 {
                                             getPostList(parentId: self.threadId)
@@ -211,6 +212,7 @@ struct FullThreadView: View {
                                             .imageScale(.large)
                                             .padding(.horizontal, 20)
                                             .padding(.bottom, 20)
+                                            .contentShape(Rectangle())
 
                                     })
                                     .buttonStyle(BorderlessButtonStyle())
@@ -239,6 +241,7 @@ struct FullThreadView: View {
                             Button(action: {
                                 withAnimation {
                                     self.isThreadExpanded = false
+                                    chatStore.activeThreadId = 0
                                 }
                             }, label: {
                                 Image(systemName: "ellipsis")
@@ -253,7 +256,7 @@ struct FullThreadView: View {
                         
                     }
                     
-                    if self.isThreadExpanded {
+                    if chatStore.activeThreadId == self.threadId {
                         
                         // Expanded thread view
                         VStack {
@@ -351,6 +354,7 @@ struct FullThreadView: View {
                                             // Lols
                                             LolView(lols: post.lols, postId: post.id)
                                         }
+                                        .contentShape(Rectangle())
                                         .onTapGesture(count: 1) {
                                             withAnimation {
                                                 selectedPost = post.id
