@@ -64,11 +64,13 @@ struct macOSChatView: View {
                                 scrollProxy.scrollTo(9999999999991, anchor: .top)
                             }
                         }
+                        /*
                         .onReceive(chatStore.$activeThreadId) { thread in
                             if thread != 0 {
                                 scrollProxy.scrollTo(thread)
                             }
                         }
+                        */
                         ForEach(filteredThreads(), id: \.threadId) { thread in
                             FullThreadView(threadId: .constant(thread.threadId))
                                 .id(thread.threadId)

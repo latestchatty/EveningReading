@@ -173,7 +173,7 @@ struct FullThreadView: View {
                     Divider()
                     .padding(.init(top: 0, leading: 20, bottom: 10, trailing: 20))
 
-                    if chatStore.activeThreadId != self.threadId {
+                    if !self.isThreadExpanded {
                         
                         // Collapsed thread view
                         if self.replyCount > 0 {
@@ -202,7 +202,6 @@ struct FullThreadView: View {
                                     Button(action: {
                                         withAnimation {
                                             self.isThreadExpanded = true
-                                            chatStore.activeThreadId = self.threadId
                                         }
                                         if postList.count < 1 {
                                             getPostList(parentId: self.threadId)
@@ -241,7 +240,6 @@ struct FullThreadView: View {
                             Button(action: {
                                 withAnimation {
                                     self.isThreadExpanded = false
-                                    chatStore.activeThreadId = 0
                                 }
                             }, label: {
                                 Image(systemName: "ellipsis")
@@ -256,7 +254,7 @@ struct FullThreadView: View {
                         
                     }
                     
-                    if chatStore.activeThreadId == self.threadId {
+                    if self.isThreadExpanded {
                         
                         // Expanded thread view
                         VStack {
