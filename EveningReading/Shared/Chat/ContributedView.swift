@@ -20,7 +20,7 @@ struct ContributedView: View {
             #endif
             #if os(OSX)
                 Image(systemName: "pencil")
-                    .imageScale(.small)
+                    .imageScale(.medium)
                     .foregroundColor(Color(NSColor.systemTeal))
                     .offset(x: 0, y: -1)
             #endif
