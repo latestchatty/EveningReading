@@ -8,7 +8,13 @@
 import SwiftUI
 
 struct macOSSettingsView: View {
+    enum SettingsTab {
+        case account
+        case filters
+        case about
+    }
     @EnvironmentObject var appSessionStore: AppSessionStore
+    @State private var activeTab: SettingsTab = SettingsTab.account
     
     private func version() -> String {
         let dict = Bundle.main.infoDictionary!
@@ -21,6 +27,53 @@ struct macOSSettingsView: View {
     
     var body: some View {
         VStack (alignment: .leading) {
+            HStack (spacing: 10) {
+                VStack {
+                    Image(systemName: "person.crop.circle")
+                        .resizable()
+                        .frame(width: 24, height: 24)
+                    Text("Account")
+                }
+                .foregroundColor(self.activeTab == .account ? Color(NSColor.systemTeal) : Color(NSColor.systemGray))
+                .frame(width: 64, height: 64)
+                .background(self.activeTab == .account ? Color("macOSSettingsButton") : Color.clear)
+                .cornerRadius(4.0)
+                .contentShape(Rectangle())
+                .onTapGesture (count: 1) {
+                    self.activeTab = .account
+                }
+                
+                VStack {
+                    Image(systemName: "line.horizontal.3.decrease.circle")
+                        .resizable()
+                        .frame(width: 24, height: 24)
+                    Text("Filters")
+                }
+                .foregroundColor(self.activeTab == .filters ? Color(NSColor.systemTeal) : Color(NSColor.systemGray))
+                .frame(width: 64, height: 64)
+                .background(self.activeTab == .filters ? Color("macOSSettingsButton") : Color.clear)
+                .cornerRadius(4.0)
+                .contentShape(Rectangle())
+                .onTapGesture (count: 1) {
+                    self.activeTab = .filters
+                }
+                
+                VStack {
+                    Image(systemName: "questionmark.circle")
+                        .resizable()
+                        .frame(width: 24, height: 24)
+                    Text("About")
+                }
+                .foregroundColor(self.activeTab == .about ? Color(NSColor.systemTeal) : Color(NSColor.systemGray))
+                .frame(width: 64, height: 64)
+                .background(self.activeTab == .about ? Color("macOSSettingsButton") : Color.clear)
+                .cornerRadius(4.0)
+                .contentShape(Rectangle())
+                .onTapGesture (count: 1) {
+                    self.activeTab = .about
+                }
+            }
+            .frame(maxWidth: .infinity)
             Form {
                 /*
                 Section(header: Text("PREFERENCES")) {
@@ -28,27 +81,31 @@ struct macOSSettingsView: View {
                         .environmentObject(appSessionStore)
                 }
                 */
-                Section(header: Text("ACCOUNT")) {
+                if self.activeTab == .account {
                     macOSAccountView()
                         .environmentObject(appSessionStore)
                 }
-                Spacer().frame(height: 20)
-                Section(header: Text("FILTERS")) {
-                    CategoriesView()
-                        .environmentObject(appSessionStore)
-                    macOSClearHiddenView()
-                        .environmentObject(appSessionStore)
-                }
-                Spacer().frame(height: 20)
-                Section(header: Text("ABOUT")) {
-                    HStack {
-                        Text("Version")
-                        Text("\(self.version())")
+
+                if self.activeTab == .filters {
+                    VStack (alignment: .leading) {
+                        CategoriesView()
+                            .environmentObject(appSessionStore)
+                        macOSClearHiddenView()
+                            .environmentObject(appSessionStore)
                     }
-                    .padding(.vertical, 5)
-                    HStack {
-                        Link("Guidelines", destination: URL(string: "https://www.shacknews.com/guidelines")!).font(.callout).foregroundColor(Color(NSColor.linkColor))
-                        Spacer()
+                }
+                
+                if self.activeTab == .about {
+                    VStack (alignment: .leading) {
+                        HStack {
+                            Text("Version")
+                            Text("\(self.version())")
+                        }
+                        .padding(.vertical, 5)
+                        HStack {
+                            Link("Guidelines", destination: URL(string: "https://www.shacknews.com/guidelines")!).font(.callout).foregroundColor(Color(NSColor.linkColor))
+                            Spacer()
+                        }
                     }
                 }
             }
