@@ -55,7 +55,7 @@ struct FullThreadView: View {
                 
             }
         } else {
-            let threads = chatStore.threads.filter({ return self.appSessionStore.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !self.appSessionStore.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
+            let threads = chatStore.threads.filter({ return self.appSessionStore.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !appSessionStore.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
             
             if let thread = threads.filter({ return $0.threadId == self.threadId }).first {
                 self.contributed = PostDecorator.checkParticipatedStatus(thread: thread, author: self.rootPostAuthor)
@@ -108,8 +108,9 @@ struct FullThreadView: View {
     }
         
     var body: some View {
-        VStack {
+        ZStack {
             if !self.isThreadCollapsed {
+                
                 VStack (alignment: .leading) {
                     
                     ThreadCategoryColor[self.rootPostCategory].frame(height: 5)
@@ -184,6 +185,7 @@ struct FullThreadView: View {
                                         HStack {
                                             Text("\(post.body.getPreview)")
                                                 .font(.body)
+                                                .foregroundColor(appSessionStore.username.lowercased() == post.author.lowercased() ? Color(NSColor.systemTeal) : Color.primary)
                                                 .lineLimit(1)
                                             Spacer()
                                             AuthorNameView(name: post.author, postId: post.id)
@@ -369,17 +371,38 @@ struct FullThreadView: View {
                 .background(Color("ThreadBubblePrimary"))
                 .cornerRadius(10)
                 .padding(.init(top: 0, leading: 20, bottom: 10, trailing: 20))
+                
+                if self.contributed {
+                    HStack {
+                        GeometryReader { categoryGeo in
+                            Path { categoryPath in
+                                categoryPath.move(to: CGPoint(x: 0, y: 0))
+                                categoryPath.addLine(to: CGPoint(x: 0, y: categoryGeo.size.height - 10))
+                                categoryPath.addLine(to: CGPoint(x: categoryGeo.size.width, y: categoryGeo.size.height - 10))
+                                categoryPath.addLine(to: CGPoint(x: categoryGeo.size.width, y: 0))
+                            }
+                            .fill(Color(NSColor.systemTeal))
+                        }
+                        .frame(width: 3)
+                        .offset(x: 8, y: 0)
+                        Spacer()
+                    }
+                }
+                
             } else {
                 Spacer().frame(height: 8)
             }
         }
+        
         // Collapse thread?
         .alert(isPresented: self.$showingCollapseAlert) {
             Alert(title: Text("Hide Thread?"), message: Text(""), primaryButton: .cancel(), secondaryButton: Alert.Button.default(Text("OK"), action: {
                 self.isThreadCollapsed = true
+                appSessionStore.collapsedThreads.append(self.threadId)
             }))
         }
-        // Lol drop down
+        
+        // Tag/Lol drop down
         .sheet(isPresented: $showingLolSheet) {
             VStack {
                 Text("Tag This Post?")
@@ -413,6 +436,7 @@ struct FullThreadView: View {
             }
             .frame(width: 300, height: 200)
         }
+        
     }
 }
 

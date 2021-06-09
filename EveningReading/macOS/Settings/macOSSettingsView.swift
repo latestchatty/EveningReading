@@ -33,8 +33,10 @@ struct macOSSettingsView: View {
                         .environmentObject(appSessionStore)
                 }
                 Spacer().frame(height: 20)
-                Section(header: Text("CATEGORIES")) {
+                Section(header: Text("FILTERS")) {
                     CategoriesView()
+                        .environmentObject(appSessionStore)
+                    macOSClearHiddenView()
                         .environmentObject(appSessionStore)
                 }
                 Spacer().frame(height: 20)
