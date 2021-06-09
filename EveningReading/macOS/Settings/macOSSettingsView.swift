@@ -73,6 +73,7 @@ struct macOSSettingsView: View {
                     self.activeTab = .about
                 }
             }
+            .padding(.top, 20)
             .frame(maxWidth: .infinity)
             Form {
                 /*
