@@ -87,6 +87,7 @@ struct macOSAccountView: View {
                                 Text("Sign In").foregroundColor(Color.primary).bold()
                             }
                             .disabled(appSessionStore.showingSignInWarning)
+                            .keyboardShortcut(.defaultAction)
                         }
                     }
                     if appSessionStore.showingSignInWarning {
