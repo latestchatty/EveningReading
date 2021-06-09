@@ -75,13 +75,8 @@ struct macOSSettingsView: View {
             }
             .padding(.top, 20)
             .frame(maxWidth: .infinity)
+            
             Form {
-                /*
-                Section(header: Text("PREFERENCES")) {
-                    PreferencesView()
-                        .environmentObject(appSessionStore)
-                }
-                */
                 if self.activeTab == .account {
                     macOSAccountView()
                         .environmentObject(appSessionStore)

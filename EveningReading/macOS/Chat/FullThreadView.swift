@@ -27,7 +27,7 @@ struct FullThreadView: View {
     @State private var postStrength = [Int: Double]()
     @State private var replyLines = [Int: String]()
     
-    @State private var showingLolSheet: Bool = false
+    @State private var showingTagSheet: Bool = false
     @State private var showingComposeSheet: Bool = false
     
     @State private var isThreadCollapsed: Bool = false
@@ -142,7 +142,7 @@ struct FullThreadView: View {
                         Image(systemName: "tag")
                             .imageScale(.large)
                             .onTapGesture(count: 1) {
-                                self.showingLolSheet.toggle()
+                                self.showingTagSheet.toggle()
                             }
                         
                         Image(systemName: "arrowshape.turn.up.left")
@@ -405,7 +405,7 @@ struct FullThreadView: View {
         }
         
         // Tag/Lol drop down
-        .sheet(isPresented: $showingLolSheet) {
+        .sheet(isPresented: $showingTagSheet) {
             VStack {
                 Text("Tag This Post?")
                     .font(.body)
@@ -427,13 +427,14 @@ struct FullThreadView: View {
                 .padding(.horizontal, 60)
                 
                 HStack {
-                    Button("OK") {
-                        self.showingLolSheet = false
+                    Button("Cancel") {
+                        self.showingTagSheet = false
                     }
                     
-                    Button("Cancel") {
-                        self.showingLolSheet = false
+                    Button("OK") {
+                        self.showingTagSheet = false
                     }
+                    .keyboardShortcut(.defaultAction)
                 }
             }
             .frame(width: 300, height: 200)
