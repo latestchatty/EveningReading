@@ -158,23 +158,17 @@ struct macOSThreadView: View {
                     .padding(.horizontal, 20)
                     .id(self.threadId)
                     
+                    // Root post body
                     VStack (alignment: .leading) {
                         RichTextView(topBlocks: self.rootPostRichText)
                             .fixedSize(horizontal: false, vertical: true)
-                        /*
-                        Text("\(self.rootPostBody)")
-                            .font(.body)
-                            .fixedSize(horizontal: false, vertical: true)
-                            .padding(.horizontal, 20)
-                            .padding(.bottom, 10)
-                        
-                        */
                     }
                     .padding(.horizontal, 20)
                     .onAppear() {
                         self.rootPostRichText = RichTextBuilder.getRichText(postBody: self.rootPostBody)
                     }
                     
+                    // -----
                     Divider()
                     .padding(.init(top: 0, leading: 20, bottom: 10, trailing: 20))
 

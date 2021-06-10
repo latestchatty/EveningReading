@@ -24,6 +24,7 @@ struct SidebarButton: View {
             .background(self.selected ? Color("macOSSidebarHighlight") : Color.clear)
             .cornerRadius(5)
         }
+        .contentShape(Rectangle())
     }
 }
 

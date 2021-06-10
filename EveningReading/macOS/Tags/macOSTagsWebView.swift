@@ -45,7 +45,7 @@ struct macOSTagsWebView: NSViewRepresentable {
         configuration.websiteDataStore = WKWebsiteDataStore.nonPersistent()
         configuration.processPool = processPool
         
-        context.coordinator.addProgressObserver()
+        //context.coordinator.addProgressObserver()
         
         if username != "" && password != "" {
                     
@@ -112,6 +112,10 @@ struct macOSTagsWebView: NSViewRepresentable {
                                 }
                                 
                                 self.webView?.load(req)
+                                
+                                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+                                    self.webViewLoading = false
+                                }
                             }
                         }
                         
