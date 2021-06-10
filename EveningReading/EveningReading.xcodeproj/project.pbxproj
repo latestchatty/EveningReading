@@ -146,7 +146,6 @@
 		83AA19272645C43500556E69 /* PostDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19262645C43500556E69 /* PostDecorator.swift */; };
 		83AA19282645C43500556E69 /* PostDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19262645C43500556E69 /* PostDecorator.swift */; };
 		83AA19292645C43500556E69 /* PostDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19262645C43500556E69 /* PostDecorator.swift */; };
-		83AA19332645E36600556E69 /* RefreshNoticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19312645E36600556E69 /* RefreshNoticeView.swift */; };
 		83AA19362645F4A700556E69 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19352645F4A700556E69 /* SignInView.swift */; };
 		83AA193A2645F66500556E69 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19392645F66500556E69 /* AuthService.swift */; };
 		83AA193B2645F66500556E69 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19392645F66500556E69 /* AuthService.swift */; };
@@ -356,7 +355,6 @@
 		83A85D5426652F97007EBAC3 /* NewMessageBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageBadgeView.swift; sourceTree = "<group>"; };
 		83A85D572666A1B2007EBAC3 /* LoadingPushNotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingPushNotificationView.swift; sourceTree = "<group>"; };
 		83AA19262645C43500556E69 /* PostDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDecorator.swift; sourceTree = "<group>"; };
-		83AA19312645E36600556E69 /* RefreshNoticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshNoticeView.swift; sourceTree = "<group>"; };
 		83AA19352645F4A700556E69 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		83AA19392645F66500556E69 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		83AA193D2645FF8900556E69 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
@@ -428,6 +426,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		833685D12672A36800ACE618 /* Controls */ = {
+			isa = PBXGroup;
+			children = (
+				833685C726723E6400ACE618 /* macOSNoticeView.swift */,
+			);
+			path = Controls;
+			sourceTree = "<group>";
+		};
 		833817792639AC17007A8B28 = {
 			isa = PBXGroup;
 			children = (
@@ -498,10 +504,10 @@
 				8339815A263F6FAD005614E8 /* Search */,
 				8339816126403F0D005614E8 /* Tags */,
 				833981662640438E005614E8 /* Settings */,
+				833685D12672A36800ACE618 /* Controls */,
 				833817802639AC17007A8B28 /* macOSContentView.swift */,
 				833817902639AC18007A8B28 /* Info.plist */,
 				833817912639AC18007A8B28 /* macOS.entitlements */,
-				833685C726723E6400ACE618 /* macOSNoticeView.swift */,
 			);
 			path = macOS;
 			sourceTree = "<group>";
@@ -733,7 +739,6 @@
 				8339819D264128B2005614E8 /* macOSThreadView.swift */,
 				833685CD2672467800ACE618 /* macOSPostExpandedView.swift */,
 				833685C9267243B500ACE618 /* macOSTagPostView.swift */,
-				83AA19312645E36600556E69 /* RefreshNoticeView.swift */,
 				833685C1266FAB2B00ACE618 /* macOSGuidelinesView.swift */,
 			);
 			path = Chat;
@@ -1367,7 +1372,6 @@
 				833685C4266FB97A00ACE618 /* macOSAccountView.swift in Sources */,
 				8339818526406814005614E8 /* Globals.swift in Sources */,
 				8339810F263F1028005614E8 /* StringExtensions.swift in Sources */,
-				83AA19332645E36600556E69 /* RefreshNoticeView.swift in Sources */,
 				83398107263F0D38005614E8 /* ChatService.swift in Sources */,
 				83398155263F69E0005614E8 /* macOSChatView.swift in Sources */,
 				833981A4264189DC005614E8 /* ContributedView.swift in Sources */,
