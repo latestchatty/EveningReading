@@ -37,7 +37,10 @@ struct FullThreadView: View {
     @State private var selectedPost = 0
     @State private var selectedPostRichText = [RichTextBlock]()
     
-    @State private var selectedLol = 0
+    @State private var selectedTag = 0
+    
+    @State private var showingNotice: Bool = false
+    @State private var noticeMessage: String = ""
     
     private func getThreadData() {
         if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
@@ -139,16 +142,18 @@ struct FullThreadView: View {
                                 self.showingCollapseAlert.toggle()
                             }
                         
-                        Image(systemName: "tag")
-                            .imageScale(.large)
-                            .onTapGesture(count: 1) {
-                                self.showingTagSheet.toggle()
-                            }
+                        if appSessionStore.isSignedIn {
+                            Image(systemName: "tag")
+                                .imageScale(.large)
+                                .onTapGesture(count: 1) {
+                                    self.showingTagSheet.toggle()
+                                }
                         
-                        Image(systemName: "arrowshape.turn.up.left")
-                            .imageScale(.large)
-                            .onTapGesture(count: 1) {
-                            }
+                            Image(systemName: "arrowshape.turn.up.left")
+                                .imageScale(.large)
+                                .onTapGesture(count: 1) {
+                                }
+                        }
                     }
                     .padding(.horizontal, 20)
                     .id(self.threadId)
@@ -246,7 +251,7 @@ struct FullThreadView: View {
                                     .imageScale(.large)
                                     .padding(.horizontal, 20)
                                     .padding(.bottom, 20)
-
+                                    .contentShape(Rectangle())
                             })
                             .buttonStyle(BorderlessButtonStyle())
                         }
@@ -300,6 +305,7 @@ struct FullThreadView: View {
                                             .background(Color("ThreadBubbleSecondary"))
                                             .cornerRadius(5)
                                         }
+                                        .id(post.id)
                                         .onAppear() {
                                             // Load Rich Text
                                             self.selectedPostRichText = RichTextBuilder.getRichText(postBody: post.body)
@@ -352,6 +358,7 @@ struct FullThreadView: View {
                                             // Lols
                                             LolView(lols: post.lols, postId: post.id)
                                         }
+                                        .id(post.id)
                                         .contentShape(Rectangle())
                                         .onTapGesture(count: 1) {
                                             withAnimation {
@@ -394,6 +401,9 @@ struct FullThreadView: View {
             } else {
                 Spacer().frame(height: 8)
             }
+            
+            // Notices liked "Tagged!" etc...
+            macOSNoticeView(show: self.$showingNotice, message: self.$noticeMessage)
         }
         
         // Collapse thread?
@@ -404,7 +414,7 @@ struct FullThreadView: View {
             }))
         }
         
-        // Tag/Lol drop down
+        // Tags drop down
         .sheet(isPresented: $showingTagSheet) {
             VStack {
                 Text("Tag This Post?")
@@ -415,7 +425,7 @@ struct FullThreadView: View {
                     .font(.subheadline)
                     .padding(.init(top: 10, leading: 60, bottom: 10, trailing: 60))
                 
-                Picker("Tag", selection: $selectedLol, content: {
+                Picker("Tag", selection: $selectedTag, content: {
                     Text("lol").tag(0)
                     Text("inf").tag(1)
                     Text("unf").tag(2)
