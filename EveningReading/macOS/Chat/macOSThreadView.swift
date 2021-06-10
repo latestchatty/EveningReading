@@ -199,9 +199,9 @@ struct macOSThreadView: View {
                                 // Expand thread button
                                 VStack (alignment: .center) {
                                     Button(action: {
-                                        withAnimation {
+                                        //withAnimation {
                                             self.isThreadExpanded = true
-                                        }
+                                        //}
                                         if postList.count < 1 {
                                             getPostList(parentId: self.threadId)
                                         }
@@ -237,9 +237,9 @@ struct macOSThreadView: View {
                         // Collapse thread button
                         VStack (alignment: .center) {
                             Button(action: {
-                                withAnimation {
+                                //withAnimation {
                                     self.isThreadExpanded = false
-                                }
+                                //}
                             }, label: {
                                 Image(systemName: "ellipsis")
                                     .imageScale(.large)
@@ -321,9 +321,9 @@ struct macOSThreadView: View {
                                         .id(post.id)
                                         .contentShape(Rectangle())
                                         .onTapGesture(count: 1) {
-                                            withAnimation {
+                                            //withAnimation {
                                                 selectedPost = post.id
-                                            }
+                                            //}
                                         }
                                     }
                                     
