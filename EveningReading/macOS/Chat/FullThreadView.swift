@@ -265,45 +265,11 @@ struct FullThreadView: View {
                         VStack {
                             ForEach(postList, id: \.id) { post in
                                 HStack {
+                                    
                                     // Reply expaned row
                                     if self.selectedPost == post.id {
                                         VStack {
-                                            HStack {
-                                                // Reply lines
-                                                Text(self.replyLines[post.id] == nil ? String(repeating: " ", count: 5) : self.replyLines[post.id]!)
-                                                    .lineLimit(1)
-                                                    .fixedSize()
-                                                    .font(.custom("replylines", size: 25, relativeTo: .callout))
-                                                    .foregroundColor(Color("replyLines"))
-                                                
-                                                // Author
-                                                AuthorNameView(name: post.author, postId: post.id)
-                                                
-                                                Spacer()
-                                                
-                                                // Lols
-                                                LolView(lols: post.lols, expanded: true, postId: post.id)
-                                                    .padding(.top, 5)
-                                            }
-                                            HStack {
-                                                VStack {
-                                                    // Full post
-                                                    RichTextView(topBlocks: self.selectedPostRichText)
-                                                        .fixedSize(horizontal: false, vertical: true)
-                                                }
-                                                .padding(8)
-                                                Spacer()
-                                                /*
-                                                Text("\(post.body.getPreview)")
-                                                    .font(.body)
-                                                    .fixedSize(horizontal: false, vertical: true)
-                                                    .padding(8)
-                                                Spacer()
-                                                */
-                                            }
-                                            .frame(maxWidth: .infinity)
-                                            .background(Color("ThreadBubbleSecondary"))
-                                            .cornerRadius(5)
+                                            macOSPostExpandedView(postId: .constant(post.id), postAuthor: .constant(post.author), replyLines: self.$replyLines[post.id], lols: .constant(post.lols), postText: self.$selectedPostRichText)
                                         }
                                         .id(post.id)
                                         .onAppear() {
@@ -366,6 +332,7 @@ struct FullThreadView: View {
                                             }
                                         }
                                     }
+                                    
                                 }
                                 .id(post.id)
                             }
@@ -381,6 +348,7 @@ struct FullThreadView: View {
                 .cornerRadius(10)
                 .padding(.init(top: 0, leading: 20, bottom: 10, trailing: 20))
                 
+                // Contributed indicator bar
                 if self.contributed {
                     HStack {
                         GeometryReader { categoryGeo in
