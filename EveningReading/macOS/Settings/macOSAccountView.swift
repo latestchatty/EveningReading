@@ -47,12 +47,18 @@ struct macOSAccountView: View {
             
             // Sign in/out button
             if self.appSessionStore.isSignedIn {
-                Button(action: showSignOut) {
-                    Text("Sign Out As \(appSessionStore.username)")
+                VStack (alignment: .leading) {
+                    Text("Signed In As: ") + Text("\(appSessionStore.username)").foregroundColor(Color(NSColor.systemBlue))
+                    Button(action: showSignOut) {
+                        Text("Sign Out")
+                            .frame(width: 200)
+                    }
                 }
             } else {
                 Button(action: showSignIn) {
+                    Text("")
                     Text("Sign In").foregroundColor(Color.primary).bold()
+                        .frame(width: 200)
                 }
             }
             

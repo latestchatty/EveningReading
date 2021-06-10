@@ -1,25 +1,25 @@
 //
-//  TagsWebView2.swift
-//  EveningReading (iOS)
+//  macOSTagsWebView.swift
+//  EveningReading (macOS)
 //
-//  Created by Chris Hodge on 6/4/21.
+//  Created by Chris Hodge on 6/10/21.
 //
 
-import Foundation
 import SwiftUI
-import Combine
 import WebKit
-import UIKit
+import Combine
 
-struct TagsWebView: UIViewRepresentable {
+struct macOSTagsWebView: NSViewRepresentable {
     @Binding var webViewLoading: Bool
     @Binding var webViewProgress: Double
     @Binding var goToPostId: Int
     @Binding var showingPost: Bool
+    @Binding var username: String
+    @Binding var password: String
     
     var webView: WKWebView?
-
-    init(webViewLoading: Binding<Bool>, webViewProgress: Binding<Double>, goToPostId: Binding<Int>, showingPost: Binding<Bool>) {
+    
+    init(webViewLoading: Binding<Bool>, webViewProgress: Binding<Double>, goToPostId: Binding<Int>, showingPost: Binding<Bool>, username: Binding<String>, password: Binding<String>) {
         let processPool = WKProcessPool()
         let configuration = WKWebViewConfiguration()
         configuration.websiteDataStore = WKWebsiteDataStore.nonPersistent()
@@ -30,77 +30,20 @@ struct TagsWebView: UIViewRepresentable {
         self._webViewProgress = webViewProgress
         self._goToPostId = goToPostId
         self._showingPost = showingPost
+        self._username = username
+        self._password = password
     }
-
-    class Coordinator: NSObject, WKNavigationDelegate, WKUIDelegate {
-        var parent: TagsWebView
-
-        init(_ parent: TagsWebView) {
-            self.parent = parent
-        }
-
-        public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-            switch navigationAction.navigationType {
-            case .linkActivated:
-                if let url = navigationAction.request.url {
-                    if url.absoluteString.contains("chatty?id") {
-                        // Open natively
-                        let postId = url.absoluteString.replacingOccurrences(of: "https://www.shacknews.com/chatty?id=", with: "")
-                        if postId.isInt {
-                            parent.goToPostId = Int(postId) ?? 0
-                            parent.showingPost = true
-                            decisionHandler(.cancel)
-                        } else {
-                            decisionHandler(.allow)
-                        }
-                        /*
-                        // Open in Safari
-                        let shared = UIApplication.shared
-                        if shared.canOpenURL(url) {
-                            shared.open(url, options: [:], completionHandler: nil)
-                        }
-                        decisionHandler(.cancel)
-                        */
-                    } else {
-                        decisionHandler(.allow)
-                    }
-                } else {
-                    decisionHandler(.allow)
-                }
-            default:
-                decisionHandler(.allow)
-            }
-        }
-
-        func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
-            //
-        }
-        
-        func addProgressObserver() {
-            parent.webView?.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
-        }
-        
-        override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-            if let o = object as? WKWebView, o == parent.webView {
-                if keyPath == #keyPath(WKWebView.estimatedProgress) {
-                    let progress = parent.webView?.estimatedProgress ?? 0.25
-                    parent.webViewProgress = progress > 0.25 ? progress : 0.25
-                    if progress == 1.0 {
-                        parent.webViewLoading = false
-                    }
-                }
-            }
-        }
-    }
-
-    func makeCoordinator() -> Coordinator {
-        Coordinator(self)
-    }
-
-    func makeUIView(context: Context) -> WKWebView  {
+    
+    public func makeNSView(context: NSViewRepresentableContext<macOSTagsWebView>) -> WKWebView {
         let tagsUrl = "https://www.shacknews.com/tags-user"
-        let username: String = KeychainWrapper.standard.string(forKey: "Username") ?? ""
-        let password: String = KeychainWrapper.standard.string(forKey: "Password") ?? ""
+        
+        self.webView?.navigationDelegate = context.coordinator
+        self.webView?.uiDelegate = context.coordinator as? WKUIDelegate
+        
+        let processPool = WKProcessPool()
+        let configuration = WKWebViewConfiguration()
+        configuration.websiteDataStore = WKWebsiteDataStore.nonPersistent()
+        configuration.processPool = processPool
         
         context.coordinator.addProgressObserver()
         
@@ -188,11 +131,65 @@ struct TagsWebView: UIViewRepresentable {
             self.webViewLoading = false
         }
         
-        return webView!
+        return self.webView ?? WKWebView(frame: CGRect.zero, configuration: configuration)
     }
 
-    func updateUIView(_ uiView: WKWebView, context: Context) {
-        uiView.navigationDelegate = context.coordinator
-        uiView.uiDelegate = context.coordinator
+    public func updateNSView(_ nsView: WKWebView, context: NSViewRepresentableContext<macOSTagsWebView>) { }
+
+    public func makeCoordinator() -> Coordinator {
+        return Coordinator(self)
     }
+    
+    class Coordinator: NSObject, WKNavigationDelegate {
+        var parent: macOSTagsWebView
+
+        init(_ parent: macOSTagsWebView) {
+            self.parent = parent
+        }
+        
+        func addProgressObserver() {
+            parent.webView?.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
+        }
+        
+        override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+            if let o = object as? WKWebView, o == parent.webView {
+                if keyPath == #keyPath(WKWebView.estimatedProgress) {
+                    let progress = parent.webView?.estimatedProgress ?? 0.25
+                    parent.webViewProgress = progress > 0.25 ? progress : 0.25
+                    if progress == 1.0 {
+                        parent.webViewLoading = false
+                    }
+                }
+            }
+        }
+        
+        public func webView(_: WKWebView, didFail: WKNavigation!, withError: Error) { }
+
+        public func webView(_: WKWebView, didFailProvisionalNavigation: WKNavigation!, withError: Error) { }
+
+        public func webView(_ web: WKWebView, didFinish: WKNavigation!) { }
+
+        public func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) { }
+
+        public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+            switch navigationAction.navigationType {
+            case .linkActivated:
+                if let url = navigationAction.request.url {
+                    if url.absoluteString.contains("chatty?id") {
+                        // Open in Safari
+                        NSWorkspace.shared.open(url)
+                        decisionHandler(.cancel)
+                    } else {
+                        decisionHandler(.allow)
+                    }
+                } else {
+                    decisionHandler(.allow)
+                }
+            default:
+                decisionHandler(.allow)
+            }
+        }
+
+    }
+
 }

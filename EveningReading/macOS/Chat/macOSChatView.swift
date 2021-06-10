@@ -72,7 +72,7 @@ struct macOSChatView: View {
                         }
                         */
                         ForEach(filteredThreads(), id: \.threadId) { thread in
-                            FullThreadView(threadId: .constant(thread.threadId))
+                            macOSThreadView(threadId: .constant(thread.threadId))
                         }
                         VStack {
                             Spacer().frame(maxWidth: .infinity).frame(height: 30)

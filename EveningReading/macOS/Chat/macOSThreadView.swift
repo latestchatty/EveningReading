@@ -1,5 +1,5 @@
 //
-//  FullThreadView.swift
+//  macOSThreadView.swift
 //  EveningReading (iOS)
 //
 //  Created by Chris Hodge on 5/4/21.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct FullThreadView: View {
+struct macOSThreadView: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var chatStore: ChatStore
     
@@ -386,10 +386,10 @@ struct FullThreadView: View {
         .sheet(isPresented: $showingTagSheet) {
             VStack {
                 Text("Tag This Post?")
-                    .font(.body)
+                    .font(.title)
                     .bold()
                 
-                Text("If already tagged, you will untag any previous tags of the same type.")
+                Text("If already tagged, the selected tag will be removed.")
                     .font(.subheadline)
                     .padding(.init(top: 10, leading: 60, bottom: 10, trailing: 60))
                 
@@ -421,9 +421,9 @@ struct FullThreadView: View {
     }
 }
 
-struct FullThreadView_Previews: PreviewProvider {
+struct macOSThreadView_Previews: PreviewProvider {
     static var previews: some View {
-        FullThreadView(threadId: .constant(999999992))
+        macOSThreadView(threadId: .constant(999999992))
             .previewLayout(.fixed(width: 640, height: 960))
             .environmentObject(AppSessionStore(service: AuthService()))
             .environmentObject(ChatStore(service: ChatService()))
