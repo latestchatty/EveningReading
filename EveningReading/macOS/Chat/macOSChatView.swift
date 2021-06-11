@@ -45,6 +45,8 @@ struct macOSChatView: View {
                 }
                 
                 if self.guidelinesAccepted {
+                    
+                    // Thread List
                     ScrollView {
                         LazyVStack (spacing: 0) {
                             macOSThreadList()
@@ -55,8 +57,12 @@ struct macOSChatView: View {
                     
                     Divider()
                     
+                    // Thread Detail
                     ScrollView {
                         ScrollViewReader { scrollProxy in
+                            VStack {
+                                Spacer().frame(width: 0, height: 0)
+                            }.id(999999991)
                             LazyVStack {
                                 if chatStore.activeThreadId == 0 {
                                     Text("No thread selected.")
@@ -67,10 +73,13 @@ struct macOSChatView: View {
                                     macOSThreadView(threadId: $chatStore.activeThreadId)
                                 }
                             }
-                            .padding(.top, 20)
+                            .onReceive(chatStore.$activeThreadId) { value in
+                                scrollProxy.scrollTo(999999991, anchor: .top)
+                            }
                         }
                     }
                     .frame(width: geometry.size.width * 0.65)
+                    
                 }
             }
             .onAppear(perform: fetchChat)
