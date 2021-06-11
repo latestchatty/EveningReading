@@ -106,10 +106,10 @@ struct macOSThreadView: View {
                     AuthorNameView(name: self.rootPostAuthor, postId: self.threadId, bold: true)
                     
                     ContributedView(contributed: self.contributed)
-                    
-                    LolView(lols: self.rootPostLols, capsule: true, postId: self.threadId)
 
                     Spacer()
+
+                    LolView(lols: self.rootPostLols, expanded: true, postId: self.threadId)
 
                     ReplyCountView(replyCount: self.replyCount)
                     
