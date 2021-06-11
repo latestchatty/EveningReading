@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct macOSWindowSize {
-    let minWidth : CGFloat = 800
-    let minHeight : CGFloat = 600
+    let minWidth : CGFloat = 1024
+    let minHeight : CGFloat = 768
 }
 
 struct macOSContentView: View {
@@ -51,6 +51,8 @@ struct macOSContentView: View {
                         if appSessionStore.showingChatView {
                             Button(action: {
                                 // refresh
+                                chatStore.activeThreadId = 0
+                                chatStore.activePostId = 0
                                 chatStore.getChat()
                             }, label: {
                                 Image(systemName: "arrow.counterclockwise")

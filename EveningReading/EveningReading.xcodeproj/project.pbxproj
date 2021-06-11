@@ -17,6 +17,11 @@
 		833685CA267243B500ACE618 /* macOSTagPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833685C9267243B500ACE618 /* macOSTagPostView.swift */; };
 		833685CE2672467800ACE618 /* macOSPostExpandedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833685CD2672467800ACE618 /* macOSPostExpandedView.swift */; };
 		833685D0267284BB00ACE618 /* macOSTagsWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833685CF267284BB00ACE618 /* macOSTagsWebView.swift */; };
+		833685D32672C18F00ACE618 /* macOSPostPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833685D22672C18F00ACE618 /* macOSPostPreviewView.swift */; };
+		833685D52672CB8A00ACE618 /* macOSChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833685D42672CB8A00ACE618 /* macOSChatView.swift */; };
+		833685D726738A8A00ACE618 /* macOSThreadList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833685D626738A8A00ACE618 /* macOSThreadList.swift */; };
+		833685D926738B5100ACE618 /* macOSThreadPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833685D826738B5100ACE618 /* macOSThreadPreview.swift */; };
+		833685DB2673982100ACE618 /* macOSThreadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833685DA2673982100ACE618 /* macOSThreadView.swift */; };
 		833817922639AC18007A8B28 /* EveningReadingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8338177F2639AC17007A8B28 /* EveningReadingApp.swift */; };
 		833817932639AC18007A8B28 /* EveningReadingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8338177F2639AC17007A8B28 /* EveningReadingApp.swift */; };
 		833817952639AC18007A8B28 /* macOSContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833817802639AC17007A8B28 /* macOSContentView.swift */; };
@@ -71,7 +76,7 @@
 		8339814D263F6394005614E8 /* iPadArticlesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339814C263F6394005614E8 /* iPadArticlesView.swift */; };
 		83398150263F6427005614E8 /* ArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339814F263F6427005614E8 /* ArrayExtensions.swift */; };
 		83398151263F6427005614E8 /* ArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339814F263F6427005614E8 /* ArrayExtensions.swift */; };
-		83398155263F69E0005614E8 /* macOSChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83398153263F69E0005614E8 /* macOSChatView.swift */; };
+		83398155263F69E0005614E8 /* macOSChatViewOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83398153263F69E0005614E8 /* macOSChatViewOld.swift */; };
 		83398159263F6BB1005614E8 /* macOSInboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83398157263F6BB1005614E8 /* macOSInboxView.swift */; };
 		8339815D263F6FC4005614E8 /* macOSSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339815B263F6FC4005614E8 /* macOSSearchView.swift */; };
 		8339816026403F08005614E8 /* macOSTagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339815E26403F08005614E8 /* macOSTagsView.swift */; };
@@ -93,7 +98,7 @@
 		8339818F26409C94005614E8 /* AuthorNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339818E26409C94005614E8 /* AuthorNameView.swift */; };
 		8339819226409D77005614E8 /* ContributedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339819126409D77005614E8 /* ContributedView.swift */; };
 		833981942640A232005614E8 /* LolView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833981932640A232005614E8 /* LolView.swift */; };
-		8339819F26412A42005614E8 /* macOSThreadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339819D264128B2005614E8 /* macOSThreadView.swift */; };
+		8339819F26412A42005614E8 /* macOSThreadViewOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339819D264128B2005614E8 /* macOSThreadViewOld.swift */; };
 		833981A326412FAC005614E8 /* AuthorNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339818E26409C94005614E8 /* AuthorNameView.swift */; };
 		833981A4264189DC005614E8 /* ContributedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339819126409D77005614E8 /* ContributedView.swift */; };
 		833981A526418DCD005614E8 /* LolView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833981932640A232005614E8 /* LolView.swift */; };
@@ -258,6 +263,11 @@
 		833685C9267243B500ACE618 /* macOSTagPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSTagPostView.swift; sourceTree = "<group>"; };
 		833685CD2672467800ACE618 /* macOSPostExpandedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSPostExpandedView.swift; sourceTree = "<group>"; };
 		833685CF267284BB00ACE618 /* macOSTagsWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSTagsWebView.swift; sourceTree = "<group>"; };
+		833685D22672C18F00ACE618 /* macOSPostPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSPostPreviewView.swift; sourceTree = "<group>"; };
+		833685D42672CB8A00ACE618 /* macOSChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSChatView.swift; sourceTree = "<group>"; };
+		833685D626738A8A00ACE618 /* macOSThreadList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSThreadList.swift; sourceTree = "<group>"; };
+		833685D826738B5100ACE618 /* macOSThreadPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSThreadPreview.swift; sourceTree = "<group>"; };
+		833685DA2673982100ACE618 /* macOSThreadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSThreadView.swift; sourceTree = "<group>"; };
 		8338177F2639AC17007A8B28 /* EveningReadingApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EveningReadingApp.swift; sourceTree = "<group>"; };
 		833817802639AC17007A8B28 /* macOSContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSContentView.swift; sourceTree = "<group>"; };
 		833817812639AC18007A8B28 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -307,7 +317,7 @@
 		83398142263F526A005614E8 /* iPadHomeButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadHomeButtons.swift; sourceTree = "<group>"; };
 		8339814C263F6394005614E8 /* iPadArticlesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadArticlesView.swift; sourceTree = "<group>"; };
 		8339814F263F6427005614E8 /* ArrayExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayExtensions.swift; sourceTree = "<group>"; };
-		83398153263F69E0005614E8 /* macOSChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSChatView.swift; sourceTree = "<group>"; };
+		83398153263F69E0005614E8 /* macOSChatViewOld.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSChatViewOld.swift; sourceTree = "<group>"; };
 		83398157263F6BB1005614E8 /* macOSInboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSInboxView.swift; sourceTree = "<group>"; };
 		8339815B263F6FC4005614E8 /* macOSSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSSearchView.swift; sourceTree = "<group>"; };
 		8339815E26403F08005614E8 /* macOSTagsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSTagsView.swift; sourceTree = "<group>"; };
@@ -326,7 +336,7 @@
 		8339818E26409C94005614E8 /* AuthorNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorNameView.swift; sourceTree = "<group>"; };
 		8339819126409D77005614E8 /* ContributedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContributedView.swift; sourceTree = "<group>"; };
 		833981932640A232005614E8 /* LolView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LolView.swift; sourceTree = "<group>"; };
-		8339819D264128B2005614E8 /* macOSThreadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSThreadView.swift; sourceTree = "<group>"; };
+		8339819D264128B2005614E8 /* macOSThreadViewOld.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSThreadViewOld.swift; sourceTree = "<group>"; };
 		833981AE2641AC58005614E8 /* watchOSThreadRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = watchOSThreadRow.swift; sourceTree = "<group>"; };
 		833981B82641B723005614E8 /* watchOSPostDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = watchOSPostDetail.swift; sourceTree = "<group>"; };
 		833981BC2641E188005614E8 /* watchOSAuthorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = watchOSAuthorView.swift; sourceTree = "<group>"; };
@@ -735,9 +745,14 @@
 		83398152263F69CE005614E8 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
-				83398153263F69E0005614E8 /* macOSChatView.swift */,
-				8339819D264128B2005614E8 /* macOSThreadView.swift */,
+				833685D42672CB8A00ACE618 /* macOSChatView.swift */,
+				833685D626738A8A00ACE618 /* macOSThreadList.swift */,
+				833685D826738B5100ACE618 /* macOSThreadPreview.swift */,
+				833685DA2673982100ACE618 /* macOSThreadView.swift */,
+				83398153263F69E0005614E8 /* macOSChatViewOld.swift */,
+				8339819D264128B2005614E8 /* macOSThreadViewOld.swift */,
 				833685CD2672467800ACE618 /* macOSPostExpandedView.swift */,
+				833685D22672C18F00ACE618 /* macOSPostPreviewView.swift */,
 				833685C9267243B500ACE618 /* macOSTagPostView.swift */,
 				833685C1266FAB2B00ACE618 /* macOSGuidelinesView.swift */,
 			);
@@ -1337,14 +1352,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				833685D726738A8A00ACE618 /* macOSThreadList.swift in Sources */,
 				8339816C26404F59005614E8 /* SidebarButtons.swift in Sources */,
 				83AA193B2645F66500556E69 /* AuthService.swift in Sources */,
 				833817952639AC18007A8B28 /* macOSContentView.swift in Sources */,
+				833685D926738B5100ACE618 /* macOSThreadPreview.swift in Sources */,
 				833981BA2641C4E8005614E8 /* ReplyCountView.swift in Sources */,
 				83AA194326462AFC00556E69 /* CategoriesView.swift in Sources */,
 				8339817C264062BB005614E8 /* RoundedCornersView.swift in Sources */,
 				83AA19282645C43500556E69 /* PostDecorator.swift in Sources */,
 				833981A326412FAC005614E8 /* AuthorNameView.swift in Sources */,
+				833685D52672CB8A00ACE618 /* macOSChatView.swift in Sources */,
 				83398118263F250E005614E8 /* ArticleService.swift in Sources */,
 				8339811B263F26CA005614E8 /* PreviewService.swift in Sources */,
 				83398159263F6BB1005614E8 /* macOSInboxView.swift in Sources */,
@@ -1353,7 +1371,7 @@
 				8339818926406F0B005614E8 /* TimeRemainingIndicator.swift in Sources */,
 				83A85D5626668940007EBAC3 /* PreferencesView.swift in Sources */,
 				83398112263F1794005614E8 /* DateExtensions.swift in Sources */,
-				8339819F26412A42005614E8 /* macOSThreadView.swift in Sources */,
+				8339819F26412A42005614E8 /* macOSThreadViewOld.swift in Sources */,
 				833685C826723E6400ACE618 /* macOSNoticeView.swift in Sources */,
 				8339816526404049005614E8 /* SidebarButton.swift in Sources */,
 				833981A526418DCD005614E8 /* LolView.swift in Sources */,
@@ -1363,17 +1381,19 @@
 				8339816026403F08005614E8 /* macOSTagsView.swift in Sources */,
 				83AA1960264656BD00556E69 /* KeychainItemAccessibility.swift in Sources */,
 				83AA1963264656BD00556E69 /* KeychainWrapper.swift in Sources */,
+				833685D32672C18F00ACE618 /* macOSPostPreviewView.swift in Sources */,
 				833685C626702CB900ACE618 /* macOSClearHiddenView.swift in Sources */,
 				833EE9CC2644DE1A00345A1D /* RichTextView.swift in Sources */,
 				833685C2266FAB2B00ACE618 /* macOSGuidelinesView.swift in Sources */,
 				833981692640439F005614E8 /* macOSSettingsView.swift in Sources */,
 				83AA19BD26485B1F00556E69 /* MessageService.swift in Sources */,
 				833685D0267284BB00ACE618 /* macOSTagsWebView.swift in Sources */,
+				833685DB2673982100ACE618 /* macOSThreadView.swift in Sources */,
 				833685C4266FB97A00ACE618 /* macOSAccountView.swift in Sources */,
 				8339818526406814005614E8 /* Globals.swift in Sources */,
 				8339810F263F1028005614E8 /* StringExtensions.swift in Sources */,
 				83398107263F0D38005614E8 /* ChatService.swift in Sources */,
-				83398155263F69E0005614E8 /* macOSChatView.swift in Sources */,
+				83398155263F69E0005614E8 /* macOSChatViewOld.swift in Sources */,
 				833981A4264189DC005614E8 /* ContributedView.swift in Sources */,
 				83AA1966264656BD00556E69 /* KeychainWrapperSubscript.swift in Sources */,
 				833685CA267243B500ACE618 /* macOSTagPostView.swift in Sources */,
