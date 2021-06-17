@@ -103,7 +103,7 @@ struct macOSThreadView: View {
             // Root post
             VStack (alignment: .leading) {
                 HStack {
-                    AuthorNameView(name: self.rootPostAuthor, postId: self.threadId, bold: true)
+                    AuthorNameView(name: self.rootPostAuthor, postId: self.threadId)
                     
                     ContributedView(contributed: self.contributed)
 
@@ -154,6 +154,19 @@ struct macOSThreadView: View {
             
             // Replies
             VStack {
+                // No replies yet
+                if postList.count < 1 {
+                    HStack {
+                        Spacer()
+                        Text("No replies, be the first to post.")
+                            .font(.body)
+                            .bold()
+                            .foregroundColor(Color("NoDataLabel"))
+                        Spacer()
+                    }
+                }
+                
+                // Post list
                 ForEach(postList, id: \.id) { post in
                     HStack {
                         
