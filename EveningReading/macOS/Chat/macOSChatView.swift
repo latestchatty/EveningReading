@@ -51,7 +51,6 @@ struct macOSChatView: View {
                         LazyVStack (spacing: 0) {
                             macOSThreadList()
                         }
-                        .padding(.top, 20)
                     }
                     .frame(width: geometry.size.width * 0.35)
                     
