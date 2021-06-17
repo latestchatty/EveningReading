@@ -55,7 +55,7 @@ struct macOSThreadPreview: View {
     var body: some View {
         VStack (alignment: .leading) {
             HStack {
-                AuthorNameView(name: self.rootPostAuthor, postId: self.threadId, bold: true)
+                AuthorNameView(name: self.rootPostAuthor, postId: self.threadId)
                 
                 ContributedView(contributed: self.contributed)
 
