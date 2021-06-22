@@ -46,6 +46,7 @@ enum RichTextBlock: Hashable {
     case quote([RichTextBlock])
     case spoiler([SpoilerBlock])
     case link([LinkBlock])
+    case spoilerlink([SpoilerLinkBlock])
 }
 
 struct InlineText: Hashable {
@@ -58,6 +59,11 @@ struct SpoilerBlock: Hashable {
 }
 
 struct LinkBlock: Hashable {
+    var hyperlink: String
+    var description: String
+}
+
+struct SpoilerLinkBlock: Hashable {
     var hyperlink: String
     var description: String
 }
@@ -253,6 +259,8 @@ struct TextBlockView: View {
                 renderSpoiler(spoiler)
             case .link(let link):
                 renderLink(link)
+            case .spoilerlink(let spoilerlink):
+                renderSpoilerLink(spoilerlink)
             }
         }
     }
@@ -269,6 +277,14 @@ struct TextBlockView: View {
         return VStack(alignment: .leading) {
             ForEach(spoiler, id: \.self) { s in
                 SpoilerView(spoilerText: s.text)
+            }
+        }
+    }
+    
+    func renderSpoilerLink(_ spoilerlink: [SpoilerLinkBlock]) -> some View {
+        return VStack(alignment: .leading) {
+            ForEach(spoilerlink, id: \.self) { l in
+                LinkView(hyperlink: l.hyperlink, description: l.description)
             }
         }
     }
@@ -434,6 +450,7 @@ class RichTextBuilder {
         var spoilerText = ""
         var hrefOpen = false
         var isSpoiler = false
+        var isSpoilerLink = false
         var lineOfText = [InlineText]()
         for markup in resultsByType {
             
@@ -532,6 +549,21 @@ class RichTextBuilder {
                     linkHref = markup.postMarkup.replacingOccurrences(of: #"<a href=""#, with: "")
                     linkHref = linkHref.replacingOccurrences(of: #"" target="_blank">"#, with: "")
                     hrefOpen = true
+                } else if markup.postMarkup.starts(with: #"<a target="_blank" rel="nofollow" href=""#) {
+                    if isSpoiler {
+                        isSpoilerLink = true
+                        if spoilerText != "" {
+                            // Spit out what's regular content
+                            richText.append(.plainTextBlock(lineOfText))
+                            lineOfText = [InlineText]()
+                            // Now do the spoiler
+                            richText.append(.spoiler([SpoilerBlock(text: spoilerText)]))
+                        }
+                        spoilerText = ""
+                        var link = markup.postMarkup.replacingOccurrences(of: #"<a target="_blank" rel="nofollow" href=""#, with: "")
+                        link = link.replacingOccurrences(of: #"">"#, with: "")
+                        linkHref = link
+                    }
                 }
                 
                 // Close tags
@@ -598,6 +630,7 @@ class RichTextBuilder {
                 if  markup.postMarkup == "</a>" {
                     linkHref = ""
                     hrefOpen = false
+                    isSpoilerLink = false
                 }
             }
 
@@ -605,6 +638,8 @@ class RichTextBuilder {
             if markup.postMarkupType == ShackMarkupType.content {
                 if !markup.postMarkup.hasPrefix("http") && !hrefOpen && !isSpoiler {
                     lineOfText.append(InlineText(text: String(markup.postMarkup).stringByDecodingHTMLEntities, attributes: attr))
+                } else if isSpoilerLink {
+                    richText.append(.link([LinkBlock(hyperlink: linkHref, description: markup.postMarkup)]))
                 } else if isSpoiler {
                     // Still within spoiler tags
                     spoilerText += markup.postMarkup + " "
