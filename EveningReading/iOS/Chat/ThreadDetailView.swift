@@ -115,7 +115,7 @@ struct ThreadDetailView: View {
             self.rootPostAuthor = rootPost.author
             self.rootPostBody = rootPost.body
             self.rootPostRichText = RichTextBuilder.getRichText(postBody: self.rootPostBody)
-            self.rootPostDate = rootPost.date
+            self.rootPostDate = rootPost.date.fromISO8601()
             self.rootPostLols = rootPost.lols
             self.postCount = thread.posts.count
         }
@@ -274,6 +274,9 @@ struct ThreadDetailView: View {
                             // Tag and Reply
                             if appSessionStore.isSignedIn {
                                 HStack {
+                                    Text(self.rootPostDate)
+                                        .font(.caption)
+                                        .foregroundColor(Color("NoDataLabel"))
                                     Spacer()
                                     TagPostView(postId: self.threadId)
                                     Spacer().frame(width: 10)
@@ -318,7 +321,7 @@ struct ThreadDetailView: View {
                                     
                                     // Reply expanded
                                     if self.selectedPost == post.id {
-                                        PostExpandedView(username: self.username, postId: post.id, postBody: post.body, replyLines: self.replyLines[post.id] == nil ? String(repeating: " ", count: 5) : self.replyLines[post.id]!, postCategory: post.category, postStrength: postStrength[post.id], postAuthor: post.author, postLols: post.lols, postRichText: self.selectedPostRichText)
+                                        PostExpandedView(username: self.username, postId: post.id, postBody: post.body, replyLines: self.replyLines[post.id] == nil ? String(repeating: " ", count: 5) : self.replyLines[post.id]!, postCategory: post.category, postStrength: postStrength[post.id], postAuthor: post.author, postLols: post.lols, postRichText: self.selectedPostRichText, postDateTime: post.date)
                                     }
                                     
                                 }

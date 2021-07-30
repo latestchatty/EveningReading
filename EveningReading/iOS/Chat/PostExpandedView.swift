@@ -20,6 +20,7 @@ struct PostExpandedView: View {
     var postAuthor: String
     var postLols: [ChatLols]
     var postRichText = [RichTextBlock]()
+    var postDateTime: String
 
     var body: some View {
         VStack {
@@ -62,6 +63,9 @@ struct PostExpandedView: View {
                 // Tag and reply
                 if appSessionStore.isSignedIn {
                     HStack {
+                        Text(postDateTime.fromISO8601())
+                            .font(.caption)
+                            .foregroundColor(Color("NoDataLabel"))
                         Spacer()
                         TagPostView(postId: self.postId)
                         Spacer().frame(width: 10)
@@ -79,7 +83,7 @@ struct PostExpandedView: View {
 
 struct PostExpandedView_Previews: PreviewProvider {
     static var previews: some View {
-        PostExpandedView(username: "aenean", postId: 0, postBody: "This is a post.", replyLines: "A", postCategory: "ontopic", postStrength: 0.75, postAuthor: "aenean", postLols: [ChatLols](), postRichText: [RichTextBlock]())
+        PostExpandedView(username: "aenean", postId: 0, postBody: "This is a post.", replyLines: "A", postCategory: "ontopic", postStrength: 0.75, postAuthor: "aenean", postLols: [ChatLols](), postRichText: [RichTextBlock](), postDateTime: "2020-08-14T21:05:00Z")
         .environment(\.colorScheme, .dark)
         .environmentObject(AppSessionStore(service: AuthService()))
     }
