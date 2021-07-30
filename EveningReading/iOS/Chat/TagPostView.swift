@@ -49,7 +49,10 @@ struct TagPostView: View {
                 }
                 
                 // Show notice
-                DispatchQueue.main.async {
+                //DispatchQueue.main.async {
+                // Is asyncAfter necessary to work 100%?
+                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(50)) {
+                    print("Should show Tagged! toast?")
                     chatStore.didTagPost = true
                     chatStore.showingTagNotice = true
                 }
