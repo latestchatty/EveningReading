@@ -115,7 +115,7 @@ struct ThreadDetailView: View {
             self.rootPostAuthor = rootPost.author
             self.rootPostBody = rootPost.body
             self.rootPostRichText = RichTextBuilder.getRichText(postBody: self.rootPostBody)
-            self.rootPostDate = rootPost.date.fromISO8601()
+            self.rootPostDate = rootPost.date.postTimestamp()
             self.rootPostLols = rootPost.lols
             self.postCount = thread.posts.count
         }

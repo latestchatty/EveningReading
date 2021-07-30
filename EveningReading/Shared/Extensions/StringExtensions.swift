@@ -324,6 +324,22 @@ extension String {
         }
     }
     
+    func postTimestamp() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        if let date = dateFormatter.date(from: self) {
+            let outFormatter = DateFormatter()
+            outFormatter.dateFormat = "MMM d, h:mm a"
+            return outFormatter.string(from: date)
+            // "Jun 5, 2016, 4:56 PM"
+        } else {
+            let outFormatter = DateFormatter()
+            outFormatter.dateFormat = "MMM d, h:mm a"
+            return outFormatter.string(from: Date())
+        }
+    }
+    
     func getTimeRemaining() -> String {
         let date = self.fromString()
         return date.timeRemaining()

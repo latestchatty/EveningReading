@@ -63,7 +63,7 @@ struct PostExpandedView: View {
                 // Tag and reply
                 if appSessionStore.isSignedIn {
                     HStack {
-                        Text(postDateTime.fromISO8601())
+                        Text(postDateTime.postTimestamp())
                             .font(.caption)
                             .foregroundColor(Color("NoDataLabel"))
                         Spacer()
