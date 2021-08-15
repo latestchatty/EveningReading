@@ -99,6 +99,36 @@ struct macOSThreadView: View {
     
     var body: some View {
         VStack (alignment: .leading) {
+//            HStack() {
+//                Image(systemName: "arrowtriangle.backward")
+//                    .imageScale(.large)
+//                    .onTapGesture {
+//                        let selectedIndex = self.postList.firstIndex { $0.id == self.selectedPost }
+//                        if selectedIndex == nil {
+//                            self.selectedPost = self.postList[0].id
+//                        } else {
+//                            if selectedIndex == 1 {
+//                                self.selectedPost = 0
+//                            } else {
+//                                self.selectedPost = self.postList[selectedIndex ?? 1 - 1].id
+//                            }
+//                        }
+//                    }
+//                Image(systemName: "arrowtriangle.forward")
+//                    .imageScale(.large)
+//                    .onTapGesture {
+//                            let selectedIndex = self.postList.firstIndex { $0.id == self.selectedPost }
+//                            if selectedIndex == nil {
+//                                self.selectedPost = self.postList[0].id
+//                            } else {
+//                                if selectedIndex == (self.postList.count - 1) {
+//                                    self.selectedPost = 0
+//                                } else {
+//                                    self.selectedPost = self.postList[selectedIndex ?? 0 + 1].id
+//                                }
+//                            }
+//                    }
+//            }
             
             // Root post
             VStack (alignment: .leading) {
@@ -179,10 +209,8 @@ struct macOSThreadView: View {
                                 // Load Rich Text
                                 self.selectedPostRichText = RichTextBuilder.getRichText(postBody: post.body)
                             }
-                        }
-                        
+                        } else {
                         // Reply preview row
-                        if self.selectedPost != post.id {
                             HStack {
                                 macOSPostPreviewView(postId: .constant(post.id), postAuthor: .constant(post.author), replyLines: self.$replyLines[post.id], lols: .constant(post.lols), postText: .constant(post.body), postCategory: .constant(post.category), postStrength: .constant(postStrength[post.id]))
                             }

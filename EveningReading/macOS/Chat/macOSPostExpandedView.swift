@@ -9,11 +9,15 @@ import SwiftUI
 
 struct macOSPostExpandedView: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var chatStore: ChatStore
     @Binding var postId: Int
     @Binding var postAuthor: String
     @Binding var replyLines: String?
     @Binding var lols: [ChatLols]
     @Binding var postText: [RichTextBlock]
+    @State var showReply = false
+    @State var replyText = ""
+    @State var postDisabled = false
 
     var body: some View {
         HStack {
@@ -38,25 +42,64 @@ struct macOSPostExpandedView: View {
                 // Full post
                 RichTextView(topBlocks: self.postText)
                     .fixedSize(horizontal: false, vertical: true)
-                    .padding(8)
 
                 if appSessionStore.isSignedIn {
-                    HStack {
-                        Spacer()
-                        Image(systemName: "tag")
-                            .imageScale(.large)
-                            .onTapGesture(count: 1) {
-                            }
-                        Image(systemName: "arrowshape.turn.up.left")
-                            .imageScale(.large)
-                            .onTapGesture(count: 1) {
-                            }
+                    VStack() {
+                        HStack {
+                            Spacer()
+                            Image(systemName: "tag")
+                                .imageScale(.large)
+                                .onTapGesture(count: 1) {
+                                }
+                            Image(systemName: "arrowshape.turn.up.left")
+                                .imageScale(.large)
+                                .foregroundColor(showReply ? Color.accentColor : Color.primary)
+                                .onTapGesture(count: 1) {
+                                    showReply = !showReply
+                                }
+                        }
                     }
-                    .padding(.bottom, 8)
-                    .padding(.trailing, 8)
+                    if (showReply) {
+                        TextEditor(text: $replyText)
+                            .disabled(postDisabled)
+                            .overlay(RoundedRectangle(cornerRadius: 4)
+                                        .stroke(Color.primary, lineWidth: 2))
+                            .padding(.top, 8)
+                            .frame(minHeight: 65)
+                        HStack() {
+                            Spacer()
+                            Image(systemName: "paperplane")
+                                .imageScale(.large)
+                                .disabled(postDisabled)
+                                .onTapGesture(count:1) {
+                                    print(replyText)
+                                    postDisabled = true
+                                    // Let the loading indicator show for at least a short time
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(200)) {
+                                        self.chatStore.submitPost(postBody: self.replyText, postId: self.postId)
+                                    }
+                                }
+                        }
+                    }
+                }
+            }.padding(8)
+            Spacer()
+        }
+        .onReceive(self.chatStore.$submitPostSuccessMessage) { successMessage in
+            DispatchQueue.main.async {
+                postDisabled = false
+                replyText = ""
+                showReply = false
+                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
+                    self.chatStore.getThread()
                 }
             }
-            Spacer()
+        }
+        .onReceive(self.chatStore.$submitPostErrorMessage) { errorMessage in
+            DispatchQueue.main.async {
+                print(errorMessage)
+                postDisabled = false
+            }
         }
         .frame(maxWidth: .infinity)
         .background(Color("ThreadBubbleSecondary"))
