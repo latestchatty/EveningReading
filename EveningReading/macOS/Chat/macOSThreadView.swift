@@ -64,7 +64,7 @@ struct macOSThreadView: View {
     
     private func getPostList(parentId: Int) {
         if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
-                {
+        {
             if let thread = chatData.threads.filter({ return $0.threadId == self.threadId }).first {
                 // Replies to post
                 let replies = thread.posts.filter({ return $0.parentId == parentId }).sorted(by: { $0.id < $1.id })
@@ -97,146 +97,163 @@ struct macOSThreadView: View {
         }
     }
     
+    private func selectNextPost(forward: Bool = true) {
+        let selectedIndex = self.postList.firstIndex { $0.id == self.selectedPost }
+        
+        if forward {
+            if selectedIndex == nil {
+                self.selectedPost = self.postList.first?.id ?? 0
+            } else if selectedIndex == (self.postList.count - 1) {
+                self.selectedPost = 0
+            } else {
+                self.selectedPost = self.postList[selectedIndex! + 1].id
+            }
+        } else {
+            if selectedIndex == nil {
+                self.selectedPost = self.postList.last?.id ?? 0
+            } else if selectedIndex == 0 {
+                self.selectedPost = 0
+            } else {
+                self.selectedPost = self.postList[selectedIndex! - 1].id
+            }
+        }
+    }
+    
     var body: some View {
-        VStack (alignment: .leading) {
-//            HStack() {
-//                Image(systemName: "arrowtriangle.backward")
-//                    .imageScale(.large)
-//                    .onTapGesture {
-//                        let selectedIndex = self.postList.firstIndex { $0.id == self.selectedPost }
-//                        if selectedIndex == nil {
-//                            self.selectedPost = self.postList[0].id
-//                        } else {
-//                            if selectedIndex == 1 {
-//                                self.selectedPost = 0
-//                            } else {
-//                                self.selectedPost = self.postList[selectedIndex ?? 1 - 1].id
-//                            }
-//                        }
-//                    }
-//                Image(systemName: "arrowtriangle.forward")
-//                    .imageScale(.large)
-//                    .onTapGesture {
-//                            let selectedIndex = self.postList.firstIndex { $0.id == self.selectedPost }
-//                            if selectedIndex == nil {
-//                                self.selectedPost = self.postList[0].id
-//                            } else {
-//                                if selectedIndex == (self.postList.count - 1) {
-//                                    self.selectedPost = 0
-//                                } else {
-//                                    self.selectedPost = self.postList[selectedIndex ?? 0 + 1].id
-//                                }
-//                            }
-//                    }
-//            }
-            
-            // Root post
-            VStack (alignment: .leading) {
-                HStack {
-                    AuthorNameView(name: self.rootPostAuthor, postId: self.threadId)
-                    
-                    ContributedView(contributed: self.contributed)
-
-                    Spacer()
-
-                    LolView(lols: self.rootPostLols, expanded: true, postId: self.threadId)
-
-                    ReplyCountView(replyCount: self.replyCount)
-                    
-                    /*
-                    Text(self.rootPostDate.getTimeAgo())
-                        .foregroundColor(Color.gray)
-                        .font(.body)
-                    */
-                    
-                    Image(systemName: "eye.slash")
-                        .imageScale(.large)
-                        .onTapGesture(count: 1) {
+        //Throwing error about "each layout item may only occur once" when switching to LazyVStack.
+        // It only happens occasionally. Seemingly after A/Zing through posts quickly
+        // then switching to a different thread...
+        LazyVStack (alignment: .leading, pinnedViews: .sectionHeaders) {
+            Section(header:
+                        HStack() {
+                            Spacer()
+                            Button(action: {
+                                self.selectNextPost(forward: false)
+                            }, label: {
+                                Image(systemName: "arrowtriangle.backward")
+                                    .imageScale(.large)
+                            })
+                            .buttonStyle(BorderlessButtonStyle())
+                            .keyboardShortcut("a", modifiers: [.command])
+                            
+                            Button(action: {
+                                self.selectNextPost()
+                            }, label: {
+                                Image(systemName: "arrowtriangle.forward")
+                                    .imageScale(.large)
+                            })
+                            .buttonStyle(BorderlessButtonStyle())
+                            .keyboardShortcut("z", modifiers: [.command])
                         }
-                    
-                    if appSessionStore.isSignedIn {
-                        Image(systemName: "tag")
+                        .padding(8)
+                        .background(Color("PrimaryBackground"))
+            ) {
+                // Root post
+                VStack (alignment: .leading) {
+                    HStack {
+                        AuthorNameView(name: self.rootPostAuthor, postId: self.threadId)
+                        
+                        ContributedView(contributed: self.contributed)
+                        
+                        Spacer()
+                        
+                        LolView(lols: self.rootPostLols, expanded: true, postId: self.threadId)
+                        
+                        ReplyCountView(replyCount: self.replyCount)
+                        
+                        /*
+                         Text(self.rootPostDate.getTimeAgo())
+                         .foregroundColor(Color.gray)
+                         .font(.body)
+                         */
+                        
+                        Image(systemName: "eye.slash")
                             .imageScale(.large)
                             .onTapGesture(count: 1) {
                             }
+                        
+                        if appSessionStore.isSignedIn {
+                            Image(systemName: "tag")
+                                .imageScale(.large)
+                                .onTapGesture(count: 1) {
+                                }
+                            
+                            Image(systemName: "arrowshape.turn.up.left")
+                                .imageScale(.large)
+                                .onTapGesture(count: 1) {
+                                }
+                        }
+                    }
+                    .padding(.horizontal, 10)
+                    .padding(.top, 10)
                     
-                        Image(systemName: "arrowshape.turn.up.left")
-                            .imageScale(.large)
-                            .onTapGesture(count: 1) {
+                    // Root post body
+                    VStack (alignment: .leading) {
+                        RichTextView(topBlocks: self.rootPostRichText)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                    .padding(.horizontal, 10)
+                    .padding(.bottom, 10)
+                }
+                .frame(maxWidth: .infinity)
+                .background(Color("ThreadBubblePrimary"))
+                .cornerRadius(10)
+                .padding(.horizontal, 10)
+                
+                // Replies
+                VStack {
+                    // No replies yet
+                    if postList.count < 1 {
+                        HStack {
+                            Spacer()
+                            Text("No replies, be the first to post.")
+                                .font(.body)
+                                .bold()
+                                .foregroundColor(Color("NoDataLabel"))
+                            Spacer()
+                        }
+                    }
+                    
+                    // Post list
+                    ForEach(postList, id: \.id) { post in
+                        HStack {
+                            
+                            // Reply expaned row
+                            if self.selectedPost == post.id {
+                                VStack {
+                                    macOSPostExpandedView(postId: .constant(post.id), postAuthor: .constant(post.author), replyLines: self.$replyLines[post.id], lols: .constant(post.lols), postText: self.$selectedPostRichText)
+                                }
+                                .onAppear() {
+                                    // Load Rich Text
+                                    self.selectedPostRichText = RichTextBuilder.getRichText(postBody: post.body)
+                                }
+                            } else {
+                                // Reply preview row
+                                HStack {
+                                    macOSPostPreviewView(postId: .constant(post.id), postAuthor: .constant(post.author), replyLines: self.$replyLines[post.id], lols: .constant(post.lols), postText: .constant(post.body), postCategory: .constant(post.category), postStrength: .constant(postStrength[post.id]))
+                                }
+                                .contentShape(Rectangle())
+                                .onTapGesture(count: 1) {
+                                    //withAnimation {
+                                    selectedPost = post.id
+                                    //}
+                                }
                             }
+                            
+                        }
+                        .id(post.id)
                     }
                 }
-                .padding(.horizontal, 10)
-                .padding(.top, 10)
-                
-                // Root post body
-                VStack (alignment: .leading) {
-                    RichTextView(topBlocks: self.rootPostRichText)
-                        .fixedSize(horizontal: false, vertical: true)
-                }
-                .padding(.horizontal, 10)
+                .padding(.horizontal, 20)
                 .padding(.bottom, 10)
             }
-            .frame(maxWidth: .infinity)
-            .background(Color("ThreadBubblePrimary"))
-            .cornerRadius(10)
-            .padding(.horizontal, 10)
-            
-            // Replies
-            VStack {
-                // No replies yet
-                if postList.count < 1 {
-                    HStack {
-                        Spacer()
-                        Text("No replies, be the first to post.")
-                            .font(.body)
-                            .bold()
-                            .foregroundColor(Color("NoDataLabel"))
-                        Spacer()
-                    }
-                }
-                
-                // Post list
-                ForEach(postList, id: \.id) { post in
-                    HStack {
-                        
-                        // Reply expaned row
-                        if self.selectedPost == post.id {
-                            VStack {
-                                macOSPostExpandedView(postId: .constant(post.id), postAuthor: .constant(post.author), replyLines: self.$replyLines[post.id], lols: .constant(post.lols), postText: self.$selectedPostRichText)
-                            }
-                            .onAppear() {
-                                // Load Rich Text
-                                self.selectedPostRichText = RichTextBuilder.getRichText(postBody: post.body)
-                            }
-                        } else {
-                        // Reply preview row
-                            HStack {
-                                macOSPostPreviewView(postId: .constant(post.id), postAuthor: .constant(post.author), replyLines: self.$replyLines[post.id], lols: .constant(post.lols), postText: .constant(post.body), postCategory: .constant(post.category), postStrength: .constant(postStrength[post.id]))
-                            }
-                            .contentShape(Rectangle())
-                            .onTapGesture(count: 1) {
-                                //withAnimation {
-                                    selectedPost = post.id
-                                //}
-                            }
-                        }
-                        
-                    }
-                    .id(post.id)
-                }
+            .onReceive(chatStore.$activeThreadId) { value in
+                getThreadData()
+                postList = [ChatPosts]()
+                postStrength = [Int: Double]()
+                replyLines = [Int: String]()
+                getPostList(parentId: self.threadId)
             }
-            .padding(.horizontal, 20)
-            .padding(.bottom, 10)
-            
-            
-        }
-        .onReceive(chatStore.$activeThreadId) { value in
-            getThreadData()
-            postList = [ChatPosts]()
-            postStrength = [Int: Double]()
-            replyLines = [Int: String]()
-            getPostList(parentId: self.threadId)
         }
     }
 }
