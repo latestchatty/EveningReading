@@ -84,7 +84,8 @@ struct macOSThreadPreview: View {
                 .frame(height: 1)
         }
         .contentShape(Rectangle())
-        .background(self.contributed ? (chatStore.activeThreadId == self.threadId ? Color("ChatBubbleSecondaryContributed") : Color("ChatBubblePrimaryContributed")) : (chatStore.activeThreadId == self.threadId ? Color("ChatBubbleSecondary") : Color.clear))
+        //.background(self.contributed ? (chatStore.activeThreadId == self.threadId ? Color("ChatBubbleSecondaryContributed") : Color("ChatBubblePrimaryContributed")) : (chatStore.activeThreadId == self.threadId ? Color("ChatBubbleSecondary") : Color.clear))
+        .background(chatStore.activeThreadId == self.threadId ? Color("ChatBubbleSecondary") : Color.clear)
         .onAppear(perform: getThreadData)
         .onTapGesture(count: 1) {
             chatStore.activeThreadId = self.threadId

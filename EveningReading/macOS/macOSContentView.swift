@@ -57,6 +57,7 @@ struct macOSContentView: View {
                             }, label: {
                                 Image(systemName: "arrow.counterclockwise")
                             })
+                            .keyboardShortcut("r", modifiers: [.command, .shift])
                             Button(action: {
                                 // compose
                             }, label: {

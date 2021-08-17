@@ -28,6 +28,7 @@ struct macOSThreadView: View {
     
     @State private var selectedPost = 0
     @State private var selectedPostRichText = [RichTextBlock]()
+    @State private var showRootReply = false
     
     private func getThreadData() {
         if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
@@ -134,7 +135,7 @@ struct macOSThreadView: View {
                                     .imageScale(.large)
                             })
                             .buttonStyle(BorderlessButtonStyle())
-                            .keyboardShortcut("a", modifiers: [.command])
+                            .keyboardShortcut("a", modifiers: [.command, .shift])
                             
                             Button(action: {
                                 self.selectNextPost()
@@ -143,7 +144,7 @@ struct macOSThreadView: View {
                                     .imageScale(.large)
                             })
                             .buttonStyle(BorderlessButtonStyle())
-                            .keyboardShortcut("z", modifiers: [.command])
+                            .keyboardShortcut("z", modifiers: [.command, .shift])
                         }
                         .padding(8)
                         .background(Color("PrimaryBackground"))
@@ -166,23 +167,6 @@ struct macOSThreadView: View {
                          .foregroundColor(Color.gray)
                          .font(.body)
                          */
-                        
-                        Image(systemName: "eye.slash")
-                            .imageScale(.large)
-                            .onTapGesture(count: 1) {
-                            }
-                        
-                        if appSessionStore.isSignedIn {
-                            Image(systemName: "tag")
-                                .imageScale(.large)
-                                .onTapGesture(count: 1) {
-                                }
-                            
-                            Image(systemName: "arrowshape.turn.up.left")
-                                .imageScale(.large)
-                                .onTapGesture(count: 1) {
-                                }
-                        }
                     }
                     .padding(.horizontal, 10)
                     .padding(.top, 10)
@@ -193,7 +177,34 @@ struct macOSThreadView: View {
                             .fixedSize(horizontal: false, vertical: true)
                     }
                     .padding(.horizontal, 10)
-                    .padding(.bottom, 10)
+                    .padding(.bottom, 8)
+                    if appSessionStore.isSignedIn {
+                        HStack {
+                            Spacer()
+                            Button(action: {}, label: {
+                                Image(systemName: "tag")
+                                    .imageScale(.large)
+                            })
+                            .buttonStyle(BorderlessButtonStyle())
+                            
+                            Button(action: {
+                                showRootReply = !showRootReply
+                            }, label: {
+                                Image(systemName: "arrowshape.turn.up.left")
+                                    .imageScale(.large)
+                                    .foregroundColor(showRootReply ? Color.accentColor : Color.primary)
+                            })
+                            .buttonStyle(BorderlessButtonStyle())
+                            .keyboardShortcut("r", modifiers: [.command, .option])
+                        }
+                        .padding(.horizontal, 10)
+                        .padding(.bottom, showRootReply ? 8 : 10)
+                        if (showRootReply) {
+                            macOSComposeView(postId: self.threadId)
+                                .padding(.horizontal, 10)
+                                .padding(.bottom, 10)
+                        }
+                    }
                 }
                 .frame(maxWidth: .infinity)
                 .background(Color("ThreadBubblePrimary"))
@@ -253,6 +264,14 @@ struct macOSThreadView: View {
                 postStrength = [Int: Double]()
                 replyLines = [Int: String]()
                 getPostList(parentId: self.threadId)
+            }
+            .onReceive(self.chatStore.$submitPostSuccessMessage) { successMessage in
+                DispatchQueue.main.async {
+                    showRootReply = false
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
+                        self.chatStore.getThread()
+                    }
+                }
             }
         }
     }
