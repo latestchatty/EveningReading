@@ -16,7 +16,8 @@ struct macOSPostExpandedView: View {
     @Binding var lols: [ChatLols]
     @Binding var postText: [RichTextBlock]
     @State var showReply = false
-
+    @State var selectedTag: String = ""
+    
     var body: some View {
         VStack {
             HStack {
@@ -41,17 +42,13 @@ struct macOSPostExpandedView: View {
                     // Full post
                     RichTextView(topBlocks: self.postText)
                         .fixedSize(horizontal: false, vertical: true)
-
+                    
                     if appSessionStore.isSignedIn {
                         VStack() {
                             HStack {
                                 Spacer()
-                                Button(action: {}, label: {
-                                    Image(systemName: "tag")
-                                        .imageScale(.large)
-                                })
-                                .buttonStyle(BorderlessButtonStyle())
-                                
+                              
+                                TagPostButton(postId: self.postId)
                                 Button(action: {
                                     showReply = !showReply
                                 }, label: {

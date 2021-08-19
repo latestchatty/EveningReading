@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7D45D72C26CC204B00D2AE63 /* macOSComposeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D45D72B26CC204B00D2AE63 /* macOSComposeView.swift */; };
+		7DA366ED26CEAEC200B567BB /* macOSShackTagsTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA366EC26CEAEC200B567BB /* macOSShackTagsTextView.swift */; };
+		7DA366EF26CEDDE900B567BB /* macOSTagPostButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA366EE26CEDDE900B567BB /* macOSTagPostButton.swift */; };
 		830292F12644C57F00B974B3 /* ReplyLineBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830292F02644C57F00B974B3 /* ReplyLineBuilder.swift */; };
 		830292F22644C57F00B974B3 /* ReplyLineBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830292F02644C57F00B974B3 /* ReplyLineBuilder.swift */; };
 		830292F32644C57F00B974B3 /* ReplyLineBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830292F02644C57F00B974B3 /* ReplyLineBuilder.swift */; };
@@ -255,6 +258,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		7D45D72B26CC204B00D2AE63 /* macOSComposeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSComposeView.swift; sourceTree = "<group>"; };
+		7DA366EC26CEAEC200B567BB /* macOSShackTagsTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSShackTagsTextView.swift; sourceTree = "<group>"; };
+		7DA366EE26CEDDE900B567BB /* macOSTagPostButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSTagPostButton.swift; sourceTree = "<group>"; };
 		830292F02644C57F00B974B3 /* ReplyLineBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyLineBuilder.swift; sourceTree = "<group>"; };
 		833685C1266FAB2B00ACE618 /* macOSGuidelinesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSGuidelinesView.swift; sourceTree = "<group>"; };
 		833685C3266FB97A00ACE618 /* macOSAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSAccountView.swift; sourceTree = "<group>"; };
@@ -440,6 +446,8 @@
 			isa = PBXGroup;
 			children = (
 				833685C726723E6400ACE618 /* macOSNoticeView.swift */,
+				7DA366EC26CEAEC200B567BB /* macOSShackTagsTextView.swift */,
+				7DA366EE26CEDDE900B567BB /* macOSTagPostButton.swift */,
 			);
 			path = Controls;
 			sourceTree = "<group>";
@@ -755,6 +763,7 @@
 				833685D22672C18F00ACE618 /* macOSPostPreviewView.swift */,
 				833685C9267243B500ACE618 /* macOSTagPostView.swift */,
 				833685C1266FAB2B00ACE618 /* macOSGuidelinesView.swift */,
+				7D45D72B26CC204B00D2AE63 /* macOSComposeView.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -1363,6 +1372,7 @@
 				83AA19282645C43500556E69 /* PostDecorator.swift in Sources */,
 				833981A326412FAC005614E8 /* AuthorNameView.swift in Sources */,
 				833685D52672CB8A00ACE618 /* macOSChatView.swift in Sources */,
+				7DA366ED26CEAEC200B567BB /* macOSShackTagsTextView.swift in Sources */,
 				83398118263F250E005614E8 /* ArticleService.swift in Sources */,
 				8339811B263F26CA005614E8 /* PreviewService.swift in Sources */,
 				83398159263F6BB1005614E8 /* macOSInboxView.swift in Sources */,
@@ -1387,8 +1397,10 @@
 				833685C2266FAB2B00ACE618 /* macOSGuidelinesView.swift in Sources */,
 				833981692640439F005614E8 /* macOSSettingsView.swift in Sources */,
 				83AA19BD26485B1F00556E69 /* MessageService.swift in Sources */,
+				7DA366EF26CEDDE900B567BB /* macOSTagPostButton.swift in Sources */,
 				833685D0267284BB00ACE618 /* macOSTagsWebView.swift in Sources */,
 				833685DB2673982100ACE618 /* macOSThreadView.swift in Sources */,
+				7D45D72C26CC204B00D2AE63 /* macOSComposeView.swift in Sources */,
 				833685C4266FB97A00ACE618 /* macOSAccountView.swift in Sources */,
 				8339818526406814005614E8 /* Globals.swift in Sources */,
 				8339810F263F1028005614E8 /* StringExtensions.swift in Sources */,
@@ -1580,7 +1592,7 @@
 				CODE_SIGN_ENTITLEMENTS = EveningReading.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 91;
-				DEVELOPMENT_TEAM = U3SY428MXR;
+				DEVELOPMENT_TEAM = U6SLGN39MS;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
@@ -1605,7 +1617,7 @@
 				CODE_SIGN_ENTITLEMENTS = EveningReading.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 91;
-				DEVELOPMENT_TEAM = U3SY428MXR;
+				DEVELOPMENT_TEAM = U6SLGN39MS;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
@@ -1632,7 +1644,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 91;
-				DEVELOPMENT_TEAM = U3SY428MXR;
+				DEVELOPMENT_TEAM = U6SLGN39MS;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = macOS/Info.plist;
@@ -1658,7 +1670,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 91;
-				DEVELOPMENT_TEAM = U3SY428MXR;
+				DEVELOPMENT_TEAM = U6SLGN39MS;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = macOS/Info.plist;
@@ -1683,7 +1695,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 91;
-				DEVELOPMENT_TEAM = U3SY428MXR;
+				DEVELOPMENT_TEAM = U6SLGN39MS;
 				IBSC_MODULE = EveningReading_Extension;
 				INFOPLIST_FILE = EveningReading/Info.plist;
 				MARKETING_VERSION = 1.947;
@@ -1705,7 +1717,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 91;
-				DEVELOPMENT_TEAM = U3SY428MXR;
+				DEVELOPMENT_TEAM = U6SLGN39MS;
 				IBSC_MODULE = EveningReading_Extension;
 				INFOPLIST_FILE = EveningReading/Info.plist;
 				MARKETING_VERSION = 1.947;
@@ -1726,7 +1738,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 91;
 				DEVELOPMENT_ASSET_PATHS = "\"EveningReading Extension/Preview Content\"";
-				DEVELOPMENT_TEAM = U3SY428MXR;
+				DEVELOPMENT_TEAM = U6SLGN39MS;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "EveningReading Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1751,7 +1763,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 91;
 				DEVELOPMENT_ASSET_PATHS = "\"EveningReading Extension/Preview Content\"";
-				DEVELOPMENT_TEAM = U3SY428MXR;
+				DEVELOPMENT_TEAM = U6SLGN39MS;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "EveningReading Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (

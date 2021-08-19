@@ -181,12 +181,7 @@ struct macOSThreadView: View {
                     if appSessionStore.isSignedIn {
                         HStack {
                             Spacer()
-                            Button(action: {}, label: {
-                                Image(systemName: "tag")
-                                    .imageScale(.large)
-                            })
-                            .buttonStyle(BorderlessButtonStyle())
-                            
+                            TagPostButton(postId: self.threadId)
                             Button(action: {
                                 showRootReply = !showRootReply
                             }, label: {
