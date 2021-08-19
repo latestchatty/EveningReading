@@ -13,15 +13,15 @@ struct macOSComposeView: View {
     var postId: Int
     @State var replyText = ""
     @State var submitInProgress = false
+    @State private var postStyle = NSFont.TextStyle.body
     
     var body: some View {
         VStack(alignment: .leading) {
-            TextEditor(text: $replyText)
+            ShackTagsTextView(text: $replyText, textStyle: $postStyle)
                 .disabled(submitInProgress)
+                .frame(minHeight: 100)
                 .overlay(RoundedRectangle(cornerRadius: 4)
-                            .stroke(replyText.count < 6 ? Color.red : Color.primary, lineWidth: 2))
-                .padding(.top, 8)
-                .frame(minHeight: 65)
+                        .stroke(replyText.count < 6 ? Color.red : Color.primary, lineWidth: 2))
             
             HStack() {
                 Spacer()
@@ -29,7 +29,8 @@ struct macOSComposeView: View {
                     submitInProgress = true
                     print(self.replyText)
                     // Let the loading indicator show for at least a short time
-                    DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(200)) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) {
+                        submitInProgress = false
                         self.chatStore.submitPost(postBody: self.replyText, postId: self.postId)
                     }
                 }, label: {
