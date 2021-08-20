@@ -17,8 +17,8 @@ struct macOSComposeView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            ShackTagsTextView(text: $replyText, textStyle: $postStyle)
-                .disabled(submitInProgress)
+            //TextEditor(text: $replyText)
+            ShackTagsTextView(text: $replyText, textStyle: $postStyle, disabled: $submitInProgress)
                 .frame(minHeight: 100)
                 .overlay(RoundedRectangle(cornerRadius: 4)
                         .stroke(replyText.count < 6 ? Color.red : Color.primary, lineWidth: 2))
@@ -27,12 +27,7 @@ struct macOSComposeView: View {
                 Spacer()
                 Button(action: {
                     submitInProgress = true
-                    print(self.replyText)
-                    // Let the loading indicator show for at least a short time
-                    DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) {
-                        submitInProgress = false
-                        self.chatStore.submitPost(postBody: self.replyText, postId: self.postId)
-                    }
+                    self.chatStore.submitPost(postBody: self.replyText, postId: self.postId)
                 }, label: {
                     Image(systemName: "paperplane")
                         .imageScale(.large)
@@ -45,18 +40,21 @@ struct macOSComposeView: View {
             }
         }
         .onReceive(self.chatStore.$submitPostSuccessMessage) { successMessage in
-            DispatchQueue.main.async {
+            if successMessage == "" { return }
+            DispatchQueue.main.asyncAfterPostDelay {
                 submitInProgress = false
                 replyText = ""
             }
         }
         
         .onReceive(self.chatStore.$submitPostErrorMessage) { errorMessage in
+            if errorMessage == "" { return }
             DispatchQueue.main.async {
                 print(errorMessage)
                 submitInProgress = false
             }
         }
+        .overlay(LoadingView(show: $submitInProgress, title: .constant("")))
     }
 }
 

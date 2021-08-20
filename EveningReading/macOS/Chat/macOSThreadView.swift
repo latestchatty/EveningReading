@@ -29,6 +29,8 @@ struct macOSThreadView: View {
     @State private var selectedPost = 0
     @State private var selectedPostRichText = [RichTextBlock]()
     @State private var showRootReply = false
+    @State private var canRefresh = true
+    @State private var isGettingThread = false
     
     private func getThreadData() {
         if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
@@ -127,7 +129,16 @@ struct macOSThreadView: View {
         LazyVStack (alignment: .leading, pinnedViews: .sectionHeaders) {
             Section(header:
                         HStack() {
+                            Button(action: {
+                                self.chatStore.getThread()
+                            }, label: {
+                                Image(systemName: "arrow.counterclockwise")
+                                    .imageScale(.large)
+                            })
+                            .buttonStyle(BorderlessButtonStyle())
+                            
                             Spacer()
+                            
                             Button(action: {
                                 self.selectNextPost(forward: false)
                             }, label: {
@@ -147,6 +158,7 @@ struct macOSThreadView: View {
                             .keyboardShortcut("z", modifiers: [.command, .shift])
                         }
                         .padding(8)
+                        .padding(.horizontal, 10)
                         .background(Color("PrimaryBackground"))
             ) {
                 // Root post
@@ -253,22 +265,50 @@ struct macOSThreadView: View {
                 .padding(.horizontal, 20)
                 .padding(.bottom, 10)
             }
-            .onReceive(chatStore.$activeThreadId) { value in
-                getThreadData()
-                postList = [ChatPosts]()
-                postStrength = [Int: Double]()
-                replyLines = [Int: String]()
-                getPostList(parentId: self.threadId)
-            }
-            .onReceive(self.chatStore.$submitPostSuccessMessage) { successMessage in
-                DispatchQueue.main.async {
-                    showRootReply = false
-                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
-                        self.chatStore.getThread()
-                    }
+        }
+        .onReceive(chatStore.$activeThreadId) { value in
+            getThreadData()
+            postList = [ChatPosts]()
+            postStrength = [Int: Double]()
+            replyLines = [Int: String]()
+            getPostList(parentId: self.threadId)
+        }
+        .onReceive(self.chatStore.$submitPostSuccessMessage) { successMessage in
+            if successMessage == "" { return }
+            
+            DispatchQueue.main.async {
+                self.chatStore.submitPostSuccessMessage = ""
+                self.chatStore.submitPostErrorMessage = ""
+                showRootReply = false
+                DispatchQueue.main.asyncAfterPostDelay {
+                    self.chatStore.getThread()
                 }
             }
         }
+        // If refreshing thread after posting
+        .onReceive(chatStore.$didGetThreadStart) { value in
+            if value && self.chatStore.didSubmitPost && chatStore.activeThreadId == self.threadId {
+                chatStore.didGetThreadStart = false
+                self.selectedPost = 0
+                self.isGettingThread = true
+            }
+        }
+        .onReceive(chatStore.$didGetThreadFinish) { value in
+            if value && chatStore.activeThreadId == self.threadId && canRefresh {
+                self.canRefresh = false
+                self.chatStore.didSubmitPost = false
+                self.chatStore.didGetThreadStart = false
+                self.chatStore.didGetThreadFinish = false
+                self.selectedPost = 0
+                getThreadData()
+                self.postList = [ChatPosts]()
+                self.postStrength = [Int: Double]()
+                getPostList(parentId: self.threadId)
+                self.isGettingThread = false
+                self.canRefresh = true
+            }
+        }
+        .overlay(LoadingView(show: self.$isGettingThread, title: .constant("")))
     }
 }
 

@@ -68,11 +68,9 @@ struct macOSPostExpandedView: View {
                 Spacer()
             }
             .onReceive(self.chatStore.$submitPostSuccessMessage) { successMessage in
-                DispatchQueue.main.async {
+                if successMessage == "" { return }
+                DispatchQueue.main.asyncAfterPostDelay {
                     showReply = false
-                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
-                        self.chatStore.getThread()
-                    }
                 }
             }
             .frame(maxWidth: .infinity)

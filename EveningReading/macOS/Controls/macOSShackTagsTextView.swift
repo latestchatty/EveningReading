@@ -26,6 +26,7 @@ struct ShackTagsTextView: NSViewRepresentable {
     
     @Binding var text: String
     @Binding var textStyle: NSFont.TextStyle
+    @Binding var disabled: Bool
     //@Binding var doTagText: Bool
     
     func makeNSView(context: Context) -> NSScrollView {
@@ -37,6 +38,8 @@ struct ShackTagsTextView: NSViewRepresentable {
         textView.font = NSFont.preferredFont(forTextStyle: textStyle)
         //textView.autocapitalizationType = .sentences
         textView.isSelectable = true
+        textView.isContinuousSpellCheckingEnabled = true
+        textView.isEditable = !disabled
         //textView.isUserInteractionEnabled = true
         
         // Guess we have to wait for it to be added to make it first responder.
@@ -55,8 +58,12 @@ struct ShackTagsTextView: NSViewRepresentable {
            return
         }
 
-        nsTextView.string = text
         nsTextView.font = NSFont.preferredFont(forTextStyle: textStyle)
+        nsTextView.isEditable = !self.disabled
+        // Re-setting it if it's already the same ends up moving the cursor to the end.
+        // So we need to protect against that.
+        guard nsTextView.string != text else { return }
+        nsTextView.string = text
     }
     
     func makeCoordinator() -> Coordinator {

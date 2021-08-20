@@ -53,6 +53,7 @@ struct ComposePostView: View {
             ShackTags.shared.taggedText = ""
         }
         
+        //TODO: Can this use .asyncAfterPostDelay extension? Why is it so long?
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(8)) {
             self.chatStore.getThread()
         }
