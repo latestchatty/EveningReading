@@ -132,6 +132,7 @@
 		833EE9E326454DFB00345A1D /* WebAuthenticationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833EE9E026454DFB00345A1D /* WebAuthenticationPresenter.swift */; };
 		833EE9E426454DFB00345A1D /* WebAuthenticationSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833EE9E126454DFB00345A1D /* WebAuthenticationSession.swift */; };
 		833EE9E52645517D00345A1D /* RichTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833EE9CA2644DB2100345A1D /* RichTextView.swift */; };
+		83501CE026D043F7008CFBB9 /* FontExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83501CDE26D043EC008CFBB9 /* FontExtensions.swift */; };
 		83A85CE52650360E007EBAC3 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19EA264F24FC00556E69 /* NotificationService.swift */; };
 		83A85CEB26515CBB007EBAC3 /* PushNotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A85CEA26515CBB007EBAC3 /* PushNotificationView.swift */; };
 		83A85CEF26551087007EBAC3 /* GoToShackLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A85CEE26551087007EBAC3 /* GoToShackLinkView.swift */; };
@@ -350,6 +351,7 @@
 		833EE9DF26454DFB00345A1D /* WebAuthenticationPresentationModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebAuthenticationPresentationModifier.swift; sourceTree = "<group>"; };
 		833EE9E026454DFB00345A1D /* WebAuthenticationPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebAuthenticationPresenter.swift; sourceTree = "<group>"; };
 		833EE9E126454DFB00345A1D /* WebAuthenticationSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebAuthenticationSession.swift; sourceTree = "<group>"; };
+		83501CDE26D043EC008CFBB9 /* FontExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontExtensions.swift; sourceTree = "<group>"; };
 		83A85CEA26515CBB007EBAC3 /* PushNotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationView.swift; sourceTree = "<group>"; };
 		83A85CEE26551087007EBAC3 /* GoToShackLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoToShackLinkView.swift; sourceTree = "<group>"; };
 		83A85CF226556F60007EBAC3 /* NotificationPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPreviewView.swift; sourceTree = "<group>"; };
@@ -515,6 +517,7 @@
 				8339816126403F0D005614E8 /* Tags */,
 				833981662640438E005614E8 /* Settings */,
 				833685D12672A36800ACE618 /* Controls */,
+				83501CDD26D043D6008CFBB9 /* Extensions */,
 				833817802639AC17007A8B28 /* macOSContentView.swift */,
 				833817902639AC18007A8B28 /* Info.plist */,
 				833817912639AC18007A8B28 /* macOS.entitlements */,
@@ -933,6 +936,14 @@
 				833EE9E126454DFB00345A1D /* WebAuthenticationSession.swift */,
 			);
 			path = WebAuthenticationSession;
+			sourceTree = "<group>";
+		};
+		83501CDD26D043D6008CFBB9 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				83501CDE26D043EC008CFBB9 /* FontExtensions.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		83A85D46265EC16E007EBAC3 /* ShackTagsTextView */ = {
@@ -1390,6 +1401,7 @@
 				833685D0267284BB00ACE618 /* macOSTagsWebView.swift in Sources */,
 				833685DB2673982100ACE618 /* macOSThreadView.swift in Sources */,
 				833685C4266FB97A00ACE618 /* macOSAccountView.swift in Sources */,
+				83501CE026D043F7008CFBB9 /* FontExtensions.swift in Sources */,
 				8339818526406814005614E8 /* Globals.swift in Sources */,
 				8339810F263F1028005614E8 /* StringExtensions.swift in Sources */,
 				83398107263F0D38005614E8 /* ChatService.swift in Sources */,

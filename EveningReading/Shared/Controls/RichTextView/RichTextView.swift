@@ -96,6 +96,7 @@ struct SpoilerView: View {
     #if os(OSX)
     var body: some View {
         Text(spoilerText)
+            .font(.body)
             .background(self.spoilerClicked ? Color.clear : Color("Spoiler"))
             .foregroundColor(self.spoilerClicked ? Color(NSColor.labelColor) : Color("Spoiler"))
             .onTapGesture(count: 1) {
@@ -214,6 +215,7 @@ struct LinkView: View {
     #if os(OSX)
     var body: some View {
         Text(self.description)
+            .font(.body)
             .underline()
             .foregroundColor(colorScheme == .dark ? Color(NSColor.systemTeal) : Color(NSColor.black))
             .onTapGesture(count: 1) {
@@ -292,6 +294,11 @@ struct TextBlockView: View {
     func renderInlineText(_ text: [InlineText]) -> some View {
         return text.map {t in
             var atomView: Text = Text(t.text)
+            
+            #if os(macOS)
+            atomView = atomView.font(.body)
+            #endif
+            
             if t.attributes.contains(.bold) {
                 atomView = atomView.bold()
             }
