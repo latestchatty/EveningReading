@@ -98,6 +98,7 @@ struct macOSContentView: View {
                 
             }
         }
+        .lineSpacing(4)
         .frame(minWidth: macOSWindowSize().minWidth, minHeight: macOSWindowSize().minHeight)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear() {

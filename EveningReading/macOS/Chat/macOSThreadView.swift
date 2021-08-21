@@ -159,7 +159,7 @@ struct macOSThreadView: View {
                         }
                         .padding(8)
                         .padding(.horizontal, 10)
-                        .background(Color("PrimaryBackground"))
+                        .background(BlurView())
             ) {
                 // Root post
                 VStack (alignment: .leading) {
@@ -182,6 +182,7 @@ struct macOSThreadView: View {
                     }
                     .padding(.horizontal, 10)
                     .padding(.top, 10)
+                    .padding(.bottom, 8)
                     
                     // Root post body
                     VStack (alignment: .leading) {

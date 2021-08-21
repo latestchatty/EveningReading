@@ -18,69 +18,69 @@ extension Font {
     
     /// Create a font with the large title text style.
     public static var largeTitle: Font {
-        return Font.custom("HelveticaNeue", size: 33.0, relativeTo: .largeTitle)
+        return Font.custom("SanFransisco", size: 32.0, relativeTo: .largeTitle)
     }
 
     /// Create a font with the title text style.
     public static var title: Font {
-        return Font.custom("HelveticaNeue", size: 27.0, relativeTo: .title)
+        return Font.custom("SanFransisco", size: 26.0, relativeTo: .title)
     }
     
     /// Create a font with the title text style.
     public static var title2: Font {
-        return Font.custom("HelveticaNeue", size: 21.0, relativeTo: .title2)
+        return Font.custom("SanFransisco", size: 20.0, relativeTo: .title2)
     }
     
     /// Create a font with the title text style.
     public static var title3: Font {
-        return Font.custom("HelveticaNeue", size: 19.0, relativeTo: .title3)
+        return Font.custom("SanFransisco", size: 18.0, relativeTo: .title3)
     }
 
     /// Create a font with the headline text style.
     public static var headline: Font {
-        return Font.custom("HelveticaNeue", size: 16.0, relativeTo: .headline)
+        return Font.custom("SanFransisco", size: 15.0, relativeTo: .headline)
     }
 
     /// Create a font with the subheadline text style.
     public static var subheadline: Font {
-        return Font.custom("HelveticaNeue", size: 14.0, relativeTo: .subheadline)
+        return Font.custom("SanFransisco", size: 13.0, relativeTo: .subheadline)
     }
 
     /// Create a font with the body text style.
     public static var body: Font {
-        return Font.custom("HelveticaNeue", size: 16.0, relativeTo: .body)
+        return Font.custom("SanFransisco", size: 15.0, relativeTo: .body)
        }
 
     /// Create a font with the callout text style.
     public static var callout: Font {
-        return Font.custom("HelveticaNeue", size: 15.0, relativeTo: .callout)
+        return Font.custom("SanFransisco", size: 14.0, relativeTo: .callout)
        }
 
     /// Create a font with the footnote text style.
     public static var footnote: Font {
-        return Font.custom("HelveticaNeue", size: 12.0, relativeTo: .footnote)
+        return Font.custom("SanFransisco", size: 12.0, relativeTo: .footnote)
        }
 
     /// Create a font with the caption text style.
     public static var caption: Font {
-        return Font.custom("HelveticaNeue", size: 11.0, relativeTo: .caption)
+        return Font.custom("SanFransisco", size: 11.0, relativeTo: .caption)
        }
 
     /// Create a font with the caption2 text style.
     public static var caption2: Font {
-        return Font.custom("HelveticaNeue", size: 11.0, relativeTo: .caption2)
+        return Font.custom("SanFransisco", size: 11.0, relativeTo: .caption2)
        }
     
     public static func system(size: CGFloat, weight: Font.Weight = .regular, design: Font.Design = .default) -> Font {
-        var font = "HelveticaNeue"
+        var font = "SanFransisco"
         switch weight {
-        case .bold: font = "HelveticaNeue-Bold"
-        case .heavy: font = "HelveticaNeue-Bold"
-        case .light: font = "HelveticaNeue-Light"
-        case .medium: font = "HelveticaNeue"
-        case .semibold: font = "HelveticaNeue-Bold"
-        case .thin: font = "HelveticaNeue-Light"
-        case .ultraLight: font = "HelveticaNeue-Light"
+        case .bold: font = "SanFransisco-Bold"
+        case .heavy: font = "SanFransisco-Bold"
+        case .light: font = "SanFransisco-Light"
+        case .medium: font = "SanFransisco"
+        case .semibold: font = "SanFransisco-Bold"
+        case .thin: font = "SanFransisco-Light"
+        case .ultraLight: font = "SanFransisco-Light"
         default: break
         }
         return Font.custom(font, size: size)
