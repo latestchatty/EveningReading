@@ -42,7 +42,10 @@ struct ComposePostView: View {
         self.chatStore.didSubmitPost = true
         
         if self.isRootPost {
-            self.chatStore.didGetChatStart = true
+            self.chatStore.didSubmitNewThread = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5)) {
+                self.chatStore.didGetChatStart = true
+            }
         } else {
             self.chatStore.didGetThreadStart = true
         }

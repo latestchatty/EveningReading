@@ -411,6 +411,7 @@ class ChatStore: ObservableObject {
     @Published var taggingNoticeText = "Tagged!"
 
     @Published var didGetChatStart = false
+    @Published var didSubmitNewThread = false
     @Published var didGetChatFinish = false
     @Published var didGetThreadStart = false
     @Published var didGetThreadFinish = false

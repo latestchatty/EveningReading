@@ -66,7 +66,13 @@ struct ChatView: View {
 
         // If refreshing thread after posting
         .overlay(LoadingView(show: self.$isGettingChat, title: .constant("")))
-                
+        
+        .onReceive(chatStore.$didSubmitNewThread) { value in
+            self.chatStore.scrollTargetChatTop = 9999999999991
+            chatStore.didGetChatStart = false
+            self.isGettingChat = true
+        }
+        
         // Fetching chat data
         .onReceive(chatStore.$didGetChatStart) { value in
             if value && self.chatStore.didSubmitPost {
