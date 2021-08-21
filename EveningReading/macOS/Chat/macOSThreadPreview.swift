@@ -75,6 +75,7 @@ struct macOSThreadPreview: View {
             // Root post body
             VStack (alignment: .leading) {
                 Text(self.rootPostBody)
+                    .font(.body)
                     .fixedSize(horizontal: false, vertical: true)
                     .lineLimit(3)
             }
