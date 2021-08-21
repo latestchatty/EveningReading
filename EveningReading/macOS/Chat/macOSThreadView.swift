@@ -123,150 +123,168 @@ struct macOSThreadView: View {
     }
     
     var body: some View {
-        //Throwing error about "each layout item may only occur once" when switching to LazyVStack.
-        // It only happens occasionally. Seemingly after A/Zing through posts quickly
-        // then switching to a different thread...
-        LazyVStack (alignment: .leading, pinnedViews: .sectionHeaders) {
-            Section(header:
-                        HStack() {
-                            Button(action: {
-                                self.chatStore.getThread()
-                            }, label: {
-                                Image(systemName: "arrow.counterclockwise")
-                                    .imageScale(.large)
-                            })
-                            .buttonStyle(BorderlessButtonStyle())
-                            
-                            Spacer()
-                            
-                            Button(action: {
-                                self.selectNextPost(forward: false)
-                            }, label: {
-                                Image(systemName: "arrowtriangle.backward")
-                                    .imageScale(.large)
-                            })
-                            .buttonStyle(BorderlessButtonStyle())
-                            .keyboardShortcut("a", modifiers: [.command, .shift])
-                            
-                            Button(action: {
-                                self.selectNextPost()
-                            }, label: {
-                                Image(systemName: "arrowtriangle.forward")
-                                    .imageScale(.large)
-                            })
-                            .buttonStyle(BorderlessButtonStyle())
-                            .keyboardShortcut("z", modifiers: [.command, .shift])
-                        }
-                        .padding(8)
-                        .padding(.horizontal, 10)
-                        .background(BlurView())
-            ) {
-                // Root post
-                VStack (alignment: .leading) {
-                    HStack {
-                        AuthorNameView(name: self.rootPostAuthor, postId: self.threadId)
-                        
-                        ContributedView(contributed: self.contributed)
-                        
-                        Spacer()
-                        
-                        LolView(lols: self.rootPostLols, expanded: true, postId: self.threadId)
-                        
-                        ReplyCountView(replyCount: self.replyCount)
-                        
-                        /*
-                         Text(self.rootPostDate.getTimeAgo())
-                         .foregroundColor(Color.gray)
-                         .font(.body)
-                         */
-                    }
-                    .padding(.horizontal, 10)
-                    .padding(.top, 10)
-                    .padding(.bottom, 8)
-                    
-                    // Root post body
-                    VStack (alignment: .leading) {
-                        RichTextView(topBlocks: self.rootPostRichText)
-                            .fixedSize(horizontal: false, vertical: true)
-                    }
-                    .padding(.horizontal, 10)
-                    .padding(.bottom, 8)
-                    if appSessionStore.isSignedIn {
-                        HStack {
-                            Spacer()
-                            TagPostButton(postId: self.threadId)
-                            Button(action: {
-                                showRootReply = !showRootReply
-                            }, label: {
-                                Image(systemName: "arrowshape.turn.up.left")
-                                    .imageScale(.large)
-                                    .foregroundColor(showRootReply ? Color.accentColor : Color.primary)
-                            })
-                            .buttonStyle(BorderlessButtonStyle())
-                            .keyboardShortcut("r", modifiers: [.command, .option])
-                        }
-                        .padding(.horizontal, 10)
-                        .padding(.bottom, showRootReply ? 8 : 10)
-                        if (showRootReply) {
-                            macOSComposeView(postId: self.threadId)
-                                .padding(.horizontal, 10)
-                                .padding(.bottom, 10)
-                        }
-                    }
-                }
-                .frame(maxWidth: .infinity)
-                .background(Color("ThreadBubblePrimary"))
-                .cornerRadius(10)
-                .padding(.horizontal, 10)
-                
-                // Replies
+        ScrollView {
+            ScrollViewReader { scrollProxy in
                 VStack {
-                    // No replies yet
-                    if postList.count < 1 {
-                        HStack {
-                            Spacer()
-                            Text("No replies, be the first to post.")
-                                .font(.body)
-                                .bold()
-                                .foregroundColor(Color("NoDataLabel"))
-                            Spacer()
-                        }
-                    }
-                    
-                    // Post list
-                    ForEach(postList, id: \.id) { post in
-                        HStack {
-                            
-                            // Reply expaned row
-                            if self.selectedPost == post.id {
-                                VStack {
-                                    macOSPostExpandedView(postId: .constant(post.id), postAuthor: .constant(post.author), replyLines: self.$replyLines[post.id], lols: .constant(post.lols), postText: self.$selectedPostRichText)
-                                }
-                                .onAppear() {
-                                    // Load Rich Text
-                                    self.selectedPostRichText = RichTextBuilder.getRichText(postBody: post.body)
-                                }
-                            } else {
-                                // Reply preview row
+                    Spacer().frame(width: 0, height: 0)
+                }.id(999999991)
+                //Throwing error about "each layout item may only occur once" when switching to LazyVStack.
+                // It only happens occasionally. Seemingly after A/Zing through posts quickly
+                // then switching to a different thread...
+                LazyVStack (alignment: .leading, pinnedViews: .sectionHeaders) {
+                    if chatStore.activeThreadId == 0 {
+                        Text("No thread selected.")
+                            .font(.body)
+                            .bold()
+                            .foregroundColor(Color("NoDataLabel"))
+                    } else {
+                        Section(header:
+                                    HStack() {
+                                        Button(action: {
+                                            self.chatStore.getThread()
+                                        }, label: {
+                                            Image(systemName: "arrow.counterclockwise")
+                                                .imageScale(.large)
+                                        })
+                                        .buttonStyle(BorderlessButtonStyle())
+                                        
+                                        Spacer()
+                                        
+                                        Button(action: {
+                                            self.selectNextPost(forward: false)
+                                        }, label: {
+                                            Image(systemName: "arrowtriangle.backward")
+                                                .imageScale(.large)
+                                        })
+                                        .buttonStyle(BorderlessButtonStyle())
+                                        .keyboardShortcut("a", modifiers: [.command, .shift])
+                                        
+                                        Button(action: {
+                                            self.selectNextPost()
+                                        }, label: {
+                                            Image(systemName: "arrowtriangle.forward")
+                                                .imageScale(.large)
+                                        })
+                                        .buttonStyle(BorderlessButtonStyle())
+                                        .keyboardShortcut("z", modifiers: [.command, .shift])
+                                    }
+                                    .padding(8)
+                                    .padding(.horizontal, 10)
+                                    .background(BlurView())
+                        ) {
+                            // Root post
+                            VStack (alignment: .leading) {
                                 HStack {
-                                    macOSPostPreviewView(postId: .constant(post.id), postAuthor: .constant(post.author), replyLines: self.$replyLines[post.id], lols: .constant(post.lols), postText: .constant(post.body), postCategory: .constant(post.category), postStrength: .constant(postStrength[post.id]))
+                                    AuthorNameView(name: self.rootPostAuthor, postId: self.threadId)
+                                    
+                                    ContributedView(contributed: self.contributed)
+                                    
+                                    Spacer()
+                                    
+                                    LolView(lols: self.rootPostLols, expanded: true, postId: self.threadId)
+                                    
+                                    ReplyCountView(replyCount: self.replyCount)
+                                    
+                                    /*
+                                     Text(self.rootPostDate.getTimeAgo())
+                                     .foregroundColor(Color.gray)
+                                     .font(.body)
+                                     */
                                 }
-                                .contentShape(Rectangle())
-                                .onTapGesture(count: 1) {
-                                    //withAnimation {
-                                    selectedPost = post.id
-                                    //}
+                                .padding(.horizontal, 10)
+                                .padding(.top, 10)
+                                .padding(.bottom, 8)
+                                
+                                // Root post body
+                                VStack (alignment: .leading) {
+                                    RichTextView(topBlocks: self.rootPostRichText)
+                                        .fixedSize(horizontal: false, vertical: true)
+                                }
+                                .padding(.horizontal, 10)
+                                .padding(.bottom, 8)
+                                if appSessionStore.isSignedIn {
+                                    HStack {
+                                        Spacer()
+                                        TagPostButton(postId: self.threadId)
+                                        Button(action: {
+                                            showRootReply = !showRootReply
+                                        }, label: {
+                                            Image(systemName: "arrowshape.turn.up.left")
+                                                .imageScale(.large)
+                                                .foregroundColor(showRootReply ? Color.accentColor : Color.primary)
+                                        })
+                                        .buttonStyle(BorderlessButtonStyle())
+                                        .keyboardShortcut("r", modifiers: [.command, .option])
+                                    }
+                                    .padding(.horizontal, 10)
+                                    .padding(.bottom, showRootReply ? 8 : 10)
+                                    if (showRootReply) {
+                                        macOSComposeView(postId: self.threadId)
+                                            .padding(.horizontal, 10)
+                                            .padding(.bottom, 10)
+                                    }
                                 }
                             }
+                            .frame(maxWidth: .infinity)
+                            .background(Color("ThreadBubblePrimary"))
+                            .cornerRadius(10)
+                            .padding(.horizontal, 10)
                             
+                            // Replies
+                            VStack {
+                                // No replies yet
+                                if postList.count < 1 {
+                                    HStack {
+                                        Spacer()
+                                        Text("No replies, be the first to post.")
+                                            .font(.body)
+                                            .bold()
+                                            .foregroundColor(Color("NoDataLabel"))
+                                        Spacer()
+                                    }
+                                }
+                                
+                                // Post list
+                                ForEach(postList, id: \.id) { post in
+                                    HStack {
+                                        
+                                        // Reply expaned row
+                                        if self.selectedPost == post.id {
+                                            VStack {
+                                                macOSPostExpandedView(postId: .constant(post.id), postAuthor: .constant(post.author), replyLines: self.$replyLines[post.id], lols: .constant(post.lols), postText: self.$selectedPostRichText)
+                                            }
+                                            .onAppear() {
+                                                // Load Rich Text
+                                                self.selectedPostRichText = RichTextBuilder.getRichText(postBody: post.body)
+                                            }
+                                        } else {
+                                            // Reply preview row
+                                            HStack {
+                                                macOSPostPreviewView(postId: .constant(post.id), postAuthor: .constant(post.author), replyLines: self.$replyLines[post.id], lols: .constant(post.lols), postText: .constant(post.body), postCategory: .constant(post.category), postStrength: .constant(postStrength[post.id]))
+                                            }
+                                            .contentShape(Rectangle())
+                                            .onTapGesture(count: 1) {
+                                                //withAnimation {
+                                                selectedPost = post.id
+                                                //}
+                                            }
+                                        }
+                                        
+                                    }
+                                    .id(post.id)
+                                }
+                            }
+                            .padding(.horizontal, 20)
+                            .padding(.bottom, 10)
                         }
-                        .id(post.id)
                     }
                 }
-                .padding(.horizontal, 20)
-                .padding(.bottom, 10)
+                .onReceive(chatStore.$activeThreadId) { value in
+                    scrollProxy.scrollTo(999999991, anchor: .top)
+                }
             }
         }
+        
         .onReceive(chatStore.$activeThreadId) { value in
             getThreadData()
             postList = [ChatPosts]()

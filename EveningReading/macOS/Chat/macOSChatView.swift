@@ -47,37 +47,15 @@ struct macOSChatView: View {
                 if self.guidelinesAccepted {
                     
                     // Thread List
-                    ScrollView {
-                        LazyVStack (spacing: 0) {
-                            macOSThreadList()
-                        }
-                    }
+                    
+                    macOSThreadList()
                     .frame(width: geometry.size.width * 0.35)
                     
                     Divider()
                     
                     // Thread Detail
-                    ScrollView {
-                        ScrollViewReader { scrollProxy in
-                            VStack {
-                                Spacer().frame(width: 0, height: 0)
-                            }.id(999999991)
-                            LazyVStack {
-                                if chatStore.activeThreadId == 0 {
-                                    Text("No thread selected.")
-                                        .font(.body)
-                                        .bold()
-                                        .foregroundColor(Color("NoDataLabel"))
-                                } else {
-                                    macOSThreadView(threadId: $chatStore.activeThreadId)
-                                }
-                            }
-                            .onReceive(chatStore.$activeThreadId) { value in
-                                scrollProxy.scrollTo(999999991, anchor: .top)
-                            }
-                        }
-                    }
-                    .frame(width: geometry.size.width * 0.65)
+                    macOSThreadView(threadId: $chatStore.activeThreadId)
+                        .frame(width: geometry.size.width * 0.65)
                     
                 }
             }

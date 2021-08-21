@@ -21,9 +21,11 @@ struct macOSThreadList: View {
     }
     
     var body: some View {
-        ForEach(filteredThreads(), id: \.threadId) { thread in
-            VStack {
-                macOSThreadPreview(threadId: thread.threadId)
+        ScrollView {
+            LazyVStack (spacing: 0) {
+                ForEach(filteredThreads(), id: \.threadId) { thread in
+                    macOSThreadPreview(threadId: thread.threadId)
+                }
             }
         }
     }
