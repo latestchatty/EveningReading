@@ -22,10 +22,28 @@ struct macOSThreadList: View {
     
     var body: some View {
         ScrollView {
-            LazyVStack (spacing: 0) {
+            VStack (spacing: 0) {
                 ForEach(filteredThreads(), id: \.threadId) { thread in
                     macOSThreadPreview(threadId: thread.threadId)
                 }
+            }
+        }
+        .toolbar() {
+            ToolbarItemGroup(placement: .navigation) {
+                Button(action: {
+                    // refresh
+                    chatStore.activeThreadId = 0
+                    chatStore.activePostId = 0
+                    chatStore.getChat()
+                }, label: {
+                    Image(systemName: "arrow.counterclockwise")
+                })
+                .keyboardShortcut("r", modifiers: [.command, .shift])
+                Button(action: {
+                    // compose
+                }, label: {
+                    Image(systemName: "square.and.pencil")
+                })
             }
         }
     }

@@ -13,7 +13,7 @@ struct macOSChatView: View {
     
     @State private var showingGuidelinesView = false
     @State private var guidelinesAccepted = false
-
+    
     private func fetchChat() {
         if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil || chatStore.threads.count > 0
         {
@@ -23,11 +23,9 @@ struct macOSChatView: View {
     }
     
     var body: some View {
-        GeometryReader { geometry in
-            HStack (alignment: .top, spacing: 0) {
-                    
-                // Check if guidelines accepted
-                Spacer().frame(width: 0, height: 0)
+        VStack {
+            // Check if guidelines accepted
+            Spacer().frame(width: 0, height: 0)
                 .onAppear() {
                     DispatchQueue.main.async {
                         let defaults = UserDefaults.standard
@@ -37,29 +35,22 @@ struct macOSChatView: View {
                     }
                 }
                 .navigationTitle("Chat")
-
-                
-                // Guidelines
-                if self.showingGuidelinesView {
-                    macOSGuidelinesView(showingGuidelinesView: $showingGuidelinesView, guidelinesAccepted: self.$guidelinesAccepted)
-                }
-                
-                if self.guidelinesAccepted {
-                    
+            
+            if self.showingGuidelinesView {
+                macOSGuidelinesView(showingGuidelinesView: $showingGuidelinesView, guidelinesAccepted: self.$guidelinesAccepted)
+            } else if self.guidelinesAccepted {
+                HSplitView () {
                     // Thread List
-                    
                     macOSThreadList()
-                    .frame(width: geometry.size.width * 0.35)
-                    
-                    Divider()
+                        .frame(minWidth: 320)
                     
                     // Thread Detail
                     macOSThreadView(threadId: $chatStore.activeThreadId)
-                        .frame(width: geometry.size.width * 0.65)
-                    
+                        .frame(minWidth: 400, idealWidth: .infinity, maxWidth: .infinity)
+                        .layoutPriority(1)
                 }
+                .onAppear(perform: fetchChat)
             }
-            .onAppear(perform: fetchChat)
         }
     }
 }

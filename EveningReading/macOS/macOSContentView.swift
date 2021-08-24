@@ -49,20 +49,20 @@ struct macOSContentView: View {
                     // Toolbar Buttons
                     ToolbarItemGroup(placement: .navigation) {
                         if appSessionStore.showingChatView {
-                            Button(action: {
-                                // refresh
-                                chatStore.activeThreadId = 0
-                                chatStore.activePostId = 0
-                                chatStore.getChat()
-                            }, label: {
-                                Image(systemName: "arrow.counterclockwise")
-                            })
-                            .keyboardShortcut("r", modifiers: [.command, .shift])
-                            Button(action: {
-                                // compose
-                            }, label: {
-                                Image(systemName: "square.and.pencil")
-                            })
+//                            Button(action: {
+//                                // refresh
+//                                chatStore.activeThreadId = 0
+//                                chatStore.activePostId = 0
+//                                chatStore.getChat()
+//                            }, label: {
+//                                Image(systemName: "arrow.counterclockwise")
+//                            })
+//                            .keyboardShortcut("r", modifiers: [.command, .shift])
+//                            Button(action: {
+//                                // compose
+//                            }, label: {
+//                                Image(systemName: "square.and.pencil")
+//                            })
                         } else if appSessionStore.showingInboxView {
                             Button(action: {
                                 // refresh

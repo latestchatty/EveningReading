@@ -57,6 +57,7 @@ struct macOSPostExpandedView: View {
                                         .foregroundColor(showReply ? Color.accentColor : Color.primary)
                                 })
                                 .buttonStyle(BorderlessButtonStyle())
+                                .help("Reply to post")
                                 .keyboardShortcut("r", modifiers: [.command])
                             }
                         }

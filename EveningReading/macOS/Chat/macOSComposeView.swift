@@ -21,7 +21,7 @@ struct macOSComposeView: View {
             ShackTagsTextView(text: $replyText, textStyle: $postStyle, disabled: $submitInProgress)
                 .frame(minHeight: 100)
                 .overlay(RoundedRectangle(cornerRadius: 4)
-                        .stroke(replyText.count < 6 ? Color.red : Color.primary, lineWidth: 2))
+                            .stroke(replyText.count < 6 ? Color.red : Color.primary, lineWidth: 2))
             
             HStack() {
                 Spacer()
@@ -31,11 +31,11 @@ struct macOSComposeView: View {
                 }, label: {
                     Image(systemName: "paperplane")
                         .imageScale(.large)
-                        
                 })
                 .disabled(submitInProgress || replyText.count < 6)
                 .buttonStyle(BorderlessButtonStyle())
                 .padding(.top, 8)
+                .help("Submit post")
                 .keyboardShortcut(KeyEquivalent.return, modifiers: [.command])
             }
         }

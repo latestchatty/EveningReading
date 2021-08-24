@@ -73,5 +73,6 @@ struct TagPostButton: View {
         }
         .menuStyle(BorderlessButtonMenuStyle(showsMenuIndicator: false))
         .fixedSize()
+        .help("Tag post")
     }
 }
