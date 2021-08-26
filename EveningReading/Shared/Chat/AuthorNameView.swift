@@ -16,6 +16,9 @@ struct AuthorNameView: View {
     var postId: Int = 0
     var bold: Bool = false
     var navLink: Bool = false
+    #if os(macOS)
+    var fontWeight: Font.Weight = .regular
+    #endif
     
     #if os(iOS)
     @State private var showingNewMessageView = false
@@ -41,6 +44,7 @@ struct AuthorNameView: View {
         #if os(OSX)
             Text("\(self.name)")
                 .font(self.bold ? .headline : .body)
+                .fontWeight(self.fontWeight)
                 .foregroundColor(colorScheme == .dark ? Color(NSColor.systemOrange) : Color(NSColor.systemPurple))
                 .lineLimit(1)
                 .contextMenu {

@@ -138,11 +138,14 @@ struct macOSThreadView: View {
                                 .foregroundColor(Color("NoDataLabel"))
                             Spacer()
                         }
+                        .padding(.top, 10)
                     } else {
                         // Root post
                         VStack (alignment: .leading) {
                             HStack {
                                 AuthorNameView(name: self.rootPostAuthor, postId: self.threadId)
+                                    .frame(width: 100, alignment: .trailing)
+                                    .help(self.rootPostAuthor)
                                 
                                 ContributedView(contributed: self.contributed)
                                 
@@ -218,7 +221,7 @@ struct macOSThreadView: View {
                                     // Reply expaned row
                                     if self.selectedPost == post.id {
                                         VStack {
-                                            macOSPostExpandedView(postId: .constant(post.id), postAuthor: .constant(post.author), replyLines: self.$replyLines[post.id], lols: .constant(post.lols), postText: self.$selectedPostRichText)
+                                            macOSPostExpandedView(postId: .constant(post.id), postAuthor: .constant(post.author), replyLines: self.$replyLines[post.id], lols: .constant(post.lols), postText: self.$selectedPostRichText, postDate: .constant(post.date))
                                         }
                                         .onAppear() {
                                             // Load Rich Text

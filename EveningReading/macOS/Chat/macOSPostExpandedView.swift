@@ -15,28 +15,44 @@ struct macOSPostExpandedView: View {
     @Binding var replyLines: String?
     @Binding var lols: [ChatLols]
     @Binding var postText: [RichTextBlock]
+    @Binding var postDate: String
     @State var showReply = false
     @State var selectedTag: String = ""
     
     var body: some View {
-        VStack {
+        VStack(alignment: .leading, spacing: 0) {
             HStack {
+                // Author
+                AuthorNameView(name: self.postAuthor, postId: self.postId, fontWeight: .bold)
+                    .frame(width: 100, alignment: .trailing)
+                    .help(self.postAuthor)
+                
+                Text("")
+                    .frame(width: 10)
+
                 // Reply lines
                 Text(self.replyLines == nil ? String(repeating: " ", count: 5) : self.replyLines!)
                     .lineLimit(1)
                     .fixedSize()
                     .font(.custom("replylines", size: 25, relativeTo: .callout))
-                    .foregroundColor(Color("replyLines"))
+                    .foregroundColor(Color.accentColor)
                 
-                // Author
-                AuthorNameView(name: self.postAuthor, postId: self.postId)
-                
-                Spacer()
-                
-                // Lols
-                LolView(lols: self.lols, expanded: true, postId: self.postId)
-                    .padding(.top, 5)
+                HStack {
+                    Text(self.postDate.getTimeAgo())
+                        .padding(.leading, 8)
+                        .help(self.postDate.postTimestamp())
+                    
+                    Spacer()
+                    
+                    // Lols
+                    LolView(lols: self.lols, expanded: true, postId: self.postId)
+                        .padding(.top, 5)
+                        .padding(.trailing, 8)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .cornerRadius(tl: 8, tr: 8, bl: 0, br: 0, color: Color("ThreadBubblePrimary"))
             }
+            
             HStack {
                 VStack (alignment: .leading) {
                     // Full post
@@ -65,7 +81,7 @@ struct macOSPostExpandedView: View {
                             macOSComposeView(postId: self.postId)
                         }
                     }
-                }.padding(8)
+                }
                 Spacer()
             }
             .onReceive(self.chatStore.$submitPostSuccessMessage) { successMessage in
@@ -74,16 +90,17 @@ struct macOSPostExpandedView: View {
                     showReply = false
                 }
             }
+            .padding(8)
             .frame(maxWidth: .infinity)
-            .background(Color("ThreadBubbleSecondary"))
-            .cornerRadius(5)
+            .cornerRadius(tl: 8, tr: 0, bl: 8, br: 8, color: Color("ThreadBubblePrimary"))
         }
+        .padding(0)
     }
 }
 
 struct macOSPostExpandedView_Previews: PreviewProvider {
     static var previews: some View {
-        macOSPostExpandedView(postId: .constant(0), postAuthor: .constant(""), replyLines: .constant(""), lols: .constant([ChatLols]()), postText: .constant([RichTextBlock]()))
+        macOSPostExpandedView(postId: .constant(0), postAuthor: .constant(""), replyLines: .constant(""), lols: .constant([ChatLols]()), postText: .constant([RichTextBlock]()), postDate: .constant("1/1/2020"))
             .environmentObject(AppSessionStore(service: AuthService()))
             .environmentObject(ChatStore(service: ChatService()))
     }

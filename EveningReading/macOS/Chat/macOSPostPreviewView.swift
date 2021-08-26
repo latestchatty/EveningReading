@@ -18,33 +18,42 @@ struct macOSPostPreviewView: View {
     @Binding var postStrength: Double?
 
     var body: some View {
+        // Author
+        AuthorNameView(name: self.postAuthor, postId: self.postId)
+            .frame(width: 100, alignment: .trailing)
+            .help(self.postAuthor)
+        
+        // Lols
+        LolView(lols: self.lols, rollup: true, postId: self.postId)
+            .frame(width: 10)
+        
         // Reply lines
         Text(self.replyLines == nil ? String(repeating: " ", count: 5) : self.replyLines!)
             .lineLimit(1)
             .fixedSize()
             .font(.custom("replylines", size: 25, relativeTo: .callout))
-            .foregroundColor(Color("replyLines"))
+            .foregroundColor(Color.accentColor)
         
         // Category (rarely)
-        if self.postCategory == "nws" {
-            Text("nws")
-                .bold()
-                .lineLimit(1)
-                .font(.footnote)
-                .foregroundColor(Color(NSColor.systemRed))
-        } else if self.postCategory == "stupid" {
-            Text("stupid")
-                .bold()
-                .lineLimit(1)
-                .font(.footnote)
-                .foregroundColor(Color(NSColor.systemGreen))
-        } else if self.postCategory == "informative" {
-            Text("inf")
-                .bold()
-                .lineLimit(1)
-                .font(.footnote)
-                .foregroundColor(Color(NSColor.systemBlue))
-        }
+//        if self.postCategory == "nws" {
+//            Text("nws")
+//                .bold()
+//                .lineLimit(1)
+//                .font(.footnote)
+//                .foregroundColor(Color(NSColor.systemRed))
+//        } else if self.postCategory == "stupid" {
+//            Text("stupid")
+//                .bold()
+//                .lineLimit(1)
+//                .font(.footnote)
+//                .foregroundColor(Color(NSColor.systemGreen))
+//        } else if self.postCategory == "informative" {
+//            Text("inf")
+//                .bold()
+//                .lineLimit(1)
+//                .font(.footnote)
+//                .foregroundColor(Color(NSColor.systemBlue))
+//        }
         
         // Post preview line
         Text("\(postText.getPreview)")
@@ -54,12 +63,6 @@ struct macOSPostPreviewView: View {
             .foregroundColor(appSessionStore.username.lowercased() == self.postAuthor.lowercased() ? Color(NSColor.systemTeal) : Color.primary)
             .lineLimit(1)
         Spacer()
-        
-        // Author
-        AuthorNameView(name: self.postAuthor, postId: self.postId)
-        
-        // Lols
-        LolView(lols: self.lols, postId: self.postId)
     }
 }
 
