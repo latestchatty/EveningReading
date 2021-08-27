@@ -126,6 +126,9 @@ struct LinkView: View {
     
     @State private var showingSafariSheet = false
     @State private var hyperlinkUrl: URL?
+    #if os(macOS)
+    @State private var hover: Bool = false
+    #endif
     
     //@State private var hyperlinkUrlStr: String?
     //@State private var showingLinkWebView = false
@@ -214,6 +217,7 @@ struct LinkView: View {
     
     #if os(OSX)
     var body: some View {
+        
         Text(self.description)
             .font(.body)
             .underline()
@@ -222,6 +226,22 @@ struct LinkView: View {
                 if let url = URL(string: self.hyperlink) {
                     NSWorkspace.shared.open(url)
                 }
+            }
+            .onHover { isHovered in
+                self.hover = isHovered
+                DispatchQueue.main.async {
+                    if (self.hover) {
+                        NSCursor.pointingHand.push()
+                    } else {
+                        NSCursor.pop()
+                    }
+                }
+            }
+            .contextMenu() {
+                Button(action: {
+                    NSPasteboard.general.clearContents()
+                    NSPasteboard.general.setString(self.hyperlink, forType: .URL)
+                }) { Text("Copy link") }
             }
     }
     #endif
