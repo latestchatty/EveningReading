@@ -11,6 +11,8 @@
 		7D2CB0EC26CF7C5C00C87611 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA198326470CC100556E69 /* LoadingView.swift */; };
 		7D45A0B226D7520E00BC0254 /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D45A0B126D7520E00BC0254 /* ViewExtensions.swift */; };
 		7D45D72C26CC204B00D2AE63 /* macOSComposeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D45D72B26CC204B00D2AE63 /* macOSComposeView.swift */; };
+		7D4815EF26D89F7400247927 /* ViewedPostsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4815EE26D89F7400247927 /* ViewedPostsService.swift */; };
+		7D4815F026D8A06C00247927 /* ViewedPostsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4815EE26D89F7400247927 /* ViewedPostsService.swift */; };
 		7D627D4926D0090600841E16 /* DispatchQueueExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D627D4826D0090600841E16 /* DispatchQueueExtensions.swift */; };
 		7D627D4A26D00ADA00841E16 /* DispatchQueueExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D627D4826D0090600841E16 /* DispatchQueueExtensions.swift */; };
 		7DA366ED26CEAEC200B567BB /* macOSShackTagsTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA366EC26CEAEC200B567BB /* macOSShackTagsTextView.swift */; };
@@ -264,6 +266,7 @@
 /* Begin PBXFileReference section */
 		7D45A0B126D7520E00BC0254 /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
 		7D45D72B26CC204B00D2AE63 /* macOSComposeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSComposeView.swift; sourceTree = "<group>"; };
+		7D4815EE26D89F7400247927 /* ViewedPostsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewedPostsService.swift; sourceTree = "<group>"; };
 		7D627D4826D0090600841E16 /* DispatchQueueExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatchQueueExtensions.swift; sourceTree = "<group>"; };
 		7DA366EC26CEAEC200B567BB /* macOSShackTagsTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSShackTagsTextView.swift; sourceTree = "<group>"; };
 		7DA366EE26CEDDE900B567BB /* macOSTagPostButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSTagPostButton.swift; sourceTree = "<group>"; };
@@ -711,6 +714,7 @@
 				83398119263F26CA005614E8 /* PreviewService.swift */,
 				83AA199F264821D100556E69 /* MessageService.swift */,
 				83AA19EA264F24FC00556E69 /* NotificationService.swift */,
+				7D4815EE26D89F7400247927 /* ViewedPostsService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1305,6 +1309,7 @@
 				833EE9E226454DFB00345A1D /* WebAuthenticationPresentationModifier.swift in Sources */,
 				833EE9DC26454DF100345A1D /* SafariViewPresenter.swift in Sources */,
 				83AA195F264656BD00556E69 /* KeychainItemAccessibility.swift in Sources */,
+				7D4815EF26D89F7400247927 /* ViewedPostsService.swift in Sources */,
 				83AA19CB2648A3AD00556E69 /* DarkModeViewModifier.swift in Sources */,
 				83A85D4A265EE813007EBAC3 /* TagTextView.swift in Sources */,
 				83398106263F0D38005614E8 /* ChatService.swift in Sources */,
@@ -1429,6 +1434,7 @@
 				833685CA267243B500ACE618 /* macOSTagPostView.swift in Sources */,
 				833817932639AC18007A8B28 /* EveningReadingApp.swift in Sources */,
 				830292F22644C57F00B974B3 /* ReplyLineBuilder.swift in Sources */,
+				7D4815F026D8A06C00247927 /* ViewedPostsService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

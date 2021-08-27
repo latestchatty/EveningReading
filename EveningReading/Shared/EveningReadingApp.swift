@@ -16,6 +16,7 @@ struct EveningReadingApp: App {
     @StateObject var chatStore = ChatStore(service: .init())
     @StateObject var articleStore = ArticleStore(service: .init())
     @StateObject var messageStore = MessageStore(service: .init())
+    @StateObject var viewedPostsService = ViewedPostsStore(service: .init())
 
     #if os(iOS)
     @StateObject var notifications = Notifications.shared //Notifications()
@@ -34,6 +35,7 @@ struct EveningReadingApp: App {
                     .environmentObject(messageStore)
                     .environmentObject(notifications)
                     .environmentObject(shackTags)
+                    .environmentObject(viewedPostsService)
                     .preferredColorScheme(appSessionStore.isDarkMode ? .dark : .light)
 
             } else {
@@ -52,6 +54,7 @@ struct EveningReadingApp: App {
                     .environmentObject(chatStore)
                     .environmentObject(articleStore)
                     .environmentObject(messageStore)
+                    .environmentObject(viewedPostsService)
             #endif
         }
         /*

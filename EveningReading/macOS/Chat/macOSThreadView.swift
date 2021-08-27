@@ -10,6 +10,7 @@ import SwiftUI
 struct macOSThreadView: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var viewedPostsStore: ViewedPostsStore
     
     @Binding var threadId: Int
     
@@ -119,6 +120,12 @@ struct macOSThreadView: View {
             } else {
                 self.selectedPost = self.postList[selectedIndex! - 1].id
             }
+        }
+    }
+    
+    private func markThreadRead() {
+        for post in self.postList {
+            self.viewedPostsStore.markPostViewed(postId: post.id)
         }
     }
     
@@ -303,6 +310,7 @@ struct macOSThreadView: View {
             // if chatStore.activeThread != 0 {
             ToolbarItemGroup(placement: .primaryAction) {
                 Button(action: {
+                    //self.markThreadRead()
                     self.chatStore.getThread()
                 }, label: {
                     Image(systemName: "arrow.counterclockwise")
@@ -310,6 +318,16 @@ struct macOSThreadView: View {
                 })
                 .buttonStyle(BorderlessButtonStyle())
                 .help("Refresh thread")
+                
+                Button(action: {
+                    self.markThreadRead()
+                }, label: {
+                    Image(systemName: "envelope.open")
+                        .imageScale(.large)
+                })
+                .buttonStyle(BorderlessButtonStyle())
+                .help("Mark all posts in thread read")
+                .keyboardShortcut("m", modifiers:[.command, .shift])
                 
                 Spacer()
                 

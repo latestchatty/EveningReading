@@ -9,6 +9,7 @@ import SwiftUI
 
 struct macOSPostPreviewView: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var viewedPostsStore: ViewedPostsStore
     @Binding var postId: Int
     @Binding var postAuthor: String
     @Binding var replyLines: String?
@@ -32,7 +33,7 @@ struct macOSPostPreviewView: View {
             .lineLimit(1)
             .fixedSize()
             .font(.custom("replylines", size: 25, relativeTo: .callout))
-            .foregroundColor(Color.accentColor)
+            .foregroundColor(self.viewedPostsStore.viewedPosts.contains(self.postId) ? Color.gray : Color.accentColor)
         
         // Category (rarely)
 //        if self.postCategory == "nws" {

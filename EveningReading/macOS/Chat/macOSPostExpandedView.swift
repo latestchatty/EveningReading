@@ -10,6 +10,7 @@ import SwiftUI
 struct macOSPostExpandedView: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var viewedPostsStore: ViewedPostsStore
     @Binding var postId: Int
     @Binding var postAuthor: String
     @Binding var replyLines: String?
@@ -35,7 +36,7 @@ struct macOSPostExpandedView: View {
                     .lineLimit(1)
                     .fixedSize()
                     .font(.custom("replylines", size: 25, relativeTo: .callout))
-                    .foregroundColor(Color.accentColor)
+                    .foregroundColor(Color.gray)
                 
                 HStack {
                     Text(self.postDate.getTimeAgo())
@@ -95,6 +96,9 @@ struct macOSPostExpandedView: View {
             .cornerRadius(tl: 8, tr: 0, bl: 8, br: 8, color: Color("ThreadBubblePrimary"))
         }
         .padding(0)
+        .onAppear(perform: {
+            self.viewedPostsStore.markPostViewed(postId: self.postId)
+        })
     }
 }
 
