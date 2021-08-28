@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -17,6 +17,7 @@
 		7D627D4A26D00ADA00841E16 /* DispatchQueueExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D627D4826D0090600841E16 /* DispatchQueueExtensions.swift */; };
 		7DA366ED26CEAEC200B567BB /* macOSShackTagsTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA366EC26CEAEC200B567BB /* macOSShackTagsTextView.swift */; };
 		7DA366EF26CEDDE900B567BB /* macOSTagPostButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA366EE26CEDDE900B567BB /* macOSTagPostButton.swift */; };
+		7DAC1C0D26DAD2D4007CEDA7 /* Gzip in Frameworks */ = {isa = PBXBuildFile; productRef = 7DAC1C0C26DAD2D4007CEDA7 /* Gzip */; };
 		830292F12644C57F00B974B3 /* ReplyLineBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830292F02644C57F00B974B3 /* ReplyLineBuilder.swift */; };
 		830292F22644C57F00B974B3 /* ReplyLineBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830292F02644C57F00B974B3 /* ReplyLineBuilder.swift */; };
 		830292F32644C57F00B974B3 /* ReplyLineBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830292F02644C57F00B974B3 /* ReplyLineBuilder.swift */; };
@@ -437,6 +438,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7DAC1C0D26DAD2D4007CEDA7 /* Gzip in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1130,6 +1132,9 @@
 			dependencies = (
 			);
 			name = "EveningReading (macOS)";
+			packageProductDependencies = (
+				7DAC1C0C26DAD2D4007CEDA7 /* Gzip */,
+			);
 			productName = "EveningReading (macOS)";
 			productReference = 8338178E2639AC18007A8B28 /* EveningReading.app */;
 			productType = "com.apple.product-type.application";
@@ -1200,6 +1205,9 @@
 				Base,
 			);
 			mainGroup = 833817792639AC17007A8B28;
+			packageReferences = (
+				7DAC1C0B26DAD2D4007CEDA7 /* XCRemoteSwiftPackageReference "GzipSwift" */,
+			);
 			productRefGroup = 833817872639AC18007A8B28 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -1856,6 +1864,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		7DAC1C0B26DAD2D4007CEDA7 /* XCRemoteSwiftPackageReference "GzipSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/1024jp/GzipSwift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		7DAC1C0C26DAD2D4007CEDA7 /* Gzip */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7DAC1C0B26DAD2D4007CEDA7 /* XCRemoteSwiftPackageReference "GzipSwift" */;
+			productName = Gzip;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 8338177A2639AC17007A8B28 /* Project object */;
 }

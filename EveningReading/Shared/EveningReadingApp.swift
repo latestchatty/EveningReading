@@ -16,7 +16,7 @@ struct EveningReadingApp: App {
     @StateObject var chatStore = ChatStore(service: .init())
     @StateObject var articleStore = ArticleStore(service: .init())
     @StateObject var messageStore = MessageStore(service: .init())
-    @StateObject var viewedPostsService = ViewedPostsStore(service: .init())
+    @StateObject var viewedPostsService = ViewedPostsStore()
 
     #if os(iOS)
     @StateObject var notifications = Notifications.shared //Notifications()

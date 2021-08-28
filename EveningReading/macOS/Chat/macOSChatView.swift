@@ -10,6 +10,7 @@ import SwiftUI
 struct macOSChatView: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var viewedPostsStore: ViewedPostsStore
     
     @State private var showingGuidelinesView = false
     @State private var guidelinesAccepted = false
@@ -20,6 +21,7 @@ struct macOSChatView: View {
             return
         }
         chatStore.getChat()
+        viewedPostsStore.getViewedPosts()
     }
     
     var body: some View {
