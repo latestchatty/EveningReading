@@ -10,6 +10,7 @@ import SwiftUI
 struct macOSThreadList: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var viewedPostsStore: ViewedPostsStore
     
     private func filteredThreads() -> [ChatThread] {
         if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
@@ -34,6 +35,7 @@ struct macOSThreadList: View {
                     // refresh
                     chatStore.activeThreadId = 0
                     chatStore.activePostId = 0
+                    viewedPostsStore.syncViewedPosts()
                     chatStore.getChat()
                 }, label: {
                     Image(systemName: "arrow.counterclockwise")

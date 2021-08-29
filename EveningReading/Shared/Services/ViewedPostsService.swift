@@ -14,7 +14,7 @@ class CloudSetting {
         public var data: String
     }
     
-    static func getCloudSetting<T>(settingName: String, defaultValue: T, handler: @escaping (Result<T, Error>) -> Void) {
+    static func getCloudSetting<T>(settingName: String, defaultValue: T, handler: @escaping (Result<T, Error>) -> Void) where T : Decodable {
         let urlSession = URLSession.shared
         
         #if os(iOS)
@@ -47,43 +47,74 @@ class CloudSetting {
                 return
             }
             do {
-                var decompressedData = Data()
                 let jsonDecoder = JSONDecoder()
                 let clientData = try jsonDecoder.decode(ClientData.self, from: responseData)
                 
                 if clientData.data != "" {
-                    if let compressedData = Data(base64Encoded: clientData.data, options: [.ignoreUnknownCharacters]) {
-//                        do {
-//                            let outputFilter = try OutputFilter(.decompress, using: .zlib) {(d: Data?) -> Void in
-//                                if let d = d {
-//                                    decompressedData.append(d)
-//                                }
-//                            }
-//
-//                            try outputFilter.write(compressedData)
-//                        } catch {
-//                            fatalError("Error occurred during decoding: \(error.localizedDescription).")
-//                        }
-                        decompressedData = try compressedData.gunzipped()
-                        
-                        if let jObj = try JSONSerialization.jsonObject(with: decompressedData) as? T {
-                            handler(.success(jObj))
-                        }
+                    if let compressedData = Data(base64Encoded: clientData.data) {
+                        let decompressedData = try compressedData.gunzipped()
+                        let jObj = try jsonDecoder.decode(T.self, from: decompressedData)
+                        handler(.success(jObj))
+                    } else {
+                        print("Couldn't decode setting, returning default value. Setting value: \(clientData.data)")
+                        // Couldn't decompress the data, return default
+                        handler(.success(defaultValue))
                     }
                 }
             }
             catch let err {
+                print("Error retrieving cloud setting: \(err)")
                 handler(.failure(err))
             }
         })
         .resume()
     }
+    
+    static func setCloudSetting<T>(settingName: String, value: T, handler: @escaping (Result<String, Error>) -> Void) where T : Encodable {
+        let urlSession = URLSession.shared
+        
+        #if os(iOS)
+        let username: String? = KeychainWrapper.standard.string(forKey: "Username")
+        #elseif os(macOS)
+        let defaults = UserDefaults.standard
+        let username = defaults.object(forKey: "Username") as? String ?? ""
+        #endif
+        
+        if username == "" { handler(.success("Username not set")) }
+        
+        let url = URL(string: "https://winchatty.com/v2/clientData/setClientData")!
+        guard
+            var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
+        else { preconditionFailure("Can't create url components...") }
+        
+        let jsonEncoder = JSONEncoder()
+        let saveData = try? jsonEncoder.encode(value)
+        let gzippedData = try? saveData!.gzipped().base64EncodedString().replacingOccurrences(of: "+", with: "%2B")
+       
+        urlComponents.queryItems = [
+            URLQueryItem(name: "username", value: username),
+            URLQueryItem(name: "client", value: settingName),
+            URLQueryItem(name: "data", value: gzippedData!)
+        ]
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.httpBody = urlComponents.query?.data(using: .utf8)
+        
+        urlSession.dataTask(with: request, completionHandler: {responseData, response, error in
+            guard error == nil else {
+                handler(.failure(error!))
+                return
+            }
+            guard responseData != nil else {
+                handler(.failure(error!))
+                return
+            }
+            handler(.success("Saved setting"))
+        })
+        .resume()
+    }
 }
-
-//class ViewedPostsService {
-//
-//
-//}
 
 class ViewedPostsStore: ObservableObject {
     //    private let service: ViewedPostsService
@@ -106,8 +137,30 @@ class ViewedPostsStore: ObservableObject {
         }
     }
     
-    public func syncMarkedPosts() {
-        
+    func syncViewedPosts() {
+        // Merge with current cloud setting if it was updated by another instance.
+        CloudSetting.getCloudSetting(settingName: "werdSeenPosts", defaultValue: [] as Set<Int>) { [weak self] result in
+                switch result {
+                case .success(var posts):
+                    posts = posts.union(self?.viewedPosts ?? Set<Int>())
+                    // Drop posts that are oldest first to keep the data set small-ish.
+                    if (posts.count > 25_000) {
+                        posts = Set(self!.viewedPosts.sorted().dropFirst(5000))
+                    }
+                    CloudSetting.setCloudSetting(settingName: "werdSeenPosts", value: posts, handler: { [weak self] result in
+                        switch result {
+                        case .success:
+                            DispatchQueue.main.async {
+                                self?.viewedPosts = Set(posts)
+                            }
+                        case .failure(let err):
+                            print("Error saving seen posts: \(err)")
+                        }
+                    })
+                case .failure(let err):
+                    print("Error getting seen posts while syncing: \(err)")
+                }
+        }
     }
     
     public func markPostViewed(postId: Int) {

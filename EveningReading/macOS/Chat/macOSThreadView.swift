@@ -124,6 +124,7 @@ struct macOSThreadView: View {
     }
     
     private func markThreadRead() {
+        self.viewedPostsStore.markPostViewed(postId: self.threadId)
         for post in self.postList {
             self.viewedPostsStore.markPostViewed(postId: post.id)
         }

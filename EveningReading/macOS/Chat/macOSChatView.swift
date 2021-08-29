@@ -20,8 +20,8 @@ struct macOSChatView: View {
         {
             return
         }
-        chatStore.getChat()
         viewedPostsStore.getViewedPosts()
+        chatStore.getChat()
     }
     
     var body: some View {
