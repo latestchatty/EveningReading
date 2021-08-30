@@ -44,4 +44,29 @@ class PostDecorator {
             return false
         }
     }
+    
+    // Check if there are unread replies to the user in the thread
+    static func checkUnreadReplies(thread: ChatThread, viewedPostsStore: ViewedPostsStore) -> Bool {
+        #if os(iOS)
+        let username: String? = KeychainWrapper.standard.string(forKey: "Username")?.lowercased()
+        #endif
+        
+        #if os(macOS)
+        var username = UserDefaults.standard.object(forKey: "Username") as? String ?? ""
+        username = username.lowercased()
+        #endif
+        
+        #if os(watchOS)
+        let username = ""
+        #endif
+
+        for p in thread.posts {
+            if p.author.lowercased() == username {
+                if thread.posts.filter({ return $0.parentId == p.id && !viewedPostsStore.isPostViewed(postId: $0.id) }).count > 0 {
+                    return true
+                }
+            }
+        }
+        return false
+    }
 }

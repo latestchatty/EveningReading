@@ -15,6 +15,9 @@
 		7D4815F026D8A06C00247927 /* ViewedPostsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4815EE26D89F7400247927 /* ViewedPostsService.swift */; };
 		7D627D4926D0090600841E16 /* DispatchQueueExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D627D4826D0090600841E16 /* DispatchQueueExtensions.swift */; };
 		7D627D4A26D00ADA00841E16 /* DispatchQueueExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D627D4826D0090600841E16 /* DispatchQueueExtensions.swift */; };
+		7D82DF1A26DC8EA600EE0EB3 /* UnreadRepliesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D82DF1926DC8EA600EE0EB3 /* UnreadRepliesView.swift */; };
+		7D82DF1B26DC8EA600EE0EB3 /* UnreadRepliesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D82DF1926DC8EA600EE0EB3 /* UnreadRepliesView.swift */; };
+		7D82DF1C26DC8EA600EE0EB3 /* UnreadRepliesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D82DF1926DC8EA600EE0EB3 /* UnreadRepliesView.swift */; };
 		7DA366ED26CEAEC200B567BB /* macOSShackTagsTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA366EC26CEAEC200B567BB /* macOSShackTagsTextView.swift */; };
 		7DA366EF26CEDDE900B567BB /* macOSTagPostButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA366EE26CEDDE900B567BB /* macOSTagPostButton.swift */; };
 		7DAC1C0D26DAD2D4007CEDA7 /* Gzip in Frameworks */ = {isa = PBXBuildFile; productRef = 7DAC1C0C26DAD2D4007CEDA7 /* Gzip */; };
@@ -269,6 +272,7 @@
 		7D45D72B26CC204B00D2AE63 /* macOSComposeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSComposeView.swift; sourceTree = "<group>"; };
 		7D4815EE26D89F7400247927 /* ViewedPostsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewedPostsService.swift; sourceTree = "<group>"; };
 		7D627D4826D0090600841E16 /* DispatchQueueExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatchQueueExtensions.swift; sourceTree = "<group>"; };
+		7D82DF1926DC8EA600EE0EB3 /* UnreadRepliesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnreadRepliesView.swift; sourceTree = "<group>"; };
 		7DA366EC26CEAEC200B567BB /* macOSShackTagsTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSShackTagsTextView.swift; sourceTree = "<group>"; };
 		7DA366EE26CEDDE900B567BB /* macOSTagPostButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSTagPostButton.swift; sourceTree = "<group>"; };
 		830292F02644C57F00B974B3 /* ReplyLineBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyLineBuilder.swift; sourceTree = "<group>"; };
@@ -922,6 +926,7 @@
 				8339819126409D77005614E8 /* ContributedView.swift */,
 				8339818B264098D5005614E8 /* ReplyCountView.swift */,
 				833981932640A232005614E8 /* LolView.swift */,
+				7D82DF1926DC8EA600EE0EB3 /* UnreadRepliesView.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -1353,6 +1358,7 @@
 				833980EB263F07DC005614E8 /* iPhoneHomeButton.swift in Sources */,
 				83AA19C62648829E00556E69 /* NewMessageView.swift in Sources */,
 				8339814D263F6394005614E8 /* iPadArticlesView.swift in Sources */,
+				7D82DF1A26DC8EA600EE0EB3 /* UnreadRepliesView.swift in Sources */,
 				83AA198E26470FD400556E69 /* UIImageExtensions.swift in Sources */,
 				83398117263F250E005614E8 /* ArticleService.swift in Sources */,
 				83AA19362645F4A700556E69 /* SignInView.swift in Sources */,
@@ -1409,6 +1415,7 @@
 				8339811B263F26CA005614E8 /* PreviewService.swift in Sources */,
 				83398159263F6BB1005614E8 /* macOSInboxView.swift in Sources */,
 				833685CE2672467800ACE618 /* macOSPostExpandedView.swift in Sources */,
+				7D82DF1B26DC8EA600EE0EB3 /* UnreadRepliesView.swift in Sources */,
 				8339815D263F6FC4005614E8 /* macOSSearchView.swift in Sources */,
 				8339818926406F0B005614E8 /* TimeRemainingIndicator.swift in Sources */,
 				83A85D5626668940007EBAC3 /* PreferencesView.swift in Sources */,
@@ -1457,6 +1464,7 @@
 				833981AB2641A93E005614E8 /* AppSessionStore.swift in Sources */,
 				83AA196B2646648900556E69 /* watchOSGuidelines.swift in Sources */,
 				83AA194F26463EAD00556E69 /* ArticleService.swift in Sources */,
+				7D82DF1C26DC8EA600EE0EB3 /* UnreadRepliesView.swift in Sources */,
 				830292F32644C57F00B974B3 /* ReplyLineBuilder.swift in Sources */,
 				833981AF2641AC58005614E8 /* watchOSThreadRow.swift in Sources */,
 				833980B4263C41CF005614E8 /* NotificationController.swift in Sources */,

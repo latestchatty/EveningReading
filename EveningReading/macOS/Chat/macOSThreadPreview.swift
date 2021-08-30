@@ -10,6 +10,7 @@ import SwiftUI
 struct macOSThreadPreview: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var viewedPostsStore: ViewedPostsStore
     
     var threadId: Int
     
@@ -20,6 +21,7 @@ struct macOSThreadPreview: View {
     @State private var rootPostLols: [ChatLols] = [ChatLols]()
     @State private var contributed: Bool = false
     @State private var replyCount: Int = 0
+    @State private var hasUnreadReplies: Bool = false
     
     private func getThreadData() {
         if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
@@ -40,6 +42,7 @@ struct macOSThreadPreview: View {
             
             if let thread = threads.filter({ return $0.threadId == self.threadId }).first {
                 self.contributed = PostDecorator.checkParticipatedStatus(thread: thread, author: self.rootPostAuthor)
+                self.hasUnreadReplies = PostDecorator.checkUnreadReplies(thread: thread, viewedPostsStore: self.viewedPostsStore)
                 if let rootPost = thread.posts.filter({ return $0.parentId == 0 }).first {
                     self.rootPostCategory = rootPost.category
                     self.rootPostAuthor = rootPost.author
@@ -58,6 +61,8 @@ struct macOSThreadPreview: View {
                 AuthorNameView(name: self.rootPostAuthor, postId: self.threadId)
                 
                 ContributedView(contributed: self.contributed)
+                
+                UnreadRepliesView(hasUnreadReplies: self.hasUnreadReplies)
 
                 Spacer()
 

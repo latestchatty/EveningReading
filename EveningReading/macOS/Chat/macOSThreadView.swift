@@ -32,6 +32,7 @@ struct macOSThreadView: View {
     @State private var showRootReply = false
     @State private var canRefresh = true
     @State private var isGettingThread = false
+    @State private var hasUnreadReplies = false
     
     private func getThreadData() {
         if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
@@ -53,6 +54,7 @@ struct macOSThreadView: View {
             
             if let thread = threads.filter({ return $0.threadId == self.threadId }).first {
                 self.contributed = PostDecorator.checkParticipatedStatus(thread: thread, author: self.rootPostAuthor)
+                self.hasUnreadReplies = PostDecorator.checkUnreadReplies(thread: thread, viewedPostsStore: self.viewedPostsStore)
                 if let rootPost = thread.posts.filter({ return $0.parentId == 0 }).first {
                     self.rootPostCategory = rootPost.category
                     self.rootPostAuthor = rootPost.author
@@ -156,6 +158,8 @@ struct macOSThreadView: View {
                                     .help(self.rootPostAuthor)
                                 
                                 ContributedView(contributed: self.contributed)
+                                
+                                UnreadRepliesView(hasUnreadReplies: self.hasUnreadReplies)
                                 
                                 Spacer()
                                 
@@ -311,7 +315,7 @@ struct macOSThreadView: View {
             // if chatStore.activeThread != 0 {
             ToolbarItemGroup(placement: .primaryAction) {
                 Button(action: {
-                    //self.markThreadRead()
+                    self.markThreadRead()
                     self.chatStore.getThread()
                 }, label: {
                     Image(systemName: "arrow.counterclockwise")

@@ -1,31 +1,31 @@
 //
-//  ContributedView.swift
-//  EveningReading (iOS)
+//  NewRepliesView.swift
+//  EveningReading
 //
-//  Created by Chris Hodge on 5/3/21.
+//  Created by Willie Zutz on 8/29/21.
 //
 
 import SwiftUI
 
-struct ContributedView: View {
-    var contributed: Bool = false
+struct UnreadRepliesView: View {
+    var hasUnreadReplies: Bool = false
     
     var body: some View {
-        if self.contributed {
+        if self.hasUnreadReplies {
             #if os(iOS)
-                Image(systemName: "pencil")
+                Image(systemName: "star.fill")
                     .imageScale(.small)
                     .foregroundColor(Color(UIColor.systemTeal))
                     .offset(x: 0, y: -1)
             #endif
             #if os(OSX)
-                Image(systemName: "pencil")
+                Image(systemName: "star.fill")
                     .imageScale(.medium)
                     .foregroundColor(Color.accentColor)
                     .offset(x: 0, y: -1)
             #endif
             #if os(watchOS)
-                Image(systemName: "pencil")
+                Image(systemName: "star.fill")
                     .imageScale(.small)
                     .foregroundColor(Color.blue)
                     .offset(x: 0, y: -1)
@@ -34,8 +34,8 @@ struct ContributedView: View {
     }
 }
 
-struct ContributedView_Previews: PreviewProvider {
+struct UnreadRepliesView_Previews: PreviewProvider {
     static var previews: some View {
-        ContributedView(contributed: true)
+        UnreadRepliesView(hasUnreadReplies: true)
     }
 }
