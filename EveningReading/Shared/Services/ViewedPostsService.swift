@@ -90,7 +90,7 @@ class CloudSetting {
         let jsonEncoder = JSONEncoder()
         let saveData = try? jsonEncoder.encode(value)
         let gzippedData = try? saveData!.gzipped().base64EncodedString().replacingOccurrences(of: "+", with: "%2B")
-       
+        
         urlComponents.queryItems = [
             URLQueryItem(name: "username", value: username),
             URLQueryItem(name: "client", value: settingName),
@@ -123,6 +123,7 @@ class ViewedPostsStore: ObservableObject {
     //    }
     
     @Published var viewedPosts: Set<Int> = []
+    private var dirty = false
     
     func getViewedPosts() {
         CloudSetting.getCloudSetting(settingName: "werdSeenPosts", defaultValue: [] as Set<Int>) { [weak self] result in
@@ -133,38 +134,52 @@ class ViewedPostsStore: ObservableObject {
                 case .failure(_):
                     self?.viewedPosts = []
                 }
+                self?.dirty = false
             }
         }
     }
     
     func syncViewedPosts() {
+        // If we haven't marked anything new, there's no reason to do any of this.
+        if !self.dirty { return }
+        
+        print("Saving viewed posts...")
         // Merge with current cloud setting if it was updated by another instance.
         CloudSetting.getCloudSetting(settingName: "werdSeenPosts", defaultValue: [] as Set<Int>) { [weak self] result in
-                switch result {
-                case .success(var posts):
-                    posts = posts.union(self?.viewedPosts ?? Set<Int>())
-                    // Drop posts that are oldest first to keep the data set small-ish.
-                    if (posts.count > 25_000) {
-                        posts = Set(self!.viewedPosts.sorted().dropFirst(5000))
-                    }
-                    CloudSetting.setCloudSetting(settingName: "werdSeenPosts", value: posts, handler: { [weak self] result in
-                        switch result {
-                        case .success:
-                            DispatchQueue.main.async {
-                                self?.viewedPosts = Set(posts)
-                            }
-                        case .failure(let err):
-                            print("Error saving seen posts: \(err)")
-                        }
-                    })
-                case .failure(let err):
-                    print("Error getting seen posts while syncing: \(err)")
+            var postsToSave = Set<Int>()
+            switch result {
+            case .success(var posts):
+                posts = posts.union(self?.viewedPosts ?? Set<Int>())
+                // Drop posts that are oldest first to keep the data set small-ish.
+                if (posts.count > 25_000) {
+                    posts = Set(self!.viewedPosts.sorted().dropFirst(5000))
                 }
+                postsToSave = posts
+            case .failure(let err):
+                print("Error getting seen posts while syncing: \(err)")
+            }
+            
+            // Outside get success in case something failed.
+            // At that point we'll just start over and keep track from this point on again.
+            CloudSetting.setCloudSetting(settingName: "werdSeenPosts", value: postsToSave, handler: { [weak self] result in
+                switch result {
+                case .success:
+                    DispatchQueue.main.async {
+                        self?.viewedPosts = Set(postsToSave)
+                        self?.dirty = false
+                    }
+                case .failure(let err):
+                    print("Error saving seen posts: \(err)")
+                }
+            })
         }
     }
     
     public func markPostViewed(postId: Int) {
-        self.viewedPosts.insert(postId)
+        let result = self.viewedPosts.insert(postId)
+        if result.inserted {
+            self.dirty = true
+        }
     }
     
     public func isPostViewed(postId: Int) -> Bool {

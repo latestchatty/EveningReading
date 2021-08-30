@@ -94,6 +94,17 @@ struct macOSThreadPreview: View {
         .background(chatStore.activeThreadId == self.threadId ? Color("ChatBubbleSecondary") : Color.clear)
         .onAppear(perform: getThreadData)
         .onTapGesture(count: 1) {
+            // When we're selecting another thread, mark the current one viewed.
+            // TODO: Consolidate marking a whole thread somewhere. It's repeated a few times now.
+            if chatStore.activeThreadId != self.threadId && chatStore.activeThreadId != 0 {
+                if let currentlyActiveThread = chatStore.threads.first(where: { return $0.threadId == chatStore.activeThreadId}) {
+                    for p in currentlyActiveThread.posts {
+                        self.viewedPostsStore.markPostViewed(postId: p.id)
+                    }
+                    self.viewedPostsStore.markPostViewed(postId: chatStore.activeThreadId)
+                }
+            }
+            self.viewedPostsStore.syncViewedPosts()
             chatStore.activeThreadId = self.threadId
         }
     }

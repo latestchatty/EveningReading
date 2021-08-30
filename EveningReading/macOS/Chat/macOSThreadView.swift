@@ -130,6 +130,7 @@ struct macOSThreadView: View {
         for post in self.postList {
             self.viewedPostsStore.markPostViewed(postId: post.id)
         }
+        self.viewedPostsStore.syncViewedPosts()
     }
     
     var body: some View {
