@@ -108,3 +108,24 @@ let PostWeight: [Double: Font.Weight] = [
     0.80: .medium,
     0.75: .regular
 ]
+
+// Cache frequently used regex's so they don't have to be created every time on the fly.
+// Should perform better this way.
+class Regex {
+    private static var _imageRegex: NSRegularExpression? = nil
+    
+    public static func getImageRegex() -> NSRegularExpression {
+        if _imageRegex == nil {
+            _imageRegex = try! NSRegularExpression(pattern:#"https?://[a-z0-9-\._~:/#\[\]@!\$&'\(\)*\+]*\.(?:jpe?g|png|gif(?!v))"#, options: [.caseInsensitive])
+        }
+        return _imageRegex!
+    }
+    
+    private static var _tagMatcherRegex: NSRegularExpression? = nil
+    public static func getTagMatcherRegex() -> NSRegularExpression {
+        if _tagMatcherRegex == nil {
+            _tagMatcherRegex = try! NSRegularExpression(pattern: #"<(?:"[^"]*"['"]*|'[^']*'['"]*|[^'">])+>"#)
+        }
+        return _tagMatcherRegex!
+    }
+}

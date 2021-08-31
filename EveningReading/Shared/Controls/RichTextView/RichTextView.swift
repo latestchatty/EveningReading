@@ -11,14 +11,14 @@ import Foundation
 import SwiftUI
 
 /*
-extension Text {
-
-    /// Creates an instance that wraps an `Image`, suitable for concatenating
-    /// with other `Text`
-    @available(iOS 14.0, OSX 10.16, tvOS 14.0, watchOS 7.0, *)
-    public init(_ image: Image)
-}
-*/
+ extension Text {
+ 
+ /// Creates an instance that wraps an `Image`, suitable for concatenating
+ /// with other `Text`
+ @available(iOS 14.0, OSX 10.16, tvOS 14.0, watchOS 7.0, *)
+ public init(_ image: Image)
+ }
+ */
 
 struct TextAttributes: OptionSet, Hashable {
     let rawValue: Int
@@ -126,12 +126,20 @@ struct LinkView: View {
     
     @State private var showingSafariSheet = false
     @State private var hyperlinkUrl: URL?
+    @State private var showingEmbeddedImage = false
+    @ObservedObject private var imageLoader = ImageLoader()
+    
     #if os(macOS)
     @State private var hover: Bool = false
     #endif
     
     //@State private var hyperlinkUrlStr: String?
     //@State private var showingLinkWebView = false
+    
+    private func isImageHyperlink() -> Bool {
+        let match = Regex.getImageRegex().firstMatch(in: self.hyperlink, range: NSRange(location: 0, length: self.hyperlink.utf16.count))
+        return match != nil
+    }
     
     #if os(iOS)
     var body: some View {
@@ -170,7 +178,7 @@ struct LinkView: View {
                             }
                         }
                     }
-                // Everything else
+                    // Everything else
                 } else {
                     // A random link in a thread
                     //self.hyperlinkUrlStr = self.hyperlink
@@ -181,36 +189,36 @@ struct LinkView: View {
                     }
                 }
             }
-        
-        // Better Safari View
-        //.safariView(isPresented: self.$showingSafariSheet) {
-        .sheet(isPresented: self.$showingSafariSheet) {
-            VStack {
-                RoundedRectangle(cornerRadius: 8)
-                    .foregroundColor(Color(UIColor.systemFill))
-                    .frame(width: 40, height: 5)
-                    .cornerRadius(3)
-                    .opacity(0.5)
-                    .padding(.top, 8)
-                SafariView(
-                    url: URL(string: self.hyperlink)!,
-                    configuration: SafariView.Configuration(
-                        entersReaderIfAvailable: false,
-                        barCollapsingEnabled: true
+            
+            // Better Safari View
+            //.safariView(isPresented: self.$showingSafariSheet) {
+            .sheet(isPresented: self.$showingSafariSheet) {
+                VStack {
+                    RoundedRectangle(cornerRadius: 8)
+                        .foregroundColor(Color(UIColor.systemFill))
+                        .frame(width: 40, height: 5)
+                        .cornerRadius(3)
+                        .opacity(0.5)
+                        .padding(.top, 8)
+                    SafariView(
+                        url: URL(string: self.hyperlink)!,
+                        configuration: SafariView.Configuration(
+                            entersReaderIfAvailable: false,
+                            barCollapsingEnabled: true
+                        )
                     )
-                )
-                .preferredBarAccentColor(.clear)
-                .preferredControlAccentColor(.accentColor)
-                .dismissButtonStyle(.done)
+                    .preferredBarAccentColor(.clear)
+                    .preferredControlAccentColor(.accentColor)
+                    .dismissButtonStyle(.done)
+                }
             }
-        }
-        
-        // If push notification tapped
-        .onReceive(Notifications.shared.$notificationData) { value in
-            if value != nil {
-                self.showingSafariSheet = false
+            
+            // If push notification tapped
+            .onReceive(Notifications.shared.$notificationData) { value in
+                if value != nil {
+                    self.showingSafariSheet = false
+                }
             }
-        }
         
     }
     #endif
@@ -224,7 +232,14 @@ struct LinkView: View {
             .foregroundColor(colorScheme == .dark ? Color(NSColor.systemTeal) : Color(NSColor.black))
             .onTapGesture(count: 1) {
                 if let url = URL(string: self.hyperlink) {
-                    NSWorkspace.shared.open(url)
+                    if self.isImageHyperlink() {
+                        self.showingEmbeddedImage = !self.showingEmbeddedImage
+                        if self.showingEmbeddedImage {
+                            self.imageLoader.loadImage(with: url)
+                        }
+                    } else {
+                        NSWorkspace.shared.open(url)
+                    }
                 }
             }
             .onHover { isHovered in
@@ -242,7 +257,24 @@ struct LinkView: View {
                     NSPasteboard.general.clearContents()
                     NSPasteboard.general.setString(self.hyperlink, forType: .URL)
                 }) { Text("Copy link") }
+                if self.isImageHyperlink() {
+                    Button(action: {
+                        if let url = URL(string: self.hyperlink) {
+                            NSWorkspace.shared.open(url)
+                        }
+                    }) { Text("Open in browser") }
+                }
             }
+        if self.showingEmbeddedImage {
+            if self.imageLoader.isLoading {
+                LoadingView(show: .constant(true), title: .constant("Loading image..."))
+            } else if self.imageLoader.image != nil {
+                Image(nsImage: self.imageLoader.image!)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(maxWidth: 500, maxHeight: 500)
+            }
+        }
     }
     #endif
     
@@ -425,7 +457,7 @@ struct TextBlockView: View {
             return atomView
         }.reduce(Text(""), +)
     }
-
+    
     func renderQuote(_ quote: [RichTextBlock]) -> some View {
         return VStack(alignment: .leading) {
             ForEach(quote, id: \.self) {q in
@@ -439,6 +471,23 @@ struct TextBlockView: View {
     
 }
 
+class ImageLoader: ObservableObject {
+    @Published var image: NSImage?
+    @Published var isLoading = false
+    
+    func loadImage(with url: URL) {
+        DispatchQueue.global(qos: .background).async { [weak self] in
+            guard let self = self else { return }
+            DispatchQueue.main.async { self.isLoading = true }
+            let image = NSImage(byReferencing: url)
+            DispatchQueue.main.async { [weak self] in
+                self?.image = image
+                self?.isLoading = false
+            }
+        }
+    }
+}
+
 class RichTextBuilder {
     
     static func getRichText(postBody: String) -> [RichTextBlock] {
@@ -447,8 +496,7 @@ class RichTextBuilder {
         // Regex matching html/tags
         let postBodyMarkup = "<body>" + postBody.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: "<br /><a", with: "<a").replacingOccurrences(of: "<br />", with: "\n") + "</body>"
         let rangeTotal = NSRange(location: 0, length: postBodyMarkup.utf16.count)
-        let regexTags = try! NSRegularExpression(pattern: #"<(?:"[^"]*"['"]*|'[^']*'['"]*|[^'">])+>"#)
-        let matchesTags = regexTags.matches(in: postBodyMarkup, options: [], range: rangeTotal)
+        let matchesTags = Regex.getTagMatcherRegex().matches(in: postBodyMarkup, options: [], range: rangeTotal)
         var matchNum = 0
         var previousRange =  NSRange(location: 0, length: 0)
         
@@ -459,7 +507,7 @@ class RichTextBuilder {
         var fifo: [String] = []
         let _: [String] = matchesTags.map {
             let rangeTags = Range($0.range, in: postBodyMarkup)!
-        
+            
             if $0.range.lowerBound - previousRange.upperBound > 0 {
                 let rangeContent = Range(NSRange(location: previousRange.upperBound, length: $0.range.lowerBound - previousRange.upperBound), in: postBodyMarkup)!
                 resultsAll.append(String(postBodyMarkup[rangeContent]))
@@ -523,9 +571,9 @@ class RichTextBuilder {
                     }
                     fifo.append("jt_orange")
                 } else if markup.postMarkup.contains(#"<span class="jt_yellow">"#) {
-                   if !attr.contains(TextAttributes.yellow) {
-                       attr.update(with: TextAttributes.yellow)
-                   }
+                    if !attr.contains(TextAttributes.yellow) {
+                        attr.update(with: TextAttributes.yellow)
+                    }
                     fifo.append("jt_yellow")
                 } else if markup.postMarkup.contains(#"<span class="jt_red">"#) {
                     if !attr.contains(TextAttributes.red) {
@@ -660,7 +708,7 @@ class RichTextBuilder {
                     isSpoilerLink = false
                 }
             }
-
+            
             // Append content, spoilers, links
             if markup.postMarkupType == ShackMarkupType.content {
                 if !markup.postMarkup.hasPrefix("http") && !hrefOpen && !isSpoiler {
@@ -695,7 +743,7 @@ class RichTextBuilder {
         if lineOfText.count > 0 {
             richText.append(.plainTextBlock(lineOfText))
         }
-                
+        
         return richText
     }
 }
