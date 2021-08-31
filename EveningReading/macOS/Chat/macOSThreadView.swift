@@ -20,8 +20,6 @@ struct macOSThreadView: View {
     @State private var rootPostRichText = [RichTextBlock]()
     @State private var rootPostDate: String = "2020-08-14T21:05:00Z"
     @State private var rootPostLols: [ChatLols] = [ChatLols]()
-    @State private var contributed: Bool = false
-    @State private var replyCount: Int = 0
     
     @State private var postList = [ChatPosts]()
     @State private var postStrength = [Int: Double]()
@@ -32,7 +30,6 @@ struct macOSThreadView: View {
     @State private var showRootReply = false
     @State private var canRefresh = true
     @State private var isGettingThread = false
-    @State private var hasUnreadReplies = false
     
     private func getThreadData() {
         if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
@@ -46,15 +43,11 @@ struct macOSThreadView: View {
                     self.rootPostDate = rootPost.date
                     self.rootPostLols = rootPost.lols
                 }
-                self.replyCount = thread.posts.count - 1
-                
             }
         } else {
             let threads = chatStore.threads.filter({ return self.appSessionStore.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !appSessionStore.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
             
             if let thread = threads.filter({ return $0.threadId == self.threadId }).first {
-                self.contributed = PostDecorator.checkParticipatedStatus(thread: thread, author: self.rootPostAuthor)
-                self.hasUnreadReplies = PostDecorator.checkUnreadReplies(thread: thread, viewedPostsStore: self.viewedPostsStore)
                 if let rootPost = thread.posts.filter({ return $0.parentId == 0 }).first {
                     self.rootPostCategory = rootPost.category
                     self.rootPostAuthor = rootPost.author
@@ -63,7 +56,6 @@ struct macOSThreadView: View {
                     self.rootPostDate = rootPost.date
                     self.rootPostLols = rootPost.lols
                 }
-                self.replyCount = thread.posts.count - 1
             }
         }
     }
@@ -126,10 +118,9 @@ struct macOSThreadView: View {
     }
     
     private func markThreadRead() {
-        self.viewedPostsStore.markPostViewed(postId: self.threadId)
-        for post in self.postList {
-            self.viewedPostsStore.markPostViewed(postId: post.id)
-        }
+        var threadIds = self.postList.map({$0.id})
+        threadIds.append(self.threadId)
+        self.viewedPostsStore.markPostsViewed(postIds: threadIds)
         self.viewedPostsStore.syncViewedPosts()
     }
     
@@ -158,21 +149,15 @@ struct macOSThreadView: View {
                                     .frame(width: 100, alignment: .trailing)
                                     .help(self.rootPostAuthor)
                                 
-                                ContributedView(contributed: self.contributed)
-                                
-                                UnreadRepliesView(hasUnreadReplies: self.hasUnreadReplies)
+                                Text("\(self.rootPostDate.getTimeRemaining()) left")
+                                    .foregroundColor(Color.gray)
+                                    .font(.body)
+                                    .help(self.rootPostDate.postTimestamp())
                                 
                                 Spacer()
                                 
                                 LolView(lols: self.rootPostLols, expanded: true, postId: self.threadId)
                                 
-                                ReplyCountView(replyCount: self.replyCount)
-                                
-                                /*
-                                 Text(self.rootPostDate.getTimeAgo())
-                                 .foregroundColor(Color.gray)
-                                 .font(.body)
-                                 */
                             }
                             .padding(.horizontal, 10)
                             .padding(.top, 10)

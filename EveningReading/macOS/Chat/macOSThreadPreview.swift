@@ -21,7 +21,8 @@ struct macOSThreadPreview: View {
     @State private var rootPostLols: [ChatLols] = [ChatLols]()
     @State private var contributed: Bool = false
     @State private var replyCount: Int = 0
-    @State private var hasUnreadReplies: Bool = false
+    @State private var hasUnreadRepliesToAuthor: Bool = false
+    @State private var hasUnreadPosts: Bool = false
     
     private func getThreadData() {
         if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
@@ -42,7 +43,8 @@ struct macOSThreadPreview: View {
             
             if let thread = threads.filter({ return $0.threadId == self.threadId }).first {
                 self.contributed = PostDecorator.checkParticipatedStatus(thread: thread, author: self.rootPostAuthor)
-                self.hasUnreadReplies = PostDecorator.checkUnreadReplies(thread: thread, viewedPostsStore: self.viewedPostsStore)
+                self.hasUnreadRepliesToAuthor = PostDecorator.checkUnreadReplies(thread: thread, viewedPostsStore: self.viewedPostsStore)
+                self.hasUnreadPosts = thread.posts.filter({ return !self.viewedPostsStore.isPostViewed(postId: $0.id) }).count > 0
                 if let rootPost = thread.posts.filter({ return $0.parentId == 0 }).first {
                     self.rootPostCategory = rootPost.category
                     self.rootPostAuthor = rootPost.author
@@ -62,7 +64,7 @@ struct macOSThreadPreview: View {
                 
                 ContributedView(contributed: self.contributed)
                 
-                UnreadRepliesView(hasUnreadReplies: self.hasUnreadReplies)
+                UnreadRepliesView(hasUnreadReplies: self.hasUnreadRepliesToAuthor)
 
                 Spacer()
 
@@ -81,6 +83,7 @@ struct macOSThreadPreview: View {
             VStack (alignment: .leading) {
                 Text(self.rootPostBody)
                     .font(.body)
+                    .foregroundColor(self.hasUnreadPosts ? Color.primary : Color.gray)
                     .fixedSize(horizontal: false, vertical: true)
                     .lineLimit(3)
             }
@@ -95,18 +98,16 @@ struct macOSThreadPreview: View {
         .onAppear(perform: getThreadData)
         .onTapGesture(count: 1) {
             // When we're selecting another thread, mark the current one viewed.
-            // TODO: Consolidate marking a whole thread somewhere. It's repeated a few times now.
             if chatStore.activeThreadId != self.threadId && chatStore.activeThreadId != 0 {
                 if let currentlyActiveThread = chatStore.threads.first(where: { return $0.threadId == chatStore.activeThreadId}) {
-                    for p in currentlyActiveThread.posts {
-                        self.viewedPostsStore.markPostViewed(postId: p.id)
-                    }
-                    self.viewedPostsStore.markPostViewed(postId: chatStore.activeThreadId)
+                    self.viewedPostsStore.markThreadViewed(thread: currentlyActiveThread)
                 }
             }
+            self.viewedPostsStore.markPostViewed(postId: self.threadId)
             self.viewedPostsStore.syncViewedPosts()
             chatStore.activeThreadId = self.threadId
         }
+        .onReceive(viewedPostsStore.$viewedPosts, perform: { x in self.getThreadData()})
     }
 }
 

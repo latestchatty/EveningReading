@@ -175,6 +175,22 @@ class ViewedPostsStore: ObservableObject {
         }
     }
     
+    // Create a temporary set, then assign that to viewedPosts to avoid excessive redraws
+    public func markThreadViewed(thread: ChatThread) {
+        var threadIds = thread.posts.map({$0.id})
+        threadIds.append(thread.threadId)
+        self.markPostsViewed(postIds: threadIds)
+    }
+    
+    public func markPostsViewed(postIds: [Int]) {
+        let postsToMarkRead = Set<Int>(postIds)
+        let originalCount = self.viewedPosts.count
+        self.viewedPosts = postsToMarkRead.union(self.viewedPosts)
+        if originalCount != self.viewedPosts.count {
+            self.dirty = true
+        }
+    }
+    
     public func markPostViewed(postId: Int) {
         let result = self.viewedPosts.insert(postId)
         if result.inserted {
