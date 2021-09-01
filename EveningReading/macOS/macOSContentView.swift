@@ -98,6 +98,7 @@ struct macOSContentView: View {
                 
             }
         }
+        .background(Color("macOSBackground"))
         .frame(minWidth: macOSWindowSize().minWidth, minHeight: macOSWindowSize().minHeight)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear() {
