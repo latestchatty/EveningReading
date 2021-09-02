@@ -17,7 +17,12 @@ struct macOSThreadList: View {
         {
             return Array(chatData.threads)
         }
+        
+        // This is a lot of looping.
+        //  It could probably be done at the time the chatty loads except in the case where you actively block something
+        //  and want to see it immediately removed. Which is rare in comparison to how often this gets executed.
         let threads = chatStore.threads.filter({ return self.appSessionStore.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !self.appSessionStore.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
+        
         return Array(threads)
     }
     
@@ -52,7 +57,7 @@ struct macOSThreadList: View {
                     chatStore.activeThreadId = 0
                     chatStore.activePostId = 0
                     viewedPostsStore.syncViewedPosts()
-                    chatStore.getChat()
+                    chatStore.getChat(viewedPostsStore: self.viewedPostsStore)
                 }, label: {
                     Image(systemName: "arrow.counterclockwise")
                 })

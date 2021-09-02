@@ -21,7 +21,7 @@ struct macOSChatView: View {
             return
         }
         viewedPostsStore.getViewedPosts()
-        chatStore.getChat()
+        chatStore.getChat(viewedPostsStore: viewedPostsStore)
     }
     
     var body: some View {

@@ -105,7 +105,7 @@ class ChatService {
         self.decoder = decoder
     }
     
-    public func getChat(handler: @escaping (Result<[ChatThread], Error>) -> Void) {
+    public func getChat(viewedPostsStore: ViewedPostsStore, handler: @escaping (Result<[ChatThread], Error>) -> Void) {
         let sessionConfig = URLSessionConfiguration.default
         #if os(iOS)
         sessionConfig.waitsForConnectivity = false
@@ -128,7 +128,22 @@ class ChatService {
                 do {
                     let data = data ?? Data()
                     let response = try self?.decoder.decode(Chat.self, from: data)
-                    handler(.success(response?.threads ?? []))
+                    let threads = response?.threads ?? []
+                    let sortedThreads = threads.sorted(by: {
+                        t1, t2 in
+                        // This is a loooot of iterating. Feels bad man.
+                        let t1HasNewReplies = PostDecorator.checkUnreadReplies(thread: t1, viewedPostsStore: viewedPostsStore)
+                        let t2HasNewReplies = PostDecorator.checkUnreadReplies(thread: t2, viewedPostsStore: viewedPostsStore)
+                        // Prioritize having unread replies
+                        if t1HasNewReplies && !t2HasNewReplies {
+                            return true
+                        } else if t2HasNewReplies && !t1HasNewReplies {
+                            return false
+                        }
+                        // Otherwise sort by which thread has the most recent post
+                        return t1.posts.max(by: { $0.id < $1.id})!.id > t2.posts.max(by: {$0.id < $1.id })!.id
+                    })
+                    handler(.success(sortedThreads))
                 } catch {
                     handler(.failure(error))
                 }
@@ -448,7 +463,7 @@ class ChatStore: ObservableObject {
         }
     }
 
-    func getChat() {
+    func getChat(viewedPostsStore: ViewedPostsStore) {
         self.didGetChatStart = true
         #if os(watchOS)
         self.threads = []
@@ -458,7 +473,7 @@ class ChatStore: ObservableObject {
         self.threads = []
         self.gettingChat = true
         #endif
-        service.getChat() { [weak self] result in
+        service.getChat(viewedPostsStore: viewedPostsStore) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let threads):

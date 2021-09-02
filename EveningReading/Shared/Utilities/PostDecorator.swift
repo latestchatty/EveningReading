@@ -35,14 +35,19 @@ class PostDecorator {
         #if os(watchOS)
         let username = ""
         #endif
-
-        let contributedReplies = thread.posts.filter({ return $0.author.lowercased() == username }).count
         
-        if username == author.lowercased() || contributedReplies > 0 {
+        // If we're the thread root author, we've participated. Bail out now.
+        if username == author.lowercased() {
             return true
-        } else {
-            return false
         }
+        
+        // Use for loop instead of filter so we short circuit and bail out as soon as we find what we're looking for.
+        for post in thread.posts {
+            if post.author.lowercased() == username {
+                return true
+            }
+        }
+        return false
     }
     
     // Check if there are unread replies to the user in the thread
@@ -59,10 +64,14 @@ class PostDecorator {
         #if os(watchOS)
         let username = ""
         #endif
-
+        
+        // Get all the posts the user has made in the thread
+        let authorPostIds = thread.posts.filter({$0.author.lowercased() == username}).map({$0.id})
+        
+        // Then find out if anything that's a direct reply is unread
         for p in thread.posts {
-            if p.author.lowercased() == username {
-                if thread.posts.filter({ return $0.parentId == p.id && !viewedPostsStore.isPostViewed(postId: $0.id) }).count > 0 {
+            if authorPostIds.contains(p.parentId) {
+                if !viewedPostsStore.isPostViewed(postId: p.id){
                     return true
                 }
             }
