@@ -153,9 +153,6 @@ struct macOSThreadView: View {
                                     .help(self.rootPostDate.postTimestamp())
                                 
                                 Spacer()
-                                
-                                LolView(lols: self.rootPostLols, expanded: true, postId: self.threadId)
-                                
                             }
                             .padding(.horizontal, 10)
                             .padding(.top, 10)
@@ -168,10 +165,37 @@ struct macOSThreadView: View {
                             }
                             .padding(.horizontal, 10)
                             .padding(.bottom, 8)
-                            if appSessionStore.isSignedIn {
-                                HStack {
-                                    Spacer()
+                            HStack {
+                                if appSessionStore.isSignedIn {
                                     TagPostButton(postId: self.threadId)
+                                }
+                                
+                                LolView(lols: self.rootPostLols, expanded: true, postId: self.threadId)
+
+                                Spacer()
+                                
+                                if appSessionStore.isSignedIn {
+                                    Button(action: {}, label: {
+                                        Image(systemName: "exclamationmark.triangle")
+                                            .imageScale(.large)
+                                    })
+                                    .buttonStyle(BorderlessButtonStyle())
+                                    .foregroundColor(Color.primary)
+                                    .help("Report")
+                                }
+                                
+                                Button(action: {
+                                    NSPasteboard.general.clearContents()
+                                    NSPasteboard.general.setString("https://www.shacknews.com/chatty?id=\(self.threadId)#item_\(self.threadId)", forType: .URL)
+                                }, label: {
+                                    Image(systemName: "link")
+                                        .imageScale(.large)
+                                })
+                                .buttonStyle(BorderlessButtonStyle())
+                                .foregroundColor(Color.primary)
+                                .help("Copy link to post")
+                                
+                                    if appSessionStore.isSignedIn {
                                     Button(action: {
                                         showRootReply = !showRootReply
                                     }, label: {
@@ -183,13 +207,13 @@ struct macOSThreadView: View {
                                     .help("Reply to post")
                                     .keyboardShortcut("r", modifiers: [.command, .option])
                                 }
-                                .padding(.horizontal, 10)
-                                .padding(.bottom, showRootReply ? 8 : 10)
-                                if (showRootReply) {
-                                    macOSComposeView(postId: self.threadId)
-                                        .padding(.horizontal, 10)
-                                        .padding(.bottom, 10)
-                                }
+                            }
+                            .padding(.horizontal, 10)
+                            .padding(.bottom, showRootReply ? 8 : 10)
+                            if (showRootReply) {
+                                macOSComposeView(postId: self.threadId)
+                                    .padding(.horizontal, 10)
+                                    .padding(.bottom, 10)
                             }
                         }
                         .frame(maxWidth: .infinity)
@@ -232,6 +256,7 @@ struct macOSThreadView: View {
                                         .onTapGesture(count: 1) {
                                             //withAnimation {
                                             selectedPost = post.id
+                                            self.selectedIndex = self.postList.firstIndex(where: {$0.id == post.id})! + 1
                                             //}
                                         }
                                     }

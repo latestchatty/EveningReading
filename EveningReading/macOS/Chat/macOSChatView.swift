@@ -44,7 +44,7 @@ struct macOSChatView: View {
                 HSplitView () {
                     // Thread List
                     macOSThreadList()
-                        .frame(minWidth: 320)
+                        .frame(minWidth: 400)
                     
                     // Thread Detail
                     macOSThreadView(threadId: $chatStore.activeThreadId)

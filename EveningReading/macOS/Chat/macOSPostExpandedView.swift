@@ -40,15 +40,10 @@ struct macOSPostExpandedView: View {
                 
                 HStack {
                     Text(self.postDate.getTimeAgo())
+                        .foregroundColor(Color.gray)
                         .padding(.leading, 8)
                         .help(self.postDate.postTimestamp())
-                    
                     Spacer()
-                    
-                    // Lols
-                    LolView(lols: self.lols, expanded: true, postId: self.postId)
-                        .padding(.top, 5)
-                        .padding(.trailing, 8)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .cornerRadius(tl: 8, tr: 8, bl: 0, br: 0, color: Color("ThreadBubblePrimary"))
@@ -60,28 +55,60 @@ struct macOSPostExpandedView: View {
                     RichTextView(topBlocks: self.postText)
                         .fixedSize(horizontal: false, vertical: true)
                     
-                    if appSessionStore.isSignedIn {
-                        VStack() {
-                            HStack {
-                                Spacer()
-                              
+                    VStack() {
+                        HStack {
+                            if appSessionStore.isSignedIn {
                                 TagPostButton(postId: self.postId)
+                            }
+                            
+                            // Lols
+                            LolView(lols: self.lols, expanded: true, postId: self.postId)
+                                .padding(.top, 5)
+                                .padding(.trailing, 10)
+                            
+                            Spacer()
+                          
+                            if appSessionStore.isSignedIn {
+                                Button(action: {}, label: {
+                                    Image(systemName: "exclamationmark.triangle")
+                                        .imageScale(.large)
+                                })
+                                .buttonStyle(BorderlessButtonStyle())
+                                .foregroundColor(Color.primary)
+                                .help("Report")
+                            }
+                            
+                            Button(action: {
+                                // TODO: Should show some type of indication that this happened.
+                                // Maybe something like https://github.com/elai950/AlertToast
+                                NSPasteboard.general.clearContents()
+                                NSPasteboard.general.setString("https://www.shacknews.com/chatty?id=\(self.postId)#item_\(self.postId)", forType: .URL)
+                            }, label: {
+                                Image(systemName: "link")
+                                    .imageScale(.large)
+                            })
+                            .buttonStyle(BorderlessButtonStyle())
+                            .foregroundColor(Color.primary)
+                            .help("Copy link to post")
+                            
+                            if appSessionStore.isSignedIn {
                                 Button(action: {
                                     showReply = !showReply
                                 }, label: {
                                     Image(systemName: "arrowshape.turn.up.left")
                                         .imageScale(.large)
-                                        .foregroundColor(showReply ? Color.accentColor : Color.primary)
+                                        .foregroundColor(showReply ? Color.accentColor : Color.secondary)
                                 })
                                 .buttonStyle(BorderlessButtonStyle())
                                 .help("Reply to post")
                                 .keyboardShortcut("r", modifiers: [.command])
                             }
                         }
-                        if (showReply) {
-                            macOSComposeView(postId: self.postId)
-                        }
                     }
+                    if (showReply) {
+                        macOSComposeView(postId: self.postId)
+                    }
+                
                 }
                 Spacer()
             }
