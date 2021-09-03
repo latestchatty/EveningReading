@@ -39,9 +39,10 @@ struct macOSThreadPreview: View {
                 
             }
         } else {
-            let threads = chatStore.threads.filter({ return self.appSessionStore.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !appSessionStore.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
+            // Why was this here?
+            //let threads = chatStore.threads.filter({ return self.appSessionStore.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !appSessionStore.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
             
-            if let thread = threads.filter({ return $0.threadId == self.threadId }).first {
+            if let thread = chatStore.threads.filter({ return $0.threadId == self.threadId }).first {
                 self.contributed = PostDecorator.checkParticipatedStatus(thread: thread, author: self.rootPostAuthor)
                 self.hasUnreadRepliesToAuthor = PostDecorator.checkUnreadReplies(thread: thread, viewedPostsStore: self.viewedPostsStore)
                 self.hasUnreadPosts = thread.posts.filter({ return !self.viewedPostsStore.isPostViewed(postId: $0.id) }).count > 0

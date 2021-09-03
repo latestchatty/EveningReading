@@ -30,6 +30,7 @@ struct macOSThreadView: View {
     @State private var showRootReply = false
     @State private var canRefresh = true
     @State private var isGettingThread = false
+    @State private var selectedIndex: Int = 0
     
     private func getThreadData() {
         if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
@@ -96,24 +97,21 @@ struct macOSThreadView: View {
     }
     
     private func selectNextPost(forward: Bool = true) {
-        let selectedIndex = self.postList.firstIndex { $0.id == self.selectedPost }
-        
         if forward {
-            if selectedIndex == nil {
-                self.selectedPost = self.postList.first?.id ?? 0
-            } else if selectedIndex == (self.postList.count - 1) {
-                self.selectedPost = 0
-            } else {
-                self.selectedPost = self.postList[selectedIndex! + 1].id
+            self.selectedIndex = self.selectedIndex + 1
+            if self.selectedIndex > self.postList.count {
+                self.selectedIndex = 0
             }
         } else {
-            if selectedIndex == nil {
-                self.selectedPost = self.postList.last?.id ?? 0
-            } else if selectedIndex == 0 {
-                self.selectedPost = 0
-            } else {
-                self.selectedPost = self.postList[selectedIndex! - 1].id
+            self.selectedIndex = self.selectedIndex - 1
+            if self.selectedIndex == -1 {
+                self.selectedIndex = self.postList.count
             }
+        }
+        if self.selectedIndex == 0 {
+            self.selectedPost = 0
+        } else {
+            self.selectedPost = self.postList[selectedIndex - 1].id
         }
     }
     
