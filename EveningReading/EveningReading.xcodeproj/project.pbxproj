@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7D2A859926E51B1D008C4833 /* macOSTextPromptSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D2A859826E51B1D008C4833 /* macOSTextPromptSheet.swift */; };
+		7D2A859B26E5619C008C4833 /* macOSReportPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D2A859A26E5619C008C4833 /* macOSReportPostView.swift */; };
 		7D2CB0EB26CF7C5C00C87611 /* BlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA195626464FBC00556E69 /* BlurView.swift */; };
 		7D2CB0EC26CF7C5C00C87611 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA198326470CC100556E69 /* LoadingView.swift */; };
 		7D45A0B226D7520E00BC0254 /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D45A0B126D7520E00BC0254 /* ViewExtensions.swift */; };
@@ -269,6 +271,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		7D2A859826E51B1D008C4833 /* macOSTextPromptSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSTextPromptSheet.swift; sourceTree = "<group>"; };
+		7D2A859A26E5619C008C4833 /* macOSReportPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSReportPostView.swift; sourceTree = "<group>"; };
 		7D45A0B126D7520E00BC0254 /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
 		7D45D72B26CC204B00D2AE63 /* macOSComposeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSComposeView.swift; sourceTree = "<group>"; };
 		7D4815EE26D89F7400247927 /* ViewedPostsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewedPostsService.swift; sourceTree = "<group>"; };
@@ -471,6 +475,8 @@
 				833685C726723E6400ACE618 /* macOSNoticeView.swift */,
 				7DA366EC26CEAEC200B567BB /* macOSShackTagsTextView.swift */,
 				7DA366EE26CEDDE900B567BB /* macOSTagPostButton.swift */,
+				7D2A859826E51B1D008C4833 /* macOSTextPromptSheet.swift */,
+				7D2A859A26E5619C008C4833 /* macOSReportPostView.swift */,
 			);
 			path = Controls;
 			sourceTree = "<group>";
@@ -1402,6 +1408,7 @@
 				833685D726738A8A00ACE618 /* macOSThreadList.swift in Sources */,
 				8339816C26404F59005614E8 /* SidebarButtons.swift in Sources */,
 				83AA193B2645F66500556E69 /* AuthService.swift in Sources */,
+				7D2A859B26E5619C008C4833 /* macOSReportPostView.swift in Sources */,
 				833817952639AC18007A8B28 /* macOSContentView.swift in Sources */,
 				833685D926738B5100ACE618 /* macOSThreadPreview.swift in Sources */,
 				833981BA2641C4E8005614E8 /* ReplyCountView.swift in Sources */,
@@ -1434,6 +1441,7 @@
 				833685D32672C18F00ACE618 /* macOSPostPreviewView.swift in Sources */,
 				833685C626702CB900ACE618 /* macOSClearHiddenView.swift in Sources */,
 				833EE9CC2644DE1A00345A1D /* RichTextView.swift in Sources */,
+				7D2A859926E51B1D008C4833 /* macOSTextPromptSheet.swift in Sources */,
 				833685C2266FAB2B00ACE618 /* macOSGuidelinesView.swift in Sources */,
 				833981692640439F005614E8 /* macOSSettingsView.swift in Sources */,
 				83AA19BD26485B1F00556E69 /* MessageService.swift in Sources */,

@@ -11,6 +11,7 @@ struct macOSPostExpandedView: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var chatStore: ChatStore
     @EnvironmentObject var viewedPostsStore: ViewedPostsStore
+    @EnvironmentObject var messageStore: MessageStore
     @Binding var postId: Int
     @Binding var postAuthor: String
     @Binding var replyLines: String?
@@ -19,6 +20,7 @@ struct macOSPostExpandedView: View {
     @Binding var postDate: String
     @State var showReply = false
     @State var selectedTag: String = ""
+    @State var showReportPost = false
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -30,7 +32,7 @@ struct macOSPostExpandedView: View {
                 
                 Text("")
                     .frame(width: 10)
-
+                
                 // Reply lines
                 Text(self.replyLines == nil ? String(repeating: " ", count: 5) : self.replyLines!)
                     .lineLimit(1)
@@ -68,16 +70,8 @@ struct macOSPostExpandedView: View {
                                 .padding(.trailing, 10)
                             
                             Spacer()
-                          
-                            if appSessionStore.isSignedIn {
-                                Button(action: {}, label: {
-                                    Image(systemName: "exclamationmark.triangle")
-                                        .imageScale(.large)
-                                })
-                                .buttonStyle(BorderlessButtonStyle())
-                                .foregroundColor(Color.primary)
-                                .help("Report")
-                            }
+                            
+                            macOSReportPostView(postId: self.postId, postAuthor: self.postAuthor, showReportPost: self.$showReportPost)
                             
                             Button(action: {
                                 // TODO: Should show some type of indication that this happened.
@@ -109,7 +103,7 @@ struct macOSPostExpandedView: View {
                     if (showReply) {
                         macOSComposeView(postId: self.postId)
                     }
-                
+                    
                 }
                 Spacer()
             }

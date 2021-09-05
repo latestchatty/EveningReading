@@ -41,6 +41,10 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LOL_KEY</key>
 	<string>$(LOL_KEY)</string>
+	<key>SHACK_ERUSER</key>
+	<string>$(SHACK_ERUSER)</string>
+	<key>SHACK_ERPASS</key>
+	<string>$(SHACK_ERPASS)</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.social-networking</string>
 	<key>LSMinimumSystemVersion</key>

@@ -396,14 +396,14 @@ class MessageStore: ObservableObject {
         }
     }
     
-    func getComplaintText(author: String, postId: Int) -> String {
-        return String("I would like to report user '\(author)', author of post http://www.shacknews.com/chatty?id=\(postId)#item_\(postId) for not adhering to the Shacknews guidelines.")
+    func getComplaintText(author: String, postId: Int, reason: String?) -> String {
+        return String("I would like to report user '\(author)', author of post http://www.shacknews.com/chatty?id=\(postId)#item_\(postId) for not adhering to the Shacknews guidelines.\r\n\r\nReason: \(reason ?? "No reason given.")")
     }
     
     func submitComplaint(author: String, postId: Int) {
         if let shackERUser = Bundle.main.infoDictionary?["SHACK_ERUSER"] as? String {
             if let shackERPass = Bundle.main.infoDictionary?["SHACK_ERPASS"] as? String {
-                service.submitMessage(username: shackERUser, password: shackERPass, recipient: "Duke Nuked", subject: "Reporting Author of Post", body: getComplaintText(author: author, postId: postId)) { [weak self] result in
+                service.submitMessage(username: shackERUser, password: shackERPass, recipient: "Duke Nuked", subject: "Reporting Author of Post", body: getComplaintText(author: author, postId: postId, reason: nil)) { [weak self] result in
                     DispatchQueue.main.async {
                         switch result {
                         case .success(let response):
@@ -420,6 +420,27 @@ class MessageStore: ObservableObject {
                     }
                 }
             }
+        }
+    }
+    
+    func submitComplaint(author: String, postId: Int, reason: String?, handler: @escaping (Result<Bool, Error>) -> Void) {
+        if let shackERUser = Bundle.main.infoDictionary?["SHACK_ERUSER"] as? String {
+            if let shackERPass = Bundle.main.infoDictionary?["SHACK_ERPASS"] as? String {
+                service.submitMessage(username: shackERUser, password: shackERPass, recipient: "Duke Nuked", subject: "Reporting Author of Post", body: getComplaintText(author: author, postId: postId, reason: reason)) { result in
+                    DispatchQueue.main.async {
+                        switch result {
+                        case .success(_):
+                            handler(.success(true))
+                        case .failure(let err):
+                            handler(.failure(err))
+                        }
+                    }
+                }
+            } else {
+                handler(.failure(NSError(domain: "ER Pass not set", code: -1, userInfo: nil)))
+            }
+        } else {
+            handler(.failure(NSError(domain: "ER User not set", code: -1, userInfo: nil)))
         }
     }
     

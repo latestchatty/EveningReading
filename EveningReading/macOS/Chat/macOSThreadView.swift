@@ -31,6 +31,7 @@ struct macOSThreadView: View {
     @State private var canRefresh = true
     @State private var isGettingThread = false
     @State private var selectedIndex: Int = 0
+    @State private var showReportPost: Bool = false
     
     private func getThreadData() {
         if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
@@ -176,15 +177,7 @@ struct macOSThreadView: View {
                                 
                                 Spacer()
                                 
-                                if appSessionStore.isSignedIn {
-                                    Button(action: {}, label: {
-                                        Image(systemName: "exclamationmark.triangle")
-                                            .imageScale(.large)
-                                    })
-                                    .buttonStyle(BorderlessButtonStyle())
-                                    .foregroundColor(Color.primary)
-                                    .help("Report")
-                                }
+                                macOSReportPostView(postId: self.threadId, postAuthor: self.rootPostAuthor, showReportPost: self.$showReportPost)
                                 
                                 Button(action: {
                                     NSPasteboard.general.clearContents()

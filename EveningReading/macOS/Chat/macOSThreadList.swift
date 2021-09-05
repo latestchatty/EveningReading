@@ -11,6 +11,7 @@ struct macOSThreadList: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var chatStore: ChatStore
     @EnvironmentObject var viewedPostsStore: ViewedPostsStore
+    @State var showRootPostPrompt: Bool = false
     
     private func filteredThreads() -> [ChatThread] {
         if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
@@ -27,6 +28,25 @@ struct macOSThreadList: View {
     
     var body: some View {
         VStack {
+            macOSTextPromptSheet(
+                action: {text, handler in
+                    chatStore.submitPost(postBody: text, postId: 0) { submitHandler in
+                        switch submitHandler {
+                        case .success(_):
+                            handler(.success(true))
+                            self.chatStore.getChat(viewedPostsStore: self.viewedPostsStore)
+                        case .failure(let err):
+                            handler(.failure(err))
+                        }
+                    }
+                },
+                label: {
+                    EmptyView()
+                },
+                showPrompt: $showRootPostPrompt,
+                title: "Write a root post",
+                acceptButtonContent: "Post",
+                useShackTagsInput: true)
             if chatStore.gettingChat {
                 ProgressView()
                     .foregroundColor(Color.accentColor)
@@ -63,7 +83,7 @@ struct macOSThreadList: View {
                 .disabled(chatStore.gettingChat)
                 .keyboardShortcut("r", modifiers: [.command, .shift])
                 Button(action: {
-                    // compose
+                    self.showRootPostPrompt = true
                 }, label: {
                     Image(systemName: "square.and.pencil")
                 })

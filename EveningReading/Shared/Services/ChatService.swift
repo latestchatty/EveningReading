@@ -557,6 +557,17 @@ class ChatStore: ObservableObject {
         }
     }
     
+    func submitPost(postBody: String, postId: Int, handler: @escaping (Result<Bool, Error>) -> Void) {
+        service.submitPost(postBody: postBody, postId: postId) { result in
+            switch result {
+            case .success(_):
+                handler(.success(true))
+            case .failure(let err):
+                handler(.failure(err))
+            }
+        }
+    }
+    
     // Taggers / Lolers
     @Published private(set) var raters: [Raters] = []
     func getRaters(postId: Int, completionSuccess: @escaping ()->(), completionFail: @escaping ()->()) {
