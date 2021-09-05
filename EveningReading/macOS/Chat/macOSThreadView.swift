@@ -113,6 +113,7 @@ struct macOSThreadView: View {
         } else {
             self.selectedPost = self.postList[selectedIndex - 1].id
         }
+        chatStore.activePostId = self.selectedPost
     }
     
     private func markThreadRead() {
@@ -168,10 +169,11 @@ struct macOSThreadView: View {
                             HStack {
                                 if appSessionStore.isSignedIn {
                                     TagPostButton(postId: self.threadId)
+                                        .padding(.trailing, 8)
                                 }
                                 
                                 LolView(lols: self.rootPostLols, expanded: true, postId: self.threadId)
-
+                                
                                 Spacer()
                                 
                                 if appSessionStore.isSignedIn {
@@ -195,7 +197,7 @@ struct macOSThreadView: View {
                                 .foregroundColor(Color.primary)
                                 .help("Copy link to post")
                                 
-                                    if appSessionStore.isSignedIn {
+                                if appSessionStore.isSignedIn {
                                     Button(action: {
                                         showRootReply = !showRootReply
                                     }, label: {
@@ -254,10 +256,9 @@ struct macOSThreadView: View {
                                         }
                                         .contentShape(Rectangle())
                                         .onTapGesture(count: 1) {
-                                            //withAnimation {
-                                            selectedPost = post.id
+                                            self.selectedPost = post.id
                                             self.selectedIndex = self.postList.firstIndex(where: {$0.id == post.id})! + 1
-                                            //}
+                                            self.chatStore.activePostId = post.id
                                         }
                                     }
                                     
@@ -273,6 +274,16 @@ struct macOSThreadView: View {
                 .onReceive(chatStore.$activeThreadId) { value in
                     scrollProxy.scrollTo(999999991, anchor: .top)
                 }
+                // This is a terrible experience
+                // Scrolling needs to happen only if it needs to happen to make the post come into view.
+                // Instead, no matter what anchor I use here it always scrolls which makes things fly all over the place if you're not just going top down/bottom up
+//                .onReceive(chatStore.$activePostId, perform: { postId in
+////                    DispatchQueue.main.asyncAfter(deadline: .now() + .miliseconds(200)) {
+//                        withAnimation {
+//                            scrollProxy.scrollTo(postId)
+//                        }
+////                    }
+//                })
             }
         }
         
@@ -300,6 +311,7 @@ struct macOSThreadView: View {
             if value && self.chatStore.didSubmitPost && chatStore.activeThreadId == self.threadId {
                 chatStore.didGetThreadStart = false
                 self.selectedPost = 0
+                self.chatStore.activePostId = 0
                 self.isGettingThread = true
             }
         }

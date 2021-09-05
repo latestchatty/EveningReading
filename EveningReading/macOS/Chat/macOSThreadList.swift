@@ -28,12 +28,12 @@ struct macOSThreadList: View {
     var body: some View {
         VStack {
             if chatStore.gettingChat {
-                // This feels jarring.
-                // A better solution would be just animating the refresh button icon
-                // I tried doing this, but the icon doesn't rotate on the center point of the circle
-                // So it looks like it's bouncing when it's spinning. Maybe a different icon would work better?
-                // For now we'll go with this.
-                LoadingView(show: .constant(true), title: .constant("Loading threads"))
+                ProgressView()
+                    .foregroundColor(Color.accentColor)
+                    .progressViewStyle(LinearProgressViewStyle())
+                    .padding()
+                
+                Spacer()
             } else {
                 ScrollView {
                     VStack (spacing: 0) {

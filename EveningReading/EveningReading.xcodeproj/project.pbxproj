@@ -15,6 +15,7 @@
 		7D4815F026D8A06C00247927 /* ViewedPostsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4815EE26D89F7400247927 /* ViewedPostsService.swift */; };
 		7D627D4926D0090600841E16 /* DispatchQueueExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D627D4826D0090600841E16 /* DispatchQueueExtensions.swift */; };
 		7D627D4A26D00ADA00841E16 /* DispatchQueueExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D627D4826D0090600841E16 /* DispatchQueueExtensions.swift */; };
+		7D6F5CFC26E48DE60037172F /* WhosTaggingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA199B2647964000556E69 /* WhosTaggingView.swift */; };
 		7D82DF1A26DC8EA600EE0EB3 /* UnreadRepliesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D82DF1926DC8EA600EE0EB3 /* UnreadRepliesView.swift */; };
 		7D82DF1B26DC8EA600EE0EB3 /* UnreadRepliesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D82DF1926DC8EA600EE0EB3 /* UnreadRepliesView.swift */; };
 		7D82DF1C26DC8EA600EE0EB3 /* UnreadRepliesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D82DF1926DC8EA600EE0EB3 /* UnreadRepliesView.swift */; };
@@ -613,6 +614,7 @@
 		833980D1263C9B3D005614E8 /* Controls */ = {
 			isa = PBXGroup;
 			children = (
+				83AA199B2647964000556E69 /* WhosTaggingView.swift */,
 				83AA195526464FB300556E69 /* BlurView */,
 				7D2CB0EA26CF797000C87611 /* LoadingView */,
 				83AA194A2646352900556E69 /* RedactingView */,
@@ -900,7 +902,6 @@
 				83AA19702646DE7100556E69 /* TagPostView.swift */,
 				83AA19742646DEA100556E69 /* ComposePostView.swift */,
 				83A85D49265EE813007EBAC3 /* TagTextView.swift */,
-				83AA199B2647964000556E69 /* WhosTaggingView.swift */,
 				83AA19C3264870BC00556E69 /* ThreadNavigation.swift */,
 				83AA19C82648952400556E69 /* PostContextView.swift */,
 				83A85CEE26551087007EBAC3 /* GoToShackLinkView.swift */,
@@ -1414,6 +1415,7 @@
 				83398118263F250E005614E8 /* ArticleService.swift in Sources */,
 				8339811B263F26CA005614E8 /* PreviewService.swift in Sources */,
 				83398159263F6BB1005614E8 /* macOSInboxView.swift in Sources */,
+				7D6F5CFC26E48DE60037172F /* WhosTaggingView.swift in Sources */,
 				833685CE2672467800ACE618 /* macOSPostExpandedView.swift in Sources */,
 				7D82DF1B26DC8EA600EE0EB3 /* UnreadRepliesView.swift in Sources */,
 				8339815D263F6FC4005614E8 /* macOSSearchView.swift in Sources */,

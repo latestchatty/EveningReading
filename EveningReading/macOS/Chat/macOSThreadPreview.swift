@@ -69,7 +69,7 @@ struct macOSThreadPreview: View {
 
                 Spacer()
 
-                LolView(lols: self.rootPostLols, expanded: false, capsule: false, postId: self.threadId)
+                LolView(lols: self.rootPostLols, expanded: false, postId: self.threadId)
 
                 ReplyCountView(replyCount: self.replyCount)
                 
@@ -107,6 +107,7 @@ struct macOSThreadPreview: View {
             self.viewedPostsStore.markPostViewed(postId: self.threadId)
             self.viewedPostsStore.syncViewedPosts()
             chatStore.activeThreadId = self.threadId
+            chatStore.activePostId = self.threadId
         }
         .onReceive(viewedPostsStore.$viewedPosts, perform: { x in self.getThreadData()})
     }

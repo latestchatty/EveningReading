@@ -10,9 +10,10 @@ import SwiftUI
 struct LolView: View {
     @EnvironmentObject var chatStore: ChatStore
     
+    @State var showTagUsers: Bool = false
+    
     var lols: [ChatLols] = [ChatLols]()
     var expanded: Bool = false
-    var capsule: Bool = false
     var rollup: Bool = false
     var postId: Int = 0
     
@@ -91,48 +92,32 @@ struct LolView: View {
         #endif
         #if os(OSX)
         if self.rollup {
-            Text(self.lols.filter({$0.count > 0}).count > 0 ? "A" : " ") // 'A' is a tag
-                .lineLimit(1)
-                .fixedSize()
-                .font(.custom("tags", size: 8, relativeTo: .caption))
-                .padding(EdgeInsets(top: 3, leading: -5, bottom: 0, trailing: 0))
-                .foregroundColor(getRollupColor(lols: self.lols))
-        } else if self.capsule && lols.count > 0 {
-            // Display as capsule with label and count
             HStack {
-                ForEach(self.lols.sorted(by: <), id: \.self) { lol in
-                    if lol.count > 0 {
-                        HStack {
-                            Text(lol.tag)
-                                .font(.caption2)
-                                .fontWeight(.bold)
-                                .foregroundColor(PostTagColor[lol.tag])
-                                +
-                                Text(" \(lol.count)")
-                                .font(.caption2)
-                                .fontWeight(.bold)
-                                .foregroundColor(PostTagColor[lol.tag])
+                WhosTaggingView(showingWhosTaggingView: self.$showTagUsers, postId: self.postId)
+                    .frame(width: 0, height: 0)
+                Text(self.lols.filter({$0.count > 0}).count > 0 ? "A" : " ") // 'A' is a tag
+                    .lineLimit(1)
+                    .fixedSize()
+                    .font(.custom("tags", size: 8, relativeTo: .caption))
+                    .foregroundColor(getRollupColor(lols: self.lols))
+                    .contextMenu {
+                        if self.lols.count > 0 {
+                            Button(action: {
+                                self.showTagUsers = true
+                            }) {
+                                Text("Who's Tagging?")
+                                Image(systemName: "tag.circle")
+                            }
                         }
-                        .padding(.init(top: 1, leading: 4, bottom: 1, trailing: 4))
-                        .overlay(Capsule(style: .continuous)
-                                    .stroke(PostTagColor[lol.tag]!))
                     }
-                }
             }
-            .contextMenu {
-                if self.lols.count > 0 {
-                    Button(action: {
-                        // show who's tagging
-                    }) {
-                        Text("Who's Tagging?")
-                        Image(systemName: "tag.circle")
-                    }
-                }
-            }
+            .padding(EdgeInsets(top: 3, leading: -5, bottom: 0, trailing: 0))
         } else if self.lols.count > 0 {
             if self.expanded {
                 // Display as label with count
                 HStack {
+                    WhosTaggingView(showingWhosTaggingView: self.$showTagUsers, postId: self.postId)
+                        .frame(width: 0, height: 0)
                     ForEach(self.lols.sorted(by: <), id: \.self) { lol in
                         if lol.count > 0 {
                             Text(lol.tag)
@@ -150,16 +135,21 @@ struct LolView: View {
                 .contextMenu {
                     if self.lols.count > 0 {
                         Button(action: {
-                            // show who's tagging
+                            self.showTagUsers = true
                         }) {
                             Text("Who's Tagging?")
                             Image(systemName: "tag.circle")
                         }
                     }
                 }
+                .onTapGesture {
+                    self.showTagUsers = true
+                }
             } else {
                 // Display as tag icon
                 HStack {
+                    WhosTaggingView(showingWhosTaggingView: self.$showTagUsers, postId: self.postId)
+                        .frame(width: 0, height: 0)
                     ForEach(self.lols.sorted(by: <), id: \.self) { lol in
                         if lol.count > 0 {
                             Text("A") // 'A' is a tag
@@ -174,7 +164,7 @@ struct LolView: View {
                 .contextMenu {
                     if self.lols.count > 0 {
                         Button(action: {
-                            // show who's tagging
+                            self.showTagUsers = true
                         }) {
                             Text("Who's Tagging?")
                             Image(systemName: "tag.circle")
@@ -185,6 +175,7 @@ struct LolView: View {
         } else {
             EmptyView()
         }
+        
         #endif
         #if os(watchOS)
         HStack {

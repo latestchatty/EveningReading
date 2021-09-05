@@ -59,6 +59,7 @@ struct macOSPostExpandedView: View {
                         HStack {
                             if appSessionStore.isSignedIn {
                                 TagPostButton(postId: self.postId)
+                                    .padding(.trailing, 8)
                             }
                             
                             // Lols
