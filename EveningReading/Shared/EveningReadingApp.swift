@@ -17,16 +17,16 @@ struct EveningReadingApp: App {
     @StateObject var articleStore = ArticleStore(service: .init())
     @StateObject var messageStore = MessageStore(service: .init())
     @StateObject var viewedPostsService = ViewedPostsStore()
-
+    
     #if os(iOS)
     @StateObject var notifications = Notifications.shared //Notifications()
     @UIApplicationDelegateAdaptor private var appDelegate: AppDelegate
     @StateObject var shackTags = ShackTags.shared
     #endif
     
+    #if os(iOS)
     var body: some Scene {
         WindowGroup {
-            #if os(iOS)
             if UIDevice.current.userInterfaceIdiom == .pad {
                 iPadContentView()
                     .environmentObject(appSessionStore)
@@ -37,7 +37,7 @@ struct EveningReadingApp: App {
                     .environmentObject(shackTags)
                     .environmentObject(viewedPostsService)
                     .preferredColorScheme(appSessionStore.isDarkMode ? .dark : .light)
-
+                
             } else {
                 iPhoneContentView()
                     .environmentObject(appSessionStore)
@@ -48,39 +48,61 @@ struct EveningReadingApp: App {
                     .environmentObject(shackTags)
                     .preferredColorScheme(appSessionStore.isDarkMode ? .dark : .light)
             }
-            #else
-                macOSContentView()
-                    .environmentObject(appSessionStore)
-                    .environmentObject(chatStore)
-                    .environmentObject(articleStore)
-                    .environmentObject(messageStore)
-                    .environmentObject(viewedPostsService)
-            #endif
         }
         /*
-        .onChange(of: phase) { newPhase in
-            if newPhase == .active {
-                #if os(iOS)
-                UIApplication.shared.applicationIconBadgeNumber = 0
-                #endif
-            }
-        }
-        */
+         .onChange(of: phase) { newPhase in
+         if newPhase == .active {
+         #if os(iOS)
+         UIApplication.shared.applicationIconBadgeNumber = 0
+         #endif
+         }
+         }
+         */
         /*
-        .onChange(of: phase) { newPhase in
-            switch newPhase {
-            case .active:
-                // App became active
-            case .inactive:
-                // App became inactive
-            case .background:
-                // App is running in the background
-            @unknown default:
-                // Fallback for future cases
-            }
-        }
-        */
+         .onChange(of: phase) { newPhase in
+         switch newPhase {
+         case .active:
+         // App became active
+         case .inactive:
+         // App became inactive
+         case .background:
+         // App is running in the background
+         @unknown default:
+         // Fallback for future cases
+         }
+         }
+         */
     }
+    #elseif os(macOS)
+    var body: some Scene {
+        WindowGroup {
+            macOSContentView()
+                .environmentObject(appSessionStore)
+                .environmentObject(chatStore)
+                .environmentObject(articleStore)
+                .environmentObject(messageStore)
+                .environmentObject(viewedPostsService)
+        }
+        .commands {
+            CommandGroup(after: CommandGroupPlacement.toolbar) {
+                Button("Increase font size") {
+                    FontSettings.setFontOffset(FontSettings.getFontOffset() + 1)
+                }
+                .keyboardShortcut("+", modifiers: [.command])
+                
+                Button("Decrease font size") {
+                    FontSettings.setFontOffset(FontSettings.getFontOffset() - 1)
+                }
+                .keyboardShortcut("-", modifiers: [.command])
+                
+                Button("Reset font size") {
+                    FontSettings.setFontOffset(0)
+                }
+                .keyboardShortcut("0", modifiers: [.command])
+            }
+        }
+    }
+    #endif
 }
 
 
@@ -98,7 +120,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         let token = tokenParts.joined()
         print("Device Token Raw: \(deviceToken)")
         print("Device Token: \(token)")
-
+        
         let deviceUUID = UUID().uuidString
         let deviceTokenClean = token.replacingOccurrences(of: "<", with: "").replacingOccurrences(of: ">", with: "").replacingOccurrences(of: " ", with: "")
         var deviceName = UIDevice.current.name
@@ -133,7 +155,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             //print("Notification settings: \(settings)")
             guard settings.authorizationStatus == .authorized else { return }
             DispatchQueue.main.async {
-              UIApplication.shared.registerForRemoteNotifications()
+                UIApplication.shared.registerForRemoteNotifications()
             }
         }
     }
