@@ -37,7 +37,7 @@ struct macOSPostExpandedView: View {
                 Text(self.replyLines == nil ? String(repeating: " ", count: 5) : self.replyLines!)
                     .lineLimit(1)
                     .fixedSize()
-                    .font(.custom("replylines", size: 25, relativeTo: .callout))
+                    .font(.custom("replylines", size: 25 + FontSettings.getFontOffset(), relativeTo: .callout))
                     .foregroundColor(Color.gray)
                 
                 HStack {
