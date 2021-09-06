@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6C62711F17327536D58ECCBE /* UserUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C627492D0ECC927EB7B7770 /* UserUtils.swift */; };
+		6C6279E556E7B79449D38738 /* UserUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C627492D0ECC927EB7B7770 /* UserUtils.swift */; };
+		6C627BA6F731AFB8CE89080B /* UserUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C627492D0ECC927EB7B7770 /* UserUtils.swift */; };
 		7D2A859926E51B1D008C4833 /* macOSTextPromptSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D2A859826E51B1D008C4833 /* macOSTextPromptSheet.swift */; };
 		7D2A859B26E5619C008C4833 /* macOSReportPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D2A859A26E5619C008C4833 /* macOSReportPostView.swift */; };
 		7D2CB0EB26CF7C5C00C87611 /* BlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA195626464FBC00556E69 /* BlurView.swift */; };
@@ -271,6 +274,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		6C627492D0ECC927EB7B7770 /* UserUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserUtils.swift; sourceTree = "<group>"; };
 		7D2A859826E51B1D008C4833 /* macOSTextPromptSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSTextPromptSheet.swift; sourceTree = "<group>"; };
 		7D2A859A26E5619C008C4833 /* macOSReportPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSReportPostView.swift; sourceTree = "<group>"; };
 		7D45A0B126D7520E00BC0254 /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
@@ -860,6 +864,7 @@
 				8339818326406814005614E8 /* Globals.swift */,
 				830292F02644C57F00B974B3 /* ReplyLineBuilder.swift */,
 				83AA19262645C43500556E69 /* PostDecorator.swift */,
+				6C627492D0ECC927EB7B7770 /* UserUtils.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1395,6 +1400,7 @@
 				7D627D4926D0090600841E16 /* DispatchQueueExtensions.swift in Sources */,
 				83AA198426470CC100556E69 /* LoadingView.swift in Sources */,
 				83398132263F2F7C005614E8 /* SettingsView.swift in Sources */,
+				6C627BA6F731AFB8CE89080B /* UserUtils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1460,6 +1466,7 @@
 				833817932639AC18007A8B28 /* EveningReadingApp.swift in Sources */,
 				830292F22644C57F00B974B3 /* ReplyLineBuilder.swift in Sources */,
 				7D4815F026D8A06C00247927 /* ViewedPostsService.swift in Sources */,
+				6C62711F17327536D58ECCBE /* UserUtils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1498,6 +1505,7 @@
 				83AA1967264656BD00556E69 /* KeychainWrapperSubscript.swift in Sources */,
 				833981B42641B2D7005614E8 /* LolView.swift in Sources */,
 				833981B22641B013005614E8 /* DateExtensions.swift in Sources */,
+				6C6279E556E7B79449D38738 /* UserUtils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

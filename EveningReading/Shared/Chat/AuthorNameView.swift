@@ -16,6 +16,7 @@ struct AuthorNameView: View {
     var postId: Int = 0
     var bold: Bool = false
     var navLink: Bool = false
+    var authorType: AuthorType
     #if os(macOS)
     var fontWeight: Font.Weight = .regular
     #endif
@@ -31,12 +32,33 @@ struct AuthorNameView: View {
     @State private var showingAuthor = false
     #endif
     
+    private func getAuthorColor(type: AuthorType) -> Color {
+        #if os(iOS)
+        return Color(UIColor.systemOrange)
+        #elseif os(watchOS)
+        return Color(Color.orange)
+        #elseif os(OSX)
+        var color: Color
+        switch type {
+        case .owner:
+            color = Color(NSColor.systemBlue)
+        case .shacknews:
+            color = Color(NSColor.systemPurple)
+        case .threadOp:
+            color = Color(NSColor.systemGreen)
+        default:
+            color = colorScheme == .dark ? Color(NSColor.systemOrange) : Color(NSColor.systemPurple)
+        }
+        return color
+        #endif
+    }
+    
     var body: some View {
         #if os(iOS)
             Text("\(self.name)")
                 .font(.footnote)
                 .bold()
-                .foregroundColor(Color(UIColor.systemOrange))
+                .foregroundColor(getAuthorColor(type: authorType))
                 .lineLimit(1)
                 .truncationMode(.tail)
                 .fixedSize()
@@ -45,7 +67,7 @@ struct AuthorNameView: View {
             Text("\(self.name)")
                 .font(self.bold ? .headline : .body)
                 .fontWeight(self.fontWeight)
-                .foregroundColor(colorScheme == .dark ? Color(NSColor.systemOrange) : Color(NSColor.systemPurple))
+                .foregroundColor(getAuthorColor(type: authorType))
                 .lineLimit(1)
                 .contextMenu {
                     Button(action: {
@@ -76,7 +98,7 @@ struct AuthorNameView: View {
                     Text("\(self.name)")
                         .font(.footnote)
                         .bold()
-                        .foregroundColor(Color.orange)
+                        .foregroundColor(getAuthorColor(type: authorType))
                         .lineLimit(1)
                 }
                 .buttonStyle(PlainButtonStyle())
@@ -92,7 +114,7 @@ struct AuthorNameView: View {
                         Text("\(self.name)")
                             .font(.footnote)
                             .bold()
-                            .foregroundColor(Color.orange)
+                            .foregroundColor(getAuthorColor(type: authorType))
                             .lineLimit(1)
                     }
                     .buttonStyle(PlainButtonStyle())
@@ -135,7 +157,7 @@ struct AuthorNameView: View {
 
 struct AuthorNameView_Previews: PreviewProvider {
     static var previews: some View {
-        AuthorNameView(name: "tamzyn", postId: 999999996, bold: false)
+        AuthorNameView(name: "tamzyn", postId: 999999996, bold: false, authorType: .none)
             .environment(\.colorScheme, .light)
             .environmentObject(AppSessionStore(service: AuthService()))
             .environmentObject(MessageStore(service: MessageService()))

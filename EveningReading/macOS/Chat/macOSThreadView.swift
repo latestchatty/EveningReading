@@ -16,6 +16,7 @@ struct macOSThreadView: View {
     
     @State private var rootPostCategory: String = "ontopic"
     @State private var rootPostAuthor: String = ""
+    @State private var rootPostAuthorType: AuthorType = .none
     @State private var rootPostBody: String = ""
     @State private var rootPostRichText = [RichTextBlock]()
     @State private var rootPostDate: String = "2020-08-14T21:05:00Z"
@@ -40,6 +41,7 @@ struct macOSThreadView: View {
                 if let rootPost = thread.posts.filter({ return $0.parentId == 0 }).first {
                     self.rootPostCategory = rootPost.category
                     self.rootPostAuthor = rootPost.author
+                    self.rootPostAuthorType = rootPost.authorType!
                     self.rootPostBody = rootPost.body
                     self.rootPostRichText = RichTextBuilder.getRichText(postBody: rootPost.body)
                     self.rootPostDate = rootPost.date
@@ -53,6 +55,7 @@ struct macOSThreadView: View {
                 if let rootPost = thread.posts.filter({ return $0.parentId == 0 }).first {
                     self.rootPostCategory = rootPost.category
                     self.rootPostAuthor = rootPost.author
+                    self.rootPostAuthorType = rootPost.authorType!
                     self.rootPostBody = rootPost.body
                     self.rootPostRichText = RichTextBuilder.getRichText(postBody: rootPost.body)
                     self.rootPostDate = rootPost.date
@@ -145,21 +148,21 @@ struct macOSThreadView: View {
                         // Root post
                         VStack (alignment: .leading) {
                             HStack {
-                                AuthorNameView(name: self.rootPostAuthor, postId: self.threadId)
+                                AuthorNameView(name: self.rootPostAuthor, postId: self.threadId, authorType: self.rootPostAuthorType)
                                     .frame(width: 100, alignment: .trailing)
                                     .help(self.rootPostAuthor)
-                                
+
                                 Text("\(self.rootPostDate.getTimeRemaining()) left")
                                     .foregroundColor(Color.gray)
                                     .font(.body)
                                     .help(self.rootPostDate.postTimestamp())
-                                
+
                                 Spacer()
                             }
                             .padding(.horizontal, 10)
                             .padding(.top, 10)
                             .padding(.bottom, 8)
-                            
+
                             // Root post body
                             VStack (alignment: .leading) {
                                 RichTextView(topBlocks: self.rootPostRichText)
@@ -172,13 +175,13 @@ struct macOSThreadView: View {
                                     TagPostButton(postId: self.threadId)
                                         .padding(.trailing, 8)
                                 }
-                                
+
                                 LolView(lols: self.rootPostLols, expanded: true, postId: self.threadId)
-                                
+
                                 Spacer()
-                                
+
                                 macOSReportPostView(postId: self.threadId, postAuthor: self.rootPostAuthor, showReportPost: self.$showReportPost)
-                                
+
                                 Button(action: {
                                     NSPasteboard.general.clearContents()
                                     NSPasteboard.general.setString("https://www.shacknews.com/chatty?id=\(self.threadId)#item_\(self.threadId)", forType: .URL)
@@ -189,7 +192,7 @@ struct macOSThreadView: View {
                                 .buttonStyle(BorderlessButtonStyle())
                                 .foregroundColor(Color.primary)
                                 .help("Copy link to post")
-                                
+
                                 if appSessionStore.isSignedIn {
                                     Button(action: {
                                         showRootReply = !showRootReply
@@ -236,7 +239,7 @@ struct macOSThreadView: View {
                                     // Reply expaned row
                                     if self.selectedPost == post.id {
                                         VStack {
-                                            macOSPostExpandedView(postId: .constant(post.id), postAuthor: .constant(post.author), replyLines: self.$replyLines[post.id], lols: .constant(post.lols), postText: self.$selectedPostRichText, postDate: .constant(post.date))
+                                            macOSPostExpandedView(postId: .constant(post.id), postAuthor: .constant(post.author), postAuthorType: .constant(post.authorType!), replyLines: self.$replyLines[post.id], lols: .constant(post.lols), postText: self.$selectedPostRichText, postDate: .constant(post.date))
                                         }
                                         .onAppear() {
                                             // Load Rich Text
@@ -245,7 +248,7 @@ struct macOSThreadView: View {
                                     } else {
                                         // Reply preview row
                                         HStack {
-                                            macOSPostPreviewView(postId: .constant(post.id), postAuthor: .constant(post.author), replyLines: self.$replyLines[post.id], lols: .constant(post.lols), postText: .constant(post.body), postCategory: .constant(post.category), postStrength: .constant(postStrength[post.id]))
+                                            macOSPostPreviewView(postId: .constant(post.id), postAuthor: .constant(post.author), postAuthorType: .constant(post.authorType!), replyLines: self.$replyLines[post.id], lols: .constant(post.lols), postText: .constant(post.body), postCategory: .constant(post.category), postStrength: .constant(postStrength[post.id]))
                                         }
                                         .contentShape(Rectangle())
                                         .onTapGesture(count: 1) {

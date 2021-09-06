@@ -16,6 +16,7 @@ struct macOSThreadPreview: View {
     
     @State private var rootPostCategory: String = "ontopic"
     @State private var rootPostAuthor: String = ""
+    @State private var rootPostAuthorType: AuthorType = .none
     @State private var rootPostBody: String = ""
     @State private var rootPostDate: String = "2020-08-14T21:05:00Z"
     @State private var rootPostLols: [ChatLols] = [ChatLols]()
@@ -31,6 +32,7 @@ struct macOSThreadPreview: View {
                 if let rootPost = thread.posts.filter({ return $0.parentId == 0 }).first {
                     self.rootPostCategory = rootPost.category
                     self.rootPostAuthor = rootPost.author
+                    self.rootPostAuthorType = rootPost.authorType!
                     self.rootPostBody = rootPost.body.getPreview
                     self.rootPostDate = rootPost.date
                     self.rootPostLols = rootPost.lols
@@ -49,6 +51,7 @@ struct macOSThreadPreview: View {
                 if let rootPost = thread.posts.filter({ return $0.parentId == 0 }).first {
                     self.rootPostCategory = rootPost.category
                     self.rootPostAuthor = rootPost.author
+                    self.rootPostAuthorType = rootPost.authorType!
                     self.rootPostBody = rootPost.body.getPreview
                     self.rootPostDate = rootPost.date
                     self.rootPostLols = rootPost.lols
@@ -61,7 +64,7 @@ struct macOSThreadPreview: View {
     var body: some View {
         VStack (alignment: .leading) {
             HStack {
-                AuthorNameView(name: self.rootPostAuthor, postId: self.threadId)
+                AuthorNameView(name: self.rootPostAuthor, postId: self.threadId, authorType: self.rootPostAuthorType)
                 
                 ContributedView(contributed: self.contributed)
                 

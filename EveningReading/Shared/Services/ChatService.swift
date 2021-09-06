@@ -25,6 +25,25 @@ struct ChatPosts: Hashable, Codable {
     var date: String
     var body: String
     var lols: [ChatLols]
+    var authorType: AuthorType?
+}
+
+enum AuthorType: Hashable, Codable, CodingKey {
+    // This isn't actually serialized or deserialized anywhere.
+    // So we'll skip it for now.
+    init(from decoder: Decoder) throws {
+        self = .none
+    }
+    
+    func encode(to encoder: Encoder) throws {
+//        var container = encoder.container(keyedBy: AuthorType.self)
+//        try container.encode(self, forKey: self)
+    }
+    
+    case owner
+    case shacknews
+    case threadOp
+    case none
 }
 
 struct ChatLols: Hashable, Codable, Comparable {
@@ -129,7 +148,7 @@ class ChatService {
                     let data = data ?? Data()
                     let response = try self?.decoder.decode(Chat.self, from: data)
                     let threads = response?.threads ?? []
-                    let sortedThreads = threads.sorted(by: {
+                    var sortedThreads = threads.sorted(by: {
                         t1, t2 in
                         // This is a loooot of iterating. Feels bad man.
                         let t1HasNewReplies = PostDecorator.checkUnreadReplies(thread: t1, viewedPostsStore: viewedPostsStore)
@@ -143,9 +162,28 @@ class ChatService {
                         // Otherwise sort by which thread has the most recent post
                         return t1.posts.max(by: { $0.id < $1.id})!.id > t2.posts.max(by: {$0.id < $1.id })!.id
                     })
+                    let username = UserUtils.getUserName().lowercased()
+                    for t in sortedThreads.enumerated() {
+                        let threadAuthor = t.element.posts.first(where: {$0.parentId == 0})!.author.lowercased()
+                        
+                        for p in t.element.posts.enumerated() {
+                            let post = p.element
+                            let postAuthor = post.author.lowercased()
+                            if postAuthor == threadAuthor && post.parentId != 0 {
+                                sortedThreads[t.offset].posts[p.offset].authorType = .threadOp
+                            } else if postAuthor == username {
+                                sortedThreads[t.offset].posts[p.offset].authorType = .owner
+                            } else if postAuthor == "shacknews" {
+                                sortedThreads[t.offset].posts[p.offset].authorType = .shacknews
+                            } else {
+                                sortedThreads[t.offset].posts[p.offset].authorType = AuthorType.none
+                            }
+                        }
+                    }
                     handler(.success(sortedThreads))
-                } catch {
-                    handler(.failure(error))
+                } catch (let err){
+                    print("Failed to fetch chatty \(err)")
+                    handler(.failure(err))
                 }
             }
         }.resume()
@@ -188,12 +226,7 @@ class ChatService {
     
     public func tag(postId: Int, tag: String, untag: String, handler: @escaping (Result<TagReponse, Error>) -> Void) {
         if let lolKey = Bundle.main.infoDictionary?["LOL_KEY"] as? String {
-            #if os(iOS)
-            let username: String? = KeychainWrapper.standard.string(forKey: "Username")
-            #elseif os(macOS)
-            let defaults = UserDefaults.standard
-            let username = defaults.object(forKey: "Username") as? String ?? ""
-            #endif
+            let username = UserUtils.getUserName()
             
             guard
                 var urlComponents = URLComponents(string: "https://www.shacknews.com/api2/api-index.php")
@@ -237,15 +270,8 @@ class ChatService {
         //let resp = SubmitPostResponseContainer(success: SubmitPostReponse(result: "failure"), fail: SubmitPostError(error: true, code: "47", message: "test failure"))
         //handler(.success(resp))
         //return
-        
-        #if os(iOS)
-        let username: String? = KeychainWrapper.standard.string(forKey: "Username")
-        let password: String? = KeychainWrapper.standard.string(forKey: "Password")
-        #elseif os(macOS)
-        let defaults = UserDefaults.standard
-        let username = defaults.object(forKey: "Username") as? String ?? ""
-        let password = defaults.object(forKey: "Password") as? String ?? ""
-        #endif
+        let username = UserUtils.getUserName()
+        let password = UserUtils.getUserPassword()
         
         print("post submitted to server... post \(postId)")
         

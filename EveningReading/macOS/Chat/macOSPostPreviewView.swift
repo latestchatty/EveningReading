@@ -12,6 +12,7 @@ struct macOSPostPreviewView: View {
     @EnvironmentObject var viewedPostsStore: ViewedPostsStore
     @Binding var postId: Int
     @Binding var postAuthor: String
+    @Binding var postAuthorType: AuthorType
     @Binding var replyLines: String?
     @Binding var lols: [ChatLols]
     @Binding var postText: String
@@ -20,7 +21,7 @@ struct macOSPostPreviewView: View {
 
     var body: some View {
         // Author
-        AuthorNameView(name: self.postAuthor, postId: self.postId)
+        AuthorNameView(name: self.postAuthor, postId: self.postId, authorType: self.postAuthorType)
             .frame(width: 100, alignment: .trailing)
             .help(self.postAuthor)
         
@@ -61,7 +62,7 @@ struct macOSPostPreviewView: View {
             .font(.body)
             .fontWeight(postStrength != nil ? PostWeight[postStrength!] : .regular)
             .opacity(postStrength != nil ? postStrength! : 0.75)
-            .foregroundColor(appSessionStore.username.lowercased() == self.postAuthor.lowercased() ? Color(NSColor.systemTeal) : Color.primary)
+            //.foregroundColor(appSessionStore.username.lowercased() == self.postAuthor.lowercased() ? Color(NSColor.systemTeal) : Color.primary)
             .lineLimit(1)
         Spacer()
     }
@@ -69,7 +70,7 @@ struct macOSPostPreviewView: View {
 
 struct macOSPostPreviewView_Previews: PreviewProvider {
     static var previews: some View {
-        macOSPostPreviewView(postId: .constant(0), postAuthor: .constant(""), replyLines: .constant(""), lols: .constant([ChatLols]()), postText: .constant(""), postCategory: .constant("ontopic"), postStrength: .constant(1.0))
+        macOSPostPreviewView(postId: .constant(0), postAuthor: .constant(""), postAuthorType: .constant(.none), replyLines: .constant(""), lols: .constant([ChatLols]()), postText: .constant(""), postCategory: .constant("ontopic"), postStrength: .constant(1.0))
             .environmentObject(AppSessionStore(service: AuthService()))
     }
 }

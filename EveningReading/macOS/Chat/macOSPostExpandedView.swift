@@ -14,6 +14,7 @@ struct macOSPostExpandedView: View {
     @EnvironmentObject var messageStore: MessageStore
     @Binding var postId: Int
     @Binding var postAuthor: String
+    @Binding var postAuthorType: AuthorType
     @Binding var replyLines: String?
     @Binding var lols: [ChatLols]
     @Binding var postText: [RichTextBlock]
@@ -26,7 +27,7 @@ struct macOSPostExpandedView: View {
         VStack(alignment: .leading, spacing: 0) {
             HStack {
                 // Author
-                AuthorNameView(name: self.postAuthor, postId: self.postId, fontWeight: .bold)
+                AuthorNameView(name: self.postAuthor, postId: self.postId, authorType: self.postAuthorType, fontWeight: .bold)
                     .frame(width: 100, alignment: .trailing)
                     .help(self.postAuthor)
                 
@@ -127,7 +128,7 @@ struct macOSPostExpandedView: View {
 
 struct macOSPostExpandedView_Previews: PreviewProvider {
     static var previews: some View {
-        macOSPostExpandedView(postId: .constant(0), postAuthor: .constant(""), replyLines: .constant(""), lols: .constant([ChatLols]()), postText: .constant([RichTextBlock]()), postDate: .constant("1/1/2020"))
+        macOSPostExpandedView(postId: .constant(0), postAuthor: .constant(""), postAuthorType: .constant(.none), replyLines: .constant(""), lols: .constant([ChatLols]()), postText: .constant([RichTextBlock]()), postDate: .constant("1/1/2020"))
             .environmentObject(AppSessionStore(service: AuthService()))
             .environmentObject(ChatStore(service: ChatService()))
     }
