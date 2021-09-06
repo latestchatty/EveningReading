@@ -83,6 +83,7 @@ struct EveningReadingApp: App {
                 .environmentObject(messageStore)
                 .environmentObject(viewedPostsService)
                 .lineSpacing(4 + (FontSettings.instance.fontOffset * 0.25))
+                .preferredColorScheme(.dark)
         }
         .commands {
             CommandGroup(after: CommandGroupPlacement.toolbar) {
