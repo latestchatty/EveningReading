@@ -32,7 +32,7 @@ struct macOSPostPreviewView: View {
         Text(self.replyLines == nil ? String(repeating: " ", count: 5) : self.replyLines!)
             .lineLimit(1)
             .fixedSize()
-            .font(.custom("replylines", size: 25 + FontSettings.getFontOffset(), relativeTo: .callout))
+            .font(.custom("replylines", size: 25 + FontSettings.instance.fontOffset, relativeTo: .callout))
             .foregroundColor(self.viewedPostsStore.viewedPosts.contains(self.postId) ? Color.gray : Color.accentColor)
         
         // Category (rarely)

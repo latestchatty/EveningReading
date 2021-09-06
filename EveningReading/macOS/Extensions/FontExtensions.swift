@@ -16,14 +16,17 @@ import SwiftUI
 
 //TODO: Make changes apply immediately instead of waiting for repaint.
 public class FontSettings {
-    public static func getFontOffset() -> CGFloat {
-        let def = UserDefaults.standard
-        return CGFloat(def.float(forKey: "FontSizeOffset"))
+    public static var instance: FontSettings = FontSettings()
+            
+    @Published var fontOffset: CGFloat {
+        willSet {
+            let def = UserDefaults.standard
+            def.set(max(min(newValue, 12), -4), forKey: "FontSizeOffset")
+        }
     }
     
-    public static func setFontOffset(_ offset: CGFloat) {
-        let def = UserDefaults.standard
-        def.set(max(min(offset, 12), -4), forKey: "FontSizeOffset")
+    private init () {
+        self.fontOffset = CGFloat(UserDefaults.standard.float(forKey: "FontSizeOffset"))
     }
 }
 
@@ -32,57 +35,57 @@ extension Font {
     /// Create a font with the large title text style.
     public static var largeTitle: Font {
         
-        return Font.custom("SF Pro", size: 32.0 + FontSettings.getFontOffset(), relativeTo: .largeTitle)
+        return Font.custom("SF Pro", size: 32.0 + FontSettings.instance.fontOffset, relativeTo: .largeTitle)
     }
 
     /// Create a font with the title text style.
     public static var title: Font {
-        return Font.custom("SF Pro", size: 26.0 + FontSettings.getFontOffset(), relativeTo: .title)
+        return Font.custom("SF Pro", size: 26.0 + FontSettings.instance.fontOffset, relativeTo: .title)
     }
     
     /// Create a font with the title text style.
     public static var title2: Font {
-        return Font.custom("SF Pro", size: 20.0 + FontSettings.getFontOffset(), relativeTo: .title2)
+        return Font.custom("SF Pro", size: 20.0 + FontSettings.instance.fontOffset, relativeTo: .title2)
     }
     
     /// Create a font with the title text style.
     public static var title3: Font {
-        return Font.custom("SF Pro", size: 18.0 + FontSettings.getFontOffset(), relativeTo: .title3)
+        return Font.custom("SF Pro", size: 18.0 + FontSettings.instance.fontOffset, relativeTo: .title3)
     }
 
     /// Create a font with the headline text style.
     public static var headline: Font {
-        return Font.custom("SF Pro", size: 15.0 + FontSettings.getFontOffset(), relativeTo: .headline)
+        return Font.custom("SF Pro", size: 15.0 + FontSettings.instance.fontOffset, relativeTo: .headline)
     }
 
     /// Create a font with the subheadline text style.
     public static var subheadline: Font {
-        return Font.custom("SF Pro", size: 13.0 + FontSettings.getFontOffset(), relativeTo: .subheadline)
+        return Font.custom("SF Pro", size: 13.0 + FontSettings.instance.fontOffset, relativeTo: .subheadline)
     }
 
     /// Create a font with the body text style.
     public static var body: Font {
-        return Font.custom("SF Pro", size: 15.0 + FontSettings.getFontOffset(), relativeTo: .body)
+        return Font.custom("SF Pro", size: 15.0 + FontSettings.instance.fontOffset, relativeTo: .body)
        }
 
     /// Create a font with the callout text style.
     public static var callout: Font {
-        return Font.custom("SF Pro", size: 14.0 + FontSettings.getFontOffset(), relativeTo: .callout)
+        return Font.custom("SF Pro", size: 14.0 + FontSettings.instance.fontOffset, relativeTo: .callout)
        }
 
     /// Create a font with the footnote text style.
     public static var footnote: Font {
-        return Font.custom("SF Pro", size: 12.0 + FontSettings.getFontOffset(), relativeTo: .footnote)
+        return Font.custom("SF Pro", size: 12.0 + FontSettings.instance.fontOffset, relativeTo: .footnote)
        }
 
     /// Create a font with the caption text style.
     public static var caption: Font {
-        return Font.custom("SF Pro", size: 11.0 + FontSettings.getFontOffset(), relativeTo: .caption)
+        return Font.custom("SF Pro", size: 11.0 + FontSettings.instance.fontOffset, relativeTo: .caption)
        }
 
     /// Create a font with the caption2 text style.
     public static var caption2: Font {
-        return Font.custom("SF Pro", size: 11.0 + FontSettings.getFontOffset(), relativeTo: .caption2)
+        return Font.custom("SF Pro", size: 11.0 + FontSettings.instance.fontOffset, relativeTo: .caption2)
        }
     
     public static func system(size: CGFloat, weight: Font.Weight = .regular, design: Font.Design = .default) -> Font {

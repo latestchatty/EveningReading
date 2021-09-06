@@ -82,22 +82,22 @@ struct EveningReadingApp: App {
                 .environmentObject(articleStore)
                 .environmentObject(messageStore)
                 .environmentObject(viewedPostsService)
-                .lineSpacing(4 + (FontSettings.getFontOffset() * 0.25))
+                .lineSpacing(4 + (FontSettings.instance.fontOffset * 0.25))
         }
         .commands {
             CommandGroup(after: CommandGroupPlacement.toolbar) {
                 Button("Increase font size") {
-                    FontSettings.setFontOffset(FontSettings.getFontOffset() + 1)
+                    FontSettings.instance.fontOffset = FontSettings.instance.fontOffset + 1
                 }
                 .keyboardShortcut("+", modifiers: [.command])
                 
                 Button("Decrease font size") {
-                    FontSettings.setFontOffset(FontSettings.getFontOffset() - 1)
+                    FontSettings.instance.fontOffset = FontSettings.instance.fontOffset - 1
                 }
                 .keyboardShortcut("-", modifiers: [.command])
                 
                 Button("Reset font size") {
-                    FontSettings.setFontOffset(0)
+                    FontSettings.instance.fontOffset = 0
                 }
                 .keyboardShortcut("0", modifiers: [.command])
             }
