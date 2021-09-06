@@ -17,16 +17,21 @@ import SwiftUI
 //TODO: Make changes apply immediately instead of waiting for repaint.
 public class FontSettings {
     public static var instance: FontSettings = FontSettings()
-            
-    @Published var fontOffset: CGFloat {
-        willSet {
+           
+    private var _fontOffset: CGFloat
+    
+    public var fontOffset: CGFloat {
+        get { return _fontOffset }
+        set {
             let def = UserDefaults.standard
-            def.set(max(min(newValue, 12), -4), forKey: "FontSizeOffset")
+            let sanitized = max(min(newValue, 12), -4)
+            def.set(sanitized, forKey: "FontSizeOffset")
+            _fontOffset = sanitized
         }
     }
     
     private init () {
-        self.fontOffset = CGFloat(UserDefaults.standard.float(forKey: "FontSizeOffset"))
+        self._fontOffset = CGFloat(UserDefaults.standard.float(forKey: "FontSizeOffset"))
     }
 }
 

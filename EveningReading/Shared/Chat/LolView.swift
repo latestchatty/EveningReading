@@ -98,7 +98,7 @@ struct LolView: View {
                 Text(self.lols.filter({$0.count > 0}).count > 0 ? "A" : " ") // 'A' is a tag
                     .lineLimit(1)
                     .fixedSize()
-                    .font(.custom("tags", size: 8, relativeTo: .caption))
+                    .font(.custom("tags", size: 8 + FontSettings.instance.fontOffset, relativeTo: .caption))
                     .foregroundColor(getRollupColor(lols: self.lols))
                     .contextMenu {
                         if self.lols.count > 0 {
@@ -155,7 +155,7 @@ struct LolView: View {
                             Text("A") // 'A' is a tag
                                 .lineLimit(1)
                                 .fixedSize()
-                                .font(.custom("tags", size: 8, relativeTo: .caption))
+                                .font(.custom("tags", size: 8 + FontSettings.instance.fontOffset, relativeTo: .caption))
                                 .padding(EdgeInsets(top: 3, leading: -5, bottom: 0, trailing: 0))
                                 .foregroundColor(PostTagColor[lol.tag])
                         }
