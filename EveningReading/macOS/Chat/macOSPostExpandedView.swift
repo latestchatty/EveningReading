@@ -102,6 +102,7 @@ struct macOSPostExpandedView: View {
                     }
                     if (showReply) {
                         macOSComposeView(postId: self.postId)
+                            .padding(.top, 8)
                     }
                     
                 }
