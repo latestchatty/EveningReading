@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct macOSPostExpandedView: View {
-    @EnvironmentObject var appSessionStore: AppSessionStore
-    @EnvironmentObject var chatStore: ChatStore
-    @EnvironmentObject var viewedPostsStore: ViewedPostsStore
-    @EnvironmentObject var messageStore: MessageStore
+    @EnvironmentObject private var appSessionStore: AppSessionStore
+    @EnvironmentObject private var chatStore: ChatStore
+    @EnvironmentObject private var viewedPostsStore: ViewedPostsStore
+    @EnvironmentObject private var messageStore: MessageStore
     @Binding var postId: Int
     @Binding var postAuthor: String
     @Binding var postAuthorType: AuthorType
@@ -19,38 +19,55 @@ struct macOSPostExpandedView: View {
     @Binding var lols: [ChatLols]
     @Binding var postText: [RichTextBlock]
     @Binding var postDate: String
-    @State var showReply = false
-    @State var selectedTag: String = ""
-    @State var showReportPost = false
+    var isRootPost = false
+    @State private var showReply = false
+    @State private var selectedTag: String = ""
+    @State private var showReportPost = false
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            HStack {
-                // Author
-                AuthorNameView(name: self.postAuthor, postId: self.postId, authorType: self.postAuthorType, fontWeight: .bold)
-                    .frame(width: 100, alignment: .trailing)
-                    .help(self.postAuthor)
-                
-                Text("")
-                    .frame(width: 10)
-                
-                // Reply lines
-                Text(self.replyLines == nil ? String(repeating: " ", count: 5) : self.replyLines!)
-                    .lineLimit(1)
-                    .fixedSize()
-                    .font(.custom("replylines", size: 25 + FontSettings.instance.fontOffset, relativeTo: .callout))
-                    .foregroundColor(Color.gray)
-                
-                HStack {
-                    Text(self.postDate.getTimeAgo())
-                        .foregroundColor(Color.gray)
-                        .padding(.leading, 8)
-                        .help(self.postDate.postTimestamp())
-                    Spacer()
+            VStack {
+                if isRootPost {
+                    Spacer().frame(height: 8)
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .cornerRadius(tl: 8, tr: 8, bl: 0, br: 0, color: Color("ThreadBubblePrimary"))
+                HStack {
+                    // Author
+                    AuthorNameView(name: self.postAuthor, postId: self.postId, authorType: self.postAuthorType, fontWeight: .bold)
+                        .frame(width: 100, alignment: .trailing)
+                        .help(self.postAuthor)
+                    
+                    if !isRootPost {
+                        Text("")
+                            .frame(width: 10)
+                        
+                        // Reply lines
+                        Text(self.replyLines == nil ? String(repeating: " ", count: 5) : self.replyLines!)
+                            .lineLimit(1)
+                            .fixedSize()
+                            .font(.custom("replylines", size: 25 + FontSettings.instance.fontOffset, relativeTo: .callout))
+                            .foregroundColor(Color.gray)
+                    }
+                    
+                    HStack {
+                        if self.isRootPost {
+                            Text("\(self.postDate.getTimeRemaining()) left")
+                                .foregroundColor(Color.gray)
+                                .font(.body)
+                                .help(self.postDate.postTimestamp())
+                        } else {
+                            Text(self.postDate.getTimeAgo())
+                                .foregroundColor(Color.gray)
+                                .padding(.leading, 8)
+                                .help(self.postDate.postTimestamp())
+                        }
+                        Spacer()
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .cornerRadius(tl: 8, tr: 8, bl: 0, br: 0, color: Color("ThreadBubblePrimary"), disabled: isRootPost)
+                    .cornerRadius(tl: 0, tr: 8, bl: 0, br: 0, color: Color("ThreadBubblePrimary"), disabled: !isRootPost)
+                }
             }
+            .cornerRadius(tl: 8, tr: 8, bl: 0, br: 0, color: Color("ThreadBubblePrimary"), disabled: !isRootPost)
             
             HStack {
                 VStack (alignment: .leading) {
@@ -97,7 +114,7 @@ struct macOSPostExpandedView: View {
                                 })
                                 .buttonStyle(BorderlessButtonStyle())
                                 .help("Reply to post")
-                                .keyboardShortcut("r", modifiers: [.command])
+                                .keyboardShortcut("r", modifiers: isRootPost ? [.command, .option] : [.command])
                             }
                         }
                     }
@@ -117,7 +134,8 @@ struct macOSPostExpandedView: View {
             }
             .padding(8)
             .frame(maxWidth: .infinity)
-            .cornerRadius(tl: 8, tr: 0, bl: 8, br: 8, color: Color("ThreadBubblePrimary"))
+            .cornerRadius(tl: 8, tr: 0, bl: 8, br: 8, color: Color("ThreadBubblePrimary"), disabled: isRootPost)
+            .cornerRadius(tl: 0, tr: 0, bl: 8, br: 8, color: Color("ThreadBubblePrimary"), disabled: !isRootPost)
         }
         .padding(0)
         .onAppear(perform: {

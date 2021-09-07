@@ -146,78 +146,9 @@ struct macOSThreadView: View {
                         .padding(.top, 10)
                     } else {
                         // Root post
-                        VStack (alignment: .leading) {
-                            HStack {
-                                AuthorNameView(name: self.rootPostAuthor, postId: self.threadId, authorType: self.rootPostAuthorType)
-                                    .frame(width: 100, alignment: .trailing)
-                                    .help(self.rootPostAuthor)
-
-                                Text("\(self.rootPostDate.getTimeRemaining()) left")
-                                    .foregroundColor(Color.gray)
-                                    .font(.body)
-                                    .help(self.rootPostDate.postTimestamp())
-
-                                Spacer()
-                            }
+                        macOSPostExpandedView(postId: self.$threadId, postAuthor: self.$rootPostAuthor, postAuthorType: self.$rootPostAuthorType, replyLines: .constant(""), lols: self.$rootPostLols, postText: self.$rootPostRichText, postDate: self.$rootPostDate, isRootPost: true)
                             .padding(.horizontal, 10)
                             .padding(.top, 10)
-                            .padding(.bottom, 8)
-
-                            // Root post body
-                            VStack (alignment: .leading) {
-                                RichTextView(topBlocks: self.rootPostRichText)
-                                    .fixedSize(horizontal: false, vertical: true)
-                            }
-                            .padding(.horizontal, 10)
-                            .padding(.bottom, 8)
-                            HStack {
-                                if appSessionStore.isSignedIn {
-                                    TagPostButton(postId: self.threadId)
-                                        .padding(.trailing, 8)
-                                }
-
-                                LolView(lols: self.rootPostLols, expanded: true, postId: self.threadId)
-
-                                Spacer()
-
-                                macOSReportPostView(postId: self.threadId, postAuthor: self.rootPostAuthor, showReportPost: self.$showReportPost)
-
-                                Button(action: {
-                                    NSPasteboard.general.clearContents()
-                                    NSPasteboard.general.setString("https://www.shacknews.com/chatty?id=\(self.threadId)#item_\(self.threadId)", forType: .URL)
-                                }, label: {
-                                    Image(systemName: "link")
-                                        .imageScale(.large)
-                                })
-                                .buttonStyle(BorderlessButtonStyle())
-                                .foregroundColor(Color.primary)
-                                .help("Copy link to post")
-
-                                if appSessionStore.isSignedIn {
-                                    Button(action: {
-                                        showRootReply = !showRootReply
-                                    }, label: {
-                                        Image(systemName: "arrowshape.turn.up.left")
-                                            .imageScale(.large)
-                                            .foregroundColor(showRootReply ? Color.accentColor : Color.primary)
-                                    })
-                                    .buttonStyle(BorderlessButtonStyle())
-                                    .help("Reply to post")
-                                    .keyboardShortcut("r", modifiers: [.command, .option])
-                                }
-                            }
-                            .padding(.horizontal, 10)
-                            .padding(.bottom, showRootReply ? 8 : 10)
-                            if (showRootReply) {
-                                macOSComposeView(postId: self.threadId)
-                                    .padding(.horizontal, 10)
-                                    .padding(.bottom, 10)
-                            }
-                        }
-                        .frame(maxWidth: .infinity)
-                        .background(Color("ThreadBubblePrimary"))
-                        .cornerRadius(10)
-                        .padding(.horizontal, 10)
                         
                         // Replies
                         VStack {

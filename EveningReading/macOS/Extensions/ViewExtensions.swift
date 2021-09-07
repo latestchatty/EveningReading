@@ -48,7 +48,12 @@ private struct RoundedCorners: Shape {
 }
 
 extension View {
-    func cornerRadius(tl: CGFloat, tr: CGFloat, bl: CGFloat, br: CGFloat, color: Color) -> some View {
-        self.background(RoundedCorners(tl: tl, tr: tr, bl: bl, br: br).fill(color))
+    @ViewBuilder
+    func cornerRadius(tl: CGFloat, tr: CGFloat, bl: CGFloat, br: CGFloat, color: Color, disabled: Bool = false) -> some View {
+        if !disabled {
+            self.background(RoundedCorners(tl: tl, tr: tr, bl: bl, br: br).fill(color))
+        } else {
+            self
+        }
     }
 }

@@ -40,7 +40,6 @@ struct macOSTextPromptSheet<Label>: View where Label : View {
                             Image(systemName: "xmark")
                         }
                         .buttonStyle(BorderlessButtonStyle())
-                        .padding()
                         .keyboardShortcut(.cancelAction)
                         
                         Text(title)
