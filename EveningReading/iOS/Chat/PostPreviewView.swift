@@ -10,6 +10,7 @@ import SwiftUI
 struct PostPreviewView: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var viewedPostsStore: ViewedPostsStore
     
     var username: String
     var postId: Int
@@ -18,6 +19,7 @@ struct PostPreviewView: View {
     var postCategory: String
     var postStrength: Double?
     var postAuthor: String
+    var postAuthorType: AuthorType
     var postLols: [ChatLols]
     
     var body: some View {
@@ -27,7 +29,7 @@ struct PostPreviewView: View {
                 .lineLimit(1)
                 .fixedSize()
                 .font(.custom("replylines", size: 25, relativeTo: .callout))
-                .foregroundColor(Color("replyLines"))
+                .foregroundColor(self.viewedPostsStore.viewedPosts.contains(self.postId) ? Color("replyLines") : Color.blue)
             
             // Rarely a post category is set on a reply
             if self.postCategory == "nws" {
@@ -72,7 +74,7 @@ struct PostPreviewView: View {
                     .fixedSize()
             }
             else if self.appSessionStore.displayPostAuthor {
-                AuthorNameView(name: postAuthor, postId: postId)
+                AuthorNameView(name: postAuthor, postId: postId, authorType: postAuthorType)
             }
             
             
@@ -84,7 +86,7 @@ struct PostPreviewView: View {
 
 struct PostPreviewView_Previews: PreviewProvider {
     static var previews: some View {
-        PostPreviewView(username: "aenean", postId: 0, postBody: "This is a post.", replyLines: "A", postCategory: "ontopic", postStrength: 0.75, postAuthor: "aenean", postLols: [ChatLols]())
+        PostPreviewView(username: "aenean", postId: 0, postBody: "This is a post.", replyLines: "A", postCategory: "ontopic", postStrength: 0.75, postAuthor: "aenean", postAuthorType: .none, postLols: [ChatLols]())
             .environment(\.colorScheme, .dark)
             .environmentObject(AppSessionStore(service: AuthService()))
     }

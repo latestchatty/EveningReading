@@ -10,6 +10,9 @@
 		6C62711F17327536D58ECCBE /* UserUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C627492D0ECC927EB7B7770 /* UserUtils.swift */; };
 		6C6279E556E7B79449D38738 /* UserUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C627492D0ECC927EB7B7770 /* UserUtils.swift */; };
 		6C627BA6F731AFB8CE89080B /* UserUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C627492D0ECC927EB7B7770 /* UserUtils.swift */; };
+		7D12C55026E8675200446F64 /* Gzip in Frameworks */ = {isa = PBXBuildFile; productRef = 7D12C54F26E8675200446F64 /* Gzip */; };
+		7D12C55126E86A9400446F64 /* ViewedPostsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4815EE26D89F7400247927 /* ViewedPostsService.swift */; };
+		7D12C55326E86A9D00446F64 /* Gzip in Frameworks */ = {isa = PBXBuildFile; productRef = 7D12C55226E86A9D00446F64 /* Gzip */; };
 		7D2A859926E51B1D008C4833 /* macOSTextPromptSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D2A859826E51B1D008C4833 /* macOSTextPromptSheet.swift */; };
 		7D2A859B26E5619C008C4833 /* macOSReportPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D2A859A26E5619C008C4833 /* macOSReportPostView.swift */; };
 		7D2CB0EB26CF7C5C00C87611 /* BlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA195626464FBC00556E69 /* BlurView.swift */; };
@@ -444,6 +447,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7D12C55026E8675200446F64 /* Gzip in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -459,12 +463,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7D12C55326E86A9D00446F64 /* Gzip in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7D12C54E26E8675200446F64 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		7D2CB0EA26CF797000C87611 /* LoadingView */ = {
 			isa = PBXGroup;
 			children = (
@@ -498,6 +510,7 @@
 				833980A2263C41CE005614E8 /* EveningReading */,
 				833980AE263C41CF005614E8 /* EveningReading Extension */,
 				833817872639AC18007A8B28 /* Products */,
+				7D12C54E26E8675200446F64 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1132,6 +1145,9 @@
 				833980C1263C41D0005614E8 /* PBXTargetDependency */,
 			);
 			name = "EveningReading (iOS)";
+			packageProductDependencies = (
+				7D12C54F26E8675200446F64 /* Gzip */,
+			);
 			productName = "EveningReading (iOS)";
 			productReference = 833817862639AC18007A8B28 /* EveningReading.app */;
 			productType = "com.apple.product-type.application";
@@ -1186,6 +1202,9 @@
 			dependencies = (
 			);
 			name = "EveningReading Extension";
+			packageProductDependencies = (
+				7D12C55226E86A9D00446F64 /* Gzip */,
+			);
 			productName = "EveningReading Extension";
 			productReference = 833980AA263C41CF005614E8 /* EveningReading Extension.appex */;
 			productType = "com.apple.product-type.watchkit2-extension";
@@ -1315,6 +1334,7 @@
 				83A85CFF265B1C5E007EBAC3 /* BindingExtensions.swift in Sources */,
 				83A85D48265EC177007EBAC3 /* ShackTagsTextView.swift in Sources */,
 				833EE9CB2644DB2100345A1D /* RichTextView.swift in Sources */,
+				7D4815EF26D89F7400247927 /* ViewedPostsService.swift in Sources */,
 				83AA19782646E49A00556E69 /* ComposePostView.swift in Sources */,
 				83398140263F525F005614E8 /* iPadHomeButton.swift in Sources */,
 				833980D0263C914D005614E8 /* iPadContentView.swift in Sources */,
@@ -1334,7 +1354,6 @@
 				833EE9E226454DFB00345A1D /* WebAuthenticationPresentationModifier.swift in Sources */,
 				833EE9DC26454DF100345A1D /* SafariViewPresenter.swift in Sources */,
 				83AA195F264656BD00556E69 /* KeychainItemAccessibility.swift in Sources */,
-				7D4815EF26D89F7400247927 /* ViewedPostsService.swift in Sources */,
 				83AA19CB2648A3AD00556E69 /* DarkModeViewModifier.swift in Sources */,
 				83A85D4A265EE813007EBAC3 /* TagTextView.swift in Sources */,
 				83398106263F0D38005614E8 /* ChatService.swift in Sources */,
@@ -1495,6 +1514,7 @@
 				83AA193C2645F66500556E69 /* AuthService.swift in Sources */,
 				833981B32641B015005614E8 /* ArrayExtensions.swift in Sources */,
 				833981AC2641A989005614E8 /* PreviewService.swift in Sources */,
+				7D12C55126E86A9400446F64 /* ViewedPostsService.swift in Sources */,
 				833981B52641B426005614E8 /* Globals.swift in Sources */,
 				83AA194E2646353800556E69 /* RedactingView.swift in Sources */,
 				833981A72641A166005614E8 /* AuthorNameView.swift in Sources */,
@@ -1903,6 +1923,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		7D12C54F26E8675200446F64 /* Gzip */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7DAC1C0B26DAD2D4007CEDA7 /* XCRemoteSwiftPackageReference "GzipSwift" */;
+			productName = Gzip;
+		};
+		7D12C55226E86A9D00446F64 /* Gzip */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7DAC1C0B26DAD2D4007CEDA7 /* XCRemoteSwiftPackageReference "GzipSwift" */;
+			productName = Gzip;
+		};
 		7DAC1C0C26DAD2D4007CEDA7 /* Gzip */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 7DAC1C0B26DAD2D4007CEDA7 /* XCRemoteSwiftPackageReference "GzipSwift" */;

@@ -13,6 +13,7 @@ struct ThreadDetailView: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var viewedPostsStore: ViewedPostsStore
         
     @Binding var threadId: Int
     @Binding var postId: Int
@@ -23,6 +24,7 @@ struct ThreadDetailView: View {
 
     @State private var rootPostCategory: String = "ontopic"
     @State private var rootPostAuthor: String = ""
+    @State private var rootPostAuthorType: AuthorType = .none
     @State private var rootPostBody: String = ""
     @State private var rootPostRichText = [RichTextBlock]()
     @State private var rootPostDate: String = "2020-08-14T21:05:00Z"
@@ -113,6 +115,7 @@ struct ThreadDetailView: View {
         if let rootPost = thread.posts.filter({ return $0.parentId == 0 }).first {
             self.rootPostCategory = rootPost.category
             self.rootPostAuthor = rootPost.author
+            self.rootPostAuthorType = rootPost.authorType ?? .none
             self.rootPostBody = rootPost.body
             self.rootPostRichText = RichTextBuilder.getRichText(postBody: self.rootPostBody)
             self.rootPostDate = rootPost.date.postTimestamp()
@@ -239,7 +242,7 @@ struct ThreadDetailView: View {
                     VStack {
                         // Post details
                         HStack (alignment: .center) {
-                            AuthorNameView(name: appSessionStore.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : self.rootPostAuthor, postId: self.threadId)
+                            AuthorNameView(name: appSessionStore.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : self.rootPostAuthor, postId: self.threadId, authorType: self.rootPostAuthorType)
 
                             //ContributedView(contributed: self.contributed)
 
@@ -316,12 +319,12 @@ struct ThreadDetailView: View {
                                     
                                     // Reply preview
                                     if self.selectedPost != post.id {
-                                        PostPreviewView(username: self.username, postId: post.id, postBody: post.body, replyLines: self.replyLines[post.id] == nil ? String(repeating: " ", count: 5) : self.replyLines[post.id]!, postCategory: post.category, postStrength: postStrength[post.id], postAuthor: post.author, postLols: post.lols)
+                                        PostPreviewView(username: self.username, postId: post.id, postBody: post.body, replyLines: self.replyLines[post.id] == nil ? String(repeating: " ", count: 5) : self.replyLines[post.id]!, postCategory: post.category, postStrength: postStrength[post.id], postAuthor: post.author, postAuthorType: post.authorType ?? .none, postLols: post.lols)
                                     }
                                     
                                     // Reply expanded
                                     if self.selectedPost == post.id {
-                                        PostExpandedView(username: self.username, postId: post.id, postBody: post.body, replyLines: self.replyLines[post.id] == nil ? String(repeating: " ", count: 5) : self.replyLines[post.id]!, postCategory: post.category, postStrength: postStrength[post.id], postAuthor: post.author, postLols: post.lols, postRichText: self.selectedPostRichText, postDateTime: post.date)
+                                        PostExpandedView(username: self.username, postId: post.id, postBody: post.body, replyLines: self.replyLines[post.id] == nil ? String(repeating: " ", count: 5) : self.replyLines[post.id]!, postCategory: post.category, postStrength: postStrength[post.id], postAuthor: post.author, postAuthorType: post.authorType ?? .none, postLols: post.lols, postRichText: self.selectedPostRichText, postDateTime: post.date)
                                     }
                                     
                                 }
@@ -447,6 +450,10 @@ struct ThreadDetailView: View {
         
         // Stop posting, refreshing or tagging
         .onDisappear {
+            let thread = self.chatStore.threads.first(where: {$0.threadId == self.threadId})
+            if thread != nil {
+                self.viewedPostsStore.markThreadViewed(thread: thread!)
+            }
             self.postList = [ChatPosts]()
             self.postStrength = [Int: Double]()
             self.chatStore.didSubmitPost = false

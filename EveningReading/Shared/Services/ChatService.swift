@@ -442,8 +442,26 @@ class ChatService {
             } else {
                 do {
                     let data = data ?? Data()
-                    let response = try self?.decoder.decode(Chat.self, from: data)
-                    handler(.success(response?.threads ?? []))
+                    let username = UserUtils.getUserName()
+                    var response = try self?.decoder.decode(Chat.self, from: data).threads ?? []
+                    for t in response.enumerated() {
+                        let threadAuthor = t.element.posts.first(where: {$0.parentId == 0})!.author.lowercased()
+                        
+                        for p in t.element.posts.enumerated() {
+                            let post = p.element
+                            let postAuthor = post.author.lowercased()
+                            if postAuthor == threadAuthor && post.parentId != 0 {
+                                response[t.offset].posts[p.offset].authorType = .threadOp
+                            } else if postAuthor == username {
+                                response[t.offset].posts[p.offset].authorType = .owner
+                            } else if postAuthor == "shacknews" {
+                                response[t.offset].posts[p.offset].authorType = .shacknews
+                            } else {
+                                response[t.offset].posts[p.offset].authorType = AuthorType.none
+                            }
+                        }
+                    }
+                    handler(.success(response))
                 } catch {
                     handler(.failure(error))
                 }
@@ -488,7 +506,8 @@ class ChatStore: ObservableObject {
                 #if os(iOS)
                 // Delay long enough for the pull to refresh animation to complete...
                 DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
-                    self.getChat()
+                    //TODO: Re-enable. Store isn't available in the service.
+                    //self.getChat()
                 }
                 #endif
             }
@@ -518,6 +537,7 @@ class ChatStore: ObservableObject {
         self.threads = []
         self.gettingChat = true
         #endif
+        viewedPostsStore.syncViewedPosts()
         service.getChat(viewedPostsStore: viewedPostsStore) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {

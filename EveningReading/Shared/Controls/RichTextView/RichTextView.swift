@@ -472,18 +472,35 @@ struct TextBlockView: View {
 }
 
 class ImageLoader: ObservableObject {
+    #if os(macOS)
     @Published var image: NSImage?
+    #else
+    @Published var image: UIImage?
+    #endif
     @Published var isLoading = false
     
     func loadImage(with url: URL) {
         DispatchQueue.global(qos: .background).async { [weak self] in
             guard let self = self else { return }
             DispatchQueue.main.async { self.isLoading = true }
+            #if os(macOS)
             let image = NSImage(byReferencing: url)
             DispatchQueue.main.async { [weak self] in
                 self?.image = image
                 self?.isLoading = false
             }
+            #else
+            //TODO: Apparently this will block the UI so it's not good.
+            // URLSession dataTask is better.
+            do {
+                let data = try Data(contentsOf: url)
+                let image = UIImage(data: data)
+                DispatchQueue.main.async { [weak self] in
+                    self?.image = image
+                    self?.isLoading = false
+                }
+            } catch{}
+            #endif
         }
     }
 }

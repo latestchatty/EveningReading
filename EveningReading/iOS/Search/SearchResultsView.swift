@@ -53,7 +53,7 @@ struct SearchResultsView: View {
                                         
                                         // AUthor and time ago
                                         HStack (alignment: .center) {
-                                            AuthorNameView(name: post.author, postId: post.id)
+                                            AuthorNameView(name: post.author, postId: post.id, authorType: .none)
                                             
                                             Spacer()
                                             

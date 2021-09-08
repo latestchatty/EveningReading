@@ -10,6 +10,7 @@ import SwiftUI
 struct TrendingView: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var viewedPostsStore: ViewedPostsStore
     
     @State private var showPlaceholder = true
     @State private var selectedThreadId: Int? = 0
@@ -26,7 +27,8 @@ struct TrendingView: View {
         {
             return
         }
-        chatStore.getChat()
+        self.viewedPostsStore.getViewedPosts()
+        self.chatStore.getChat(viewedPostsStore: self.viewedPostsStore)
     }
     
     private func filteredThreads() -> [ChatThread] {

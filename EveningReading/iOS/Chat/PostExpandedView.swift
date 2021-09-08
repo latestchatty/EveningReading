@@ -10,6 +10,7 @@ import SwiftUI
 struct PostExpandedView: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var viewedPostsStore: ViewedPostsStore
     
     var username: String
     var postId: Int
@@ -18,6 +19,7 @@ struct PostExpandedView: View {
     var postCategory: String
     var postStrength: Double?
     var postAuthor: String
+    var postAuthorType: AuthorType
     var postLols: [ChatLols]
     var postRichText = [RichTextBlock]()
     var postDateTime: String
@@ -33,7 +35,7 @@ struct PostExpandedView: View {
                     .foregroundColor(Color("replyLines"))
                 
                 // Author name
-                AuthorNameView(name: appSessionStore.blockedAuthors.contains(self.postAuthor) ? "[blocked]" : self.postAuthor, postId: self.postId)
+                AuthorNameView(name: appSessionStore.blockedAuthors.contains(self.postAuthor) ? "[blocked]" : self.postAuthor, postId: self.postId, authorType: self.postAuthorType)
                 
                 Spacer()
                 
@@ -78,12 +80,15 @@ struct PostExpandedView: View {
             .background(RoundedCornersView(color: Color("ChatBubbleSecondary")))
             .padding(.bottom, 5)
         }
+        .onAppear(perform: {
+            self.viewedPostsStore.markPostViewed(postId: self.postId)
+        })
     }
 }
 
 struct PostExpandedView_Previews: PreviewProvider {
     static var previews: some View {
-        PostExpandedView(username: "aenean", postId: 0, postBody: "This is a post.", replyLines: "A", postCategory: "ontopic", postStrength: 0.75, postAuthor: "aenean", postLols: [ChatLols](), postRichText: [RichTextBlock](), postDateTime: "2020-08-14T21:05:00Z")
+        PostExpandedView(username: "aenean", postId: 0, postBody: "This is a post.", replyLines: "A", postCategory: "ontopic", postStrength: 0.75, postAuthor: "aenean", postAuthorType: .none, postLols: [ChatLols](), postRichText: [RichTextBlock](), postDateTime: "2020-08-14T21:05:00Z")
         .environment(\.colorScheme, .dark)
         .environmentObject(AppSessionStore(service: AuthService()))
     }

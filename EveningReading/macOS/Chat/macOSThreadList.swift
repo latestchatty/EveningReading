@@ -75,7 +75,6 @@ struct macOSThreadList: View {
                     }
                     chatStore.activeThreadId = 0
                     chatStore.activePostId = 0
-                    viewedPostsStore.syncViewedPosts()
                     chatStore.getChat(viewedPostsStore: self.viewedPostsStore)
                 }, label: {
                     Image(systemName: "arrow.counterclockwise")

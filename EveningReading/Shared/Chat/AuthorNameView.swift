@@ -33,24 +33,48 @@ struct AuthorNameView: View {
     #endif
     
     private func getAuthorColor(type: AuthorType) -> Color {
-        #if os(iOS)
-        return Color(UIColor.systemOrange)
-        #elseif os(watchOS)
-        return Color(Color.orange)
-        #elseif os(OSX)
+//        #if os(iOS)
+//        return Color(UIColor.systemOrange)
+//        #elseif os(watchOS)
+//        return Color.orange
+//        #elseif os(OSX)
         var color: Color
         switch type {
         case .owner:
+            #if os(macOS)
             color = Color(NSColor.systemBlue)
+            #elseif os(iOS)
+            color = Color(UIColor.systemBlue)
+            #elseif os(watchOS)
+            color = Color.blue
+            #endif
         case .shacknews:
+            #if os(macOS)
             color = Color(NSColor.systemPurple)
+            #elseif os(iOS)
+            color = Color(UIColor.systemPurple)
+            #elseif os(watchOS)
+            color = Color.purple
+            #endif
         case .threadOp:
+            #if os(macOS)
             color = Color(NSColor.systemGreen)
+            #elseif os(iOS)
+            color = Color(UIColor.systemGreen)
+            #elseif os(watchOS)
+            color = Color.green
+            #endif
         default:
+            #if os(macOS)
             color = colorScheme == .dark ? Color(NSColor.systemOrange) : Color(NSColor.systemPurple)
+            #elseif os(iOS)
+            color = Color(UIColor.systemOrange)
+            #elseif os(watchOS)
+            color = Color.orange
+            #endif
         }
         return color
-        #endif
+//        #endif
     }
     
     var body: some View {

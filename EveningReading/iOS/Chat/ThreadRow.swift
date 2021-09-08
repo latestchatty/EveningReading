@@ -10,17 +10,21 @@ import SwiftUI
 struct ThreadRow: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var viewedPostsStore: ViewedPostsStore
 
     @Binding var threadId: Int
     @Binding var activeThreadId: Int
 
     @State private var rootPostCategory: String = "ontopic"
     @State private var rootPostAuthor: String = ""
+    @State private var rootPostAuthorType: AuthorType = .none
     @State private var rootPostBodyPreview: String = ""
     @State private var rootPostBody: String = ""
     @State private var rootPostDate: String = "2020-08-14T21:05:00Z"
     @State private var rootPostLols: [ChatLols] = [ChatLols]()
     @State private var contributed: Bool = false
+    @State private var hasUnreadRepliesToAuthor: Bool = false
+    @State private var hasUnreadPosts: Bool = false
     @State private var replyCount: Int = 0
     @State private var lolTypeCount: Int = 0
 
@@ -43,6 +47,8 @@ struct ThreadRow: View {
             if let currentThread = chatStore.threads.filter({ return $0.threadId == self.threadId }).first {
                 setThreadData(currentThread)
                 self.contributed = PostDecorator.checkParticipatedStatus(thread: currentThread, author: self.rootPostAuthor)
+                self.hasUnreadRepliesToAuthor = PostDecorator.checkUnreadReplies(thread: currentThread, viewedPostsStore: self.viewedPostsStore)
+                self.hasUnreadPosts = currentThread.posts.filter({ return !self.viewedPostsStore.isPostViewed(postId: $0.id) }).count > 0
             }
         }
     }
@@ -51,6 +57,7 @@ struct ThreadRow: View {
         if let rootPost = currentThread.posts.filter({ return $0.parentId == 0 }).first {
             self.rootPostCategory = rootPost.category
             self.rootPostAuthor = rootPost.author
+            self.rootPostAuthorType = rootPost.authorType ?? .none
             self.rootPostBodyPreview = rootPost.body.getPreview
             self.rootPostBody = rootPost.body
             self.rootPostDate = rootPost.date
@@ -101,9 +108,11 @@ struct ThreadRow: View {
                     
                     NewMessageView(showingNewMessageSheet: self.$showingNewMessageView, messageId: Binding.constant(0), recipientName: self.$messageRecipient, subjectText: self.$messageSubject, bodyText: self.$messageBody)
                     
-                    AuthorNameView(name: appSessionStore.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : self.rootPostAuthor, postId: self.threadId)
+                    AuthorNameView(name: appSessionStore.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : self.rootPostAuthor, postId: self.threadId, authorType: self.rootPostAuthorType)
 
                     ContributedView(contributed: self.contributed)
+                    
+                    UnreadRepliesView(hasUnreadReplies: self.hasUnreadRepliesToAuthor)
 
                     Spacer()
 
@@ -120,7 +129,7 @@ struct ThreadRow: View {
                     HStack (alignment: .top) {
                         Text(appSessionStore.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : rootPostBodyPreview)
                             .font(.callout)
-                            .foregroundColor(Color(UIColor.label))
+                            .foregroundColor(self.hasUnreadPosts ? Color(UIColor.label) : Color(UIColor.systemGray))
                             .lineLimit(appSessionStore.abbreviateThreads ? 3 : 8)
                             .frame(minHeight: 30)
                             .padding(10)

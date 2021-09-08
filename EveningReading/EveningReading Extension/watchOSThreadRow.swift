@@ -16,6 +16,7 @@ struct watchOSThreadRow: View {
     @State private var categoryWidth: CGFloat = 3
     @State private var rootPostCategory: String = "ontopic"
     @State private var rootPostAuthor: String = ""
+    @State private var rootPostAuthorType: AuthorType = .none
     @State private var rootPostBodyPreview: String = ""
     @State private var rootPostDate: String = "2020-08-14T21:05:00Z"
     @State private var rootPostLols: [ChatLols] = [ChatLols]()
@@ -42,6 +43,7 @@ struct watchOSThreadRow: View {
         let rootPost = thread.posts.filter({ return $0.parentId == 0 }).first
         self.rootPostCategory = rootPost?.category ?? "ontopic"
         self.rootPostAuthor = rootPost?.author ?? ""
+        self.rootPostAuthorType = rootPost?.authorType ?? .none
         self.rootPostBodyPreview = rootPost?.body.getPreview ?? ""
         self.rootPostDate = rootPost?.date ?? "2020-08-14T21:05:00Z"
         self.replyCount = thread.posts.count - 1
@@ -61,7 +63,7 @@ struct watchOSThreadRow: View {
                 VStack (alignment: .leading) {
                     // Thread details
                     HStack {
-                        AuthorNameView(name: appSessionStore.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : self.rootPostAuthor, postId: self.threadId, navLink: true)
+                        AuthorNameView(name: appSessionStore.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : self.rootPostAuthor, postId: self.threadId, navLink: true, authorType: self.rootPostAuthorType)
                         ContributedView(contributed: self.contributed)
                         Spacer()
                         LolView(lols: self.rootPostLols, postId: self.threadId)

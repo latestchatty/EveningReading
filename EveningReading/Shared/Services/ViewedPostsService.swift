@@ -17,12 +17,7 @@ class CloudSetting {
     static func getCloudSetting<T>(settingName: String, defaultValue: T, handler: @escaping (Result<T, Error>) -> Void) where T : Decodable {
         let urlSession = URLSession.shared
         
-        #if os(iOS)
-        let username: String? = KeychainWrapper.standard.string(forKey: "Username")
-        #elseif os(macOS)
-        let defaults = UserDefaults.standard
-        let username = defaults.object(forKey: "Username") as? String ?? ""
-        #endif
+        let username = UserUtils.getUserName()
         
         if username == "" { handler(.success(defaultValue)) }
         
@@ -73,12 +68,7 @@ class CloudSetting {
     static func setCloudSetting<T>(settingName: String, value: T, handler: @escaping (Result<String, Error>) -> Void) where T : Encodable {
         let urlSession = URLSession.shared
         
-        #if os(iOS)
-        let username: String? = KeychainWrapper.standard.string(forKey: "Username")
-        #elseif os(macOS)
-        let defaults = UserDefaults.standard
-        let username = defaults.object(forKey: "Username") as? String ?? ""
-        #endif
+        let username = UserUtils.getUserName()
         
         if username == "" { handler(.success("Username not set")) }
         
@@ -189,6 +179,7 @@ class ViewedPostsStore: ObservableObject {
         if originalCount != self.viewedPosts.count {
             self.dirty = true
         }
+        self.syncViewedPosts()
     }
     
     public func markPostViewed(postId: Int) {

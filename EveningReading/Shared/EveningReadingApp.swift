@@ -46,6 +46,7 @@ struct EveningReadingApp: App {
                     .environmentObject(messageStore)
                     .environmentObject(notifications)
                     .environmentObject(shackTags)
+                    .environmentObject(viewedPostsService)
                     .preferredColorScheme(appSessionStore.isDarkMode ? .dark : .light)
             }
         }

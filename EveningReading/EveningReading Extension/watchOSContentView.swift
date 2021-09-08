@@ -10,6 +10,7 @@ import SwiftUI
 struct watchOSContentView: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var viewedPostsStore: ViewedPostsStore
     
     @State private var showingGuidelinesView = false
     
@@ -18,7 +19,7 @@ struct watchOSContentView: View {
         {
             return
         }
-        chatStore.getChat()
+        chatStore.getChat(viewedPostsStore: self.viewedPostsStore)
     }
     
     private func filteredThreads() -> [ChatThread] {
@@ -26,7 +27,7 @@ struct watchOSContentView: View {
         {
             return Array(chatData.threads)
         }
-        var threads = self.chatStore.threads.filter({ return self.appSessionStore.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !self.appSessionStore.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
+        let threads = self.chatStore.threads.filter({ return self.appSessionStore.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !self.appSessionStore.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
         return Array(threads)
     }
     
@@ -46,7 +47,7 @@ struct watchOSContentView: View {
             // Thread list
             if filteredThreads().count > 0 {
                 Button(action: {
-                    chatStore.getChat()
+                    chatStore.getChat(viewedPostsStore: self.viewedPostsStore)
                 }) {
                     HStack {
                         Text("Refresh")

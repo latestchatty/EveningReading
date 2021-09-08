@@ -12,6 +12,7 @@ import SwiftUI
 struct ThreadPreviewView: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var viewedPostsStore: ViewedPostsStore
 
     @Binding var activeThreadId: Int
 
@@ -78,9 +79,11 @@ struct ThreadPreviewView: View {
                     
                     NewMessageView(showingNewMessageSheet: self.$showingNewMessageView, messageId: Binding.constant(0), recipientName: self.$messageRecipient, subjectText: self.$messageSubject, bodyText: self.$messageBody)
                     
-                    AuthorNameView(name: appSessionStore.blockedAuthors.contains(self.rootPost.author) ? "[blocked]" : self.rootPost.author, postId: self.rootPost.threadId)
+                    AuthorNameView(name: appSessionStore.blockedAuthors.contains(self.rootPost.author) ? "[blocked]" : self.rootPost.author, postId: self.rootPost.threadId, authorType: self.rootPost.authorType ?? .none)
 
                     ContributedView(contributed: self.contributed)
+                    
+                    UnreadRepliesView(hasUnreadReplies: PostDecorator.checkUnreadReplies(thread: self.chatStore.threads.first(where: {$0.threadId == self.activeThreadId})!, viewedPostsStore: self.viewedPostsStore))
 
                     Spacer()
 
@@ -98,7 +101,7 @@ struct ThreadPreviewView: View {
                     HStack (alignment: .top) {
                         Text(appSessionStore.blockedAuthors.contains(self.rootPost.author) ? "[blocked]" : self.rootPostBodyPreview)
                             .font(.callout)
-                            .foregroundColor(Color(UIColor.label))
+                            .foregroundColor(self.chatStore.threads.first(where: {$0.threadId == self.activeThreadId})?.posts.filter({!self.viewedPostsStore.isPostViewed(postId: $0.id)}).count ?? 0 > 0 ? Color(UIColor.label) : Color(UIColor.systemGreen))
                             .lineLimit(appSessionStore.abbreviateThreads ? 3 : 8)
                             .frame(minHeight: 30)
                             .padding(10)

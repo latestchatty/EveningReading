@@ -396,7 +396,7 @@ class MessageStore: ObservableObject {
         }
     }
     
-    func getComplaintText(author: String, postId: Int, reason: String?) -> String {
+    func getComplaintText(author: String, postId: Int, reason: String? = nil) -> String {
         return String("I would like to report user '\(author)', author of post http://www.shacknews.com/chatty?id=\(postId)#item_\(postId) for not adhering to the Shacknews guidelines.\r\n\r\nReason: \(reason ?? "No reason given.")")
     }
     

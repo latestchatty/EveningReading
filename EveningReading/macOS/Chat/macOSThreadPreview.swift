@@ -102,13 +102,12 @@ struct macOSThreadPreview: View {
         .onAppear(perform: getThreadData)
         .onTapGesture(count: 1) {
             // When we're selecting another thread, mark the current one viewed.
+            self.viewedPostsStore.markPostViewed(postId: self.threadId)
             if chatStore.activeThreadId != self.threadId && chatStore.activeThreadId != 0 {
                 if let currentlyActiveThread = chatStore.threads.first(where: { return $0.threadId == chatStore.activeThreadId}) {
                     self.viewedPostsStore.markThreadViewed(thread: currentlyActiveThread)
                 }
             }
-            self.viewedPostsStore.markPostViewed(postId: self.threadId)
-            self.viewedPostsStore.syncViewedPosts()
             chatStore.activeThreadId = self.threadId
             chatStore.activePostId = self.threadId
         }

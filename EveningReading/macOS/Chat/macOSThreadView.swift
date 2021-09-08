@@ -124,7 +124,6 @@ struct macOSThreadView: View {
         var threadIds = self.postList.map({$0.id})
         threadIds.append(self.threadId)
         self.viewedPostsStore.markPostsViewed(postIds: threadIds)
-        self.viewedPostsStore.syncViewedPosts()
     }
     
     var body: some View {

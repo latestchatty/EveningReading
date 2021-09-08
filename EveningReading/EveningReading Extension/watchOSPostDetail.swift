@@ -15,6 +15,7 @@ struct watchOSPostDetail: View {
     
     @State private var postCategory: String = "ontopic"
     @State private var postAuthor: String = ""
+    @State private var postAuthorType: AuthorType = .none
     @State private var contributed: Bool = false
     @State private var postBody: String = ""
     @State private var richTextBody = [RichTextBlock]()
@@ -39,6 +40,7 @@ struct watchOSPostDetail: View {
         if let childPost = thread?.posts.filter({ return $0.id == self.postId }).first {
             self.postCategory = childPost.category
             self.postAuthor = childPost.author
+            self.postAuthorType = childPost.authorType ?? .none
             self.postBody = childPost.body
             self.postDate = childPost.date
             self.postLols = childPost.lols
@@ -66,7 +68,7 @@ struct watchOSPostDetail: View {
                 // Post
                 VStack (alignment: .leading) {
                     HStack {
-                        AuthorNameView(name: appSessionStore.blockedAuthors.contains(self.postAuthor) ? "[blocked]" : self.postAuthor, postId: self.postId)
+                        AuthorNameView(name: appSessionStore.blockedAuthors.contains(self.postAuthor) ? "[blocked]" : self.postAuthor, postId: self.postId, authorType: self.postAuthorType)
                         ContributedView(contributed: self.contributed)
                         Spacer()
                         LolView(lols: self.postLols, postId: self.postId)
