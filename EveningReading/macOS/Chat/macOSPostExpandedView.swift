@@ -105,6 +105,9 @@ struct macOSPostExpandedView: View {
                             .help("Copy link to post")
                             
                             if appSessionStore.isSignedIn {
+                                //TODO: Use a confirmation dialog or something to confirm that they want to close the reply if it's open
+                                // https://developer.apple.com/documentation/swiftui/view-presentation
+                                // Not available until macOS 12.
                                 Button(action: {
                                     showReply = !showReply
                                 }, label: {

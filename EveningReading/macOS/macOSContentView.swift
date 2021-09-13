@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct macOSWindowSize {
-    let minWidth : CGFloat = 1024
-    let minHeight : CGFloat = 768
+    let minWidth : CGFloat = 960
+    let minHeight : CGFloat = 250
 }
 
 struct macOSContentView: View {
