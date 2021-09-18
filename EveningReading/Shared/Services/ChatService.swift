@@ -24,9 +24,9 @@ struct ChatPosts: Hashable, Codable {
     var category: String
     var date: String
     var body: String
-    var preview: String?
+    var preview: String
     var lols: [ChatLols]
-    var authorType: AuthorType?
+    var authorType: AuthorType
 }
 
 enum AuthorType: Hashable, Codable, CodingKey {
@@ -117,12 +117,85 @@ struct TagReponse: Hashable, Codable {
 
 // Service for chat related functionality
 class ChatService {
+    
+    private struct ChatResponse: Hashable, Codable {
+        var threads: [ChatThreadResponse]
+    }
+    
+    private struct ChatThreadResponse: Hashable, Codable {
+        var threadId: Int
+        var posts: [ChatPostsResponse]
+    }
+
+    private struct ChatPostsResponse: Hashable, Codable {
+        var id: Int
+        var threadId: Int
+        var parentId: Int
+        var author: String
+        var category: String
+        var date: String
+        var body: String
+        var lols: [ChatLols]
+    }
+    
     private let session: URLSession
     private let decoder: JSONDecoder
 
     init(session: URLSession = .shared, decoder: JSONDecoder = .init()) {
         self.session = session
         self.decoder = decoder
+    }
+    
+    private func chatResponseToChat(_ response: ChatService.ChatResponse?, viewedPostsStore: ViewedPostsStore) -> Chat {
+        let threads = response?.threads ?? []
+        
+        let username = UserUtils.getUserName().lowercased()
+        
+        let chat = threads.map { thread -> ChatThread in
+            let threadAuthor = thread.posts.first(where: {$0.parentId == 0})!.author.lowercased()
+            return ChatThread(threadId: thread.threadId, posts: thread.posts.map { post in
+                
+                let postAuthor = post.author.lowercased()
+                var authorType = AuthorType.none
+                if postAuthor == threadAuthor && post.parentId != 0 {
+                    authorType = .threadOp
+                } else if postAuthor == username {
+                    authorType = .owner
+                } else if postAuthor == "shacknews" {
+                    authorType = .shacknews
+                }
+                
+                let preview = post.body.getPreview
+                return ChatPosts(id: post.id,
+                          threadId: post.threadId,
+                          parentId: post.parentId,
+                          author: post.author,
+                          category: post.category,
+                          date: post.date,
+                          body: post.body,
+                          preview: String(preview.prefix(500)) + (preview.count > 500 ? "..." : ""),
+                          lols: post.lols,
+                          authorType: authorType)
+                
+            })
+        }
+        
+        let sortedThreads = chat.sorted(by: {
+            t1, t2 in
+            // This is a loooot of iterating. Feels bad man.
+            let t1HasNewReplies = PostDecorator.checkUnreadReplies(thread: t1, viewedPostsStore: viewedPostsStore)
+            let t2HasNewReplies = PostDecorator.checkUnreadReplies(thread: t2, viewedPostsStore: viewedPostsStore)
+            // Prioritize having unread replies
+            if t1HasNewReplies && !t2HasNewReplies {
+                return true
+            } else if t2HasNewReplies && !t1HasNewReplies {
+                return false
+            }
+            // Otherwise sort by which thread has the most recent post
+            return t1.posts.max(by: { $0.id < $1.id})!.id > t2.posts.max(by: {$0.id < $1.id })!.id
+        })
+        
+        return Chat(threads: sortedThreads)
     }
     
     public func getChat(viewedPostsStore: ViewedPostsStore, handler: @escaping (Result<[ChatThread], Error>) -> Void) {
@@ -147,42 +220,9 @@ class ChatService {
             } else {
                 do {
                     let data = data ?? Data()
-                    let response = try self?.decoder.decode(Chat.self, from: data)
-                    let threads = response?.threads ?? []
-                    var sortedThreads = threads.sorted(by: {
-                        t1, t2 in
-                        // This is a loooot of iterating. Feels bad man.
-                        let t1HasNewReplies = PostDecorator.checkUnreadReplies(thread: t1, viewedPostsStore: viewedPostsStore)
-                        let t2HasNewReplies = PostDecorator.checkUnreadReplies(thread: t2, viewedPostsStore: viewedPostsStore)
-                        // Prioritize having unread replies
-                        if t1HasNewReplies && !t2HasNewReplies {
-                            return true
-                        } else if t2HasNewReplies && !t1HasNewReplies {
-                            return false
-                        }
-                        // Otherwise sort by which thread has the most recent post
-                        return t1.posts.max(by: { $0.id < $1.id})!.id > t2.posts.max(by: {$0.id < $1.id })!.id
-                    })
-                    let username = UserUtils.getUserName().lowercased()
-                    for t in sortedThreads.enumerated() {
-                        let threadAuthor = t.element.posts.first(where: {$0.parentId == 0})!.author.lowercased()
-                        
-                        for p in t.element.posts.enumerated() {
-                            let post = p.element
-                            let postAuthor = post.author.lowercased()
-                            if postAuthor == threadAuthor && post.parentId != 0 {
-                                sortedThreads[t.offset].posts[p.offset].authorType = .threadOp
-                            } else if postAuthor == username {
-                                sortedThreads[t.offset].posts[p.offset].authorType = .owner
-                            } else if postAuthor == "shacknews" {
-                                sortedThreads[t.offset].posts[p.offset].authorType = .shacknews
-                            } else {
-                                sortedThreads[t.offset].posts[p.offset].authorType = AuthorType.none
-                            }
-                            sortedThreads[t.offset].posts[p.offset].preview = post.body.getPreview
-                        }
-                    }
-                    handler(.success(sortedThreads))
+                    let response = try self?.decoder.decode(ChatResponse.self, from: data)
+                    
+                    handler(.success(self?.chatResponseToChat(response, viewedPostsStore: viewedPostsStore).threads ?? []))
                 } catch (let err){
                     print("Failed to fetch chatty \(err)")
                     handler(.failure(err))
@@ -191,7 +231,7 @@ class ChatService {
         }.resume()
     }
     
-    public func getThread(threadId: Int, handler: @escaping (Result<[ChatThread], Error>) -> Void) {
+    public func getThread(threadId: Int, viewedPostsStore: ViewedPostsStore, handler: @escaping (Result<[ChatThread], Error>) -> Void) {
         let sessionConfig = URLSessionConfiguration.default
         #if os(iOS)
         sessionConfig.waitsForConnectivity = false
@@ -218,27 +258,9 @@ class ChatService {
                 do {
                     let data = data ?? Data()
                     //TODO: consolidate
-                    let username = UserUtils.getUserName().lowercased()
-                    var response = try self?.decoder.decode(Chat.self, from: data).threads ?? []
-                    for t in response.enumerated() {
-                        let threadAuthor = t.element.posts.first(where: {$0.parentId == 0})!.author.lowercased()
-                        
-                        for p in t.element.posts.enumerated() {
-                            let post = p.element
-                            let postAuthor = post.author.lowercased()
-                            if postAuthor == threadAuthor && post.parentId != 0 {
-                                response[t.offset].posts[p.offset].authorType = .threadOp
-                            } else if postAuthor == username {
-                                response[t.offset].posts[p.offset].authorType = .owner
-                            } else if postAuthor == "shacknews" {
-                                response[t.offset].posts[p.offset].authorType = .shacknews
-                            } else {
-                                response[t.offset].posts[p.offset].authorType = AuthorType.none
-                            }
-                            response[t.offset].posts[p.offset].preview = post.body.getPreview
-                        }
-                    }
-                    handler(.success(response))
+                    let response = try self?.decoder.decode(ChatResponse.self, from: data)
+                    
+                    handler(.success(self?.chatResponseToChat(response, viewedPostsStore: viewedPostsStore).threads ?? []))
                 } catch {
                     handler(.failure(error))
                 }
@@ -430,7 +452,7 @@ class ChatService {
         }.resume()
     }
     
-    public func getThreadByPost(postId: Int, handler: @escaping (Result<[ChatThread], Error>) -> Void) {
+    public func getThreadByPost(postId: Int, viewedPostsStore: ViewedPostsStore, handler: @escaping (Result<[ChatThread], Error>) -> Void) {
         guard
             let urlComponents = URLComponents(string: "https://winchatty.com/v2/getThread?id=\(postId)")
             else { preconditionFailure("Can't create url components...") }
@@ -445,26 +467,9 @@ class ChatService {
             } else {
                 do {
                     let data = data ?? Data()
-                    let username = UserUtils.getUserName()
-                    var response = try self?.decoder.decode(Chat.self, from: data).threads ?? []
-                    for t in response.enumerated() {
-                        let threadAuthor = t.element.posts.first(where: {$0.parentId == 0})!.author.lowercased()
-                        
-                        for p in t.element.posts.enumerated() {
-                            let post = p.element
-                            let postAuthor = post.author.lowercased()
-                            if postAuthor == threadAuthor && post.parentId != 0 {
-                                response[t.offset].posts[p.offset].authorType = .threadOp
-                            } else if postAuthor == username {
-                                response[t.offset].posts[p.offset].authorType = .owner
-                            } else if postAuthor == "shacknews" {
-                                response[t.offset].posts[p.offset].authorType = .shacknews
-                            } else {
-                                response[t.offset].posts[p.offset].authorType = AuthorType.none
-                            }
-                        }
-                    }
-                    handler(.success(response))
+                    let response = try self?.decoder.decode(ChatResponse.self, from: data)
+                    
+                    handler(.success(self?.chatResponseToChat(response, viewedPostsStore: viewedPostsStore).threads ?? []))
                 } catch {
                     handler(.failure(error))
                 }
@@ -557,9 +562,9 @@ class ChatStore: ObservableObject {
         }
     }
     
-    func getThread() {
+    func getThread(viewedPostsStore: ViewedPostsStore) {
         self.didGetThreadStart = true
-        service.getThread(threadId: self.activeThreadId) { [weak self] result in
+        service.getThread(threadId: self.activeThreadId, viewedPostsStore: viewedPostsStore) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let threads):
@@ -673,9 +678,9 @@ class ChatStore: ObservableObject {
 
     // Load any thread
     @Published private(set) var searchedThreads: [ChatThread] = []
-    func getThreadByPost(postId: Int, completion: @escaping ()->()) {
+    func getThreadByPost(postId: Int, viewedPostsStore: ViewedPostsStore, completion: @escaping ()->()) {
         print("ChatService.getThreadByPost")
-        service.getThreadByPost(postId: postId) { [weak self] result in
+        service.getThreadByPost(postId: postId, viewedPostsStore: viewedPostsStore) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let foundThreads):

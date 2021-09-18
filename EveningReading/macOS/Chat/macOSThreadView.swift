@@ -41,7 +41,7 @@ struct macOSThreadView: View {
                 if let rootPost = thread.posts.filter({ return $0.parentId == 0 }).first {
                     self.rootPostCategory = rootPost.category
                     self.rootPostAuthor = rootPost.author
-                    self.rootPostAuthorType = rootPost.authorType!
+                    self.rootPostAuthorType = rootPost.authorType
                     self.rootPostBody = rootPost.body
                     self.rootPostRichText = RichTextBuilder.getRichText(postBody: rootPost.body)
                     self.rootPostDate = rootPost.date
@@ -55,7 +55,7 @@ struct macOSThreadView: View {
                 if let rootPost = thread.posts.filter({ return $0.parentId == 0 }).first {
                     self.rootPostCategory = rootPost.category
                     self.rootPostAuthor = rootPost.author
-                    self.rootPostAuthorType = rootPost.authorType!
+                    self.rootPostAuthorType = rootPost.authorType
                     self.rootPostBody = rootPost.body
                     self.rootPostRichText = RichTextBuilder.getRichText(postBody: rootPost.body)
                     self.rootPostDate = rootPost.date
@@ -146,7 +146,7 @@ struct macOSThreadView: View {
                             .padding(.top, 10)
                         
                         // Replies
-                        VStack {
+                        LazyVStack {
                             // No replies yet
                             if postList.count < 1 {
                                 HStack {
@@ -158,14 +158,13 @@ struct macOSThreadView: View {
                                     Spacer()
                                 }
                             }
-                            
                             // Post list
                             ForEach(postList, id: \.id) { post in
                                 HStack {
                                     // Reply expaned row
                                     if self.selectedPost == post.id {
                                         VStack {
-                                            macOSPostExpandedView(postId: .constant(post.id), postAuthor: .constant(post.author), postAuthorType: .constant(post.authorType!), replyLines: self.$replyLines[post.id], lols: .constant(post.lols), postText: self.$selectedPostRichText, postDate: .constant(post.date))
+                                            macOSPostExpandedView(postId: .constant(post.id), postAuthor: .constant(post.author), postAuthorType: .constant(post.authorType), replyLines: self.$replyLines[post.id], lols: .constant(post.lols), postText: self.$selectedPostRichText, postDate: .constant(post.date))
                                         }
                                         .onAppear() {
                                             // Load Rich Text
@@ -174,7 +173,7 @@ struct macOSThreadView: View {
                                     } else {
                                         // Reply preview row
                                         HStack {
-                                            macOSPostPreviewView(postId: .constant(post.id), postAuthor: .constant(post.author), postAuthorType: .constant(post.authorType!), replyLines: self.$replyLines[post.id], lols: .constant(post.lols), postPreviewText: .constant(post.preview ?? ""), postCategory: .constant(post.category), postStrength: .constant(postStrength[post.id]))
+                                            macOSPostPreviewView(postId: .constant(post.id), postAuthor: .constant(post.author), postAuthorType: .constant(post.authorType), replyLines: self.$replyLines[post.id], lols: .constant(post.lols), postPreviewText: .constant(post.preview), postCategory: .constant(post.category), postStrength: .constant(postStrength[post.id]))
                                         }
                                         .contentShape(Rectangle())
                                         .onTapGesture(count: 1) {
@@ -232,7 +231,7 @@ struct macOSThreadView: View {
                 self.chatStore.submitPostErrorMessage = ""
                 showRootReply = false
                 DispatchQueue.main.asyncAfterPostDelay {
-                    self.chatStore.getThread()
+                    self.chatStore.getThread(viewedPostsStore: viewedPostsStore)
                 }
             }
         }
@@ -269,7 +268,7 @@ struct macOSThreadView: View {
             ToolbarItemGroup(placement: .primaryAction) {
                 Button(action: {
                     self.markThreadRead()
-                    self.chatStore.getThread()
+                    self.chatStore.getThread(viewedPostsStore: viewedPostsStore)
                 }, label: {
                     Image(systemName: "arrow.counterclockwise")
                         .imageScale(.large)

@@ -32,8 +32,8 @@ struct macOSThreadPreview: View {
                 if let rootPost = thread.posts.filter({ return $0.parentId == 0 }).first {
                     self.rootPostCategory = rootPost.category
                     self.rootPostAuthor = rootPost.author
-                    self.rootPostAuthorType = rootPost.authorType!
-                    self.rootPostBody = rootPost.preview ?? ""
+                    self.rootPostAuthorType = rootPost.authorType
+                    self.rootPostBody = rootPost.preview
                     self.rootPostDate = rootPost.date
                     self.rootPostLols = rootPost.lols
                 }
@@ -41,6 +41,7 @@ struct macOSThreadPreview: View {
                 
             }
         } else {
+            print("ThreadPreview getThreadData")
             // Why was this here?
             //let threads = chatStore.threads.filter({ return self.appSessionStore.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !appSessionStore.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
             
@@ -51,8 +52,8 @@ struct macOSThreadPreview: View {
                 if let rootPost = thread.posts.filter({ return $0.parentId == 0 }).first {
                     self.rootPostCategory = rootPost.category
                     self.rootPostAuthor = rootPost.author
-                    self.rootPostAuthorType = rootPost.authorType!
-                    self.rootPostBody = rootPost.preview ?? ""
+                    self.rootPostAuthorType = rootPost.authorType
+                    self.rootPostBody = rootPost.preview
                     self.rootPostDate = rootPost.date
                     self.rootPostLols = rootPost.lols
                 }
@@ -101,6 +102,7 @@ struct macOSThreadPreview: View {
         .background(chatStore.activeThreadId == self.threadId ? Color("ChatBubbleSecondary") : Color.clear)
         .onAppear(perform: getThreadData)
         .onTapGesture(count: 1) {
+            withAnimation(.none) {
             // When we're selecting another thread, mark the current one viewed.
             self.viewedPostsStore.markPostViewed(postId: self.threadId)
             if chatStore.activeThreadId != self.threadId && chatStore.activeThreadId != 0 {
@@ -110,8 +112,9 @@ struct macOSThreadPreview: View {
             }
             chatStore.activeThreadId = self.threadId
             chatStore.activePostId = self.threadId
+            }
         }
-        .onReceive(viewedPostsStore.$viewedPosts, perform: { x in self.getThreadData()})
+        .onReceive(viewedPostsStore.$viewedPosts, perform: { x in withAnimation(.none) { self.getThreadData()} })
     }
 }
 
