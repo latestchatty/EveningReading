@@ -15,7 +15,7 @@ struct macOSPostPreviewView: View {
     @Binding var postAuthorType: AuthorType
     @Binding var replyLines: String?
     @Binding var lols: [ChatLols]
-    @Binding var postText: String
+    @Binding var postPreviewText: String
     @Binding var postCategory: String
     @Binding var postStrength: Double?
 
@@ -58,7 +58,7 @@ struct macOSPostPreviewView: View {
 //        }
         
         // Post preview line
-        Text("\(postText.getPreview)")
+        Text("\(postPreviewText)")
             .font(.body)
             .fontWeight(postStrength != nil ? PostWeight[postStrength!] : .regular)
             .opacity(postStrength != nil ? postStrength! : 0.75)
@@ -70,7 +70,7 @@ struct macOSPostPreviewView: View {
 
 struct macOSPostPreviewView_Previews: PreviewProvider {
     static var previews: some View {
-        macOSPostPreviewView(postId: .constant(0), postAuthor: .constant(""), postAuthorType: .constant(.none), replyLines: .constant(""), lols: .constant([ChatLols]()), postText: .constant(""), postCategory: .constant("ontopic"), postStrength: .constant(1.0))
+        macOSPostPreviewView(postId: .constant(0), postAuthor: .constant(""), postAuthorType: .constant(.none), replyLines: .constant(""), lols: .constant([ChatLols]()), postPreviewText: .constant(""), postCategory: .constant("ontopic"), postStrength: .constant(1.0))
             .environmentObject(AppSessionStore(service: AuthService()))
     }
 }

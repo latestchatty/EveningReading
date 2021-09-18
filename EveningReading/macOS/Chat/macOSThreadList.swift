@@ -68,14 +68,17 @@ struct macOSThreadList: View {
             ToolbarItemGroup(placement: .navigation) {
                 Button(action: {
                     // refresh
-                    if chatStore.activeThreadId != 0 {
-                        if let thread = chatStore.threads.first(where: { return $0.threadId == chatStore.activeThreadId }) {
-                            viewedPostsStore.markThreadViewed(thread: thread)
+                    let tx = Transaction(animation: .linear)
+                    withTransaction(tx) {
+                        if chatStore.activeThreadId != 0 {
+                            if let thread = chatStore.threads.first(where: { return $0.threadId == chatStore.activeThreadId }) {
+                                viewedPostsStore.markThreadViewed(thread: thread)
+                            }
                         }
+                        chatStore.activeThreadId = 0
+                        chatStore.activePostId = 0
+                        chatStore.getChat(viewedPostsStore: self.viewedPostsStore)
                     }
-                    chatStore.activeThreadId = 0
-                    chatStore.activePostId = 0
-                    chatStore.getChat(viewedPostsStore: self.viewedPostsStore)
                 }, label: {
                     Image(systemName: "arrow.counterclockwise")
                 })

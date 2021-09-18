@@ -33,7 +33,7 @@ struct macOSThreadPreview: View {
                     self.rootPostCategory = rootPost.category
                     self.rootPostAuthor = rootPost.author
                     self.rootPostAuthorType = rootPost.authorType!
-                    self.rootPostBody = rootPost.body.getPreview
+                    self.rootPostBody = rootPost.preview ?? ""
                     self.rootPostDate = rootPost.date
                     self.rootPostLols = rootPost.lols
                 }
@@ -52,7 +52,7 @@ struct macOSThreadPreview: View {
                     self.rootPostCategory = rootPost.category
                     self.rootPostAuthor = rootPost.author
                     self.rootPostAuthorType = rootPost.authorType!
-                    self.rootPostBody = rootPost.body.getPreview
+                    self.rootPostBody = rootPost.preview ?? ""
                     self.rootPostDate = rootPost.date
                     self.rootPostLols = rootPost.lols
                 }

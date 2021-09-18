@@ -24,6 +24,7 @@ struct ChatPosts: Hashable, Codable {
     var category: String
     var date: String
     var body: String
+    var preview: String?
     var lols: [ChatLols]
     var authorType: AuthorType?
 }
@@ -178,6 +179,7 @@ class ChatService {
                             } else {
                                 sortedThreads[t.offset].posts[p.offset].authorType = AuthorType.none
                             }
+                            sortedThreads[t.offset].posts[p.offset].preview = post.body.getPreview
                         }
                     }
                     handler(.success(sortedThreads))
@@ -233,6 +235,7 @@ class ChatService {
                             } else {
                                 response[t.offset].posts[p.offset].authorType = AuthorType.none
                             }
+                            response[t.offset].posts[p.offset].preview = post.body.getPreview
                         }
                     }
                     handler(.success(response))

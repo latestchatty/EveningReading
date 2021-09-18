@@ -65,37 +65,33 @@ struct macOSThreadView: View {
         }
     }
     
-    private func getPostList(parentId: Int) {
+    private func getPostList(thread: ChatThread, parentId: Int) {
         if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
         {
-            if let thread = chatData.threads.filter({ return $0.threadId == self.threadId }).first {
-                // Replies to post
-                let replies = thread.posts.filter({ return $0.parentId == parentId }).sorted(by: { $0.id < $1.id })
-                
-                // Font strength for recent posts
-                postStrength = PostDecorator.getPostStrength(thread: thread)
-                
-                // Get replies to this post
-                for post in replies {
-                    self.replyLines[post.id] = ReplyLineBuilder.getLines(post: post, thread: thread)
-                    postList.append(post)
-                    getPostList(parentId: post.id)
-                }
+            // Replies to post
+            let replies = thread.posts.filter({ return $0.parentId == parentId }).sorted(by: { $0.id < $1.id })
+            
+            // Font strength for recent posts
+            postStrength = PostDecorator.getPostStrength(thread: thread)
+            
+            // Get replies to this post
+            for post in replies {
+                self.replyLines[post.id] = ReplyLineBuilder.getLines(post: post, thread: thread)
+                postList.append(post)
+                getPostList(thread: thread, parentId: post.id)
             }
         } else {
-            if let thread = chatStore.threads.filter({ return $0.threadId == self.threadId }).first {
-                // Replies to post
-                let replies = thread.posts.filter({ return $0.parentId == parentId }).sorted(by: { $0.id < $1.id })
-                
-                // Font strength for recent posts
-                postStrength = PostDecorator.getPostStrength(thread: thread)
-                
-                // Get replies to this post
-                for post in replies {
-                    self.replyLines[post.id] = ReplyLineBuilder.getLines(post: post, thread: thread)
-                    postList.append(post)
-                    getPostList(parentId: post.id)
-                }
+            // Replies to post
+            let replies = thread.posts.filter({ return $0.parentId == parentId }).sorted(by: { $0.id < $1.id })
+            
+            // Font strength for recent posts
+            postStrength = PostDecorator.getPostStrength(thread: thread)
+            
+            // Get replies to this post
+            for post in replies {
+                self.replyLines[post.id] = ReplyLineBuilder.getLines(post: post, thread: thread)
+                postList.append(post)
+                getPostList(thread: thread, parentId: post.id)
             }
         }
     }
@@ -178,7 +174,7 @@ struct macOSThreadView: View {
                                     } else {
                                         // Reply preview row
                                         HStack {
-                                            macOSPostPreviewView(postId: .constant(post.id), postAuthor: .constant(post.author), postAuthorType: .constant(post.authorType!), replyLines: self.$replyLines[post.id], lols: .constant(post.lols), postText: .constant(post.body), postCategory: .constant(post.category), postStrength: .constant(postStrength[post.id]))
+                                            macOSPostPreviewView(postId: .constant(post.id), postAuthor: .constant(post.author), postAuthorType: .constant(post.authorType!), replyLines: self.$replyLines[post.id], lols: .constant(post.lols), postPreviewText: .constant(post.preview ?? ""), postCategory: .constant(post.category), postStrength: .constant(postStrength[post.id]))
                                         }
                                         .contentShape(Rectangle())
                                         .onTapGesture(count: 1) {
@@ -214,11 +210,19 @@ struct macOSThreadView: View {
         }
         
         .onReceive(chatStore.$activeThreadId) { value in
-            getThreadData()
-            postList = [ChatPosts]()
-            postStrength = [Int: Double]()
-            replyLines = [Int: String]()
-            getPostList(parentId: self.threadId)
+            self.isGettingThread = true
+            var tx = Transaction()
+            tx.disablesAnimations = true
+            withTransaction(tx) {
+                getThreadData()
+                postList = [ChatPosts]()
+                postStrength = [Int: Double]()
+                replyLines = [Int: String]()
+                if let thread = chatStore.threads.filter({ return $0.threadId == self.threadId }).first {
+                    getPostList(thread: thread, parentId: self.threadId)
+                }
+                self.isGettingThread = false
+            }
         }
         .onReceive(self.chatStore.$submitPostSuccessMessage) { successMessage in
             if successMessage == "" { return }
@@ -251,7 +255,9 @@ struct macOSThreadView: View {
                 getThreadData()
                 self.postList = [ChatPosts]()
                 self.postStrength = [Int: Double]()
-                getPostList(parentId: self.threadId)
+                if let thread = chatStore.threads.filter({ return $0.threadId == self.threadId }).first {
+                    getPostList(thread: thread, parentId: self.threadId)
+                }
                 self.isGettingThread = false
                 self.canRefresh = true
             }
