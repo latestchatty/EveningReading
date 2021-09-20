@@ -99,5 +99,6 @@ struct macOSThreadList_Previews: PreviewProvider {
         macOSThreadList()
             .environmentObject(AppSessionStore(service: AuthService()))
             .environmentObject(ChatStore(service: ChatService()))
+            .environmentObject(ViewedPostsStore())
     }
 }

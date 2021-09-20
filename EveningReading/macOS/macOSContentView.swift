@@ -45,25 +45,6 @@ struct macOSContentView: View {
                             Image(systemName: "sidebar.left")
                         })
                     }
-                    
-                    // Toolbar Buttons
-                    ToolbarItemGroup(placement: .navigation) {
-                        if appSessionStore.showingInboxView {
-                            Button(action: {
-                                // refresh
-                            }, label: {
-                                Image(systemName: "arrow.counterclockwise")
-                            })
-                            Button(action: {
-                                // compose
-                            }, label: {
-                                Image(systemName: "square.and.pencil")
-                            })
-                        } else {
-                            EmptyView()
-                        }
-                    }
-                    
                 }
                 
                 // Detail View
@@ -88,6 +69,7 @@ struct macOSContentView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear() {
             appSessionStore.showingChatView = true
+//            appSessionStore.showingInboxView = true
         }
     }
 }
