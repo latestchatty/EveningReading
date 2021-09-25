@@ -127,10 +127,13 @@ struct LinkView: View {
     @State private var showingSafariSheet = false
     @State private var hyperlinkUrl: URL?
     @State private var showingEmbeddedImage = false
+    @State private var maxImageWidth: CGFloat? = 500
+    @State private var maxImageHeight: CGFloat? = 500
     @ObservedObject private var imageLoader = ImageLoader()
     
     #if os(macOS)
     @State private var hover: Bool = false
+    @State private var imageHovered: Bool = false
     #endif
     
     //@State private var hyperlinkUrlStr: String?
@@ -225,7 +228,7 @@ struct LinkView: View {
     
     #if os(OSX)
     var body: some View {
-        
+                
         Text(self.description)
             .font(.body)
             .underline()
@@ -272,7 +275,21 @@ struct LinkView: View {
                 Image(nsImage: self.imageLoader.image!)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(maxWidth: 500, maxHeight: 500)
+                    .frame(maxWidth: maxImageWidth, maxHeight: maxImageHeight)
+                    .onTapGesture {
+                        maxImageWidth = maxImageWidth == 500 ? .infinity : 500
+                        maxImageHeight = maxImageHeight == 500 ? .infinity : 500
+                    }
+                    .onHover { isHovered in
+                        self.imageHovered = isHovered
+                        DispatchQueue.main.async {
+                            if (self.imageHovered) {
+                                NSCursor.pointingHand.push()
+                            } else {
+                                NSCursor.pop()
+                            }
+                        }
+                    }
             }
         }
     }
