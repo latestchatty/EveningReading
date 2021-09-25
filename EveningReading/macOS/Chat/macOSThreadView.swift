@@ -192,6 +192,7 @@ struct macOSThreadView: View {
                         
                     }
                 }
+                // Something about this causes a resource leak in instruments.
                 .onReceive(chatStore.$activeThreadId) { value in
                     scrollProxy.scrollTo(999999991, anchor: .top)
                 }
@@ -210,6 +211,7 @@ struct macOSThreadView: View {
         
         .onReceive(chatStore.$activeThreadId) { value in
             self.isGettingThread = true
+            self.selectedIndex = 0
             var tx = Transaction()
             tx.disablesAnimations = true
             withTransaction(tx) {

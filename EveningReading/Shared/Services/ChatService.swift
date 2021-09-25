@@ -165,7 +165,6 @@ class ChatService {
                     authorType = .shacknews
                 }
                 
-                let preview = post.body.getPreview
                 return ChatPosts(id: post.id,
                           threadId: post.threadId,
                           parentId: post.parentId,
@@ -173,7 +172,7 @@ class ChatService {
                           category: post.category,
                           date: post.date,
                           body: post.body,
-                          preview: String(preview.prefix(500)) + (preview.count > 500 ? "..." : ""),
+                          preview: post.body.getPreview,
                           lols: post.lols,
                           authorType: authorType)
                 
