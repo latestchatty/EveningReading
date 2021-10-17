@@ -155,6 +155,10 @@ struct RefreshableScrollView<Content: View>: View {
                         Spacer()
                     }.frame(height: height).fixedSize()
                         .offset(y: -height + (self.loading && self.frozen ? height : 0.0))
+                } else if self.spokes == 0 {
+                    HStack {
+                        EmptyView()
+                    }
                 } else {
                     HStack {
                         GeometryReader { proxy in

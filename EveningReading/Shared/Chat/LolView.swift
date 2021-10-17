@@ -69,7 +69,7 @@ struct LolView: View {
                         .lineLimit(1)
                         .fixedSize()
                         .font(.custom("tags", size: 8, relativeTo: .caption))
-                        .padding(EdgeInsets(top: 3, leading: -5, bottom: 0, trailing: 0))
+                        .padding(EdgeInsets(top: 0, leading: -5, bottom: 0, trailing: 0))
                         .foregroundColor(PostTagColor[lol.tag])
                 }
             }

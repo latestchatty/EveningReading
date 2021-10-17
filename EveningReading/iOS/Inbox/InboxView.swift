@@ -106,6 +106,7 @@ struct InboxView: View {
                                        }
                                        Text(message.body.getPreview)
                                            .lineLimit(3)
+                                           .multilineTextAlignment(.leading)
                                            .padding(.init(top: 5, leading: 20, bottom: 20, trailing: 20))
                                            .foregroundColor(Color(UIColor.label))
                                    }
@@ -116,7 +117,7 @@ struct InboxView: View {
                         
                     }
                     .conditionalModifier(self.showRedacted, RedactedModifier())
-                    .padding(.top, 30)
+                    .padding(.top, 10)
                     .frame(maxWidth: .infinity)
                     .id(message.id)
                 }
