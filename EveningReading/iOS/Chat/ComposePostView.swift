@@ -219,7 +219,6 @@ struct ComposePostView: View {
 
                             // Imgur Button
                             Button(action: {
-                                print("got here")
                                 if self.showingLoading || self.showingTagMenu {
                                     return
                                 }
