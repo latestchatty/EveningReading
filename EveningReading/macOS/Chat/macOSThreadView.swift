@@ -125,9 +125,9 @@ struct macOSThreadView: View {
     var body: some View {
         ScrollView {
             ScrollViewReader { scrollProxy in
-                VStack {
-                    Spacer().frame(width: 0, height: 0)
-                }.id(999999991)
+//                VStack {
+//                    Spacer().frame(width: 0, height: 0)
+//                }.id(999999991)
                 VStack (alignment: .leading) {
                     if chatStore.activeThreadId == 0 {
                         HStack() {
@@ -139,14 +139,14 @@ struct macOSThreadView: View {
                             Spacer()
                         }
                         .padding(.top, 10)
-                    } else {
+                    } else if !self.isGettingThread {
                         // Root post
                         macOSPostExpandedView(postId: self.$threadId, postAuthor: self.$rootPostAuthor, postAuthorType: self.$rootPostAuthorType, replyLines: .constant(""), lols: self.$rootPostLols, postText: self.$rootPostRichText, postDate: self.$rootPostDate, isRootPost: true)
                             .padding(.horizontal, 10)
                             .padding(.top, 10)
                         
                         // Replies
-                        LazyVStack {
+                        VStack {
                             // No replies yet
                             if postList.count < 1 {
                                 HStack {
@@ -193,9 +193,9 @@ struct macOSThreadView: View {
                     }
                 }
                 // Something about this causes a resource leak in instruments.
-                .onReceive(chatStore.$activeThreadId) { value in
-                    scrollProxy.scrollTo(999999991, anchor: .top)
-                }
+//                .onReceive(chatStore.$activeThreadId) { value in
+//                    scrollProxy.scrollTo(999999991, anchor: .top)
+//                }
                 // This is a terrible experience
                 // Scrolling needs to happen only if it needs to happen to make the post come into view.
                 // Instead, no matter what anchor I use here it always scrolls which makes things fly all over the place if you're not just going top down/bottom up
@@ -212,17 +212,19 @@ struct macOSThreadView: View {
         .onReceive(chatStore.$activeThreadId) { value in
             self.isGettingThread = true
             self.selectedIndex = 0
-            var tx = Transaction()
-            tx.disablesAnimations = true
-            withTransaction(tx) {
-                getThreadData()
-                postList = [ChatPosts]()
-                postStrength = [Int: Double]()
-                replyLines = [Int: String]()
-                if let thread = chatStore.threads.filter({ return $0.threadId == self.threadId }).first {
-                    getPostList(thread: thread, parentId: self.threadId)
+            postList = [ChatPosts]()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                var tx = Transaction()
+                tx.disablesAnimations = true
+                withTransaction(tx) {
+                    getThreadData()
+                    postStrength = [Int: Double]()
+                    replyLines = [Int: String]()
+                    if let thread = chatStore.threads.filter({ return $0.threadId == self.threadId }).first {
+                        getPostList(thread: thread, parentId: self.threadId)
+                    }
+                    self.isGettingThread = false
                 }
-                self.isGettingThread = false
             }
         }
         .onReceive(self.chatStore.$submitPostSuccessMessage) { successMessage in
