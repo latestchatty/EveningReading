@@ -31,7 +31,7 @@ struct WhosTaggingView: View {
     
     var body: some View {
         VStack {
-            EmptyView()
+            Spacer()
             .sheet(isPresented: $showingWhosTaggingView) {
                 VStack {
                     HStack {
