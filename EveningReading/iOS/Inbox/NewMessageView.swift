@@ -46,7 +46,7 @@ struct NewMessageView: View {
     }
     
     var body: some View {
-        EmptyView()
+        Spacer().frame(width: 0)
         .sheet(isPresented: $showingNewMessageSheet) {
             VStack {
                 
