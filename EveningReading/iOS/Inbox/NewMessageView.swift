@@ -46,7 +46,7 @@ struct NewMessageView: View {
     }
     
     var body: some View {
-        Spacer().frame(width: 0)
+        Spacer().frame(width: 0, height: 0)
         .sheet(isPresented: $showingNewMessageSheet) {
             VStack {
                 
@@ -89,6 +89,7 @@ struct NewMessageView: View {
                     Spacer()
                     TextField("", text: $messageRecipient)
                         .padding(10)
+                        .multilineTextAlignment(.leading)
                         .background(colorScheme == .light ? Color("ChatBubblePrimary") : Color(red: 227.0 / 255.0, green:  227.0 / 255.0, blue: 225.0 / 255.0))
                         .foregroundColor(Color.black)
                         .cornerRadius(4.0)
@@ -104,6 +105,7 @@ struct NewMessageView: View {
                     Spacer()
                     TextField("", text: self.$messageSubjectText)
                         .padding(10)
+                        .multilineTextAlignment(.leading)
                         .background(colorScheme == .light ? Color("ChatBubblePrimary") : Color(red: 227.0 / 255.0, green:  227.0 / 255.0, blue: 225.0 / 255.0))
                         .foregroundColor(Color.black)
                         .cornerRadius(4.0)
@@ -116,6 +118,7 @@ struct NewMessageView: View {
                     TextEditor(text: self.$messageBodyText)
                         .border(Color(UIColor.systemGray5))
                         .cornerRadius(4.0)
+                        .multilineTextAlignment(.leading)
                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                         .padding(EdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5))
                 } else {
@@ -123,6 +126,7 @@ struct NewMessageView: View {
                         .border(Color(UIColor.systemGray5))
                         .cornerRadius(4.0)
                         .colorInvert()
+                        .multilineTextAlignment(.leading)
                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                         .padding(EdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5))
                 }
