@@ -533,7 +533,7 @@ class ChatStore: ObservableObject {
     }
     
     // Taggers / Lolers
-    @Published private(set) var raters: [Raters] = []
+    @Published var raters: [Raters] = []
     func getRaters(postId: Int, completionSuccess: @escaping ()->(), completionFail: @escaping ()->()) {
         service.getRaters(postId: postId) { [weak self] result in
             DispatchQueue.main.async {

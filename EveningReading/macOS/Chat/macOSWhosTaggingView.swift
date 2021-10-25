@@ -41,7 +41,10 @@ struct macOSWhosTaggingView: View {
                         VStack {}.frame(width: 800, height: 450)
                         VStack {
                             HStack {
-                                Button(action: {self.showingWhosTaggingView = false}) {
+                                Button(action: {
+                                    self.showingWhosTaggingView = false
+                                    self.chatStore.raters.removeAll()
+                                }) {
                                     Image(systemName: "xmark")
                                 }
                                 .buttonStyle(BorderlessButtonStyle())

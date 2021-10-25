@@ -589,6 +589,8 @@
 		833980D1263C9B3D005614E8 /* Controls */ = {
 			isa = PBXGroup;
 			children = (
+				83FE337627272ECD003FB55D /* BlurView */,
+				83FE337927272F38003FB55D /* LoadingView */,
 				83AA194A2646352900556E69 /* RedactingView */,
 				833EE9C92644DB1800345A1D /* RichTextView */,
 				8339818626406F04005614E8 /* TimeRemainingIndicator */,
@@ -986,8 +988,6 @@
 		83AA195426464FA600556E69 /* Controls */ = {
 			isa = PBXGroup;
 			children = (
-				83FE337927272F38003FB55D /* LoadingView */,
-				83FE337627272ECD003FB55D /* BlurView */,
 				83A85D4B2663C11E007EBAC3 /* MbModalHackView */,
 				83A85D46265EC16E007EBAC3 /* ShackTagsTextView */,
 				8339816D2640588B005614E8 /* RefreshableScrollView */,

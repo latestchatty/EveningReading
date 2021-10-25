@@ -10,6 +10,10 @@ import SwiftUI
 struct LolView: View {
     @EnvironmentObject var chatStore: ChatStore
     
+    #if os(OSX)
+    @State var showTagUsers: Bool = false
+    #endif
+    
     var lols: [ChatLols] = [ChatLols]()
     var expanded: Bool = false
     var capsule: Bool = false
@@ -101,6 +105,7 @@ struct LolView: View {
                     if self.lols.count > 0 {
                         Button(action: {
                             // show who's tagging
+                            self.showTagUsers = true
                         }) {
                             Text("Who's Tagging?")
                             Image(systemName: "tag.circle")
@@ -124,11 +129,14 @@ struct LolView: View {
                                     .foregroundColor(PostTagColor[lol.tag])
                             }
                         }
+                        macOSWhosTaggingView(showingWhosTaggingView: self.$showTagUsers, postId: self.postId)
+                            .frame(width: 5, height: 0)
                     }
                     .contextMenu {
                         if self.lols.count > 0 {
                             Button(action: {
                                 // show who's tagging
+                                self.showTagUsers = true
                             }) {
                                 Text("Who's Tagging?")
                                 Image(systemName: "tag.circle")
@@ -148,11 +156,14 @@ struct LolView: View {
                                     .foregroundColor(PostTagColor[lol.tag])
                             }
                         }
+                        macOSWhosTaggingView(showingWhosTaggingView: self.$showTagUsers, postId: self.postId)
+                            .frame(width: 5, height: 0)
                     }
                     .contextMenu {
                         if self.lols.count > 0 {
                             Button(action: {
                                 // show who's tagging
+                                self.showTagUsers = true
                             }) {
                                 Text("Who's Tagging?")
                                 Image(systemName: "tag.circle")
