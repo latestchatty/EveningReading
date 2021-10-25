@@ -59,7 +59,7 @@ struct macOSPostExpandedView: View {
             Spacer()
         }
         .frame(maxWidth: .infinity)
-        .background(Color("ThreadBubbleSecondary"))
+        .background(Color("ThreadBubblePrimary"))
         .cornerRadius(5)
     }
 }

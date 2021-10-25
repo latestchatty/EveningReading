@@ -138,6 +138,7 @@ struct macOSThreadView: View {
                 }
                 .padding(.horizontal, 10)
                 .padding(.top, 10)
+                .padding(.bottom, 5)
                 
                 // Root post body
                 VStack (alignment: .leading) {
@@ -151,6 +152,7 @@ struct macOSThreadView: View {
             .background(Color("ThreadBubblePrimary"))
             .cornerRadius(10)
             .padding(.horizontal, 10)
+            .padding(.top, 10)
             
             // Replies
             VStack {

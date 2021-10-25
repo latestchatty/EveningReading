@@ -68,6 +68,7 @@ struct macOSChatView: View {
                                         .font(.body)
                                         .bold()
                                         .foregroundColor(Color("NoDataLabel"))
+                                        .padding(.top, 10)
                                 } else {
                                     macOSThreadView(threadId: $chatStore.activeThreadId)
                                 }
