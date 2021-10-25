@@ -278,9 +278,15 @@ struct ThreadDetailView: View {
                                         .font(.caption)
                                         .foregroundColor(Color("NoDataLabel"))
                                     Spacer()
-                                    TagPostView(postId: self.threadId)
-                                    Spacer().frame(width: 10)
-                                    ComposePostView(postId: self.threadId)
+                                    if self.threadId == 0 {
+                                        TagPostView(postId: self.postId)
+                                        Spacer().frame(width: 10)
+                                        ComposePostView(postId: self.postId)
+                                    } else {
+                                        TagPostView(postId: self.threadId)
+                                        Spacer().frame(width: 10)
+                                        ComposePostView(postId: self.threadId)
+                                    }
                                 }
                                 .padding(.horizontal, 10)
                                 .padding(.bottom, 10)
