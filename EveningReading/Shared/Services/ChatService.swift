@@ -173,8 +173,8 @@ class ChatService {
     
     public func tag(postId: Int, tag: String, untag: String, handler: @escaping (Result<TagReponse, Error>) -> Void) {
         if let lolKey = Bundle.main.infoDictionary?["LOL_KEY"] as? String {
-            
-            let username: String? = KeychainWrapper.standard.string(forKey: "Username")
+            //let username: String? = KeychainWrapper.standard.string(forKey: "Username")
+            let username = UserHelper.getUserName()
             
             guard
                 var urlComponents = URLComponents(string: "https://www.shacknews.com/api2/api-index.php")

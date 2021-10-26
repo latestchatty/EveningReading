@@ -132,6 +132,10 @@
 		833EE9E326454DFB00345A1D /* WebAuthenticationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833EE9E026454DFB00345A1D /* WebAuthenticationPresenter.swift */; };
 		833EE9E426454DFB00345A1D /* WebAuthenticationSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833EE9E126454DFB00345A1D /* WebAuthenticationSession.swift */; };
 		833EE9E52645517D00345A1D /* RichTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833EE9CA2644DB2100345A1D /* RichTextView.swift */; };
+		834EFE6127284273004E7BA1 /* macOSTagPostButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834EFE6027284273004E7BA1 /* macOSTagPostButton.swift */; };
+		834EFE6327284603004E7BA1 /* UserHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834EFE6227284603004E7BA1 /* UserHelper.swift */; };
+		834EFE6527284A85004E7BA1 /* UserHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834EFE6227284603004E7BA1 /* UserHelper.swift */; };
+		834EFE6627284A8F004E7BA1 /* UserHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834EFE6227284603004E7BA1 /* UserHelper.swift */; };
 		83501CE026D043F7008CFBB9 /* FontExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83501CDE26D043EC008CFBB9 /* FontExtensions.swift */; };
 		83A85CE52650360E007EBAC3 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19EA264F24FC00556E69 /* NotificationService.swift */; };
 		83A85CEB26515CBB007EBAC3 /* PushNotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A85CEA26515CBB007EBAC3 /* PushNotificationView.swift */; };
@@ -354,6 +358,8 @@
 		833EE9DF26454DFB00345A1D /* WebAuthenticationPresentationModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebAuthenticationPresentationModifier.swift; sourceTree = "<group>"; };
 		833EE9E026454DFB00345A1D /* WebAuthenticationPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebAuthenticationPresenter.swift; sourceTree = "<group>"; };
 		833EE9E126454DFB00345A1D /* WebAuthenticationSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebAuthenticationSession.swift; sourceTree = "<group>"; };
+		834EFE6027284273004E7BA1 /* macOSTagPostButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSTagPostButton.swift; sourceTree = "<group>"; };
+		834EFE6227284603004E7BA1 /* UserHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserHelper.swift; sourceTree = "<group>"; };
 		83501CDE26D043EC008CFBB9 /* FontExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontExtensions.swift; sourceTree = "<group>"; };
 		83A85CEA26515CBB007EBAC3 /* PushNotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationView.swift; sourceTree = "<group>"; };
 		83A85CEE26551087007EBAC3 /* GoToShackLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoToShackLinkView.swift; sourceTree = "<group>"; };
@@ -446,6 +452,7 @@
 			isa = PBXGroup;
 			children = (
 				833685C726723E6400ACE618 /* macOSNoticeView.swift */,
+				834EFE6027284273004E7BA1 /* macOSTagPostButton.swift */,
 			);
 			path = Controls;
 			sourceTree = "<group>";
@@ -828,6 +835,7 @@
 				8339818326406814005614E8 /* Globals.swift */,
 				830292F02644C57F00B974B3 /* ReplyLineBuilder.swift */,
 				83AA19262645C43500556E69 /* PostDecorator.swift */,
+				834EFE6227284603004E7BA1 /* UserHelper.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1330,6 +1338,7 @@
 				8339811E263F288D005614E8 /* ArticleCard.swift in Sources */,
 				83A85D4D2663C128007EBAC3 /* MbModalHackView.swift in Sources */,
 				83398143263F526A005614E8 /* iPadHomeButtons.swift in Sources */,
+				834EFE6527284A85004E7BA1 /* UserHelper.swift in Sources */,
 				833EE9E426454DFB00345A1D /* WebAuthenticationSession.swift in Sources */,
 				833980EB263F07DC005614E8 /* iPhoneHomeButton.swift in Sources */,
 				83AA19C62648829E00556E69 /* NewMessageView.swift in Sources */,
@@ -1398,6 +1407,7 @@
 				8339816026403F08005614E8 /* macOSTagsView.swift in Sources */,
 				83AA1960264656BD00556E69 /* KeychainItemAccessibility.swift in Sources */,
 				83AA1963264656BD00556E69 /* KeychainWrapper.swift in Sources */,
+				834EFE6327284603004E7BA1 /* UserHelper.swift in Sources */,
 				833685D32672C18F00ACE618 /* macOSPostPreviewView.swift in Sources */,
 				833685C626702CB900ACE618 /* macOSClearHiddenView.swift in Sources */,
 				833EE9CC2644DE1A00345A1D /* RichTextView.swift in Sources */,
@@ -1416,6 +1426,7 @@
 				833981A4264189DC005614E8 /* ContributedView.swift in Sources */,
 				83AA1966264656BD00556E69 /* KeychainWrapperSubscript.swift in Sources */,
 				83FE3380272730B6003FB55D /* BlurView.swift in Sources */,
+				834EFE6127284273004E7BA1 /* macOSTagPostButton.swift in Sources */,
 				833685CA267243B500ACE618 /* macOSTagPostView.swift in Sources */,
 				833817932639AC18007A8B28 /* EveningReadingApp.swift in Sources */,
 				830292F22644C57F00B974B3 /* ReplyLineBuilder.swift in Sources */,
@@ -1439,6 +1450,7 @@
 				83AA1964264656BD00556E69 /* KeychainWrapper.swift in Sources */,
 				833981A82641A922005614E8 /* ChatService.swift in Sources */,
 				833981BF26421312005614E8 /* watchOSPostPreview.swift in Sources */,
+				834EFE6627284A8F004E7BA1 /* UserHelper.swift in Sources */,
 				833980B2263C41CF005614E8 /* watchOSContentView.swift in Sources */,
 				833981BB2641C4E9005614E8 /* ReplyCountView.swift in Sources */,
 				833980B0263C41CF005614E8 /* EveningReadingApp.swift in Sources */,

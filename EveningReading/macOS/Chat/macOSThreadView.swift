@@ -127,11 +127,8 @@ struct macOSThreadView: View {
                         }
                     
                     if appSessionStore.isSignedIn {
-                        Image(systemName: "tag")
-                            .imageScale(.large)
-                            .onTapGesture(count: 1) {
-                            }
-                    
+                        macOSTagPostButton(postId: self.threadId)
+                        
                         Image(systemName: "arrowshape.turn.up.left")
                             .imageScale(.large)
                             .onTapGesture(count: 1) {

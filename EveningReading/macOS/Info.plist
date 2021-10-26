@@ -31,5 +31,13 @@
 		<string>replylines.ttf</string>
 		<string>tags.ttf</string>
 	</array>
+	<key>LOL_KEY</key>
+	<string>$(LOL_KEY)</string>
+	<key>IMGUR_KEY</key>
+	<string>$(IMGUR_KEY)</string>
+	<key>SHACK_ERPASS</key>
+	<string>$(SHACK_ERPASS)</string>
+	<key>SHACK_ERUSER</key>
+	<string>$(SHACK_ERUSER)</string>
 </dict>
 </plist>

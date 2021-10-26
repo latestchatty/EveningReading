@@ -47,10 +47,7 @@ struct macOSPostExpandedView: View {
                             .font(.caption)
                             .foregroundColor(Color("NoDataLabel"))
                         Spacer()
-                        Image(systemName: "tag")
-                            .imageScale(.large)
-                            .onTapGesture(count: 1) {
-                            }
+                        macOSTagPostButton(postId: self.postId)
                         Image(systemName: "arrowshape.turn.up.left")
                             .imageScale(.large)
                             .onTapGesture(count: 1) {
