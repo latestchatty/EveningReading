@@ -14,6 +14,7 @@ struct macOSPostExpandedView: View {
     @Binding var replyLines: String?
     @Binding var lols: [ChatLols]
     @Binding var postText: [RichTextBlock]
+    @Binding var postDateTime: String
 
     var body: some View {
         HStack {
@@ -42,6 +43,9 @@ struct macOSPostExpandedView: View {
 
                 if appSessionStore.isSignedIn {
                     HStack {
+                        Text(postDateTime.postTimestamp())
+                            .font(.caption)
+                            .foregroundColor(Color("NoDataLabel"))
                         Spacer()
                         Image(systemName: "tag")
                             .imageScale(.large)
@@ -53,7 +57,7 @@ struct macOSPostExpandedView: View {
                             }
                     }
                     .padding(.bottom, 8)
-                    .padding(.trailing, 8)
+                    .padding(.horizontal, 8)
                 }
             }
             Spacer()
@@ -66,7 +70,7 @@ struct macOSPostExpandedView: View {
 
 struct macOSPostExpandedView_Previews: PreviewProvider {
     static var previews: some View {
-        macOSPostExpandedView(postId: .constant(0), postAuthor: .constant(""), replyLines: .constant(""), lols: .constant([ChatLols]()), postText: .constant([RichTextBlock]()))
+        macOSPostExpandedView(postId: .constant(0), postAuthor: .constant(""), replyLines: .constant(""), lols: .constant([ChatLols]()), postText: .constant([RichTextBlock]()), postDateTime: .constant("2020-04-20T09:20:00Z"))
             .environmentObject(AppSessionStore(service: AuthService()))
     }
 }

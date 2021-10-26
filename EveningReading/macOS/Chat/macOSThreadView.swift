@@ -110,8 +110,10 @@ struct macOSThreadView: View {
                     Spacer()
 
                     LolView(lols: self.rootPostLols, expanded: true, postId: self.threadId)
+                        .padding(.trailing, 1)
 
                     ReplyCountView(replyCount: self.replyCount)
+                        .padding(.trailing, 5)
                     
                     /*
                     Text(self.rootPostDate.getTimeAgo())
@@ -147,6 +149,12 @@ struct macOSThreadView: View {
                 }
                 .padding(.horizontal, 10)
                 .padding(.bottom, 10)
+                
+                Text(rootPostDate.postTimestamp())
+                    .font(.caption)
+                    .foregroundColor(Color("NoDataLabel"))
+                    .padding(.bottom, 10)
+                    .padding(.leading, 10)
             }
             .frame(maxWidth: .infinity)
             .background(Color("ThreadBubblePrimary"))
@@ -175,7 +183,7 @@ struct macOSThreadView: View {
                         // Reply expaned row
                         if self.selectedPost == post.id {
                             VStack {
-                                macOSPostExpandedView(postId: .constant(post.id), postAuthor: .constant(post.author), replyLines: self.$replyLines[post.id], lols: .constant(post.lols), postText: self.$selectedPostRichText)
+                                macOSPostExpandedView(postId: .constant(post.id), postAuthor: .constant(post.author), replyLines: self.$replyLines[post.id], lols: .constant(post.lols), postText: self.$selectedPostRichText, postDateTime: .constant(post.date))
                             }
                             .onAppear() {
                                 // Load Rich Text
