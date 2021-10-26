@@ -29,6 +29,9 @@ struct macOSThreadView: View {
     @State private var selectedPost = 0
     @State private var selectedPostRichText = [RichTextBlock]()
     
+    @State private var showingHideAlert = false
+    @State private var hideThread = false
+    
     private func getThreadData() {
         if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
         {
@@ -100,129 +103,152 @@ struct macOSThreadView: View {
     var body: some View {
         VStack (alignment: .leading) {
             
-            // Root post
-            VStack (alignment: .leading) {
-                HStack {
-                    AuthorNameView(name: self.rootPostAuthor, postId: self.threadId)
-                    
-                    ContributedView(contributed: self.contributed)
+            if hideThread {
+                
+                Text("No thread selected.")
+                    .font(.body)
+                    .bold()
+                    .foregroundColor(Color("NoDataLabel"))
+                    .padding(.top, 10)
+                
+            } else {
+            
+                // Root post
+                VStack (alignment: .leading) {
+                    HStack {
+                        AuthorNameView(name: self.rootPostAuthor, postId: self.threadId)
+                        
+                        ContributedView(contributed: self.contributed)
 
-                    Spacer()
+                        Spacer()
 
-                    Text("\(rootPostDate.getTimeRemaining()) left")
-                        .foregroundColor(Color("NoDataLabel"))
-                        .font(.body)
-                        .help(rootPostDate.postTimestamp())
-                    
-                    Text("-")
-                        .foregroundColor(Color("NoDataLabel"))
-                    
-                    ReplyCountView(replyCount: self.replyCount)
-                        .padding(.trailing, 5)
-                    
-                    /*
-                    Text(self.rootPostDate.getTimeAgo())
-                        .foregroundColor(Color.gray)
-                        .font(.body)
-                    */
-                    
-                    Image(systemName: "eye.slash")
-                        .imageScale(.large)
-                        .onTapGesture(count: 1) {
+                        Text("\(rootPostDate.getTimeRemaining()) left")
+                            .foregroundColor(Color("NoDataLabel"))
+                            .font(.body)
+                            .help(rootPostDate.postTimestamp())
+                        
+                        Text("-")
+                            .foregroundColor(Color("NoDataLabel"))
+                        
+                        ReplyCountView(replyCount: self.replyCount)
+                            .padding(.trailing, 5)
+                        
+                        /*
+                        Text(self.rootPostDate.getTimeAgo())
+                            .foregroundColor(Color.gray)
+                            .font(.body)
+                        */
+                        
+                        
+                        Image(systemName: "eye.slash")
+                            .imageScale(.large)
+                            .onTapGesture(count: 1) {
+                                self.showingHideAlert = true
+                            }
+                        .alert(isPresented: self.$showingHideAlert) {
+                            Alert(title: Text("Hide thread?"), message: Text(""), primaryButton: .default(Text("Yes")) {
+                                // collapse thread
+                                self.appSessionStore.collapsedThreads.append(self.threadId)
+                                chatStore.activeThreadId = 0
+                                self.hideThread = true
+                            }, secondaryButton: .cancel() {
+                                
+                            })
                         }
+                        
+                    }
+                    .padding(.horizontal, 10)
+                    .padding(.top, 10)
+                    .padding(.bottom, 5)
+                    
+                    // Root post body
+                    VStack (alignment: .leading) {
+                        RichTextView(topBlocks: appSessionStore.blockedAuthors.contains(self.rootPostAuthor) ? RichTextBuilder.getRichText(postBody: "[blocked]") : self.rootPostRichText)
+                        .fixedSize(horizontal: false, vertical: true)
+                    }
+                    .padding(.horizontal, 10)
+                    .padding(.bottom, 10)
+                    
+                    HStack {
+                        LolView(lols: self.rootPostLols, expanded: true, postId: self.threadId)
+                            .padding(.trailing, 1)
+
+                        Spacer()
+                        
+                        if appSessionStore.isSignedIn {
+                            macOSTagPostButton(postId: self.threadId)
+                            Image(systemName: "link")
+                                .imageScale(.large)
+                                .onTapGesture(count: 1) {
+                                }
+                            Image(systemName: "arrowshape.turn.up.left")
+                                .imageScale(.large)
+                                .onTapGesture(count: 1) {
+                                }
+                        }
+                    }
+                    .padding(.horizontal, 10)
+                    .padding(.bottom, 10)
+                    
                 }
+                .frame(maxWidth: .infinity)
+                .background(Color("ThreadBubblePrimary"))
+                .cornerRadius(10)
                 .padding(.horizontal, 10)
                 .padding(.top, 10)
-                .padding(.bottom, 5)
-                
-                // Root post body
-                VStack (alignment: .leading) {
-                    RichTextView(topBlocks: appSessionStore.blockedAuthors.contains(self.rootPostAuthor) ? RichTextBuilder.getRichText(postBody: "[blocked]") : self.rootPostRichText)
-                    .fixedSize(horizontal: false, vertical: true)
-                }
-                .padding(.horizontal, 10)
-                .padding(.bottom, 10)
-                
-                HStack {
-                    LolView(lols: self.rootPostLols, expanded: true, postId: self.threadId)
-                        .padding(.trailing, 1)
-
-                    Spacer()
+            
+                // Replies
+                VStack {
+                    // No replies yet
+                    if postList.count < 1 {
+                        HStack {
+                            Spacer()
+                            Text("No replies, be the first to post.")
+                                .font(.body)
+                                .bold()
+                                .foregroundColor(Color("NoDataLabel"))
+                            Spacer()
+                        }
+                    }
                     
-                    if appSessionStore.isSignedIn {
-                        macOSTagPostButton(postId: self.threadId)
-                        Image(systemName: "link")
-                            .imageScale(.large)
-                            .onTapGesture(count: 1) {
+                    // Post list
+                    ForEach(postList, id: \.id) { post in
+                        HStack {
+                            
+                            // Reply expaned row
+                            if self.selectedPost == post.id {
+                                VStack {
+                                    macOSPostExpandedView(postId: .constant(post.id), postAuthor: .constant(post.author), replyLines: self.$replyLines[post.id], lols: .constant(post.lols), postText: self.$selectedPostRichText, postDateTime: .constant(post.date))
+                                }
+                                .onAppear() {
+                                    // Load Rich Text
+                                    self.selectedPostRichText = RichTextBuilder.getRichText(postBody: post.body)
+                                }
                             }
-                        Image(systemName: "arrowshape.turn.up.left")
-                            .imageScale(.large)
-                            .onTapGesture(count: 1) {
+                            
+                            // Reply preview row
+                            if self.selectedPost != post.id {
+                                HStack {
+                                    macOSPostPreviewView(postId: .constant(post.id), postAuthor: .constant(post.author), replyLines: self.$replyLines[post.id], lols: .constant(post.lols), postText: .constant(post.body), postCategory: .constant(post.category), postStrength: .constant(postStrength[post.id]))
+                                }
+                                .contentShape(Rectangle())
+                                .onTapGesture(count: 1) {
+                                    //withAnimation {
+                                        selectedPost = post.id
+                                    //}
+                                }
                             }
+                            
+                        }
+                        .id(post.id)
                     }
                 }
-                .padding(.horizontal, 10)
+                .padding(.horizontal, 20)
                 .padding(.bottom, 10)
-                
             }
-            .frame(maxWidth: .infinity)
-            .background(Color("ThreadBubblePrimary"))
-            .cornerRadius(10)
-            .padding(.horizontal, 10)
-            .padding(.top, 10)
-            
-            // Replies
-            VStack {
-                // No replies yet
-                if postList.count < 1 {
-                    HStack {
-                        Spacer()
-                        Text("No replies, be the first to post.")
-                            .font(.body)
-                            .bold()
-                            .foregroundColor(Color("NoDataLabel"))
-                        Spacer()
-                    }
-                }
-                
-                // Post list
-                ForEach(postList, id: \.id) { post in
-                    HStack {
-                        
-                        // Reply expaned row
-                        if self.selectedPost == post.id {
-                            VStack {
-                                macOSPostExpandedView(postId: .constant(post.id), postAuthor: .constant(post.author), replyLines: self.$replyLines[post.id], lols: .constant(post.lols), postText: self.$selectedPostRichText, postDateTime: .constant(post.date))
-                            }
-                            .onAppear() {
-                                // Load Rich Text
-                                self.selectedPostRichText = RichTextBuilder.getRichText(postBody: post.body)
-                            }
-                        }
-                        
-                        // Reply preview row
-                        if self.selectedPost != post.id {
-                            HStack {
-                                macOSPostPreviewView(postId: .constant(post.id), postAuthor: .constant(post.author), replyLines: self.$replyLines[post.id], lols: .constant(post.lols), postText: .constant(post.body), postCategory: .constant(post.category), postStrength: .constant(postStrength[post.id]))
-                            }
-                            .contentShape(Rectangle())
-                            .onTapGesture(count: 1) {
-                                //withAnimation {
-                                    selectedPost = post.id
-                                //}
-                            }
-                        }
-                        
-                    }
-                    .id(post.id)
-                }
-            }
-            .padding(.horizontal, 20)
-            .padding(.bottom, 10)
-            
-            
         }
         .onReceive(chatStore.$activeThreadId) { value in
+            self.hideThread = false
             getThreadData()
             postList = [ChatPosts]()
             postStrength = [Int: Double]()
