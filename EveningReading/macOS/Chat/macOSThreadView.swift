@@ -109,9 +109,14 @@ struct macOSThreadView: View {
 
                     Spacer()
 
-                    LolView(lols: self.rootPostLols, expanded: true, postId: self.threadId)
-                        .padding(.trailing, 1)
-
+                    Text("\(rootPostDate.getTimeRemaining()) left")
+                        .foregroundColor(Color("NoDataLabel"))
+                        .font(.body)
+                        .help(rootPostDate.postTimestamp())
+                    
+                    Text("-")
+                        .foregroundColor(Color("NoDataLabel"))
+                    
                     ReplyCountView(replyCount: self.replyCount)
                         .padding(.trailing, 5)
                     
@@ -125,15 +130,6 @@ struct macOSThreadView: View {
                         .imageScale(.large)
                         .onTapGesture(count: 1) {
                         }
-                    
-                    if appSessionStore.isSignedIn {
-                        macOSTagPostButton(postId: self.threadId)
-                        
-                        Image(systemName: "arrowshape.turn.up.left")
-                            .imageScale(.large)
-                            .onTapGesture(count: 1) {
-                            }
-                    }
                 }
                 .padding(.horizontal, 10)
                 .padding(.top, 10)
@@ -141,17 +137,33 @@ struct macOSThreadView: View {
                 
                 // Root post body
                 VStack (alignment: .leading) {
-                    RichTextView(topBlocks: self.rootPostRichText)
-                        .fixedSize(horizontal: false, vertical: true)
+                    RichTextView(topBlocks: appSessionStore.blockedAuthors.contains(self.rootPostAuthor) ? RichTextBuilder.getRichText(postBody: "[blocked]") : self.rootPostRichText)
+                    .fixedSize(horizontal: false, vertical: true)
                 }
                 .padding(.horizontal, 10)
                 .padding(.bottom, 10)
                 
-                Text(rootPostDate.postTimestamp())
-                    .font(.caption)
-                    .foregroundColor(Color("NoDataLabel"))
-                    .padding(.bottom, 10)
-                    .padding(.leading, 10)
+                HStack {
+                    LolView(lols: self.rootPostLols, expanded: true, postId: self.threadId)
+                        .padding(.trailing, 1)
+
+                    Spacer()
+                    
+                    if appSessionStore.isSignedIn {
+                        macOSTagPostButton(postId: self.threadId)
+                        Image(systemName: "link")
+                            .imageScale(.large)
+                            .onTapGesture(count: 1) {
+                            }
+                        Image(systemName: "arrowshape.turn.up.left")
+                            .imageScale(.large)
+                            .onTapGesture(count: 1) {
+                            }
+                    }
+                }
+                .padding(.horizontal, 10)
+                .padding(.bottom, 10)
+                
             }
             .frame(maxWidth: .infinity)
             .background(Color("ThreadBubblePrimary"))

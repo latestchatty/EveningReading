@@ -24,6 +24,10 @@ struct AuthorNameView: View {
     @State private var messageBody: String = ""
     #endif
     
+    #if os(macOS)
+    @State private var showingBlockUser = false
+    #endif
+    
     #if os(watchOS)
     @State private var showingAuthor = false
     #endif
@@ -39,11 +43,12 @@ struct AuthorNameView: View {
                 .fixedSize()
         #endif
         #if os(OSX)
-            Text("\(self.name)")
+            Text("\(appSessionStore.blockedAuthors.contains(self.name) ? "[blocked]" : self.name)")
                 .font(self.bold ? .headline : .body)
                 .foregroundColor(colorScheme == .dark ? Color(NSColor.systemOrange) : Color(NSColor.systemPurple))
                 .lineLimit(1)
                 .contextMenu {
+                    /*
                     Button(action: {
                         // send message
                     }) {
@@ -62,6 +67,22 @@ struct AuthorNameView: View {
                         Text("Report User")
                         Image(systemName: "exclamationmark.circle")
                     }
+                    */
+                    Button(action: {
+                        // block user
+                        self.showingBlockUser = true
+                    }) {
+                        Text("Block User")
+                        Image(systemName: "exclamationmark.circle")
+                    }
+                    
+                }
+                .alert(isPresented: self.$showingBlockUser) {
+                    Alert(title: Text("Block \(self.name)?"), message: Text("For post \(String(self.postId))"), primaryButton: .destructive(Text("Yes")) {
+                        appSessionStore.blockedAuthors.append(self.name)
+                    }, secondaryButton: .cancel() {
+                        
+                    })
                 }
         #endif
         #if os(watchOS)

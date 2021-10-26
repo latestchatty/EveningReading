@@ -37,7 +37,7 @@ struct macOSPostExpandedView: View {
         HStack {
             VStack (alignment: .leading) {
                 // Full post
-                RichTextView(topBlocks: self.postText)
+                RichTextView(topBlocks: appSessionStore.blockedAuthors.contains(self.postAuthor) ? RichTextBuilder.getRichText(postBody: "[blocked]") : self.postText)
                     .fixedSize(horizontal: false, vertical: true)
                     .padding(8)
 
@@ -48,6 +48,10 @@ struct macOSPostExpandedView: View {
                             .foregroundColor(Color("NoDataLabel"))
                         Spacer()
                         macOSTagPostButton(postId: self.postId)
+                        Image(systemName: "link")
+                            .imageScale(.large)
+                            .onTapGesture(count: 1) {
+                            }
                         Image(systemName: "arrowshape.turn.up.left")
                             .imageScale(.large)
                             .onTapGesture(count: 1) {

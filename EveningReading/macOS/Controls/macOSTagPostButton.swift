@@ -48,7 +48,6 @@ struct macOSTagPostButton: View {
                 //DispatchQueue.main.async {
                 // Is asyncAfter necessary to work 100%?
                 DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(50)) {
-                    print("Should show \(chatStore.taggingNoticeText) toast?")
                     chatStore.didTagPost = true
                     chatStore.showingTagNotice = true
                 }

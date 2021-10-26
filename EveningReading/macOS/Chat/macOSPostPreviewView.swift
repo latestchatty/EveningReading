@@ -47,7 +47,7 @@ struct macOSPostPreviewView: View {
         }
         
         // Post preview line
-        Text("\(postText.getPreview)")
+        Text("\(appSessionStore.blockedAuthors.contains(self.postAuthor) ? "[blocked]" : postText.getPreview)")
             .font(.body)
             .fontWeight(postStrength != nil ? PostWeight[postStrength!] : .regular)
             .opacity(postStrength != nil ? postStrength! : 0.75)
