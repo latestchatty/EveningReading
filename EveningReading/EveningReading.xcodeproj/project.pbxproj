@@ -136,6 +136,7 @@
 		834EFE6327284603004E7BA1 /* UserHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834EFE6227284603004E7BA1 /* UserHelper.swift */; };
 		834EFE6527284A85004E7BA1 /* UserHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834EFE6227284603004E7BA1 /* UserHelper.swift */; };
 		834EFE6627284A8F004E7BA1 /* UserHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834EFE6227284603004E7BA1 /* UserHelper.swift */; };
+		834EFE6727285445004E7BA1 /* NoticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19A4264824CB00556E69 /* NoticeView.swift */; };
 		83501CE026D043F7008CFBB9 /* FontExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83501CDE26D043EC008CFBB9 /* FontExtensions.swift */; };
 		83A85CE52650360E007EBAC3 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19EA264F24FC00556E69 /* NotificationService.swift */; };
 		83A85CEB26515CBB007EBAC3 /* PushNotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A85CEA26515CBB007EBAC3 /* PushNotificationView.swift */; };
@@ -1407,6 +1408,7 @@
 				8339816026403F08005614E8 /* macOSTagsView.swift in Sources */,
 				83AA1960264656BD00556E69 /* KeychainItemAccessibility.swift in Sources */,
 				83AA1963264656BD00556E69 /* KeychainWrapper.swift in Sources */,
+				834EFE6727285445004E7BA1 /* NoticeView.swift in Sources */,
 				834EFE6327284603004E7BA1 /* UserHelper.swift in Sources */,
 				833685D32672C18F00ACE618 /* macOSPostPreviewView.swift in Sources */,
 				833685C626702CB900ACE618 /* macOSClearHiddenView.swift in Sources */,

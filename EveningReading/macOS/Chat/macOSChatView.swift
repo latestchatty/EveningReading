@@ -76,6 +76,7 @@ struct macOSChatView: View {
                             .onReceive(chatStore.$activeThreadId) { value in
                                 scrollProxy.scrollTo(999999991, anchor: .top)
                             }
+                            .overlay(NoticeView(show: $chatStore.showingTagNotice, message: $chatStore.taggingNoticeText))
                         }
                     }
                     .frame(width: geometry.size.width * 0.65)
