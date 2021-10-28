@@ -21,9 +21,19 @@ struct macOSThreadList: View {
     }
     
     var body: some View {
-        ForEach(filteredThreads(), id: \.threadId) { thread in
-            VStack {
-                macOSThreadPreview(threadId: thread.threadId)
+        VStack {
+            if chatStore.gettingChat {
+                ProgressView()
+                    .foregroundColor(Color.accentColor)
+                    .progressViewStyle(LinearProgressViewStyle())
+                    .padding()
+                Spacer()
+            } else {
+                ForEach(filteredThreads(), id: \.threadId) { thread in
+                    VStack {
+                        macOSThreadPreview(threadId: thread.threadId)
+                    }
+                }
             }
         }
     }

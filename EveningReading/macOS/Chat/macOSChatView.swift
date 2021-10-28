@@ -13,7 +13,7 @@ struct macOSChatView: View {
     
     @State private var showingGuidelinesView = false
     @State private var guidelinesAccepted = false
-
+    
     private func fetchChat() {
         if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil || chatStore.threads.count > 0
         {

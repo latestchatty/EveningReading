@@ -9,6 +9,9 @@ import Foundation
 import SwiftUI
 
 struct macOSTextPromptSheet<Label>: View where Label : View {
+    @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var chatStore: ChatStore
+    
     @Binding var showPrompt: Bool
     let action: (_ text: String, _ handler: @escaping (Result<Bool, Error>) -> Void) -> Void
     let label: Label
