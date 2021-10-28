@@ -36,7 +36,6 @@ struct macOSContentView: View {
                 .navigationTitle("Evening Reading")
                 .frame(minWidth: 150, idealWidth: 250, maxWidth: 300)
                 .toolbar {
-                    
                     // Collapse Sidebar
                     ToolbarItem(placement: .automatic) {
                         Button(action: {

@@ -57,30 +57,36 @@ struct macOSChatView: View {
                     Divider()
                     
                     // Thread Detail
-                    ScrollView {
-                        ScrollViewReader { scrollProxy in
-                            VStack {
-                                Spacer().frame(width: 0, height: 0)
-                            }.id(999999991)
-                            LazyVStack {
-                                if chatStore.activeThreadId == 0 {
-                                    Text("No thread selected.")
-                                        .font(.body)
-                                        .bold()
-                                        .foregroundColor(Color("NoDataLabel"))
-                                        .padding(.top, 10)
-                                } else {
-                                    macOSThreadView(threadId: $chatStore.activeThreadId)
+                    ZStack {
+                        ScrollView {
+                            ScrollViewReader { scrollProxy in
+                                VStack {
+                                    Spacer().frame(width: 0, height: 0)
+                                }.id(999999991)
+                                LazyVStack {
+                                    if chatStore.activeThreadId == 0 {
+                                        Text("No thread selected.")
+                                            .font(.body)
+                                            .bold()
+                                            .foregroundColor(Color("NoDataLabel"))
+                                            .padding(.top, 10)
+                                    } else {
+                                        macOSThreadView(threadId: $chatStore.activeThreadId)
+                                    }
+                                }
+                                .onReceive(chatStore.$activeThreadId) { value in
+                                    scrollProxy.scrollTo(999999991, anchor: .top)
                                 }
                             }
-                            .onReceive(chatStore.$activeThreadId) { value in
-                                scrollProxy.scrollTo(999999991, anchor: .top)
-                            }
-                            .overlay(NoticeView(show: $chatStore.showingTagNotice, message: $chatStore.taggingNoticeText))
                         }
+                        
+                        // Toasts
+                        NoticeView(show: $chatStore.showingTagNotice, message: $chatStore.taggingNoticeText)
+                        
+                        NoticeView(show: $chatStore.didCopyLink, message: .constant("Copied!"))
                     }
                     .frame(width: geometry.size.width * 0.65)
-                    
+
                 }
             }
             .onAppear(perform: fetchChat)

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct macOSPostExpandedView: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var chatStore: ChatStore
     @Binding var postId: Int
     @Binding var postAuthor: String
     @Binding var replyLines: String?
@@ -51,6 +52,9 @@ struct macOSPostExpandedView: View {
                         Image(systemName: "link")
                             .imageScale(.large)
                             .onTapGesture(count: 1) {
+                                NSPasteboard.general.clearContents()
+                                NSPasteboard.general.setString("https://www.shacknews.com/chatty?id=\(self.postId)#item_\(self.postId)", forType: .URL)
+                                chatStore.didCopyLink = true
                             }
                         Image(systemName: "arrowshape.turn.up.left")
                             .imageScale(.large)

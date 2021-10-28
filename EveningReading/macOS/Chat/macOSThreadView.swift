@@ -180,6 +180,9 @@ struct macOSThreadView: View {
                             Image(systemName: "link")
                                 .imageScale(.large)
                                 .onTapGesture(count: 1) {
+                                    NSPasteboard.general.clearContents()
+                                    NSPasteboard.general.setString("https://www.shacknews.com/chatty?id=\(self.threadId)#item_\(self.threadId)", forType: .URL)
+                                    chatStore.didCopyLink = true
                                 }
                             Image(systemName: "arrowshape.turn.up.left")
                                 .imageScale(.large)
