@@ -146,7 +146,7 @@ struct macOSThreadView: View {
                             .padding(.top, 10)
                         
                         // Replies
-                        VStack {
+                        LazyVStack (alignment: .leading, spacing: 0) {
                             // No replies yet
                             if postList.count < 1 {
                                 HStack {
@@ -189,7 +189,6 @@ struct macOSThreadView: View {
                         }
                         .padding(.horizontal, 20)
                         .padding(.bottom, 10)
-                        
                     }
                 }
                 // Something about this causes a resource leak in instruments.
