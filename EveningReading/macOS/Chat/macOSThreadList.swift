@@ -30,9 +30,8 @@ struct macOSThreadList: View {
                 Spacer()
             } else {
                 ForEach(filteredThreads(), id: \.threadId) { thread in
-                    VStack {
-                        macOSThreadPreview(threadId: thread.threadId)
-                    }
+                    macOSThreadPreview(threadId: thread.threadId)
+                        .padding(.bottom, -10)
                 }
             }
         }
