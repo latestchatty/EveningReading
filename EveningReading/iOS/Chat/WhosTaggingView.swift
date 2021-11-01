@@ -30,8 +30,8 @@ struct WhosTaggingView: View {
     }
     
     var body: some View {
-        VStack {
-            Spacer()
+        //VStack {
+            Spacer().frame(width: 0, height: 0)
             .sheet(isPresented: $showingWhosTaggingView) {
                 VStack {
                     HStack {
@@ -187,8 +187,8 @@ struct WhosTaggingView: View {
                 .edgesIgnoringSafeArea(.all)
                 .overlay(LoadingView(show: self.$hideRaters, title: .constant("")))
             } // sheet
-        }
-        .frame(height: 25)
+        //}
+        //.frame(height: 25)
     }
 }
 

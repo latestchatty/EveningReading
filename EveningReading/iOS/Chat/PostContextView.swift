@@ -30,6 +30,7 @@ struct PostContextView: View {
     
     var body: some View {
         Button(action: {
+            chatStore.activePostId = postId
             self.showingWhosTaggingView = true
         }) {
             Text("Who's Tagging?")

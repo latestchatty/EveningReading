@@ -223,12 +223,18 @@ struct ThreadDetailView: View {
                 //GoToPostView(currentViewName: "ThreadView")
                 GoToShackLinkView()
             }
+            
+            // This little bit of code might not be needed
+            // since these both are navigation items (see
+            // bottom of file)
+            /*
             if UIDevice.current.userInterfaceIdiom == .pad {
-                WhosTaggingView(showingWhosTaggingView: self.$showingWhosTaggingView)
-                    .frame(width: 0, height: 0)
-                NewMessageView(showingNewMessageSheet: self.$showingNewMessageView, messageId: Binding.constant(0), recipientName: self.$messageRecipient, subjectText: self.$messageSubject, bodyText: self.$messageBody)
-                    .frame(width: 0, height: 0)
+                HStack {
+                    WhosTaggingView(showingWhosTaggingView: self.$showingWhosTaggingView)
+                    NewMessageView(showingNewMessageSheet: self.$showingNewMessageView, messageId: Binding.constant(0), recipientName: self.$messageRecipient, subjectText: self.$messageSubject, bodyText: self.$messageBody)
+                }
             }
+            */
             // End comment out to preview
             
             if self.showThread {
