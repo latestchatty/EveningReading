@@ -121,7 +121,8 @@ class ViewedPostsStore: ObservableObject {
                 switch result {
                 case .success(let posts):
                     self?.viewedPosts = posts
-                case .failure(_):
+                case .failure(let err):
+                    print("Error getting seen posts: \(err)")
                     self?.viewedPosts = []
                 }
                 self?.dirty = false

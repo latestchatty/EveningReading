@@ -25,7 +25,6 @@ class ShackTags: NSObject, ObservableObject {
 struct ShackTagsTextView: NSViewRepresentable {
     
     @Binding var text: String
-    @Binding var textStyle: NSFont.TextStyle
     @Binding var disabled: Bool
     //@Binding var doTagText: Bool
     
@@ -35,7 +34,7 @@ struct ShackTagsTextView: NSViewRepresentable {
         let textView = scrollView.documentView as! NSTextView
         
         textView.delegate = context.coordinator
-        textView.font = NSFont.preferredFont(forTextStyle: textStyle)
+        textView.font = NSFont.init(name: Font.defaultFontName, size: Font.defaultFontBodyFontSize + FontSettings.instance.fontOffset)
         //textView.autocapitalizationType = .sentences
         textView.isSelectable = true
         textView.isContinuousSpellCheckingEnabled = true
@@ -58,7 +57,7 @@ struct ShackTagsTextView: NSViewRepresentable {
            return
         }
 
-        nsTextView.font = NSFont.preferredFont(forTextStyle: textStyle)
+        nsTextView.font = NSFont.init(name: Font.defaultFontName, size: Font.defaultFontBodyFontSize + FontSettings.instance.fontOffset)
         nsTextView.isEditable = !self.disabled
         // Re-setting it if it's already the same ends up moving the cursor to the end.
         // So we need to protect against that.

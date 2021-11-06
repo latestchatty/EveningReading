@@ -53,7 +53,7 @@ struct macOSTextPromptSheet<Label>: View where Label : View {
                         .padding(.bottom, 8)
                     
                     if useShackTagsInput {
-                        ShackTagsTextView(text: self.$inputText, textStyle: .constant(NSFont.TextStyle.body), disabled: self.$submitting)
+                        ShackTagsTextView(text: self.$inputText, disabled: self.$submitting)
                             .frame(minHeight: 100)
                             .overlay(RoundedRectangle(cornerRadius: 4)
                                         .stroke(self.inputText.count < 6 ? Color.red : Color.primary, lineWidth: 2))

@@ -36,70 +36,73 @@ public class FontSettings {
 }
 
 extension Font {
+    public static var defaultFontName: String = "SF Pro"
+    
+    public static var defaultFontBodyFontSize: CGFloat = 15
     
     /// Create a font with the large title text style.
     public static var largeTitle: Font {
-        
-        return Font.custom("SF Pro", size: 32.0 + FontSettings.instance.fontOffset, relativeTo: .largeTitle)
+        return Font.custom(Font.defaultFontName, size: 32.0 + FontSettings.instance.fontOffset, relativeTo: .largeTitle)
     }
 
     /// Create a font with the title text style.
     public static var title: Font {
-        return Font.custom("SF Pro", size: 26.0 + FontSettings.instance.fontOffset, relativeTo: .title)
+        return Font.custom(Font.defaultFontName, size: 26.0 + FontSettings.instance.fontOffset, relativeTo: .title)
     }
     
     /// Create a font with the title text style.
     public static var title2: Font {
-        return Font.custom("SF Pro", size: 20.0 + FontSettings.instance.fontOffset, relativeTo: .title2)
+        return Font.custom(Font.defaultFontName, size: 20.0 + FontSettings.instance.fontOffset, relativeTo: .title2)
     }
     
     /// Create a font with the title text style.
     public static var title3: Font {
-        return Font.custom("SF Pro", size: 18.0 + FontSettings.instance.fontOffset, relativeTo: .title3)
+        return Font.custom(Font.defaultFontName, size: 18.0 + FontSettings.instance.fontOffset, relativeTo: .title3)
     }
 
     /// Create a font with the headline text style.
     public static var headline: Font {
-        return Font.custom("SF Pro", size: 15.0 + FontSettings.instance.fontOffset, relativeTo: .headline)
+        return Font.custom(Font.defaultFontName, size: 15.0 + FontSettings.instance.fontOffset, relativeTo: .headline)
     }
 
     /// Create a font with the subheadline text style.
     public static var subheadline: Font {
-        return Font.custom("SF Pro", size: 13.0 + FontSettings.instance.fontOffset, relativeTo: .subheadline)
+        return Font.custom(Font.defaultFontName, size: 13.0 + FontSettings.instance.fontOffset, relativeTo: .subheadline)
     }
 
     /// Create a font with the body text style.
     public static var body: Font {
-        return Font.custom("SF Pro", size: 15.0 + FontSettings.instance.fontOffset, relativeTo: .body)
+        return Font.custom(Font.defaultFontName, size: Font.defaultFontBodyFontSize + FontSettings.instance.fontOffset, relativeTo: .body)
        }
 
     /// Create a font with the callout text style.
     public static var callout: Font {
-        return Font.custom("SF Pro", size: 14.0 + FontSettings.instance.fontOffset, relativeTo: .callout)
+        return Font.custom(Font.defaultFontName, size: 14.0 + FontSettings.instance.fontOffset, relativeTo: .callout)
        }
 
     /// Create a font with the footnote text style.
     public static var footnote: Font {
-        return Font.custom("SF Pro", size: 12.0 + FontSettings.instance.fontOffset, relativeTo: .footnote)
+        return Font.custom(Font.defaultFontName, size: 12.0 + FontSettings.instance.fontOffset, relativeTo: .footnote)
        }
 
     /// Create a font with the caption text style.
     public static var caption: Font {
-        return Font.custom("SF Pro", size: 11.0 + FontSettings.instance.fontOffset, relativeTo: .caption)
+        return Font.custom(Font.defaultFontName, size: 11.0 + FontSettings.instance.fontOffset, relativeTo: .caption)
        }
 
     /// Create a font with the caption2 text style.
     public static var caption2: Font {
-        return Font.custom("SF Pro", size: 11.0 + FontSettings.instance.fontOffset, relativeTo: .caption2)
+        return Font.custom(Font.defaultFontName, size: 11.0 + FontSettings.instance.fontOffset, relativeTo: .caption2)
        }
     
     public static func system(size: CGFloat, weight: Font.Weight = .regular, design: Font.Design = .default) -> Font {
-        var font = "SF Pro"
+        var font = Font.defaultFontName
+        
         switch weight {
         case .bold: font = "SF Pro-Bold"
         case .heavy: font = "SF Pro-Bold"
         case .light: font = "SF Pro-Light"
-        case .medium: font = "SF Pro"
+        case .medium: font = Font.defaultFontName
         case .semibold: font = "SF Pro-Bold"
         case .thin: font = "SF Pro-Light"
         case .ultraLight: font = "SF Pro-Light"

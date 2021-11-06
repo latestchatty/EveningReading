@@ -13,12 +13,11 @@ struct macOSComposeView: View {
     var postId: Int
     @State var replyText = ""
     @State var submitInProgress = false
-    @State private var postStyle = NSFont.TextStyle.body
     
     var body: some View {
         VStack(alignment: .leading) {
             //TextEditor(text: $replyText)
-            ShackTagsTextView(text: $replyText, textStyle: $postStyle, disabled: $submitInProgress)
+            ShackTagsTextView(text: $replyText, disabled: $submitInProgress)
                 .frame(minHeight: 100)
                 .overlay(RoundedRectangle(cornerRadius: 4)
                             .stroke(replyText.count < 6 ? Color.red : Color.primary, lineWidth: 2))
