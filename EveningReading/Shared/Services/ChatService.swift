@@ -213,11 +213,11 @@ class ChatService {
     }
     
     public func submitPost(postBody: String, postId: Int, handler: @escaping (Result<SubmitPostResponseContainer, Error>) -> Void) {
-        print("returning from submitPost for post \(postId) with text: \(postBody)")
-        let resp = SubmitPostResponseContainer(success: SubmitPostReponse(result: "success"), fail: SubmitPostError(error: false, code: "ERR_NONE", message: "No error."))
+        //print("returning from submitPost for post \(postId) with text: \(postBody)")
+        //let resp = SubmitPostResponseContainer(success: SubmitPostReponse(result: "success"), fail: SubmitPostError(error: false, code: "ERR_NONE", message: "No error."))
         //let resp = SubmitPostResponseContainer(success: SubmitPostReponse(result: "failure"), fail: SubmitPostError(error: true, code: "47", message: "test failure"))
-        handler(.success(resp))
-        return
+        //handler(.success(resp))
+        //return
         
         let username: String? = KeychainWrapper.standard.string(forKey: "Username")
         let password: String? = KeychainWrapper.standard.string(forKey: "Password")
