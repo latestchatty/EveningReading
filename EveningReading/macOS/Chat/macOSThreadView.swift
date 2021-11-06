@@ -116,10 +116,10 @@ struct macOSThreadView: View {
         chatStore.activePostId = self.selectedPost
     }
     
-    private func markThreadRead() {
+    private func markThreadRead(_ handler: @escaping (Error?) -> Void) {
         var threadIds = self.postList.map({$0.id})
         threadIds.append(self.threadId)
-        self.viewedPostsStore.markPostsViewed(postIds: threadIds, handler: {_ in })
+        self.viewedPostsStore.markPostsViewed(postIds: threadIds, handler)
     }
     
     var body: some View {
@@ -270,8 +270,9 @@ struct macOSThreadView: View {
             // if chatStore.activeThread != 0 {
             ToolbarItemGroup(placement: .primaryAction) {
                 Button(action: {
-                    self.markThreadRead()
-                    self.chatStore.getThread(viewedPostsStore: viewedPostsStore)
+                    self.markThreadRead() { _ in
+                        self.chatStore.getThread(viewedPostsStore: viewedPostsStore)
+                    }
                 }, label: {
                     Image(systemName: "arrow.counterclockwise")
                         .imageScale(.large)
@@ -280,7 +281,7 @@ struct macOSThreadView: View {
                 .help("Refresh thread")
                 
                 Button(action: {
-                    self.markThreadRead()
+                    self.markThreadRead() { _ in }
                 }, label: {
                     Image(systemName: "envelope.open")
                         .imageScale(.large)

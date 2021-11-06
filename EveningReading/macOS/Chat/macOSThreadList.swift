@@ -12,6 +12,7 @@ struct macOSThreadList: View {
     @EnvironmentObject var chatStore: ChatStore
     @EnvironmentObject var viewedPostsStore: ViewedPostsStore
     @State var showRootPostPrompt: Bool = false
+    @State var gettingData: Bool = false
     
     private func filteredThreads() -> [ChatThread] {
         if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
@@ -47,7 +48,7 @@ struct macOSThreadList: View {
                 title: "Write a root post",
                 acceptButtonContent: "Post",
                 useShackTagsInput: true)
-            if chatStore.gettingChat {
+            if self.gettingData || chatStore.gettingChat {
                 ProgressView()
                     .foregroundColor(Color.accentColor)
                     .progressViewStyle(LinearProgressViewStyle())
@@ -68,16 +69,21 @@ struct macOSThreadList: View {
             ToolbarItemGroup(placement: .navigation) {
                 Button(action: {
                     // refresh
+                    self.gettingData = true
                     let tx = Transaction(animation: .linear)
                     withTransaction(tx) {
                         if chatStore.activeThreadId != 0 {
                             if let thread = chatStore.threads.first(where: { return $0.threadId == chatStore.activeThreadId }) {
-                                viewedPostsStore.markThreadViewed(thread: thread, handler: { err in
-                                    chatStore.getChat(viewedPostsStore: self.viewedPostsStore)
-                                })
+                                viewedPostsStore.markThreadViewed(thread: thread) { err in
+                                    DispatchQueue.main.async {
+                                        chatStore.getChat(viewedPostsStore: self.viewedPostsStore)
+                                        self.gettingData = false
+                                    }
+                                }
                             }
                         } else {
                             chatStore.getChat(viewedPostsStore: self.viewedPostsStore)
+                            self.gettingData = false
                         }
                         chatStore.activeThreadId = 0
                         chatStore.activePostId = 0

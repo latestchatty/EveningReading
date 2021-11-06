@@ -37,8 +37,8 @@ enum AuthorType: Hashable, Codable, CodingKey {
     }
     
     func encode(to encoder: Encoder) throws {
-//        var container = encoder.container(keyedBy: AuthorType.self)
-//        try container.encode(self, forKey: self)
+        //        var container = encoder.container(keyedBy: AuthorType.self)
+        //        try container.encode(self, forKey: self)
     }
     
     case owner
@@ -126,7 +126,7 @@ class ChatService {
         var threadId: Int
         var posts: [ChatPostsResponse]
     }
-
+    
     private struct ChatPostsResponse: Hashable, Codable {
         var id: Int
         var threadId: Int
@@ -140,7 +140,7 @@ class ChatService {
     
     private let session: URLSession
     private let decoder: JSONDecoder
-
+    
     init(session: URLSession = .shared, decoder: JSONDecoder = .init()) {
         self.session = session
         self.decoder = decoder
@@ -166,15 +166,15 @@ class ChatService {
                 }
                 
                 return ChatPosts(id: post.id,
-                          threadId: post.threadId,
-                          parentId: post.parentId,
-                          author: post.author,
-                          category: post.category,
-                          date: post.date,
-                          body: post.body,
-                          preview: post.body.getPreview,
-                          lols: post.lols,
-                          authorType: authorType)
+                                 threadId: post.threadId,
+                                 parentId: post.parentId,
+                                 author: post.author,
+                                 category: post.category,
+                                 date: post.date,
+                                 body: post.body,
+                                 preview: post.body.getPreview,
+                                 lols: post.lols,
+                                 authorType: authorType)
                 
             })
         }
@@ -199,20 +199,20 @@ class ChatService {
     
     public func getChat(viewedPostsStore: ViewedPostsStore, handler: @escaping (Result<[ChatThread], Error>) -> Void) {
         let sessionConfig = URLSessionConfiguration.default
-        #if os(iOS)
+#if os(iOS)
         sessionConfig.waitsForConnectivity = false
         sessionConfig.timeoutIntervalForResource = 10.0
-        #endif
+#endif
         let shortSession = URLSession(configuration: sessionConfig)
         
         guard
             let urlComponents = URLComponents(string: "https://winchatty.com/v2/getChatty")
-            else { preconditionFailure("Can't create url components...") }
-
+        else { preconditionFailure("Can't create url components...") }
+        
         guard
             let url = urlComponents.url
-            else { preconditionFailure("Can't create url from url components...") }
-
+        else { preconditionFailure("Can't create url from url components...") }
+        
         shortSession.dataTask(with: url) { [weak self] data, _, error in
             if let error = error {
                 handler(.failure(error))
@@ -232,24 +232,24 @@ class ChatService {
     
     public func getThread(threadId: Int, viewedPostsStore: ViewedPostsStore, handler: @escaping (Result<[ChatThread], Error>) -> Void) {
         let sessionConfig = URLSessionConfiguration.default
-        #if os(iOS)
+#if os(iOS)
         sessionConfig.waitsForConnectivity = false
         sessionConfig.timeoutIntervalForResource = 10.0
-        #endif
+#endif
         let shortSession = URLSession(configuration: sessionConfig)
         
         guard
             var urlComponents = URLComponents(string: "https://winchatty.com/v2/getThread")
-            else { preconditionFailure("Can't create url components...") }
-
+        else { preconditionFailure("Can't create url components...") }
+        
         urlComponents.queryItems = [
             URLQueryItem(name: "id", value: (String(threadId)))
         ]
-
+        
         guard
             let url = urlComponents.url
-            else { preconditionFailure("Can't create url from url components...") }
-
+        else { preconditionFailure("Can't create url from url components...") }
+        
         shortSession.dataTask(with: url) { [weak self] data, _, error in
             if let error = error {
                 handler(.failure(error))
@@ -273,7 +273,7 @@ class ChatService {
             
             guard
                 var urlComponents = URLComponents(string: "https://www.shacknews.com/api2/api-index.php")
-                else { preconditionFailure("Can't create url components...") }
+            else { preconditionFailure("Can't create url components...") }
             
             urlComponents.queryItems = [
                 URLQueryItem(name: "action2", value: "ext_create_tag_via_api"),
@@ -283,11 +283,11 @@ class ChatService {
                 URLQueryItem(name: "user", value: username),
                 URLQueryItem(name: "id", value: (String(postId)))
             ]
-
+            
             guard
                 let url = urlComponents.url
-                else { preconditionFailure("Can't create url from url components...") }
-
+            else { preconditionFailure("Can't create url from url components...") }
+            
             session.dataTask(with: url) { [weak self] data, _, error in
                 if let error = error {
                     handler(.failure(error))
@@ -329,12 +329,12 @@ class ChatService {
         
         guard
             let query = components.url!.query
-            else { preconditionFailure("Can't create url components...") }
+        else { preconditionFailure("Can't create url components...") }
         
         var request = URLRequest(url: newPostUrl)
         request.httpMethod = "POST"
         request.httpBody = Data(query.utf8)
-
+        
         let session = URLSession.shared
         let task = session.dataTask(with: request as URLRequest, completionHandler: { data, response, error in
             guard error == nil else {
@@ -357,7 +357,7 @@ class ChatService {
                     } catch {
                         // ChattyService submitPost - successResponse fail
                     }
-
+                    
                     if !didProcessResponse {
                         do {
                             let failResponse = try self.decoder.decode(SubmitPostError.self, from: data)
@@ -379,18 +379,18 @@ class ChatService {
     public func getRaters(postId: Int, handler: @escaping (Result<RatersResponse, Error>) -> Void) {
         guard
             var urlComponents = URLComponents(string: "https://www.shacknews.com/api2/api-index.php")
-            else { preconditionFailure("Can't create url components...") }
+        else { preconditionFailure("Can't create url components...") }
         
         urlComponents.queryItems = [
             URLQueryItem(name: "action2", value: "ext_get_all_raters"),
             URLQueryItem(name: "tag", value: "all"),
             URLQueryItem(name: "ids[]", value: (String(postId)))
         ]
-
+        
         guard
             let url = urlComponents.url
-            else { preconditionFailure("Can't create url from url components...") }
-
+        else { preconditionFailure("Can't create url from url components...") }
+        
         session.dataTask(with: url) { [weak self] data, _, error in
             if let error = error {
                 handler(.failure(error))
@@ -412,7 +412,7 @@ class ChatService {
     public func search(terms: String, author: String, parentAuthor: String, handler: @escaping (Result<[SearchChatPosts], Error>) -> Void) {
         guard
             var urlComponents = URLComponents(string: "https://winchatty.com/v2/search")
-            else { preconditionFailure("Can't create url components...") }
+        else { preconditionFailure("Can't create url components...") }
         
         urlComponents.queryItems = [
             URLQueryItem(name: "limit", value: "35"),
@@ -431,8 +431,8 @@ class ChatService {
         
         guard
             let url = urlComponents.url
-            else { preconditionFailure("Can't create url from url components...") }
-
+        else { preconditionFailure("Can't create url from url components...") }
+        
         session.dataTask(with: url) { [weak self] data, _, error in
             if let error = error {
                 handler(.failure(error))
@@ -454,12 +454,12 @@ class ChatService {
     public func getThreadByPost(postId: Int, viewedPostsStore: ViewedPostsStore, handler: @escaping (Result<[ChatThread], Error>) -> Void) {
         guard
             let urlComponents = URLComponents(string: "https://winchatty.com/v2/getThread?id=\(postId)")
-            else { preconditionFailure("Can't create url components...") }
-
+        else { preconditionFailure("Can't create url components...") }
+        
         guard
             let url = urlComponents.url
-            else { preconditionFailure("Can't create url from url components...") }
-
+        else { preconditionFailure("Can't create url from url components...") }
+        
         session.dataTask(with: url) { [weak self] data, _, error in
             if let error = error {
                 handler(.failure(error))
@@ -483,18 +483,18 @@ class ChatStore: ObservableObject {
     init(service: ChatService) {
         self.service = service
     }
-
+    
     @Published var threads: [ChatThread] = []
     @Published var activeThreadId: Int = 0
     
     @Published var activePostId: Int = 0
     
     @Published var didSubmitPost = false
-
+    
     @Published var didTagPost = false
     @Published var showingTagNotice = false
     @Published var taggingNoticeText = "Tagged!"
-
+    
     @Published var didGetChatStart = false
     @Published var didSubmitNewThread = false
     @Published var didGetChatFinish = false
@@ -505,18 +505,18 @@ class ChatStore: ObservableObject {
     @Published var scrollTargetChatTop: Int?
     @Published var scrollTargetThread: Int?
     @Published var scrollTargetThreadTop: Int?
-
+    
     // For pull to refresh
     @Published var gettingChat: Bool = false {
         didSet {
             if oldValue == false && gettingChat == true {
-                #if os(iOS)
+#if os(iOS)
                 // Delay long enough for the pull to refresh animation to complete...
                 DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
                     //TODO: Re-enable. Store isn't available in the service.
                     //self.getChat()
                 }
-                #endif
+#endif
             }
         }
     }
@@ -524,38 +524,39 @@ class ChatStore: ObservableObject {
     @Published var gettingThread: Bool = false {
         didSet {
             if oldValue == false && gettingThread == true {
-                #if os(iOS)
+#if os(iOS)
                 // Delay long enough for the pull to refresh animation to complete...
                 DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
                     self.getThread()
                 }
-                #endif
+#endif
             }
         }
     }
-
+    
     func getChat(viewedPostsStore: ViewedPostsStore) {
         self.didGetChatStart = true
-        #if os(watchOS)
+#if os(watchOS)
         self.threads = []
         self.gettingChat = true
-        #endif
-        #if os(OSX)
+#endif
+#if os(OSX)
         self.threads = []
         self.gettingChat = true
-        #endif
+#endif
         viewedPostsStore.syncViewedPosts() { [weak self] _ in
-            self?.service.getChat(viewedPostsStore: viewedPostsStore) { [weak self] result in
-                DispatchQueue.main.async {
-                    switch result {
-                    case .success(let threads):
-                        self?.threads = threads
-                    case .failure:
-                        self?.threads = []
-                    }
+            DispatchQueue.main.async {
+                self?.service.getChat(viewedPostsStore: viewedPostsStore) { [weak self] result in
                     DispatchQueue.main.async {
+                        switch result {
+                        case .success(let threads):
+                            self?.threads = threads
+                        case .failure:
+                            self?.threads = []
+                        }
                         self?.didGetChatFinish = true
                         self?.gettingChat = false
+                        
                     }
                 }
             }
@@ -610,7 +611,7 @@ class ChatStore: ObservableObject {
             DispatchQueue.main.async {
                 self?.submitPostSuccessMessage = ""
                 self?.submitPostErrorMessage = ""
-
+                
                 switch result {
                 case .success(let response):
                     self?.submitPostResponse = response
@@ -675,7 +676,7 @@ class ChatStore: ObservableObject {
             }
         }
     }
-
+    
     // Load any thread
     @Published private(set) var searchedThreads: [ChatThread] = []
     func getThreadByPost(postId: Int, viewedPostsStore: ViewedPostsStore, completion: @escaping ()->()) {

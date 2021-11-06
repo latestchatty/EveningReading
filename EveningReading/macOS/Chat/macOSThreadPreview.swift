@@ -107,7 +107,7 @@ struct macOSThreadPreview: View {
             self.viewedPostsStore.markPostViewed(postId: self.threadId)
             if chatStore.activeThreadId != self.threadId && chatStore.activeThreadId != 0 {
                 if let currentlyActiveThread = chatStore.threads.first(where: { return $0.threadId == chatStore.activeThreadId}) {
-                    self.viewedPostsStore.markThreadViewed(thread: currentlyActiveThread, handler: {_ in})
+                    self.viewedPostsStore.markThreadViewed(thread: currentlyActiveThread, {_ in})
                 }
             }
             chatStore.activeThreadId = self.threadId
