@@ -119,7 +119,7 @@ struct macOSThreadView: View {
     private func markThreadRead() {
         var threadIds = self.postList.map({$0.id})
         threadIds.append(self.threadId)
-        self.viewedPostsStore.markPostsViewed(postIds: threadIds)
+        self.viewedPostsStore.markPostsViewed(postIds: threadIds, handler: {_ in })
     }
     
     var body: some View {

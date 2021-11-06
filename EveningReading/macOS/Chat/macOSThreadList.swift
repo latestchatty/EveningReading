@@ -72,12 +72,15 @@ struct macOSThreadList: View {
                     withTransaction(tx) {
                         if chatStore.activeThreadId != 0 {
                             if let thread = chatStore.threads.first(where: { return $0.threadId == chatStore.activeThreadId }) {
-                                viewedPostsStore.markThreadViewed(thread: thread)
+                                viewedPostsStore.markThreadViewed(thread: thread, handler: { err in
+                                    chatStore.getChat(viewedPostsStore: self.viewedPostsStore)
+                                })
                             }
+                        } else {
+                            chatStore.getChat(viewedPostsStore: self.viewedPostsStore)
                         }
                         chatStore.activeThreadId = 0
                         chatStore.activePostId = 0
-                        chatStore.getChat(viewedPostsStore: self.viewedPostsStore)
                     }
                 }, label: {
                     Image(systemName: "arrow.counterclockwise")

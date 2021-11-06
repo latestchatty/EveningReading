@@ -130,9 +130,12 @@ class ViewedPostsStore: ObservableObject {
         }
     }
     
-    func syncViewedPosts() {
+    func syncViewedPosts(handler: @escaping (Error?) -> Void) {
         // If we haven't marked anything new, there's no reason to do any of this.
-        if !self.dirty { return }
+        if !self.dirty {
+            handler(nil)
+            return
+        }
         
         print("Saving viewed posts...")
         // Merge with current cloud setting if it was updated by another instance.
@@ -146,41 +149,53 @@ class ViewedPostsStore: ObservableObject {
                     posts = Set(self!.viewedPosts.sorted().dropFirst(5000))
                 }
                 postsToSave = posts
-            case .failure(let err):
-                print("Error getting seen posts while syncing: \(err)")
-            }
-            
-            // Outside get success in case something failed.
-            // At that point we'll just start over and keep track from this point on again.
-            CloudSetting.setCloudSetting(settingName: "werdSeenPosts", value: postsToSave, handler: { [weak self] result in
-                switch result {
-                case .success:
-                    DispatchQueue.main.async {
-                        self?.viewedPosts = Set(postsToSave)
-                        self?.dirty = false
+                CloudSetting.setCloudSetting(settingName: "werdSeenPosts", value: postsToSave, handler: { [weak self] result in
+                    switch result {
+                    case .success:
+                        DispatchQueue.main.async {
+                            self?.viewedPosts = Set(postsToSave)
+                            self?.dirty = false
+                        }
+                        handler(nil)
+                    case .failure(let err):
+                        print("Error saving seen posts: \(err)")
+                        handler(err)
                     }
-                case .failure(let err):
-                    print("Error saving seen posts: \(err)")
-                }
-            })
+                })
+            case .failure(let err):
+                CloudSetting.setCloudSetting(settingName: "werdSeenPots", value: postsToSave, handler: { [weak self] result in
+                    switch result {
+                    case .success:
+                        DispatchQueue.main.async {
+                            self?.viewedPosts = Set(postsToSave)
+                            self?.dirty = false
+                        }
+                        handler(nil)
+                    case .failure(let err):
+                        handler(err)
+                    }
+                })
+                print("Error getting seen posts while syncing: \(err)")
+                handler(err)
+            }
         }
     }
     
     // Create a temporary set, then assign that to viewedPosts to avoid excessive redraws
-    public func markThreadViewed(thread: ChatThread) {
+    public func markThreadViewed(thread: ChatThread, handler: @escaping (Error?) -> Void) {
         var threadIds = thread.posts.map({$0.id})
         threadIds.append(thread.threadId)
-        self.markPostsViewed(postIds: threadIds)
+        self.markPostsViewed(postIds: threadIds, handler: handler)
     }
     
-    public func markPostsViewed(postIds: [Int]) {
+    public func markPostsViewed(postIds: [Int], handler: @escaping (Error?) -> Void) {
         let postsToMarkRead = Set<Int>(postIds)
         let originalCount = self.viewedPosts.count
         self.viewedPosts = postsToMarkRead.union(self.viewedPosts)
         if originalCount != self.viewedPosts.count {
             self.dirty = true
         }
-        self.syncViewedPosts()
+        self.syncViewedPosts(handler: handler)
     }
     
     public func markPostViewed(postId: Int) {
