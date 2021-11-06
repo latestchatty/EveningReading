@@ -96,6 +96,7 @@ struct macOSPostExpandedView: View {
                                 // Maybe something like https://github.com/elai950/AlertToast
                                 NSPasteboard.general.clearContents()
                                 NSPasteboard.general.setString("https://www.shacknews.com/chatty?id=\(self.postId)#item_\(self.postId)", forType: .URL)
+                                NSPasteboard.general.setString("https://www.shacknews.com/chatty?id=\(self.postId)#item_\(self.postId)", forType: .string)
                             }, label: {
                                 Image(systemName: "link")
                                     .imageScale(.large)
