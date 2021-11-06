@@ -32,7 +32,7 @@ struct macOSTextPromptSheet<Label>: View where Label : View {
     }
     
     var body: some View {
-        EmptyView()
+        Spacer().frame(width:0, height: 0)
             .sheet(isPresented: self.$showPrompt) {
                 VStack(alignment: .leading) {
                     HStack {
@@ -68,17 +68,17 @@ struct macOSTextPromptSheet<Label>: View where Label : View {
                             self.submitting = true
                             self.action(self.inputText) { result in
                                 switch result {
-                                    case .success:
-                                        self.inputText = ""
-                                        self.showPrompt = false
-                                    case .failure(let error):
-                                        print(error)
+                                case .success:
+                                    self.inputText = ""
+                                    self.showPrompt = false
+                                case .failure(let error):
+                                    print(error)
                                 }
                                 self.submitting = false
                             }
                         })
-                        .disabled(self.submitting)
-                        .keyboardShortcut(KeyEquivalent.return, modifiers: [.command])
+                            .disabled(self.submitting)
+                            .keyboardShortcut(KeyEquivalent.return, modifiers: [.command])
                     }
                 }
                 .padding()

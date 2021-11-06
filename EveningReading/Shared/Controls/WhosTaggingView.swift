@@ -32,7 +32,7 @@ struct WhosTaggingView: View {
     
     var body: some View {
         VStack {
-            EmptyView()
+            Spacer().frame(width:0, height: 0)
                 .sheet(isPresented: $showingWhosTaggingView) {
                     ZStack {
                         #if os(macOS)

@@ -544,7 +544,7 @@ class ChatStore: ObservableObject {
         self.threads = []
         self.gettingChat = true
         #endif
-        viewedPostsStore.syncViewedPosts(handler: { [weak self] _ in
+        viewedPostsStore.syncViewedPosts() { [weak self] _ in
             self?.service.getChat(viewedPostsStore: viewedPostsStore) { [weak self] result in
                 DispatchQueue.main.async {
                     switch result {
@@ -559,7 +559,7 @@ class ChatStore: ObservableObject {
                     }
                 }
             }
-        })
+        }
     }
     
     func getThread(viewedPostsStore: ViewedPostsStore) {

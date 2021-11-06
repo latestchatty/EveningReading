@@ -20,8 +20,9 @@ struct macOSChatView: View {
         {
             return
         }
-        self.viewedPostsStore.getViewedPosts()
-        self.chatStore.getChat(viewedPostsStore: viewedPostsStore)
+        self.viewedPostsStore.getViewedPosts() { _ in
+            self.chatStore.getChat(viewedPostsStore: viewedPostsStore)
+        }
     }
     
     var body: some View {

@@ -115,22 +115,24 @@ class ViewedPostsStore: ObservableObject {
     @Published var viewedPosts: Set<Int> = []
     private var dirty = false
     
-    func getViewedPosts() {
+    func getViewedPosts(_ handler: @escaping (Error?) -> Void) {
         CloudSetting.getCloudSetting(settingName: "werdSeenPosts", defaultValue: [] as Set<Int>) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let posts):
                     self?.viewedPosts = posts
+                    handler(nil)
                 case .failure(let err):
                     print("Error getting seen posts: \(err)")
                     self?.viewedPosts = []
+                    handler(err)
                 }
                 self?.dirty = false
             }
         }
     }
     
-    func syncViewedPosts(handler: @escaping (Error?) -> Void) {
+    func syncViewedPosts(_ handler: @escaping (Error?) -> Void) {
         // If we haven't marked anything new, there's no reason to do any of this.
         if !self.dirty {
             handler(nil)
@@ -195,7 +197,7 @@ class ViewedPostsStore: ObservableObject {
         if originalCount != self.viewedPosts.count {
             self.dirty = true
         }
-        self.syncViewedPosts(handler: handler)
+        self.syncViewedPosts(handler)
     }
     
     public func markPostViewed(postId: Int) {
