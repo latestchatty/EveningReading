@@ -87,6 +87,7 @@ struct iPadChatView: View {
         .edgesIgnoringSafeArea(.bottom)
         .navigationViewStyle(.stack)
         .navigationBarTitle("Chat", displayMode: .inline)
+        .padding(.top, 1)
         
         // New thread button
         .navigationBarItems(leading: Spacer().frame(width: 26, height: 16), trailing: ComposePostView(isRootPost: true))
