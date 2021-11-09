@@ -85,7 +85,7 @@ struct iPadChatView: View {
         // View settings
         .background(Color("PrimaryBackground").frame(height: 2600).offset(y: -80))
         .edgesIgnoringSafeArea(.bottom)
-        .navigationViewStyle(StackNavigationViewStyle())
+        .navigationViewStyle(.stack)
         .navigationBarTitle("Chat", displayMode: .inline)
         
         // New thread button
