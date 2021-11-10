@@ -58,6 +58,7 @@ struct macOSContentView: View {
                             })
                             Button(action: {
                                 // compose
+                                chatStore.showingNewThreadPrompt = true
                             }, label: {
                                 Image(systemName: "square.and.pencil")
                             })

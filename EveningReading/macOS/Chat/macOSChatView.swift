@@ -58,6 +58,8 @@ struct macOSChatView: View {
                     
                     // Thread Detail
                     ZStack {
+                        
+                        // Thread Detail
                         ScrollView {
                             ScrollViewReader { scrollProxy in
                                 VStack {
@@ -84,6 +86,8 @@ struct macOSChatView: View {
                         NoticeView(show: $chatStore.showingTagNotice, message: $chatStore.taggingNoticeText)
                         
                         NoticeView(show: $chatStore.didCopyLink, message: .constant("Copied!"))
+                        
+                        
                     }
                     .frame(width: geometry.size.width * 0.65)
 
