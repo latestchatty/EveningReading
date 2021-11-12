@@ -16,6 +16,7 @@ struct AuthorNameView: View {
     var postId: Int = 0
     var bold: Bool = false
     var navLink: Bool = false
+    var op: String = ""
     
     #if os(iOS)
     @State private var showingNewMessageView = false
@@ -37,7 +38,10 @@ struct AuthorNameView: View {
             Text("\(self.name)")
                 .font(.footnote)
                 .bold()
-                .foregroundColor(Color(UIColor.systemOrange))
+                .foregroundColor(
+                    self.name == self.op ? Color(UIColor.systemGreen) : 
+                    Color(UIColor.systemOrange)
+                )
                 .lineLimit(1)
                 .truncationMode(.tail)
                 .fixedSize()
@@ -152,7 +156,7 @@ struct AuthorNameView: View {
 
 struct AuthorNameView_Previews: PreviewProvider {
     static var previews: some View {
-        AuthorNameView(name: "tamzyn", postId: 999999996, bold: false)
+        AuthorNameView(name: "tamzyn", postId: 999999996, bold: false, op: "Abercio")
             .environment(\.colorScheme, .light)
             .environmentObject(AppSessionStore(service: AuthService()))
             .environmentObject(MessageStore(service: MessageService()))

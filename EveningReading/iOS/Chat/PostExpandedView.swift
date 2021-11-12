@@ -21,6 +21,7 @@ struct PostExpandedView: View {
     var postLols: [ChatLols]
     var postRichText = [RichTextBlock]()
     var postDateTime: String
+    var op: String = ""
 
     var body: some View {
         VStack {
@@ -33,7 +34,7 @@ struct PostExpandedView: View {
                     .foregroundColor(Color("replyLines"))
                 
                 // Author name
-                AuthorNameView(name: appSessionStore.blockedAuthors.contains(self.postAuthor) ? "[blocked]" : self.postAuthor, postId: self.postId)
+                AuthorNameView(name: appSessionStore.blockedAuthors.contains(self.postAuthor) ? "[blocked]" : self.postAuthor, postId: self.postId, op: self.op)
                 
                 Spacer()
                 
