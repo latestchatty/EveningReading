@@ -53,39 +53,59 @@ struct macOSThreadPreview: View {
     }
     
     var body: some View {
-        VStack (alignment: .leading) {
-            HStack {
-                AuthorNameView(name: self.rootPostAuthor, postId: self.threadId)
-                
-                ContributedView(contributed: self.contributed)
-
-                Spacer()
-
-                LolView(lols: self.rootPostLols, expanded: false, capsule: false, postId: self.threadId)
-
-                ReplyCountView(replyCount: self.replyCount)
-                
-                TimeRemainingIndicator(percent: .constant(self.rootPostDate.getTimeRemaining()))
-                    .frame(width: 12, height: 12)
-                    .padding(.horizontal, 2)
-            }
-            .padding(.horizontal, 10)
-            .padding(.top, 10)
+        ZStack {
             
-            // Root post body
+            // Thread preview
             VStack (alignment: .leading) {
-                Text(appSessionStore.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : self.rootPostBody)
-                    .font(.body)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .lineLimit(3)
+                HStack {
+                    AuthorNameView(name: self.rootPostAuthor, postId: self.threadId)
+                    
+                    ContributedView(contributed: self.contributed)
+
+                    Spacer()
+
+                    LolView(lols: self.rootPostLols, expanded: false, capsule: false, postId: self.threadId)
+
+                    ReplyCountView(replyCount: self.replyCount)
+                    
+                    TimeRemainingIndicator(percent: .constant(self.rootPostDate.getTimeRemaining()))
+                        .frame(width: 12, height: 12)
+                        .padding(.horizontal, 2)
+                }
+                .padding(.horizontal, 10)
+                .padding(.top, 10)
+                
+                // Root post body
+                VStack (alignment: .leading) {
+                    Text(appSessionStore.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : self.rootPostBody)
+                        .font(.body)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .lineLimit(3)
+                }
+                .padding(.horizontal, 10)
+                
+                Divider()
+                    .frame(height: 1)
             }
-            .padding(.horizontal, 10)
+            .contentShape(Rectangle())
+            .background(self.contributed ? (chatStore.activeThreadId == self.threadId ? Color("ChatBubbleSecondaryContributed") : Color("ChatBubblePrimaryContributed")) : (chatStore.activeThreadId == self.threadId ? Color("ChatBubbleSecondary") : Color.clear))
             
-            Divider()
-                .frame(height: 1)
+            // Category Color
+            HStack {
+                GeometryReader { categoryGeo in
+                    Path { categoryPath in
+                        categoryPath.move(to: CGPoint(x: 0, y: 0))
+                        categoryPath.addLine(to: CGPoint(x: 0, y: categoryGeo.size.height))
+                        categoryPath.addLine(to: CGPoint(x: categoryGeo.size.width, y: categoryGeo.size.height))
+                        categoryPath.addLine(to: CGPoint(x: categoryGeo.size.width, y: 0))
+                    }
+                    .fill(ThreadCategoryColor[self.rootPostCategory]!)
+                }
+                .frame(width: 3)
+                Spacer()
+            }
+            
         }
-        .contentShape(Rectangle())
-        .background(self.contributed ? (chatStore.activeThreadId == self.threadId ? Color("ChatBubbleSecondaryContributed") : Color("ChatBubblePrimaryContributed")) : (chatStore.activeThreadId == self.threadId ? Color("ChatBubbleSecondary") : Color.clear))
         .onAppear(perform: getThreadData)
         .onTapGesture(count: 1) {
             chatStore.activeThreadId = self.threadId
