@@ -41,6 +41,9 @@ struct ComposePostView: View {
         self.showingLoading = true
         self.chatStore.didSubmitPost = true
         
+        // Hide keyboard
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+        
         if self.isRootPost {
             self.chatStore.didSubmitNewThread = true
             DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5)) {
