@@ -49,7 +49,10 @@ struct AuthorNameView: View {
         #if os(OSX)
             Text("\(appSessionStore.blockedAuthors.contains(self.name) ? "[blocked]" : self.name)")
                 .font(self.bold ? .headline : .body)
-                .foregroundColor(colorScheme == .dark ? Color(NSColor.systemOrange) : Color(NSColor.systemPurple))
+                .foregroundColor(
+                    self.name == self.op ? Color(NSColor.systemGreen) :
+                    colorScheme == .dark ? Color(NSColor.systemOrange) : Color(NSColor.systemPurple)
+                )
                 .lineLimit(1)
                 .contextMenu {
                     /*

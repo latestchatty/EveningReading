@@ -16,6 +16,7 @@ struct macOSPostPreviewView: View {
     @Binding var postText: String
     @Binding var postCategory: String
     @Binding var postStrength: Double?
+    @Binding var op: String
 
     var body: some View {
         // Reply lines
@@ -56,7 +57,7 @@ struct macOSPostPreviewView: View {
         Spacer()
         
         // Author
-        AuthorNameView(name: self.postAuthor, postId: self.postId)
+        AuthorNameView(name: self.postAuthor, postId: self.postId, op: self.op)
         
         // Lols
         LolView(lols: self.lols, postId: self.postId)
@@ -65,7 +66,7 @@ struct macOSPostPreviewView: View {
 
 struct macOSPostPreviewView_Previews: PreviewProvider {
     static var previews: some View {
-        macOSPostPreviewView(postId: .constant(0), postAuthor: .constant(""), replyLines: .constant(""), lols: .constant([ChatLols]()), postText: .constant(""), postCategory: .constant("ontopic"), postStrength: .constant(1.0))
+        macOSPostPreviewView(postId: .constant(0), postAuthor: .constant(""), replyLines: .constant(""), lols: .constant([ChatLols]()), postText: .constant(""), postCategory: .constant("ontopic"), postStrength: .constant(1.0), op: .constant(""))
             .environmentObject(AppSessionStore(service: AuthService()))
     }
 }

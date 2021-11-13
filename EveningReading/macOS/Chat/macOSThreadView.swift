@@ -221,7 +221,8 @@ struct macOSThreadView: View {
                             // Reply expaned row
                             if self.selectedPost == post.id {
                                 VStack {
-                                    macOSPostExpandedView(postId: .constant(post.id), postAuthor: .constant(post.author), replyLines: self.$replyLines[post.id], lols: .constant(post.lols), postText: self.$selectedPostRichText, postDateTime: .constant(post.date))
+                                    macOSPostExpandedView(postId: .constant(post.id), postAuthor: .constant(post.author), replyLines: self.$replyLines[post.id], lols: .constant(post.lols), postText: self.$selectedPostRichText, postDateTime: .constant(post.date),
+                                        op: .constant(self.rootPostAuthor))
                                 }
                                 .onAppear() {
                                     // Load Rich Text
@@ -232,8 +233,9 @@ struct macOSThreadView: View {
                             // Reply preview row
                             if self.selectedPost != post.id {
                                 HStack {
-                                    macOSPostPreviewView(postId: .constant(post.id), postAuthor: .constant(post.author), replyLines: self.$replyLines[post.id], lols: .constant(post.lols), postText: .constant(post.body), postCategory: .constant(post.category), postStrength: .constant(postStrength[post.id]))
-                                }
+                                    macOSPostPreviewView(postId: .constant(post.id), postAuthor: .constant(post.author), replyLines: self.$replyLines[post.id], lols: .constant(post.lols), postText: .constant(post.body), postCategory: .constant(post.category), postStrength: .constant(postStrength[post.id]),
+                                        op: .constant(self.rootPostAuthor)
+                                    )}
                                 .contentShape(Rectangle())
                                 .onTapGesture(count: 1) {
                                     //withAnimation {

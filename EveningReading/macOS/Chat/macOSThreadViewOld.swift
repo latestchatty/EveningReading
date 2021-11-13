@@ -261,6 +261,7 @@ struct macOSThreadViewOld: View {
                                 HStack {
                                     
                                     // Reply expaned row
+                                    /*
                                     if self.selectedPost == post.id {
                                         VStack {
                                             macOSPostExpandedView(postId: .constant(post.id), postAuthor: .constant(post.author), replyLines: self.$replyLines[post.id], lols: .constant(post.lols), postText: self.$selectedPostRichText, postDateTime: .constant(post.date))
@@ -271,8 +272,10 @@ struct macOSThreadViewOld: View {
                                             self.selectedPostRichText = RichTextBuilder.getRichText(postBody: post.body)
                                         }
                                     }
+                                    */
                                     
                                     // Reply preview row
+                                    /*
                                     if self.selectedPost != post.id {
                                         HStack {
                                             macOSPostPreviewView(postId: .constant(post.id), postAuthor: .constant(post.author), replyLines: self.$replyLines[post.id], lols: .constant(post.lols), postText: .constant(post.body), postCategory: .constant(post.category), postStrength: .constant(postStrength[post.id]))
@@ -285,7 +288,7 @@ struct macOSThreadViewOld: View {
                                             //}
                                         }
                                     }
-                                    
+                                    */
                                 }
                                 //.id(post.id)
                             }

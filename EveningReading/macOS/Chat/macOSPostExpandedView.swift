@@ -16,7 +16,8 @@ struct macOSPostExpandedView: View {
     @Binding var lols: [ChatLols]
     @Binding var postText: [RichTextBlock]
     @Binding var postDateTime: String
-
+    @Binding var op: String
+    
     var body: some View {
         HStack {
             // Reply lines
@@ -27,7 +28,7 @@ struct macOSPostExpandedView: View {
                 .foregroundColor(Color("replyLines"))
             
             // Author
-            AuthorNameView(name: self.postAuthor, postId: self.postId)
+            AuthorNameView(name: self.postAuthor, postId: self.postId, op: self.op)
             
             Spacer()
             
@@ -75,7 +76,7 @@ struct macOSPostExpandedView: View {
 
 struct macOSPostExpandedView_Previews: PreviewProvider {
     static var previews: some View {
-        macOSPostExpandedView(postId: .constant(0), postAuthor: .constant(""), replyLines: .constant(""), lols: .constant([ChatLols]()), postText: .constant([RichTextBlock]()), postDateTime: .constant("2020-04-20T09:20:00Z"))
+        macOSPostExpandedView(postId: .constant(0), postAuthor: .constant(""), replyLines: .constant(""), lols: .constant([ChatLols]()), postText: .constant([RichTextBlock]()), postDateTime: .constant("2020-04-20T09:20:00Z"), op: .constant(""))
             .environmentObject(AppSessionStore(service: AuthService()))
     }
 }
