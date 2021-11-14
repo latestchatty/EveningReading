@@ -169,9 +169,8 @@ struct LinkView: View {
                             }
                         }
                     }
-                // Everything else
+                // Everything else - i.e. a random link in a thread
                 } else {
-                    // A random link in a thread
                     // Use LinkViewerSheet
                     self.hyperlinkUrlStr = self.hyperlink
                     self.showingLinkWebView = true
