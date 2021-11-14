@@ -127,14 +127,16 @@ struct LinkView: View {
     @State private var showingSafariSheet = false
     @State private var hyperlinkUrl: URL?
     
-    //@State private var hyperlinkUrlStr: String?
-    //@State private var showingLinkWebView = false
+    @State private var hyperlinkUrlStr: String?
+    @State private var showingLinkWebView = false
     
     #if os(iOS)
     var body: some View {
         
-        //LinkViewerSheet(hyperlinkUrl: self.$hyperlinkUrlStr, showingWebView: self.$showingLinkWebView)
-        
+        // ... may cause performance issues
+        LinkViewerSheet(hyperlinkUrl: self.$hyperlinkUrlStr, showingWebView: self.$showingLinkWebView)
+        // ...
+    
         Text(self.description)
             .underline()
             .foregroundColor(colorScheme == .dark ? Color(UIColor.systemTeal) : Color(UIColor.black))
@@ -154,7 +156,7 @@ struct LinkView: View {
                     }
                 }
                 // Shack link
-                else if self.hyperlink.starts(with: "https://www.shacknews.com/chatty?id=")
+                else if self.hyperlink.starts(with: "https://www.shacknews.com/chatty?id=") || self.hyperlink.starts(with: "http://www.shacknews.com/chatty?id=")
                 {
                     if let url = URL(string: self.hyperlink) {
                         print("it is a valid url")
@@ -170,12 +172,17 @@ struct LinkView: View {
                 // Everything else
                 } else {
                     // A random link in a thread
-                    //self.hyperlinkUrlStr = self.hyperlink
-                    //self.showingLinkWebView = true
+                    // Use LinkViewerSheet
+                    self.hyperlinkUrlStr = self.hyperlink
+                    self.showingLinkWebView = true
+                    
+                    // Use Better Safari View
+                    /*
                     if let url = URL(string: self.hyperlink) {
                         self.hyperlinkUrl = url
                         self.showingSafariSheet = true
                     }
+                    */
                 }
             }
         

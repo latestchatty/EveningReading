@@ -60,8 +60,10 @@ struct LinkViewerSheet : View {
                                     .progressViewStyle(LinearProgressViewStyle(tint: Color(UIColor.systemBlue)))
                                     .frame(maxWidth: .infinity)
                             }
-                            LinkViewerWebView(webView: self.linkViewerStore.webView, viewModel: self.linkViewerStore, estimatedProgress: self.$webViewProgress, isLoading: self.$webViewLoading, loadUrl: Binding.constant(getHyperlink()))
-                            
+                            if showingWebView {
+                                LinkViewerWebView(webView: self.linkViewerStore.webView, viewModel: self.linkViewerStore, estimatedProgress: self.$webViewProgress, isLoading: self.$webViewLoading, loadUrl: Binding.constant(getHyperlink()))
+                            }
+                            Spacer()
                             .navigationBarTitle(Text(verbatim: self.linkViewerStore.webView.title ?? ""), displayMode: .inline)
                         }
                         .navigationBarItems(trailing: HStack {
@@ -78,7 +80,7 @@ struct LinkViewerSheet : View {
                             }.disabled(!self.linkViewerStore.webView.canGoForward)
                             Spacer().frame(width: 30)
                             Button(action: self.openInSafari) {
-                                Image(systemName: "square.and.arrow.up")
+                                Image(systemName: "safari") // square.and.arrow.up
                                   .imageScale(.large)
                                   .aspectRatio(contentMode: .fit)
                             }.disabled(self.linkViewerStore.webView.isLoading)
