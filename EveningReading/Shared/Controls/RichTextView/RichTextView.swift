@@ -169,19 +169,21 @@ struct LinkView: View {
                             }
                         }
                     }
-                // Everything else - i.e. a random link in a thread
-                } else {
-                    // Use LinkViewerSheet
-                    self.hyperlinkUrlStr = self.hyperlink
-                    self.showingLinkWebView = true
-                    
+                }
+                // Chattypics
+                else if self.hyperlink.starts(with: "https://www.chattypics.com") || self.hyperlink.starts(with: "http://www.chattypics.com") || self.hyperlink.starts(with: "https://chattypics.com") || self.hyperlink.starts(with: "http://chattypics.com")
+                {
                     // Use Better Safari View
-                    /*
                     if let url = URL(string: self.hyperlink) {
                         self.hyperlinkUrl = url
                         self.showingSafariSheet = true
                     }
-                    */
+                }
+                // Everything else - i.e. a random link in a thread
+                else {
+                    // Use LinkViewerSheet
+                    self.hyperlinkUrlStr = self.hyperlink
+                    self.showingLinkWebView = true
                 }
             }
         
