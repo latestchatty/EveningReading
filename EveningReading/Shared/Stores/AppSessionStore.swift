@@ -45,7 +45,14 @@ class AppSessionStore : ObservableObject {
     }
     @Published var threadNavigation: Bool = false {
         didSet {
-            UserDefaults.standard.set(threadNavigation, forKey: "ThreadNavigation")
+            UserDefaults.standard.set(threadNavigation, forKey: "ThreadNavigation")            
+            #if os(iOS)
+            if UIDevice.current.userInterfaceIdiom == .phone {
+                let navigationLocation = CGPoint(x: UIScreen.main.bounds.width - 50, y: UIScreen.main.bounds.height - 120)
+                self.threadNavigationLocationX = navigationLocation.x
+                self.threadNavigationLocationY = navigationLocation.y
+            }
+            #endif
         }
     }
     @Published var isDarkMode: Bool = true {
