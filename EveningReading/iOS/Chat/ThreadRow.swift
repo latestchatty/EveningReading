@@ -151,7 +151,9 @@ struct ThreadRow: View {
         
         // Load thread data
         .onAppear(perform: getThreadData)
-        
+        .onReceive(chatStore.$didGetChatFinish) { value in
+            getThreadData()
+        }
     }
     
 }
