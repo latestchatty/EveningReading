@@ -107,6 +107,9 @@ struct macOSThreadPreview: View {
             
         }
         .onAppear(perform: getThreadData)
+        .onReceive(chatStore.$didGetChatFinish) { value in
+            getThreadData()
+        }
         .onTapGesture(count: 1) {
             chatStore.activeThreadId = self.threadId
         }
