@@ -32,11 +32,16 @@ struct LolView: View {
                 tagTypeCount += 1
             }
         }
+        
+        // if there are more than 3 types of tags as this tag has
+        // fewer than 2 then do not show this tag
         if let count = tagCounts[tagType] {
             if tagTypeCount > 3 && count < 2 {
                 return true
             }
         }
+        
+        // show the tag
         return false
     }
     #endif
