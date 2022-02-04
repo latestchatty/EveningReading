@@ -94,7 +94,8 @@ struct RefreshableScrollView<Content: View>: View {
             if !self.refreshing && (self.scrollOffset > self.threshold && self.previousScrollOffset <= self.threshold) {
                 self.refreshing = true
                 #if os(iOS)
-                haptic(type: .success)
+                //haptic(type: .success)
+                impact(style: .medium)
                 #endif
             }
             
