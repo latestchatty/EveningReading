@@ -230,7 +230,7 @@ class ChatService {
             URLQueryItem(name: "username", value: username),
             URLQueryItem(name: "password", value: password),
             URLQueryItem(name: "parentId", value: String(postId)),
-            URLQueryItem(name: "text", value: postBody)
+            URLQueryItem(name: "text", value: postBody.replacingOccurrences(of: "+", with: "%2B").replacingOccurrences(of: "&", with: "%26"))
         ]
         
         guard
@@ -239,7 +239,7 @@ class ChatService {
         
         var request = URLRequest(url: newPostUrl)
         request.httpMethod = "POST"
-        request.httpBody = Data(query.utf8)
+        request.httpBody = components.query?.data(using: .utf8) //Data(query.utf8)
 
         let session = URLSession.shared
         let task = session.dataTask(with: request as URLRequest, completionHandler: { data, response, error in
