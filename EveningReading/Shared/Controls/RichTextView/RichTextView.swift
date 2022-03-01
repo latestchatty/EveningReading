@@ -259,6 +259,7 @@ struct LinkView: View {
                 Button(action: {
                     NSPasteboard.general.clearContents()
                     NSPasteboard.general.setString(self.hyperlink, forType: .URL)
+                    NSPasteboard.general.setString(self.hyperlink, forType: .string)
                 }) { Text("Copy link") }
                 if self.isImageHyperlink() {
                     Button(action: {

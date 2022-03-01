@@ -113,7 +113,6 @@ class ViewedPostsStore: ObservableObject {
     //    }
     
     @Published var viewedPosts: Set<Int> = []
-    private var dirty = false
     
     func getViewedPosts(_ handler: @escaping (Error?) -> Void) {
         CloudSetting.getCloudSetting(settingName: "werdSeenPosts", defaultValue: [] as Set<Int>) { [weak self] result in
@@ -127,18 +126,11 @@ class ViewedPostsStore: ObservableObject {
                     self?.viewedPosts = []
                     handler(err)
                 }
-                self?.dirty = false
             }
         }
     }
     
     func syncViewedPosts(_ handler: @escaping (Error?) -> Void) {
-        // If we haven't marked anything new, there's no reason to do any of this.
-        if !self.dirty {
-            handler(nil)
-            return
-        }
-        
         print("Saving viewed posts...")
         // Merge with current cloud setting if it was updated by another instance.
         CloudSetting.getCloudSetting(settingName: "werdSeenPosts", defaultValue: [] as Set<Int>) { [weak self] result in
@@ -156,7 +148,6 @@ class ViewedPostsStore: ObservableObject {
                     case .success:
                         DispatchQueue.main.async {
                             self?.viewedPosts = Set(postsToSave)
-                            self?.dirty = false
                         }
                         handler(nil)
                     case .failure(let err):
@@ -170,7 +161,6 @@ class ViewedPostsStore: ObservableObject {
                     case .success:
                         DispatchQueue.main.async {
                             self?.viewedPosts = Set(postsToSave)
-                            self?.dirty = false
                         }
                         handler(nil)
                     case .failure(let err):
@@ -192,19 +182,12 @@ class ViewedPostsStore: ObservableObject {
     
     public func markPostsViewed(postIds: [Int], _ handler: @escaping (Error?) -> Void) {
         let postsToMarkRead = Set<Int>(postIds)
-        let originalCount = self.viewedPosts.count
         self.viewedPosts = postsToMarkRead.union(self.viewedPosts)
-        if originalCount != self.viewedPosts.count {
-            self.dirty = true
-        }
         self.syncViewedPosts(handler)
     }
     
     public func markPostViewed(postId: Int) {
-        let result = self.viewedPosts.insert(postId)
-        if result.inserted {
-            self.dirty = true
-        }
+        self.viewedPosts.insert(postId)
     }
     
     public func isPostViewed(postId: Int) -> Bool {
