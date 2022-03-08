@@ -41,7 +41,7 @@ struct macOSThreadPreview: View {
                 
             }
         } else {
-            print("ThreadPreview getThreadData")
+            //print("ThreadPreview getThreadData")
             // Why was this here?
             //let threads = chatStore.threads.filter({ return self.appSessionStore.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !appSessionStore.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
             

@@ -11,6 +11,7 @@ struct macOSThreadList: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var chatStore: ChatStore
     @EnvironmentObject var viewedPostsStore: ViewedPostsStore
+    @EnvironmentObject var liveChatUpdate: LiveChatStore
     @State var showRootPostPrompt: Bool = false
     @State var gettingData: Bool = false
     
@@ -72,6 +73,7 @@ struct macOSThreadList: View {
                     self.gettingData = true
                     let tx = Transaction(animation: .linear)
                     withTransaction(tx) {
+                        liveChatUpdate.start()
                         if chatStore.activeThreadId != 0 {
                             if let thread = chatStore.threads.first(where: { return $0.threadId == chatStore.activeThreadId }) {
                                 viewedPostsStore.markThreadViewed(thread: thread) { err in
@@ -90,9 +92,15 @@ struct macOSThreadList: View {
                     }
                 }, label: {
                     Image(systemName: "arrow.counterclockwise")
+                    if liveChatUpdate.newRepliesToLoggedInUser > 0 {
+                        Image(systemName: "star.fill")
+                    }
+                    if liveChatUpdate.newThreads > 0 {
+                        Text(liveChatUpdate.newThreads > 9 ? "9+" : String(liveChatUpdate.newThreads))
+                    }
                 })
-                .disabled(chatStore.gettingChat)
-                .keyboardShortcut("r", modifiers: [.command, .shift])
+                    .disabled(chatStore.gettingChat || liveChatUpdate.newReplies == 0)
+                    .keyboardShortcut("r", modifiers: [.command, .shift])
                 Button(action: {
                     self.showRootPostPrompt = true
                 }, label: {
@@ -109,5 +117,6 @@ struct macOSThreadList_Previews: PreviewProvider {
             .environmentObject(AppSessionStore(service: AuthService()))
             .environmentObject(ChatStore(service: ChatService()))
             .environmentObject(ViewedPostsStore())
+            .environmentObject(LiveChatStore(service: LiveChatUpdateService()))
     }
 }

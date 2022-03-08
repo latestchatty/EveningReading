@@ -10,6 +10,9 @@
 		6C62711F17327536D58ECCBE /* UserUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C627492D0ECC927EB7B7770 /* UserUtils.swift */; };
 		6C6279E556E7B79449D38738 /* UserUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C627492D0ECC927EB7B7770 /* UserUtils.swift */; };
 		6C627BA6F731AFB8CE89080B /* UserUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C627492D0ECC927EB7B7770 /* UserUtils.swift */; };
+		7D0011C727D3D7BD00385A47 /* LiveChatUpdateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0011C627D3D7BD00385A47 /* LiveChatUpdateService.swift */; };
+		7D0011C827D3D7BD00385A47 /* LiveChatUpdateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0011C627D3D7BD00385A47 /* LiveChatUpdateService.swift */; };
+		7D0011C927D3D7BD00385A47 /* LiveChatUpdateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0011C627D3D7BD00385A47 /* LiveChatUpdateService.swift */; };
 		7D12C55026E8675200446F64 /* Gzip in Frameworks */ = {isa = PBXBuildFile; productRef = 7D12C54F26E8675200446F64 /* Gzip */; };
 		7D12C55126E86A9400446F64 /* ViewedPostsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4815EE26D89F7400247927 /* ViewedPostsService.swift */; };
 		7D12C55326E86A9D00446F64 /* Gzip in Frameworks */ = {isa = PBXBuildFile; productRef = 7D12C55226E86A9D00446F64 /* Gzip */; };
@@ -278,6 +281,7 @@
 
 /* Begin PBXFileReference section */
 		6C627492D0ECC927EB7B7770 /* UserUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserUtils.swift; sourceTree = "<group>"; };
+		7D0011C627D3D7BD00385A47 /* LiveChatUpdateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveChatUpdateService.swift; sourceTree = "<group>"; };
 		7D2A859826E51B1D008C4833 /* macOSTextPromptSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSTextPromptSheet.swift; sourceTree = "<group>"; };
 		7D2A859A26E5619C008C4833 /* macOSReportPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSReportPostView.swift; sourceTree = "<group>"; };
 		7D45A0B126D7520E00BC0254 /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
@@ -746,6 +750,7 @@
 				83AA199F264821D100556E69 /* MessageService.swift */,
 				83AA19EA264F24FC00556E69 /* NotificationService.swift */,
 				7D4815EE26D89F7400247927 /* ViewedPostsService.swift */,
+				7D0011C627D3D7BD00385A47 /* LiveChatUpdateService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1399,6 +1404,7 @@
 				83398150263F6427005614E8 /* ArrayExtensions.swift in Sources */,
 				8339817B264062BB005614E8 /* RoundedCornersView.swift in Sources */,
 				83AA19982647933300556E69 /* SearchResultsView.swift in Sources */,
+				7D0011C727D3D7BD00385A47 /* LiveChatUpdateService.swift in Sources */,
 				83A85CF5265570BD007EBAC3 /* NotificationsView.swift in Sources */,
 				83AA195726464FBC00556E69 /* BlurView.swift in Sources */,
 				830292F12644C57F00B974B3 /* ReplyLineBuilder.swift in Sources */,
@@ -1465,6 +1471,7 @@
 				83AA1963264656BD00556E69 /* KeychainWrapper.swift in Sources */,
 				833685D32672C18F00ACE618 /* macOSPostPreviewView.swift in Sources */,
 				833685C626702CB900ACE618 /* macOSClearHiddenView.swift in Sources */,
+				7D0011C827D3D7BD00385A47 /* LiveChatUpdateService.swift in Sources */,
 				833EE9CC2644DE1A00345A1D /* RichTextView.swift in Sources */,
 				7D2A859926E51B1D008C4833 /* macOSTextPromptSheet.swift in Sources */,
 				833685C2266FAB2B00ACE618 /* macOSGuidelinesView.swift in Sources */,
@@ -1499,6 +1506,7 @@
 				833981A62641A051005614E8 /* ContributedView.swift in Sources */,
 				833981AB2641A93E005614E8 /* AppSessionStore.swift in Sources */,
 				83AA196B2646648900556E69 /* watchOSGuidelines.swift in Sources */,
+				7D0011C927D3D7BD00385A47 /* LiveChatUpdateService.swift in Sources */,
 				83AA194F26463EAD00556E69 /* ArticleService.swift in Sources */,
 				7D82DF1C26DC8EA600EE0EB3 /* UnreadRepliesView.swift in Sources */,
 				830292F32644C57F00B974B3 /* ReplyLineBuilder.swift in Sources */,

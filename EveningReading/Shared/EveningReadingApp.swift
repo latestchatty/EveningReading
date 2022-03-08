@@ -17,6 +17,7 @@ struct EveningReadingApp: App {
     @StateObject var articleStore = ArticleStore(service: .init())
     @StateObject var messageStore = MessageStore(service: .init())
     @StateObject var viewedPostsService = ViewedPostsStore()
+    @StateObject var liveChatStore = LiveChatStore(service: .init())
     
     #if os(iOS)
     @StateObject var notifications = Notifications.shared //Notifications()
@@ -83,6 +84,7 @@ struct EveningReadingApp: App {
                 .environmentObject(articleStore)
                 .environmentObject(messageStore)
                 .environmentObject(viewedPostsService)
+                .environmentObject(liveChatStore)
                 .lineSpacing(4 + (FontSettings.instance.fontOffset * 0.25))
                 .preferredColorScheme(.dark)
         }

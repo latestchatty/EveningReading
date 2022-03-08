@@ -11,6 +11,7 @@ struct macOSChatView: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var chatStore: ChatStore
     @EnvironmentObject var viewedPostsStore: ViewedPostsStore
+    @EnvironmentObject var liveChatStore: LiveChatStore
     
     @State private var showingGuidelinesView = false
     @State private var guidelinesAccepted = false
@@ -22,6 +23,7 @@ struct macOSChatView: View {
         }
         self.viewedPostsStore.getViewedPosts() { _ in
             self.chatStore.getChat(viewedPostsStore: viewedPostsStore)
+            self.liveChatStore.start()
         }
     }
     
@@ -64,5 +66,6 @@ struct macOSChatView_Previews: PreviewProvider {
             .previewLayout(.fixed(width: 640, height: 480))
             .environmentObject(AppSessionStore(service: AuthService()))
             .environmentObject(ChatStore(service: ChatService()))
+            .environmentObject(LiveChatStore(service: LiveChatUpdateService()))
     }
 }
