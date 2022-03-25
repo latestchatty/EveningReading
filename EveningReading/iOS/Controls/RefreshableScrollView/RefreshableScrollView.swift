@@ -23,7 +23,7 @@ struct RefreshableScrollView<Content: View>: View {
     @Binding var scrollTarget: Int?
     @Binding var scrollTargetTop: Int?
     let content: Content
-
+    
     init(height: CGFloat = 80, refreshing: Binding<Bool>, scrollTarget: Binding<Int?>, scrollTargetTop: Binding<Int?>, @ViewBuilder content: () -> Content) {
         self.threshold = height
         self._refreshing = refreshing
