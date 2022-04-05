@@ -227,11 +227,12 @@ class ChatService {
         let newPostUrl = URL(string: "https://winchatty.com/v2/postComment")!
         var components = URLComponents(url: newPostUrl, resolvingAgainstBaseURL: false)!
         components.queryItems = [
-            URLQueryItem(name: "username", value: username),
-            URLQueryItem(name: "password", value: password),
+            URLQueryItem(name: "username", value: username?.replacingOccurrences(of: "+", with: "%2B").replacingOccurrences(of: "&", with: "%26")),
+            URLQueryItem(name: "password", value: password?.replacingOccurrences(of: "+", with: "%2B").replacingOccurrences(of: "&", with: "%26")),
             URLQueryItem(name: "parentId", value: String(postId)),
             URLQueryItem(name: "text", value: postBody.replacingOccurrences(of: "+", with: "%2B").replacingOccurrences(of: "&", with: "%26"))
         ]
+        // .replacingOccurrences(of: "#", with: "%23")
         
         guard
             let query = components.url!.query
