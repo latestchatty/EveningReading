@@ -5,6 +5,9 @@
 //  Created by Chris Hodge on 5/2/21.
 //
 
+// https://blckbirds.com/post/mastering-pull-to-refresh-in-swiftui/
+// https://swift-cast.com/2020/10/1/
+
 import SwiftUI
 
 struct ChatView: View {

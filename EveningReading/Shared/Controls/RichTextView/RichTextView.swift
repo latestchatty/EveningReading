@@ -6,6 +6,7 @@
 //
 
 // This repo helped me a lot: https://github.com/JohnHeitmann/SwiftUI-Rich-Text-Demo Thanks!
+// https://stackoverflow.com/questions/25882936/open-appstore-through-button
 
 import Foundation
 import SwiftUI
@@ -177,6 +178,15 @@ struct LinkView: View {
                     if let url = URL(string: self.hyperlink) {
                         self.hyperlinkUrl = url
                         self.showingSafariSheet = true
+                    }
+                }
+                // Apple
+                else if self.hyperlink.starts(with: "https://apps.apple.com")
+                {
+                    // Open Directly
+                    let appleLink = self.hyperlink.replacingOccurrences(of: "https", with: "itms-apps")
+                    if let url = URL(string: appleLink) {
+                        UIApplication.shared.open(url)
                     }
                 }
                 // Everything else - i.e. a random link in a thread
