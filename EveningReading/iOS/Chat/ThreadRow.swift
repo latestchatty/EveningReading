@@ -79,19 +79,38 @@ struct ThreadRow: View {
         ZStack {
             
             // Category Color
-            HStack {
-                GeometryReader { categoryGeo in
-                    Path { categoryPath in
-                        categoryPath.move(to: CGPoint(x: 0, y: 16))
-                        categoryPath.addLine(to: CGPoint(x: 0, y: categoryGeo.size.height - 21))
-                        categoryPath.addLine(to: CGPoint(x: categoryGeo.size.width, y: categoryGeo.size.height - 21))
-                        categoryPath.addLine(to: CGPoint(x: categoryGeo.size.width, y: 16))
+            //if self.rootPostCategory != "ontopic" {
+                HStack {
+                    GeometryReader { categoryGeo in
+                        Path { categoryPath in
+                            categoryPath.move(to: CGPoint(x: 0, y: 16))
+                            categoryPath.addLine(to: CGPoint(x: 0, y: categoryGeo.size.height - 21))
+                            categoryPath.addLine(to: CGPoint(x: categoryGeo.size.width, y: categoryGeo.size.height - 21))
+                            categoryPath.addLine(to: CGPoint(x: categoryGeo.size.width, y: 16))
+                        }
+                        .fill(ThreadCategoryColor[self.rootPostCategory]!)
                     }
-                    .fill(ThreadCategoryColor[self.rootPostCategory]!)
+                    .frame(width: 3)
+                    Spacer()
                 }
-                .frame(width: 3)
-                Spacer()
+            //}
+            /*
+            else if self.rootPostLols.count > 0 && self.rootPostCategory == "ontopic"  {
+                HStack {
+                    GeometryReader { categoryGeo in
+                        Path { categoryPath in
+                            categoryPath.move(to: CGPoint(x: 0, y: 0))
+                            categoryPath.addLine(to: CGPoint(x: 0, y: categoryGeo.size.height - 21))
+                            categoryPath.addLine(to: CGPoint(x: categoryGeo.size.width, y: categoryGeo.size.height - 21))
+                            categoryPath.addLine(to: CGPoint(x: categoryGeo.size.width, y: 0))
+                        }
+                        .fill(Color(UIColor.systemGray))
+                    }
+                    .frame(width: 3)
+                    Spacer()
+                }
             }
+            */
             
             // Author, Contribution, Lols, Replies, Time, Preview
             VStack {
@@ -107,13 +126,30 @@ struct ThreadRow: View {
 
                     Spacer()
 
-                    LolView(lols: self.rootPostLols, expanded: true, postId: self.threadId)
+                    LolView(lols: self.rootPostLols, expanded: false, postId: self.threadId)
 
                     ReplyCountView(replyCount: self.replyCount)
                     
                     TimeRemainingIndicator(percent: .constant(self.rootPostDate.getTimeRemaining()))
                             .frame(width: 10, height: 10)
                 }
+                
+                
+                /*
+                //if self.rootPostLols.count > 0 {
+                    HStack (alignment: .center) {
+                        Text("\(self.rootPostDate.fromISO8601Time())")
+                            .font(.caption2)
+                            .foregroundColor(Color("NoDataLabel"))
+                            .padding(.bottom, 5)
+                        Spacer()
+                        if self.rootPostLols.count > 0 {
+                            LolView(lols: self.rootPostLols, expanded: true, postId: self.threadId)
+                                .padding(.bottom, 5)
+                        }
+                    }
+                //}
+                */
                 
                 // Post Preview
                 ZStack {
@@ -155,7 +191,6 @@ struct ThreadRow: View {
             getThreadData()
         }
     }
-    
 }
 
 struct ThreadRow_Previews: PreviewProvider {
