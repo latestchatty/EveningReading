@@ -16,6 +16,7 @@ struct ChatView: View {
     @EnvironmentObject var chatStore: ChatStore
 
     @State private var isGettingChat: Bool = false
+    @State private var noInternet: Bool = false
 
     //@State private var isPushNotificationAlertShowing: Bool = false
     
@@ -34,7 +35,20 @@ struct ChatView: View {
             // Comment out to preview
             //GoToPostView(currentViewName: "ChatView")
             
-            RefreshableScrollView(height: 70, refreshing: self.$chatStore.gettingChat, scrollTarget: self.$chatStore.scrollTargetChat, scrollTargetTop: self.$chatStore.scrollTargetChatTop) {
+            // height: 70
+            RefreshableScrollView(height: 20, refreshing: self.$chatStore.gettingChat, scrollTarget: self.$chatStore.scrollTargetChat, scrollTargetTop: self.$chatStore.scrollTargetChatTop) {
+                
+                // No Internet/Data
+                if self.noInternet {
+                    Text("Oops! No Data.")
+                        .foregroundColor(Color("NoData"))
+                        .padding(5)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color("NoDataLabel"), lineWidth: 1)
+                        )
+                        .padding(.top, 20)
+                }
                 
                 // Scroll to top
                 VStack {
@@ -92,6 +106,11 @@ struct ChatView: View {
         // Finished getting chat data
         .onReceive(chatStore.$didGetChatFinish) { value in
             self.isGettingChat = false
+            if chatStore.threads.isEmpty {
+                self.noInternet = true
+            } else {
+                self.noInternet = false
+            }
         }
         
         // Disable while getting new data
@@ -113,5 +132,6 @@ struct ChatView_Previews: PreviewProvider {
             .environment(\.colorScheme, .dark)
             .environmentObject(AppSessionStore(service: AuthService()))
             .environmentObject(ChatStore(service: ChatService()))
+            .environmentObject(Notifications())
     }
 }

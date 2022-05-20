@@ -24,6 +24,8 @@ struct RefreshableScrollView<Content: View>: View {
     @Binding var scrollTargetTop: Int?
     let content: Content
     
+    //let endRefreshTimer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+
     init(height: CGFloat = 80, refreshing: Binding<Bool>, scrollTarget: Binding<Int?>, scrollTargetTop: Binding<Int?>, @ViewBuilder content: () -> Content) {
         self.threshold = height
         self._refreshing = refreshing
@@ -40,7 +42,8 @@ struct RefreshableScrollView<Content: View>: View {
                     MovingView()
                     
                     LazyVStack { self.content }
-                    .alignmentGuide(.top, computeValue: { d in (self.refreshing && self.frozen) ? -self.threshold : 0.0 })
+//.alignmentGuide(.top, computeValue: { d in (self.refreshing && self.frozen) ? -self.threshold : 0.0 })
+                    .alignmentGuide(.top, computeValue: { d in (self.refreshing) ? -self.threshold : 0.0 })
                     .onChange(of: scrollTarget) { target in
                         if let target = target {
                             self.scrollTarget = nil
@@ -72,6 +75,11 @@ struct RefreshableScrollView<Content: View>: View {
             .onPreferenceChange(RefreshableKeyTypes.PrefKey.self) { values in
                 self.refreshLogic(values: values)
             }
+            /*
+            .onReceive(endRefreshTimer) { input in
+                print("self.refreshing = \(self.refreshing) and self.frozen = \(self.frozen)")
+            }
+            */
         }
     }
     

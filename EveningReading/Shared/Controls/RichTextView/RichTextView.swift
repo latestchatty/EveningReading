@@ -454,7 +454,7 @@ class RichTextBuilder {
         var resultsAll: [String] = []
         var resultsByType: [ShackPostMarkup] = []
         var attr: TextAttributes = [.normal]
-        var fifo: [String] = []
+        var lifo: [String] = []
         let _: [String] = matchesTags.map {
             let rangeTags = Range($0.range, in: postBodyMarkup)!
         
@@ -509,60 +509,60 @@ class RichTextBuilder {
                     if !attr.contains(TextAttributes.blue) {
                         attr.update(with: TextAttributes.blue)
                     }
-                    fifo.append("jt_blue")
+                    lifo.append("jt_blue")
                 } else if markup.postMarkup.contains(#"<span class="jt_green">"#) {
                     if !attr.contains(TextAttributes.green) {
                         attr.update(with: TextAttributes.green)
                     }
-                    fifo.append("jt_green")
+                    lifo.append("jt_green")
                 } else if markup.postMarkup.contains(#"<span class="jt_orange">"#) {
                     if !attr.contains(TextAttributes.orange) {
                         attr.update(with: TextAttributes.orange)
                     }
-                    fifo.append("jt_orange")
+                    lifo.append("jt_orange")
                 } else if markup.postMarkup.contains(#"<span class="jt_yellow">"#) {
                    if !attr.contains(TextAttributes.yellow) {
                        attr.update(with: TextAttributes.yellow)
                    }
-                    fifo.append("jt_yellow")
+                    lifo.append("jt_yellow")
                 } else if markup.postMarkup.contains(#"<span class="jt_red">"#) {
                     if !attr.contains(TextAttributes.red) {
                         attr.update(with: TextAttributes.red)
                     }
-                    fifo.append("jt_red")
+                    lifo.append("jt_red")
                 } else if markup.postMarkup.contains(#"<span class="jt_pink">"#) {
                     if !attr.contains(TextAttributes.pink) {
                         attr.update(with: TextAttributes.pink)
                     }
-                    fifo.append("jt_pink")
+                    lifo.append("jt_pink")
                 } else if markup.postMarkup.contains(#"<span class="jt_olive">"#) {
                     if !attr.contains(TextAttributes.olive) {
                         attr.update(with: TextAttributes.olive)
                     }
-                    fifo.append("jt_olive")
+                    lifo.append("jt_olive")
                 } else if markup.postMarkup.contains(#"<span class="jt_lime">"#) {
                     if !attr.contains(TextAttributes.lime) {
                         attr.update(with: TextAttributes.lime)
                     }
-                    fifo.append("jt_lime")
+                    lifo.append("jt_lime")
                 } else if markup.postMarkup.contains(#"<span class="jt_strike">"#) {
                     if !attr.contains(TextAttributes.strike) {
                         attr.update(with: TextAttributes.strike)
                     }
-                    fifo.append("jt_strike")
+                    lifo.append("jt_strike")
                 } else if markup.postMarkup.contains(#"<span class="jt_sample">"#) {
                     if !attr.contains(TextAttributes.sample) {
                         attr.update(with: TextAttributes.sample)
                     }
-                    fifo.append("jt_sample")
+                    lifo.append("jt_sample")
                 } else if markup.postMarkup.contains(#"<span class="jt_quote">"#) {
                     if !attr.contains(TextAttributes.quote) {
                         attr.update(with: TextAttributes.quote)
                     }
-                    fifo.append("jt_quote")
+                    lifo.append("jt_quote")
                 }
                 else if markup.postMarkup.contains(#"<span class="jt_spoiler" onclick="this.className = '';">"#) {
-                    fifo.append("jt_spoiler")
+                    lifo.append("jt_spoiler")
                     isSpoiler = true
                 }
                 else if markup.postMarkup.starts(with: #"<a target="_blank" href="https://www.shacknews.com/article/"#) {
@@ -593,52 +593,52 @@ class RichTextBuilder {
                 
                 // Close tags
                 if markup.postMarkup == #"</span>"# {
-                    if attr.contains(TextAttributes.blue) && fifo.last ?? "" == "jt_blue" {
+                    if attr.contains(TextAttributes.blue) && lifo.last ?? "" == "jt_blue" {
                         attr.remove(TextAttributes.blue)
-                        fifo.removeLast()
+                        lifo.removeLast()
                     }
-                    else if attr.contains(TextAttributes.green) && fifo.last ?? "" == "jt_green" {
+                    else if attr.contains(TextAttributes.green) && lifo.last ?? "" == "jt_green" {
                         attr.remove(TextAttributes.green)
-                        fifo.removeLast()
+                        lifo.removeLast()
                     }
-                    else if attr.contains(TextAttributes.orange) && fifo.last ?? "" == "jt_orange" {
+                    else if attr.contains(TextAttributes.orange) && lifo.last ?? "" == "jt_orange" {
                         attr.remove(TextAttributes.orange)
-                        fifo.removeLast()
+                        lifo.removeLast()
                     }
-                    else if attr.contains(TextAttributes.yellow) && fifo.last ?? "" == "jt_yellow" {
+                    else if attr.contains(TextAttributes.yellow) && lifo.last ?? "" == "jt_yellow" {
                         attr.remove(TextAttributes.yellow)
-                        fifo.removeLast()
+                        lifo.removeLast()
                     }
-                    else if attr.contains(TextAttributes.red) && fifo.last ?? "" == "jt_red" {
+                    else if attr.contains(TextAttributes.red) && lifo.last ?? "" == "jt_red" {
                         attr.remove(TextAttributes.red)
-                        fifo.removeLast()
+                        lifo.removeLast()
                     }
-                    else if attr.contains(TextAttributes.pink) && fifo.last ?? "" == "jt_pink" {
+                    else if attr.contains(TextAttributes.pink) && lifo.last ?? "" == "jt_pink" {
                         attr.remove(TextAttributes.pink)
-                        fifo.removeLast()
+                        lifo.removeLast()
                     }
-                    else if attr.contains(TextAttributes.olive) && fifo.last ?? "" == "jt_olive" {
+                    else if attr.contains(TextAttributes.olive) && lifo.last ?? "" == "jt_olive" {
                         attr.remove(TextAttributes.olive)
-                        fifo.removeLast()
+                        lifo.removeLast()
                     }
-                    else if attr.contains(TextAttributes.lime) && fifo.last ?? "" == "jt_lime" {
+                    else if attr.contains(TextAttributes.lime) && lifo.last ?? "" == "jt_lime" {
                         attr.remove(TextAttributes.lime)
-                        fifo.removeLast()
+                        lifo.removeLast()
                     }
-                    else if attr.contains(TextAttributes.strike) && fifo.last ?? "" == "jt_strike" {
+                    else if attr.contains(TextAttributes.strike) && lifo.last ?? "" == "jt_strike" {
                         attr.remove(TextAttributes.strike)
-                        fifo.removeLast()
+                        lifo.removeLast()
                     }
-                    else if attr.contains(TextAttributes.sample) && fifo.last ?? "" == "jt_sample" {
+                    else if attr.contains(TextAttributes.sample) && lifo.last ?? "" == "jt_sample" {
                         attr.remove(TextAttributes.sample)
-                        fifo.removeLast()
+                        lifo.removeLast()
                     }
-                    else if attr.contains(TextAttributes.quote) && fifo.last ?? "" == "jt_quote" {
+                    else if attr.contains(TextAttributes.quote) && lifo.last ?? "" == "jt_quote" {
                         attr.remove(TextAttributes.quote)
-                        fifo.removeLast()
+                        lifo.removeLast()
                     }
-                    else if fifo.last ?? "" == "jt_spoiler" {
-                        fifo.removeLast()
+                    else if lifo.last ?? "" == "jt_spoiler" {
+                        lifo.removeLast()
                         isSpoiler = false
                         if spoilerText != "" {
                             // Spit out what's regular content
