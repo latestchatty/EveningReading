@@ -50,6 +50,7 @@ struct NoticeView : View {
             .background(BlurView(style: .systemUltraThinMaterial))
             .cornerRadius(20)
             .onAppear() {
+                print("Show Notice")
                 DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
                     withAnimation {
                         self.show = false

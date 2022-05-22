@@ -28,6 +28,8 @@ struct TagPostView: View {
         
         // Find out if we are tagging or untagging then proceed
         chatStore.getRaters(postId: postId, completionSuccess: {
+                print("getRaters completionSuccess")
+            
                 // Check if user already tagged
                 for rater in chatStore.raters {
                     for username in rater.usernames {
@@ -51,16 +53,25 @@ struct TagPostView: View {
                 // Show notice
                 //DispatchQueue.main.async {
                 // Is asyncAfter necessary to work 100%?
-                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(50)) {
+                //DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(50)) {
+                DispatchQueue.main.async {
                     print("Should show Tagged! toast?")
                     chatStore.didTagPost = true
                     chatStore.showingTagNotice = true
                 }
             }, completionFail: {
+                print("getRaters completionFail")
                 if !(userTagsForPost[tag] ?? 0 > 0) {
                     chatStore.tag(postId: self.postId, tag: tag, untag: "0")
+                    chatStore.taggingNoticeText = "Tagged!"
                 } else {
                     chatStore.tag(postId: self.postId, tag: tag, untag: "1")
+                    chatStore.taggingNoticeText = "Untagged!"
+                }
+                DispatchQueue.main.async {
+                    print("Should show Tagged! toast?")
+                    chatStore.didTagPost = true
+                    chatStore.showingTagNotice = true
                 }
             }
         )
