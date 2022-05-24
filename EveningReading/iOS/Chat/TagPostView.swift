@@ -45,9 +45,11 @@ struct TagPostView: View {
                 if (userTagsForPost[tag] ?? 0 < 1) {
                     chatStore.tag(postId: self.postId, tag: tag, untag: "0")
                     chatStore.taggingNoticeText = "Tagged!"
+                    chatStore.tagDelta[self.postId, default: [:]][tag] = 1
                 } else {
                     chatStore.tag(postId: self.postId, tag: tag, untag: "1")
                     chatStore.taggingNoticeText = "Untagged!"
+                    chatStore.tagDelta[self.postId, default: [:]][tag] = 0
                 }
                 
                 // Show notice
@@ -64,9 +66,11 @@ struct TagPostView: View {
                 if !(userTagsForPost[tag] ?? 0 > 0) {
                     chatStore.tag(postId: self.postId, tag: tag, untag: "0")
                     chatStore.taggingNoticeText = "Tagged!"
+                    chatStore.tagDelta[self.postId, default: [:]][tag] = 1
                 } else {
                     chatStore.tag(postId: self.postId, tag: tag, untag: "1")
                     chatStore.taggingNoticeText = "Untagged!"
+                    chatStore.tagDelta[self.postId, default: [:]][tag] = 0
                 }
                 DispatchQueue.main.async {
                     print("Should show Tagged! toast?")

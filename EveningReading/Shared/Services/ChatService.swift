@@ -415,6 +415,8 @@ class ChatStore: ObservableObject {
     @Published var scrollTargetChatTop: Int?
     @Published var scrollTargetThread: Int?
     @Published var scrollTargetThreadTop: Int?
+    
+    @Published public var tagDelta = [Int: [String: Int]]()
 
     // For pull to refresh
     @Published var gettingChat: Bool = false {
@@ -458,8 +460,10 @@ class ChatStore: ObservableObject {
                 switch result {
                 case .success(let threads):
                     self?.threads = threads
+                    self?.tagDelta = [Int: [String: Int]]()
                 case .failure:
                     self?.threads = []
+                    
                 }
                 DispatchQueue.main.async {
                     self?.didGetChatFinish = true
