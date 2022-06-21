@@ -374,6 +374,8 @@ extension String {
     var getPreview: String {
         var postPreview = self.replacingOccurrences(of: "<br />", with: " ")
         postPreview = postPreview.replacingOccurrences(of: "<span\\sclass=\"jt_spoiler\"\\sonclick=\"this.className\\s=\\s'';\">(.|\\n)*?<\\/span>", with: "______", options: .regularExpression, range: nil)
+        postPreview = postPreview.replacingOccurrences(of: "&gt;", with: ">")
+        postPreview = postPreview.replacingOccurrences(of: "&lt;", with: "<")
         postPreview = postPreview.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil).stringByDecodingHTMLEntities
         let components = postPreview.components(separatedBy: .whitespacesAndNewlines)
         postPreview = components.filter { !$0.isEmpty }.joined(separator: " ")
