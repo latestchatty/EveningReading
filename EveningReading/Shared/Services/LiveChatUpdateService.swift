@@ -46,6 +46,7 @@ class LiveChatUpdateService {
         let lastEventId: Int
         let tooManyEvents: Bool
         var events: [ChatUpdateEvent] = [ChatUpdateEvent]()
+        private struct EmptyCodable: Codable {}
         
         init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -60,6 +61,10 @@ class LiveChatUpdateService {
                     events.append(event)
                 } else if let event = try? eventArray.decode(UnknownUpdateEvent.self) {
                     events.append(event)
+                } else {
+                    // If we REALLY can't figure out what this is, skip it by decoding it into an empty object.
+                    // Otherwise this will infinite loop.
+                    _ = try eventArray.decode(EmptyCodable.self)
                 }
             }}
         }
