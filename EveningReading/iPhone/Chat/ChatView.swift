@@ -51,7 +51,7 @@ struct ChatView: View {
                 //GoToPostView(currentViewName: "ChatView")
                 
                 // height: 70
-                RefreshableScrollView(height: 20, refreshing: self.$chatStore.gettingChat, scrollTarget: self.$chatStore.scrollTargetChat, scrollTargetTop: self.$chatStore.scrollTargetChatTop) {
+                RefreshableScrollView(height: 70, refreshing: self.$chatStore.gettingChat, scrollTarget: self.$chatStore.scrollTargetChat, scrollTargetTop: self.$chatStore.scrollTargetChatTop) {
                     
                     // No Internet/Data
                     if self.noInternet {

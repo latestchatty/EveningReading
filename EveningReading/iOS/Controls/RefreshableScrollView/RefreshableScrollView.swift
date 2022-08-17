@@ -43,7 +43,7 @@ struct RefreshableScrollView<Content: View>: View {
                     
                     LazyVStack { self.content }
 //.alignmentGuide(.top, computeValue: { d in (self.refreshing && self.frozen) ? -self.threshold : 0.0 })
-                    .alignmentGuide(.top, computeValue: { d in (self.refreshing) ? -self.threshold : 0.0 })
+.alignmentGuide(.top, computeValue: { d in (self.refreshing) ? -self.threshold : 0.0 })
                     .onChange(of: scrollTarget) { target in
                         if let target = target {
                             self.scrollTarget = nil

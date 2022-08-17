@@ -23,7 +23,7 @@ let PostTagColor: [String: Color] = [
     "inf": Color(UIColor.systemBlue),
     "unf": Color(UIColor.systemRed),
     "tag": Color(UIColor.systemGreen),
-    "wtf": Color(UIColor.systemPink),
+    "wtf": Color(UIColor.systemPurple),
     "wow": Color(UIColor.systemGray),
     "aww": Color(UIColor.systemTeal)
 ]

@@ -240,8 +240,8 @@ struct ThreadDetailView: View {
             if self.showThread {
                 
                 
-                // height: 70
-                RefreshableScrollView(height: 20, refreshing: self.$chatStore.gettingThread, scrollTarget: self.$chatStore.scrollTargetThread, scrollTargetTop: self.$chatStore.scrollTargetThreadTop) {
+                // height: 20
+                RefreshableScrollView(height: 70, refreshing: self.$chatStore.gettingThread, scrollTarget: self.$chatStore.scrollTargetThread, scrollTargetTop: self.$chatStore.scrollTargetThreadTop) {
                     
                     // Root Post
                     VStack {
