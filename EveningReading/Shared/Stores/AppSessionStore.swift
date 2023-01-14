@@ -86,10 +86,10 @@ class AppSessionStore : ObservableObject {
     @Published var showOffTopic: Bool = false {
         didSet {
             UserDefaults.standard.set(showOffTopic, forKey: "ShowOffTopic")
-            if self.showOffTopic && !self.threadFilters.contains("offtopic") {
-                self.threadFilters.append("offtopic")
+            if self.showOffTopic && !self.threadFilters.contains("tangent") {
+                self.threadFilters.append("tangent")
             } else if !self.showOffTopic {
-                self.threadFilters = self.threadFilters.filter { $0 != "offtopic" }
+                self.threadFilters = self.threadFilters.filter { $0 != "tangent" }
             }
         }
     }

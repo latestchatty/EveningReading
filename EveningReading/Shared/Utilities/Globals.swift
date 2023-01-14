@@ -11,7 +11,7 @@ import SwiftUI
 #if os(iOS)
 let ThreadCategoryColor: [String: Color] = [
     "informative": Color(UIColor.systemBlue),
-    "offtopic": Color(UIColor.systemGray),
+    "tangent": Color(UIColor.systemGray),
     "stupid": Color(UIColor.systemGreen),
     "political": Color(UIColor.systemOrange),
     "nws": Color(UIColor.systemRed),
@@ -32,7 +32,7 @@ let PostTagColor: [String: Color] = [
 #if os(OSX)
 let ThreadCategoryColor: [String: Color] = [
     "informative": Color(NSColor.systemBlue),
-    "offtopic": Color(NSColor.systemGray),
+    "tangent": Color(NSColor.systemGray),
     "stupid": Color(NSColor.systemGreen),
     "political": Color(NSColor.systemOrange),
     "nws": Color(NSColor.systemRed),
@@ -53,7 +53,7 @@ let PostTagColor: [String: Color] = [
 #if os(watchOS)
 let ThreadCategoryColor: [String: Color] = [
     "informative": Color.blue,
-    "offtopic": Color.gray,
+    "tangent": Color.gray,
     "stupid": Color.green,
     "political": Color.orange,
     "nws": Color.red,
