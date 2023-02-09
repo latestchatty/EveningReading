@@ -27,6 +27,15 @@ let PostTagColor: [String: Color] = [
     "wow": Color(UIColor.systemGray),
     "aww": Color(UIColor.systemTeal)
 ]
+enum PostTags: String, CaseIterable {
+    case aww = "aww"
+    case inf = "inf"
+    case lol = "lol"
+    case tag = "tag"
+    case unf = "unf"
+    case wow = "wow"
+    case wtf = "wtf"
+}
 #endif
 
 #if os(OSX)

@@ -63,10 +63,20 @@ struct LolView: View {
                                     .fontWeight(.bold)
                                     .foregroundColor(PostTagColor[lol.tag])
                                 +
-                                Text(" \(lol.count)")
+                                Text(" \(lol.count + (chatStore.tagDelta[postId]?[lol.tag] ?? 0))")
                                     .font(.caption2)
                                     .fontWeight(.bold)
                                     .foregroundColor(PostTagColor[lol.tag])
+                            }
+                        }
+                    }
+                    ForEach(PostTags.allCases, id: \.self) { tag in
+                        if self.lols.filter{$0.tag == tag.rawValue}.count < 1 && (chatStore.tagDelta[postId]?[tag.rawValue] ?? 0) > 0 {
+                            HStack {
+                                Text(tag.rawValue + " 1")
+                                    .font(.caption2)
+                                    .fontWeight(.bold)
+                                    .foregroundColor(PostTagColor[tag.rawValue])
                             }
                         }
                     }
@@ -80,6 +90,16 @@ struct LolView: View {
                         .font(.custom("tags", size: 8, relativeTo: .caption))
                         .padding(EdgeInsets(top: 0, leading: -5, bottom: 0, trailing: 0))
                         .foregroundColor(PostTagColor[lol.tag])
+                }
+                ForEach(PostTags.allCases, id: \.self) { tag in
+                    if self.lols.filter{$0.tag == tag.rawValue}.count < 1 && (chatStore.tagDelta[postId]?[tag.rawValue] ?? 0) > 0 {
+                        Text("A")
+                            .lineLimit(1)
+                            .fixedSize()
+                            .font(.custom("tags", size: 8, relativeTo: .caption))
+                            .padding(EdgeInsets(top: 0, leading: -5, bottom: 0, trailing: 0))
+                            .foregroundColor(PostTagColor[tag.rawValue])
+                    }
                 }
             }
         #endif
