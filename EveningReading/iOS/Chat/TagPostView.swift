@@ -69,10 +69,12 @@ struct TagPostView: View {
                     chatStore.tag(postId: self.postId, tag: tag, untag: "0")
                     chatStore.taggingNoticeText = "Tagged!"
                     chatStore.tagDelta[self.postId, default: [:]][tag] = 1
+                    chatStore.tagRemovedDelta[self.postId, default: [:]][tag] = 0
                 } else {
                     chatStore.tag(postId: self.postId, tag: tag, untag: "1")
                     chatStore.taggingNoticeText = "Untagged!"
                     chatStore.tagDelta[self.postId, default: [:]][tag] = 0
+                    chatStore.tagRemovedDelta[self.postId, default: [:]][tag] = 1
                 }
                 DispatchQueue.main.async {
                     print("Should show Tagged! toast?")
