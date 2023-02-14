@@ -417,6 +417,7 @@ class ChatStore: ObservableObject {
     @Published var scrollTargetThreadTop: Int?
     
     @Published public var tagDelta = [Int: [String: Int]]()
+    @Published public var tagRemovedDelta = [Int: [String: Int]]()
 
     // For pull to refresh
     @Published var gettingChat: Bool = false {
@@ -461,6 +462,7 @@ class ChatStore: ObservableObject {
                 case .success(let threads):
                     self?.threads = threads
                     self?.tagDelta = [Int: [String: Int]]()
+                    self?.tagRemovedDelta = [Int: [String: Int]]()
                 case .failure:
                     self?.threads = []
                     
@@ -489,6 +491,8 @@ class ChatStore: ObservableObject {
                     print("failure to getThread")
                 }
                 DispatchQueue.main.async {
+                    self?.tagDelta.removeValue(forKey: self?.activeThreadId ?? 0)
+                    self?.tagRemovedDelta.removeValue(forKey: self?.activeThreadId ?? 0)
                     self?.didGetThreadFinish = true
                     self?.gettingThread = false
                 }

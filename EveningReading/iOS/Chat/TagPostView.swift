@@ -40,16 +40,18 @@ struct TagPostView: View {
                         }
                     }
                 }
-            
+                
                 // Tag or untag
                 if (userTagsForPost[tag] ?? 0 < 1) {
                     chatStore.tag(postId: self.postId, tag: tag, untag: "0")
                     chatStore.taggingNoticeText = "Tagged!"
                     chatStore.tagDelta[self.postId, default: [:]][tag] = 1
+                    chatStore.tagRemovedDelta[self.postId, default: [:]][tag] = 0
                 } else {
                     chatStore.tag(postId: self.postId, tag: tag, untag: "1")
                     chatStore.taggingNoticeText = "Untagged!"
                     chatStore.tagDelta[self.postId, default: [:]][tag] = 0
+                    chatStore.tagRemovedDelta[self.postId, default: [:]][tag] = 1
                 }
                 
                 // Show notice

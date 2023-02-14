@@ -44,6 +44,22 @@ struct LolView: View {
         // show the tag
         return false
     }
+    
+    func getTagDelta(tagType: String) -> Int {
+        let delta = (chatStore.tagDelta[postId]?[tagType] ?? 0)
+        return delta
+    }
+    
+    func getRemovedTagDelta(tagType: String) -> Int {
+        let addedDelta = (chatStore.tagDelta[postId]?[tagType] ?? 0)
+        let removedDelta = (chatStore.tagRemovedDelta[postId]?[tagType] ?? 0)
+        let total = lols.filter{$0.tag == tagType}.count
+        if addedDelta > 0 {
+            return 1
+        } else {
+            return 0
+        }
+    }
     #endif
     
     var body: some View {
@@ -63,7 +79,7 @@ struct LolView: View {
                                     .fontWeight(.bold)
                                     .foregroundColor(PostTagColor[lol.tag])
                                 +
-                                Text(" \(lol.count + (chatStore.tagDelta[postId]?[lol.tag] ?? 0))")
+                                Text(" \(lol.count + getTagDelta(tagType: lol.tag))")
                                     .font(.caption2)
                                     .fontWeight(.bold)
                                     .foregroundColor(PostTagColor[lol.tag])
@@ -71,7 +87,7 @@ struct LolView: View {
                         }
                     }
                     ForEach(PostTags.allCases, id: \.self) { tag in
-                        if self.lols.filter{$0.tag == tag.rawValue}.count < 1 && (chatStore.tagDelta[postId]?[tag.rawValue] ?? 0) > 0 {
+                        if self.lols.filter{$0.tag == tag.rawValue}.count < 1 && getTagDelta(tagType: tag.rawValue) > 0 {
                             HStack {
                                 Text(tag.rawValue + " 1")
                                     .font(.caption2)
@@ -84,15 +100,17 @@ struct LolView: View {
             } else {
                 // Display as tag icon
                 ForEach(self.lols.sorted(by: <), id: \.self) { lol in
-                    Text("A")
-                        .lineLimit(1)
-                        .fixedSize()
-                        .font(.custom("tags", size: 8, relativeTo: .caption))
-                        .padding(EdgeInsets(top: 0, leading: -5, bottom: 0, trailing: 0))
-                        .foregroundColor(PostTagColor[lol.tag])
+                    if lol.count > 0 {
+                        Text("A")
+                            .lineLimit(1)
+                            .fixedSize()
+                            .font(.custom("tags", size: 8, relativeTo: .caption))
+                            .padding(EdgeInsets(top: 0, leading: -5, bottom: 0, trailing: 0))
+                            .foregroundColor(PostTagColor[lol.tag])
+                    }
                 }
                 ForEach(PostTags.allCases, id: \.self) { tag in
-                    if self.lols.filter{$0.tag == tag.rawValue}.count < 1 && (chatStore.tagDelta[postId]?[tag.rawValue] ?? 0) > 0 {
+                    if self.lols.filter{$0.tag == tag.rawValue}.count < 1 && getTagDelta(tagType: tag.rawValue) > 0 {
                         Text("A")
                             .lineLimit(1)
                             .fixedSize()

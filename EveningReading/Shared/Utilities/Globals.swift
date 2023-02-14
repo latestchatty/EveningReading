@@ -53,10 +53,19 @@ let PostTagColor: [String: Color] = [
     "inf": Color(NSColor.systemBlue),
     "unf": Color(NSColor.systemRed),
     "tag": Color(NSColor.systemGreen),
-    "wtf": Color(NSColor.systemPink),
+    "wtf": Color(NSColor.systemPurple),
     "wow": Color(NSColor.systemGray),
     "aww": Color(NSColor.systemTeal)
 ]
+enum PostTags: String, CaseIterable {
+    case aww = "aww"
+    case inf = "inf"
+    case lol = "lol"
+    case tag = "tag"
+    case unf = "unf"
+    case wow = "wow"
+    case wtf = "wtf"
+}
 #endif
 
 #if os(watchOS)
