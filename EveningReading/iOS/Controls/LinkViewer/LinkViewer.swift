@@ -83,7 +83,8 @@ struct LinkViewerSheet : View {
                                 Image(systemName: "safari") // square.and.arrow.up
                                   .imageScale(.large)
                                   .aspectRatio(contentMode: .fit)
-                            }.disabled(self.linkViewerStore.webView.isLoading)
+                            }
+                            //.disabled(self.linkViewerStore.webView.isLoading)
                         })
                     }
                     .onAppear {
