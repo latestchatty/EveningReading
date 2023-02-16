@@ -45,7 +45,7 @@ struct SearchResultsView: View {
                 }
             } else {
                 ScrollView {
-                    LazyVStack {
+                    LazyVStack(spacing: 0) {
                         ForEach(searchResults, id: \.id) { post in
                             NavigationLink(destination: ThreadDetailView(threadId: .constant(post.threadId), postId: .constant(post.id), replyCount: .constant(-1), isSearchResult: .constant(true))) {
                                 HStack {
@@ -62,7 +62,8 @@ struct SearchResultsView: View {
                                                 .foregroundColor(Color(UIColor.systemGray))
                                         }
                                         .frame(minHeight: 20)
-                                        
+                                        .offset(y: 5)
+
                                         // Post body and chat bubble
                                         ZStack {
                                             HStack (alignment: .top) {
@@ -87,7 +88,7 @@ struct SearchResultsView: View {
                                     }
                                 }
                                 .padding(.horizontal, 10)
-                                .padding(.vertical, 5)
+                                //.padding(.top, 5)
                             }
                         }
                     }

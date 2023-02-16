@@ -667,8 +667,8 @@
 		833980F7263F09E6005614E8 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
-				83398129263F2E60005614E8 /* ChatView.swift */,
 				83A85D5226651638007EBAC3 /* ChatViewPreloaded.swift */,
+				83398129263F2E60005614E8 /* ChatView.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -1634,7 +1634,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.988;
+				MARKETING_VERSION = 1.989;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrishodge.eveningreading;
 				PRODUCT_NAME = EveningReading;
 				SDKROOT = iphoneos;
@@ -1659,7 +1659,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.988;
+				MARKETING_VERSION = 1.989;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrishodge.eveningreading;
 				PRODUCT_NAME = EveningReading;
 				SDKROOT = iphoneos;
@@ -1688,7 +1688,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 1.988;
+				MARKETING_VERSION = 1.989;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrishodge.eveningreading;
 				PRODUCT_NAME = EveningReading;
 				SDKROOT = macosx;
@@ -1715,7 +1715,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 1.988;
+				MARKETING_VERSION = 1.989;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrishodge.eveningreading;
 				PRODUCT_NAME = EveningReading;
 				SDKROOT = macosx;
@@ -1734,7 +1734,7 @@
 				DEVELOPMENT_TEAM = U3SY428MXR;
 				IBSC_MODULE = EveningReading_Extension;
 				INFOPLIST_FILE = EveningReading/Info.plist;
-				MARKETING_VERSION = 1.988;
+				MARKETING_VERSION = 1.989;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrishodge.eveningreading.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -1756,7 +1756,7 @@
 				DEVELOPMENT_TEAM = U3SY428MXR;
 				IBSC_MODULE = EveningReading_Extension;
 				INFOPLIST_FILE = EveningReading/Info.plist;
-				MARKETING_VERSION = 1.988;
+				MARKETING_VERSION = 1.989;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrishodge.eveningreading.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -1782,7 +1782,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.988;
+				MARKETING_VERSION = 1.989;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrishodge.eveningreading.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
@@ -1807,7 +1807,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.988;
+				MARKETING_VERSION = 1.989;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrishodge.eveningreading.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
