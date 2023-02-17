@@ -59,6 +59,8 @@ struct LinkViewerSheet : View {
                                 ProgressView(value: self.webViewProgress, total: 1.0)
                                     .progressViewStyle(LinearProgressViewStyle(tint: Color(UIColor.systemBlue)))
                                     .frame(maxWidth: .infinity)
+                            } else {
+                                Color(UINavigationBar.appearance().barTintColor ?? UIColor.clear).frame(maxWidth: .infinity).frame(height: 4)
                             }
                             if showingWebView {
                                 LinkViewerWebView(webView: self.linkViewerStore.webView, viewModel: self.linkViewerStore, estimatedProgress: self.$webViewProgress, isLoading: self.$webViewLoading, loadUrl: Binding.constant(getHyperlink()))
@@ -92,10 +94,10 @@ struct LinkViewerSheet : View {
                             self.linkViewerStore.webView.load(URLRequest(url: URL(string: self.getHyperlink())!))
                         }
                     }
+                    /*
                     .onDisappear {
                         self.linkViewerStore.webView.load(URLRequest(url: URL(string: "about:blank")!))
                     }
-                    /*
                     .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
                         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
                             self.linkViewerStore.webView.load(URLRequest(url: URL(string: self.getHyperlink())!))
