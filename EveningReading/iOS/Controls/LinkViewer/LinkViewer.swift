@@ -30,9 +30,9 @@ struct LinkViewerSheet : View {
     }
 
     func openInSafari() {
-        let hyperlink = getHyperlink()
-        UIApplication.shared.open((URL.init(string: hyperlink) ?? URL(string: "about:blank"))!)
-        showingWebView = false
+        let hyperlink = linkViewerStore.webView.url?.absoluteString ?? getHyperlink()
+        UIApplication.shared.open((URL.init(string: hyperlink))!)
+        //showingWebView = false
     }
     
     var body: some View {
@@ -95,6 +95,7 @@ struct LinkViewerSheet : View {
                     .onDisappear {
                         self.linkViewerStore.webView.load(URLRequest(url: URL(string: "about:blank")!))
                     }
+                    /*
                     .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
                         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
                             self.linkViewerStore.webView.load(URLRequest(url: URL(string: self.getHyperlink())!))
@@ -103,6 +104,7 @@ struct LinkViewerSheet : View {
                     .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
                         self.linkViewerStore.webView.load(URLRequest(url: URL(string: "about:blank")!))
                     }
+                    */
                     Spacer()
                 }
                 .edgesIgnoringSafeArea(.all)
