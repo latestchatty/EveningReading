@@ -21,6 +21,7 @@ struct ChatView: View {
     @State private var searchTerms: String = ""
     @State private var searchPadding: Double = -100
     @State private var resultsPadding: Double = 1
+    @State private var favoriteContributed: [Int] = [0]
 
     //@State private var isPushNotificationAlertShowing: Bool = false
     
@@ -40,7 +41,7 @@ struct ChatView: View {
             threads = chatStore.threads.filter({ return
             self.appSessionStore.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) &&
             !self.appSessionStore.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
-        }
+        }        
         return Array(threads)
     }
     

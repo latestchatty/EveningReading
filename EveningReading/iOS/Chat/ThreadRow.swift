@@ -33,6 +33,8 @@ struct ThreadRow: View {
     @State private var messageSubject: String = ""
     @State private var messageBody: String = ""
     
+    @State private var favoriteContributed: Bool = false
+    
     private func getThreadData() {
         if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
         {
@@ -45,6 +47,7 @@ struct ThreadRow: View {
                 self.contributed = PostDecorator.checkParticipatedStatus(thread: currentThread, author: self.rootPostAuthor)
             }
         }
+        
     }
     
     private func setThreadData(_ currentThread: ChatThread) {
@@ -56,6 +59,11 @@ struct ThreadRow: View {
             self.rootPostDate = rootPost.date
             self.rootPostLols = rootPost.lols
             self.replyCount = currentThread.posts.count - 1
+        }
+        for post in currentThread.posts {
+            if appSessionStore.favoriteAuthors.contains(post.author) {
+                self.favoriteContributed = true
+            }
         }
     }
     
@@ -123,6 +131,8 @@ struct ThreadRow: View {
                     AuthorNameView(name: appSessionStore.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : self.rootPostAuthor, postId: self.threadId)
 
                     ContributedView(contributed: self.contributed)
+                    
+                    FavoriteContributedView(contributed: self.$favoriteContributed)
 
                     Spacer()
 

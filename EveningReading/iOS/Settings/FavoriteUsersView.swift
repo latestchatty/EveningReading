@@ -16,6 +16,14 @@ struct FavoriteUsersView: View {
     var body: some View {
         ScrollView {
             VStack {
+                if appSessionStore.favoriteAuthors.filter { $0 != "" }.isEmpty {
+                    HStack {
+                        Text("No favorites, long press a post to add users.")
+                            .font(.body)
+                            .bold()
+                            .foregroundColor(Color("NoDataLabel"))
+                    }
+                }
                 ForEach(appSessionStore.favoriteAuthors.filter { $0 != "" }, id: \.self) { favorite in
                     HStack {
                         Text(favorite)
@@ -43,6 +51,8 @@ struct FavoriteUsersView: View {
             }
             return Alert(title: Text("Remove Favorite?"), message: Text(""), primaryButton: primaryButton, secondaryButton: secondaryButton)
         }
+        .navigationBarTitle("Favorite Users", displayMode: .inline)
+        .navigationBarItems(leading: Spacer().frame(width: 16, height: 16))
     }
     
     func deleteFavorite() {
