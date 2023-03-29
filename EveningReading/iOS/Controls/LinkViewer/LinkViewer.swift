@@ -90,14 +90,16 @@ struct LinkViewerSheet : View {
                         })
                     }
                     .onAppear {
+                        print("showing LinkViewer")
                         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
                             self.linkViewerStore.webView.load(URLRequest(url: URL(string: self.getHyperlink())!))
                         }
                     }
-                    /*
                     .onDisappear {
+                        print("hiding LinkViewer")
                         self.linkViewerStore.webView.load(URLRequest(url: URL(string: "about:blank")!))
                     }
+                    /*
                     .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
                         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
                             self.linkViewerStore.webView.load(URLRequest(url: URL(string: self.getHyperlink())!))
