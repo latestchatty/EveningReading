@@ -78,6 +78,13 @@ struct PostContextView: View {
             Image(systemName: "doc.on.clipboard")
         }
         Button(action: {
+            appSessionStore.favoriteAuthors.append(self.author)
+            chatStore.showingFavoriteNotice = true
+        }) {
+            Text("Favorite User")
+            Image(systemName: "hand.thumbsup")
+        }
+        Button(action: {
             appSessionStore.blockedAuthors.append(self.author)
         }) {
             Text("Block User")

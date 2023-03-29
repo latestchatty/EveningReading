@@ -39,7 +39,7 @@ struct AuthorNameView: View {
                 .font(.footnote)
                 .bold()
                 .foregroundColor(
-                    self.name == self.op ? Color(UIColor.systemGreen) : self.name == "Shacknews" ? Color(UIColor.systemBlue) : Color(UIColor.systemOrange)
+                    self.name == self.op ? Color(UIColor.systemGreen) : self.name == "Shacknews" ? Color(UIColor.systemBlue) : appSessionStore.favoriteAuthors.contains(self.name) ? Color(UIColor.systemRed) : Color(UIColor.systemOrange)
                 )
                 .lineLimit(1)
                 .truncationMode(.tail)

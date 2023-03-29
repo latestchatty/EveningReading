@@ -137,6 +137,12 @@ class AppSessionStore : ObservableObject {
             UserDefaults.standard.set(blockedAuthors, forKey: "BlockedAuthors")
         }
     }
+
+    @Published var favoriteAuthors: [String] = [""] {
+        didSet {
+            UserDefaults.standard.set(favoriteAuthors, forKey: "FavoriteAuthors")
+        }
+    }
     
     // Thread Navigation
     #if os(iOS)
@@ -231,6 +237,7 @@ class AppSessionStore : ObservableObject {
         
         // Authors
         self.blockedAuthors = defaults.object(forKey: "BlockedAuthors") as? [String] ?? [""]
+        self.favoriteAuthors = defaults.object(forKey: "FavoriteAuthors") as? [String] ?? [""]
         
         // Collapsed
         self.collapsedThreads = defaults.object(forKey: "CollapsedThreads") as? [Int] ?? [0]

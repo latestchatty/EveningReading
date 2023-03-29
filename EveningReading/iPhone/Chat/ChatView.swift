@@ -86,6 +86,8 @@ struct ChatView: View {
                 //.overlay(PushNotificationView(isAlertShowing: self.$isPushNotificationAlertShowing))
             }
             
+            .overlay(NoticeView(show: $chatStore.showingFavoriteNotice, message: .constant("Added User!")))
+            
             if showingSearch {
                 VStack {
                     TextField("Search for...", text: $searchTerms)

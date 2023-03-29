@@ -401,6 +401,8 @@ class ChatStore: ObservableObject {
     @Published var showingTagNotice = false
     @Published var taggingNoticeText = "Tagged!"
     
+    @Published var showingFavoriteNotice = false
+    
     @Published var didCopyLink = false
 
     @Published var showingNewThreadPrompt = false

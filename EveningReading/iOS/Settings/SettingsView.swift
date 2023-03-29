@@ -30,7 +30,16 @@ struct SettingsView: View {
             }
             Section(header: Text("FILTERS")) {
                 CategoriesView()
+                NavigationLink(destination: FavoriteUsersView()) {
+                    HStack {
+                        Text("Favorite Users")
+                        Spacer()
+                        Image("chevron.right")
+                    }
+                    .contentShape(Rectangle())
+                }.isDetailLink(false)
                 ClearHiddenView()
+                ClearBlockedView()
             }
             Section(header: Text("ABOUT")) {
                 HStack {

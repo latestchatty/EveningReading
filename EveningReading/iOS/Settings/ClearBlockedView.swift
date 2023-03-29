@@ -7,24 +7,24 @@
 
 import SwiftUI
 
-struct ClearHiddenView: View {
+struct ClearBlockedView: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
     
-    @State private var showingClearHiddenAlert = false
+    @State private var showingClearBlockedAlert = false
     
     var body: some View {
         HStack {
             Spacer()
             Button(action: {
-                self.showingClearHiddenAlert = true
+                self.showingClearBlockedAlert = true
             }) {
-                Text("Clear Hidden Threads")
+                Text("Clear Blocked Users")
                     .foregroundColor(Color(UIColor.link))
             }
             .buttonStyle(DefaultButtonStyle())
-            .alert(isPresented: self.$showingClearHiddenAlert) {
-                Alert(title: Text("Clear Hidden Threads?"), message: Text(""), primaryButton: .destructive(Text("Yes")) {
-                    appSessionStore.collapsedThreads.removeAll()
+            .alert(isPresented: self.$showingClearBlockedAlert) {
+                Alert(title: Text("Clear Blocked Users?"), message: Text(""), primaryButton: .destructive(Text("Yes")) {
+                    appSessionStore.blockedAuthors.removeAll()
                 }, secondaryButton: .cancel() {
                     
                 })
@@ -35,9 +35,9 @@ struct ClearHiddenView: View {
 }
 
 
-struct ClearHiddenView_Previews: PreviewProvider {
+struct ClearBlockedView_Previews: PreviewProvider {
     static var previews: some View {
-        ClearHiddenView()
+        ClearBlockedView()
             .environmentObject(AppSessionStore(service: AuthService()))
     }
 }
