@@ -34,30 +34,30 @@ struct WhosTaggingView: View {
             Spacer().frame(width: 0, height: 0)
             .sheet(isPresented: $showingWhosTaggingView) {
                 VStack {
-                    HStack {
-                        Spacer()
-                        Button(action: { self.showingWhosTaggingView = false }) {
-                            Rectangle()
-                                .foregroundColor(Color(UIColor.systemFill))
-                                .frame(width: 40, height: 5)
-                                .cornerRadius(3)
-                                .opacity(0.5)
-                        }
-                        Spacer()
-                    }
-                    .padding(.top, 10)
-                    .padding(.bottom, 20)
-                    .onAppear(perform: fetchRaters)
-                    .onDisappear(perform: onSheetClosed)
-
-                    Text("Who's Tagging?")
-                        .bold()
-                        .font(.body)
-                        .foregroundColor(Color(UIColor.label))
-                        .padding(.horizontal, 20)
-                        .padding(.bottom, self.hideRaters ? 2600 : 1e-10)
-                    
                     ScrollView {
+                        HStack {
+                            Spacer()
+                            Button(action: { self.showingWhosTaggingView = false }) {
+                                Rectangle()
+                                    .foregroundColor(Color(UIColor.systemFill))
+                                    .frame(width: 40, height: 5)
+                                    .cornerRadius(3)
+                                    .opacity(0.5)
+                            }
+                            Spacer()
+                        }
+                        .padding(.top, 10)
+                        .padding(.bottom, 20)
+                        .onAppear(perform: fetchRaters)
+                        .onDisappear(perform: onSheetClosed)
+
+                        Text("Who's Tagging?")
+                            .bold()
+                            .font(.body)
+                            .foregroundColor(Color(UIColor.label))
+                            .padding(.horizontal, 20)
+                            .padding(.bottom, self.hideRaters ? 2600 : 1e-10)
+                    
                         VStack {
                             if (chatStore.raters.filter{ $0.tag == String(PostTagKey.lol.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames.count > 0 {
                                 VStack {
