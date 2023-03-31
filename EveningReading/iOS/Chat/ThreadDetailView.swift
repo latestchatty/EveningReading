@@ -348,6 +348,7 @@ struct ThreadDetailView: View {
                                 }
                                 .onTapGesture(count: 1) {
                                     chatStore.activePostId = post.id
+                                    self.chatStore.scrollTargetThread = post.id
                                     self.selectedPostRichText = RichTextBuilder.getRichText(postBody: post.body)
                                     if appSessionStore.disableAnimation {
                                         self.selectedPost = post.id
