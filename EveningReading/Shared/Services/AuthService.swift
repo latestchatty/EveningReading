@@ -5,6 +5,8 @@
 //  Created by Chris Hodge on 8/14/20.
 //
 
+// https://stackoverflow.com/questions/43052657/encode-using-urlcomponents-in-swift
+
 import Foundation
 
 struct AuthResponse: Hashable, Codable {
