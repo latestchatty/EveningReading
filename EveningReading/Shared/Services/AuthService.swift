@@ -22,15 +22,18 @@ class AuthService {
     }
     
     public func auth(username: String, password: String, handler: @escaping (Result<Bool, Error>) -> Void) {
-        let newPostUrl = URL(string: "https://winchatty.com/v2/verifyCredentials")!
-        var components = URLComponents(url: newPostUrl, resolvingAgainstBaseURL: false)!
+        let loginUrl = URL(string: "https://winchatty.com/v2/verifyCredentials")!
+        var components = URLComponents(url: loginUrl, resolvingAgainstBaseURL: false)!
         components.queryItems = [
             URLQueryItem(name: "username", value: username),
             URLQueryItem(name: "password", value: password)
         ]
+        components.percentEncodedQuery = components.percentEncodedQuery?
+            .replacingOccurrences(of: "+", with: "%2B")
+
         let query = components.url!.query
-        
-        var request = URLRequest(url: newPostUrl)
+                
+        var request = URLRequest(url: loginUrl)
         request.httpMethod = "POST"
         request.httpBody = Data(query!.utf8)
 
