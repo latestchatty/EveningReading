@@ -99,7 +99,7 @@ struct AuthorNameView: View {
                     Text("\(self.name)")
                         .font(.footnote)
                         .bold()
-                        .foregroundColor(Color.orange)
+                        .foregroundColor(self.name == "Shacknews" ? Color.blue : Color.orange)
                         .lineLimit(1)
                 }
                 .buttonStyle(PlainButtonStyle())
