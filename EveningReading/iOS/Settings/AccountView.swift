@@ -52,6 +52,7 @@ struct AccountView: View {
                     _ = KeychainWrapper.standard.removeObject(forKey: "Password")
                     appSessionStore.clearNotifications()
                     messageStore.clearMessages()
+                    UIApplication.shared.applicationIconBadgeNumber = 0
                 }, secondaryButton: .cancel() {
                     
                 })
