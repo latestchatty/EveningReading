@@ -17,6 +17,8 @@ struct watchOSPostPreview: View {
     
     @State private var showingPost: Bool = false
     
+    @ObservedObject private var watchService = WatchService.shared
+    
     var body: some View {
         HStack {
             Button(action: {
@@ -32,7 +34,9 @@ struct watchOSPostPreview: View {
                 }
             }
             .buttonStyle(PlainButtonStyle())
-            .background(Color("ThreadBubbleSecondary"))
+            .background(
+                watchService.username == author.lowercased() ? Color("ThreadBubbleContributed") : Color("ThreadBubbleSecondary")
+            )
             .cornerRadius(5)
             
             NavigationLink(destination: watchOSPostDetail(postId: .constant(self.postId)).environmentObject(appSessionStore).environmentObject(chatStore), isActive: self.$showingPost) {
