@@ -18,10 +18,22 @@ struct iPhoneContentView: View {
     
     @State private var showingGuidelinesView = false
     
+    let sendUsernameTimer = Timer.publish(every: 10, on: .main, in: .common).autoconnect()
+    
     var body: some View {
         NavigationView {
             ScrollView {
                 VStack {
+                    
+                    /*
+                    Button(action: {
+                        print("Try to send username")
+                        WatchService.shared.sendUsername()
+                    }) {
+                        Text("Try username")
+                    }
+                    */
+                    
                     GoToPostViewHome()
                     GuidelinesView(showingGuidelinesView: $showingGuidelinesView)
                     .onAppear() {
@@ -55,6 +67,9 @@ struct iPhoneContentView: View {
                 appSessionStore.didRegisterForPush = true
                 NotificationStore(service: .init()).registernew()
             }
+        }
+        .onReceive(sendUsernameTimer) { _ in
+            WatchService.shared.sendUsername()
         }
     }
 }

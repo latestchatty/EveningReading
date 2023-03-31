@@ -49,7 +49,7 @@ struct FavoriteUsersView: View {
             let secondaryButton = Alert.Button.cancel(Text("OK")) {
                 deleteFavorite()
             }
-            return Alert(title: Text("Remove Favorite?"), message: Text(""), primaryButton: primaryButton, secondaryButton: secondaryButton)
+            return Alert(title: Text("Remove User?"), message: Text(""), primaryButton: primaryButton, secondaryButton: secondaryButton)
         }
         .navigationBarTitle("Favorite Users", displayMode: .inline)
         .navigationBarItems(leading: Spacer().frame(width: 16, height: 16))

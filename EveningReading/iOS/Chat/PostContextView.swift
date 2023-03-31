@@ -7,6 +7,7 @@
 
 import SwiftUI
 import MobileCoreServices
+import UniformTypeIdentifiers
 
 struct PostContextView: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
@@ -71,8 +72,12 @@ struct PostContextView: View {
         */
         Button(action: {
             let shackURL = "https://www.shacknews.com/chatty?id=\(self.postId)#item_\(self.postId)"
+            let board = UIPasteboard.general
+            board.string = shackURL
+            /*
             UIPasteboard.general.setValue(shackURL,
                         forPasteboardType: kUTTypePlainText as String)
+            */
         }) {
             Text("Copy Link")
             Image(systemName: "doc.on.clipboard")

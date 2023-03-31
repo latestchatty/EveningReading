@@ -115,7 +115,10 @@ struct watchOSGuidelines: View {
                         Text("Accept").foregroundColor(Color.primary).bold()
                         Spacer()
                     }
-                }.padding().background(Color("AcceptButton")).cornerRadius(4.0).padding(10)
+                }
+                .padding()
+                .background(Color("AcceptButton"))
+                .cornerRadius(4.0).padding(10)
             }
         }
     }

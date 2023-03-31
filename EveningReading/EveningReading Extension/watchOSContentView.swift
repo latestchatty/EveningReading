@@ -13,6 +13,8 @@ struct watchOSContentView: View {
     
     @State private var showingGuidelinesView = false
     
+    @ObservedObject private var watchService = WatchService.shared
+    
     private func getChat() {
         if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil || chatStore.threads.count > 0
         {
@@ -26,12 +28,16 @@ struct watchOSContentView: View {
         {
             return Array(chatData.threads)
         }
-        var threads = self.chatStore.threads.filter({ return self.appSessionStore.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !self.appSessionStore.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
+        let threads = self.chatStore.threads.filter({ return self.appSessionStore.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !self.appSessionStore.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
         return Array(threads)
     }
     
     var body: some View {
         ScrollView {
+            
+            /*
+            Text("Username = \($watchService.username.wrappedValue)")
+            */
             
             // Guidelines on first run
             watchOSGuidelines(showingGuidelinesView: $showingGuidelinesView)

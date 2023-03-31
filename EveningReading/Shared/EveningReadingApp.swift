@@ -89,6 +89,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         return true
     }
     
+   
     // No callback in simulator, must use device to get valid push token
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         let tokenParts = deviceToken.map { data in String(format: "%02.2hhx", data) }

@@ -25,7 +25,7 @@ struct watchOSPostPreview: View {
                 HStack {
                     Text("\(appSessionStore.blockedAuthors.contains(author) ? "[blocked]" : self.replyText)")
                         .font(.footnote)
-                        .lineLimit(1)
+                        .lineLimit(3)
                         .truncationMode(.tail)
                         .padding()
                     Spacer()

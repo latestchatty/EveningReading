@@ -92,6 +92,11 @@ struct SearchResultsView: View {
                             }
                         }
                     }
+                    
+                    VStack {
+                        Spacer().frame(maxWidth: .infinity).frame(height: 30)
+                    }
+                    
                 }
             }
         }

@@ -26,6 +26,10 @@ struct watchOSThreadRow: View {
     @State private var showingCollapseAlert: Bool = false
     @State private var showingPost: Bool = false
     
+    @State private var allAuthors: [String] = [""]
+    
+    @ObservedObject private var watchService = WatchService.shared
+    
     private func getThreadData() {
         if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil {
             if let thread = chatData.threads.filter({ return $0.threadId == self.threadId }).first {
@@ -46,6 +50,10 @@ struct watchOSThreadRow: View {
         self.rootPostDate = rootPost?.date ?? "2020-08-14T21:05:00Z"
         self.replyCount = thread.posts.count - 1
         self.rootPostLols = rootPost?.lols ?? [ChatLols]()
+        allAuthors.removeAll()
+        for post in thread.posts {
+            allAuthors.append(post.author.lowercased())
+        }
     }
     
     var body: some View {
@@ -85,7 +93,9 @@ struct watchOSThreadRow: View {
                     }
                 }
                 .padding()
-                .background(Color("ThreadBubblePrimary"))
+                .background(
+                    allAuthors.contains(watchService.username) ?       Color("ThreadBubbleContributed") : Color("ThreadBubblePrimary")
+                )
                 .cornerRadius(5)
                 .onAppear(perform: getThreadData)
             } else {
