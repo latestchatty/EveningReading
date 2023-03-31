@@ -92,7 +92,9 @@ struct LinkViewerSheet : View {
                     .onAppear {
                         print("showing LinkViewer")
                         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
-                            self.linkViewerStore.webView.load(URLRequest(url: URL(string: self.getHyperlink())!))
+                            if let url = URL(string: self.getHyperlink()) {
+                                self.linkViewerStore.webView.load(URLRequest(url: url))
+                            }
                         }
                     }
                     .onDisappear {
@@ -192,8 +194,10 @@ public struct LinkViewerWebView: View, UIViewRepresentable {
         }
         
         if webView.url?.description == "about:blank" {
-            let req = URLRequest(url: URL(string: loadUrl)!)
-            webView.load(req)
+            if let url = URL(string: loadUrl) {
+                let req = URLRequest(url: url)
+                webView.load(req)
+            }
         }
         
         // For progress tracking
