@@ -37,6 +37,7 @@ struct PostContextView: View {
             Text("Who's Tagging?")
             Image(systemName: "tag.circle")
         }
+        
         if self.threadId > 0 && !self.isRootPost {
             Button(action: {
                 self.collapsed = true
@@ -46,6 +47,7 @@ struct PostContextView: View {
                 Image(systemName: "eye.slash")
             }
         }
+        
         Button(action: {
             self.messageRecipient = self.author
             self.messageSubject = " "
@@ -55,6 +57,7 @@ struct PostContextView: View {
             Text("Message User")
             Image(systemName: "envelope.circle")
         }
+        
         Button(action: {
             let board = UIPasteboard.general
             board.string = self.postBody.getTextOnly
@@ -62,6 +65,7 @@ struct PostContextView: View {
             Text("Copy Post")
             Image(systemName: "doc.on.doc")
         }
+        
         /*
         Button(action: {
             print("button")
@@ -70,6 +74,7 @@ struct PostContextView: View {
             Image(systemName: "magnifyingglass.circle")
         }
         */
+        
         Button(action: {
             let shackURL = "https://www.shacknews.com/chatty?id=\(self.postId)#item_\(self.postId)"
             let board = UIPasteboard.general
@@ -92,12 +97,14 @@ struct PostContextView: View {
                 Image(systemName: "star")
             }
         }
+        
         Button(action: {
             appSessionStore.blockedAuthors.append(self.author)
         }) {
             Text("Block User")
             Image(systemName: "exclamationmark.circle")
         }
+        
         Button(action: {
             self.messageRecipient = "Duke Nuked"
             self.messageSubject = "Reporting Author of Post"
@@ -110,6 +117,7 @@ struct PostContextView: View {
         .onAppear() {
             chatStore.activePostId = self.postId
         }
+        
     }
 }
 
