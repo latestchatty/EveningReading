@@ -67,6 +67,10 @@ struct watchOSThreadRow: View {
             
             if !self.isThreadCollapsed {
                 VStack (alignment: .leading) {
+                    /*
+                    Text("user = \(watchService.plainTextUsername)")
+                    */
+                    
                     // Thread details
                     HStack {
                         AuthorNameView(name: appSessionStore.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : self.rootPostAuthor, postId: self.threadId, navLink: true)
@@ -94,7 +98,7 @@ struct watchOSThreadRow: View {
                 }
                 .padding()
                 .background(
-                    allAuthors.contains(watchService.username) ?       Color("ThreadBubbleContributed") : Color("ThreadBubblePrimary")
+                    allAuthors.contains(watchService.plainTextUsername) ? Color("ThreadBubbleContributed") : Color("ThreadBubblePrimary")
                 )
                 .cornerRadius(5)
                 .onAppear(perform: getThreadData)

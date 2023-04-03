@@ -18,12 +18,18 @@ struct iPhoneContentView: View {
     
     @State private var showingGuidelinesView = false
     
+    @State private var watchServiceStatus = ""
+    
     let sendUsernameTimer = Timer.publish(every: 10, on: .main, in: .common).autoconnect()
     
     var body: some View {
         NavigationView {
             ScrollView {
                 VStack {
+                    
+                    /*
+                    Text("watchServiceStatus = \(watchServiceStatus)")
+                    */
                     
                     /*
                     Button(action: {
@@ -69,7 +75,7 @@ struct iPhoneContentView: View {
             }
         }
         .onReceive(sendUsernameTimer) { _ in
-            WatchService.shared.sendUsername()
+            watchServiceStatus = WatchService.shared.sendUsername()
         }
     }
 }

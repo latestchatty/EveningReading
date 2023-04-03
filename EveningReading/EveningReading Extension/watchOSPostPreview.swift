@@ -35,7 +35,7 @@ struct watchOSPostPreview: View {
             }
             .buttonStyle(PlainButtonStyle())
             .background(
-                watchService.username == author.lowercased() ? Color("ThreadBubbleContributed") : Color("ThreadBubbleSecondary")
+                watchService.plainTextUsername == author.lowercased() ? Color("ThreadBubbleContributed") : Color("ThreadBubbleSecondary")
             )
             .cornerRadius(5)
             
