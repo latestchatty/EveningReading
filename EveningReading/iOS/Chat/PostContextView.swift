@@ -82,12 +82,15 @@ struct PostContextView: View {
             Text("Copy Link")
             Image(systemName: "doc.on.clipboard")
         }
-        Button(action: {
-            appSessionStore.favoriteAuthors.append(self.author)
-            chatStore.showingFavoriteNotice = true
-        }) {
-            Text("Favorite User")
-            Image(systemName: "hand.thumbsup")
+        
+        if !appSessionStore.favoriteAuthors.contains(self.author) {
+            Button(action: {
+                appSessionStore.favoriteAuthors.append(self.author)
+                chatStore.showingFavoriteNotice = true
+            }) {
+                Text("Favorite User")
+                Image(systemName: "star")
+            }
         }
         Button(action: {
             appSessionStore.blockedAuthors.append(self.author)

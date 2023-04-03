@@ -26,7 +26,7 @@ struct FavoriteUsersView: View {
                 }
                 ForEach(appSessionStore.favoriteAuthors.filter { $0 != "" }, id: \.self) { favorite in
                     HStack {
-                        Image(systemName: "pencil")
+                        Image(systemName: "star")
                             .imageScale(.medium)
                             .foregroundColor(Color(UIColor.systemRed))
 
