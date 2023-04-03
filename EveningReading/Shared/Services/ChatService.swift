@@ -404,6 +404,7 @@ class ChatStore: ObservableObject {
     @Published var showingFavoriteNotice = false
     
     @Published var didCopyLink = false
+    @Published var showingCopiedNotice = false
 
     @Published var showingNewThreadPrompt = false
 

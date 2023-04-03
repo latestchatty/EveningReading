@@ -89,6 +89,8 @@ struct ChatView: View {
             
             .overlay(NoticeView(show: $chatStore.showingFavoriteNotice, message: .constant("Added User!")))
             
+            .overlay(NoticeView(show: $chatStore.showingCopiedNotice, message: .constant("Copied!")))
+            
             if showingSearch {
                 VStack {
                     TextField("Search for...", text: $searchTerms)

@@ -476,6 +476,7 @@ struct ThreadDetailView: View {
         .overlay(LoadingView(show: self.$isGettingThread, title: .constant("")))
         .overlay(NoticeView(show: $chatStore.showingTagNotice, message: $chatStore.taggingNoticeText))
         .overlay(NoticeView(show: $chatStore.showingFavoriteNotice, message: .constant("Added User!")))
+        .overlay(NoticeView(show: $chatStore.showingCopiedNotice, message: .constant("Copied!")))
         
         // Thread Navigation
         .overlay(

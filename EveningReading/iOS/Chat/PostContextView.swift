@@ -61,6 +61,7 @@ struct PostContextView: View {
         Button(action: {
             let board = UIPasteboard.general
             board.string = self.postBody.getTextOnly
+            chatStore.showingCopiedNotice = true
         }) {
             Text("Copy Post")
             Image(systemName: "doc.on.doc")
@@ -79,6 +80,7 @@ struct PostContextView: View {
             let shackURL = "https://www.shacknews.com/chatty?id=\(self.postId)#item_\(self.postId)"
             let board = UIPasteboard.general
             board.string = shackURL
+            chatStore.showingCopiedNotice = true
             /*
             UIPasteboard.general.setValue(shackURL,
                         forPasteboardType: kUTTypePlainText as String)

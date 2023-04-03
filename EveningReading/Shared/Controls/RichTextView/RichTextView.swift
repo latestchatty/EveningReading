@@ -122,6 +122,7 @@ struct SpoilerView: View {
 struct LinkView: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var chatStore: ChatStore
     var hyperlink: String = ""
     var description: String = ""
     
@@ -202,6 +203,7 @@ struct LinkView: View {
                 Spacer()
                 Button(action: {
                     UIPasteboard.general.string = self.hyperlink
+                    chatStore.showingCopiedNotice = true
                 }) {
                     Image(systemName: "doc.on.doc")
                         .imageScale(.small)
