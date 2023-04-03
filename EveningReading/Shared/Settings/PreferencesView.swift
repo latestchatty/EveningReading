@@ -27,6 +27,9 @@ struct PreferencesView: View {
             Toggle(isOn: self.$appSessionStore.useYoutubeApp) {
                 Text("Use YouTube App")
             }
+            Toggle(isOn: self.$appSessionStore.showLinkCopyButton) {
+                Text("Copy Link Button")
+            }
             #endif
             Toggle(isOn: self.$appSessionStore.disableAnimation) {
                 Text("Disable Animation")

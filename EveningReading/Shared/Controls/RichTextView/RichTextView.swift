@@ -138,64 +138,76 @@ struct LinkView: View {
         LinkViewerSheet(hyperlinkUrl: self.$hyperlinkUrlStr, showingWebView: self.$showingLinkWebView)
         // ...
     
-        Text(self.description)
-            .underline()
-            .foregroundColor(colorScheme == .dark ? Color(UIColor.systemTeal) : Color(UIColor.black))
-            .onTapGesture(count: 1) {
-                // YouTube
-                if self.appSessionStore.useYoutubeApp && (self.hyperlink.starts(with: "https://www.youtube.com/") || self.hyperlink.starts(with: "https://youtube.com/") || self.hyperlink.starts(with: "https://youtu.be/")) {
-                    let url = URL(string: self.hyperlink.replacingOccurrences(of: "https", with: "youtube"))!
-                    if !UIApplication.shared.canOpenURL(url)  {
-                        //self.hyperlinkUrlStr = self.hyperlink
-                        //self.showingLinkWebView = true
-                        if let url = URL(string: self.hyperlink) {
-                            self.hyperlinkUrl = url
-                            self.showingSafariSheet = true
+        HStack(alignment: .bottom, spacing: 0) {
+            Text(self.description)
+                .underline()
+                .foregroundColor(colorScheme == .dark ? Color(UIColor.systemTeal) : Color(UIColor.black))
+                .onTapGesture(count: 1) {
+                    // YouTube
+                    if self.appSessionStore.useYoutubeApp && (self.hyperlink.starts(with: "https://www.youtube.com/") || self.hyperlink.starts(with: "https://youtube.com/") || self.hyperlink.starts(with: "https://youtu.be/")) {
+                        let url = URL(string: self.hyperlink.replacingOccurrences(of: "https", with: "youtube"))!
+                        if !UIApplication.shared.canOpenURL(url)  {
+                            //self.hyperlinkUrlStr = self.hyperlink
+                            //self.showingLinkWebView = true
+                            if let url = URL(string: self.hyperlink) {
+                                self.hyperlinkUrl = url
+                                self.showingSafariSheet = true
+                            }
+                        } else {
+                            UIApplication.shared.open(url, options: [:], completionHandler: nil)
                         }
-                    } else {
-                        UIApplication.shared.open(url, options: [:], completionHandler: nil)
                     }
-                }
-                // Shack link
-                else if self.hyperlink.starts(with: "https://www.shacknews.com/chatty?id=") || self.hyperlink.starts(with: "http://www.shacknews.com/chatty?id=")
-                {
-                    if let url = URL(string: self.hyperlink) {
-                        print("it is a valid url")
-                        let components = URLComponents(url: url, resolvingAgainstBaseURL: false)
-                        if let queryItems = components?.queryItems {
-                            for queryItem in queryItems {
-                                if queryItem.name == "id" {
-                                    appSessionStore.setLink(postId: queryItem.value ?? "")
+                    // Shack link
+                    else if self.hyperlink.starts(with: "https://www.shacknews.com/chatty?id=") || self.hyperlink.starts(with: "http://www.shacknews.com/chatty?id=")
+                    {
+                        if let url = URL(string: self.hyperlink) {
+                            print("it is a valid url")
+                            let components = URLComponents(url: url, resolvingAgainstBaseURL: false)
+                            if let queryItems = components?.queryItems {
+                                for queryItem in queryItems {
+                                    if queryItem.name == "id" {
+                                        appSessionStore.setLink(postId: queryItem.value ?? "")
+                                    }
                                 }
                             }
                         }
                     }
-                }
-                // Chattypics
-                else if self.hyperlink.starts(with: "https://www.chattypics.com") || self.hyperlink.starts(with: "http://www.chattypics.com") || self.hyperlink.starts(with: "https://chattypics.com") || self.hyperlink.starts(with: "http://chattypics.com")
-                {
-                    // Use Better Safari View
-                    if let url = URL(string: self.hyperlink) {
-                        self.hyperlinkUrl = url
-                        self.showingSafariSheet = true
+                    // Chattypics
+                    else if self.hyperlink.starts(with: "https://www.chattypics.com") || self.hyperlink.starts(with: "http://www.chattypics.com") || self.hyperlink.starts(with: "https://chattypics.com") || self.hyperlink.starts(with: "http://chattypics.com")
+                    {
+                        // Use Better Safari View
+                        if let url = URL(string: self.hyperlink) {
+                            self.hyperlinkUrl = url
+                            self.showingSafariSheet = true
+                        }
+                    }
+                    // Apple
+                    else if self.hyperlink.starts(with: "https://apps.apple.com")
+                    {
+                        // Open Directly
+                        let appleLink = self.hyperlink.replacingOccurrences(of: "https", with: "itms-apps")
+                        if let url = URL(string: appleLink) {
+                            UIApplication.shared.open(url)
+                        }
+                    }
+                    // Everything else - i.e. a random link in a thread
+                    else {
+                        // Use LinkViewerSheet
+                        self.hyperlinkUrlStr = self.hyperlink
+                        self.showingLinkWebView = true
                     }
                 }
-                // Apple
-                else if self.hyperlink.starts(with: "https://apps.apple.com")
-                {
-                    // Open Directly
-                    let appleLink = self.hyperlink.replacingOccurrences(of: "https", with: "itms-apps")
-                    if let url = URL(string: appleLink) {
-                        UIApplication.shared.open(url)
-                    }
-                }
-                // Everything else - i.e. a random link in a thread
-                else {
-                    // Use LinkViewerSheet
-                    self.hyperlinkUrlStr = self.hyperlink
-                    self.showingLinkWebView = true
+            
+            if self.appSessionStore.showLinkCopyButton {
+                Spacer()
+                Button(action: {
+                    UIPasteboard.general.string = self.hyperlink
+                }) {
+                    Image(systemName: "doc.on.doc")
+                        .imageScale(.small)
                 }
             }
+        }
         
         // Better Safari View
         //.safariView(isPresented: self.$showingSafariSheet) {

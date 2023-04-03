@@ -70,6 +70,12 @@ class AppSessionStore : ObservableObject {
             UserDefaults.standard.set(disableAnimation, forKey: "DisableAnimation")
         }
     }
+    @Published var showLinkCopyButton: Bool = false {
+        didSet {
+            UserDefaults.standard.set(showLinkCopyButton, forKey: "ShowLinkCopyButton")
+        }
+    }
+
     
     // Category Filters
     @Published var threadFilters: [String] = ["informative", "ontopic"]
