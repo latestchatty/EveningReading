@@ -10,9 +10,11 @@ import SwiftUI
 struct PostPreviewView: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var chatStore: ChatStore
     
     var username: String
     var postId: Int
+    var parentId: Int
     var postBody: String
     var replyLines: String
     var postCategory: String
@@ -20,15 +22,44 @@ struct PostPreviewView: View {
     var postAuthor: String
     var postLols: [ChatLols]
     var op: String = ""
-    
+    @Binding var selectedPostDepth: Int
+    @Binding var postsToHighlight: [Int]
+
     var body: some View {
         HStack {
             // Reply lines for eaiser reading
+            HStack(spacing: 0) {
+                ForEach(Array(self.replyLines.enumerated()), id: \.offset) { index, character in
+                    Text(String(character))
+                        .lineLimit(1)
+                        .fixedSize()
+                        .font(.custom("replylines", size: 25, relativeTo: .callout))
+                        .foregroundColor(Color("replyLines"))
+                        .overlay(
+                            Text(
+                                self.postsToHighlight.contains(postId) && selectedPostDepth - 1 == index && index > 0 ? String(character) : ""
+                            )
+                                .lineLimit(1)
+                                .fixedSize()
+                                .font(.custom("replylines", size: 25, relativeTo: .callout))
+                                .foregroundColor(Color.red)
+                        )
+                        // String("B")
+                }
+            }
+            
+            /*
+            Text(String(self.postId))
+                .font(.callout)
+            */
+            
+            /*
             Text(self.replyLines)
                 .lineLimit(1)
                 .fixedSize()
                 .font(.custom("replylines", size: 25, relativeTo: .callout))
                 .foregroundColor(Color("replyLines"))
+            */
             
             // Rarely a post category is set on a reply
             if self.postCategory == "nws" {
@@ -85,7 +116,7 @@ struct PostPreviewView: View {
 
 struct PostPreviewView_Previews: PreviewProvider {
     static var previews: some View {
-        PostPreviewView(username: "aenean", postId: 0, postBody: "This is a post.", replyLines: "A", postCategory: "ontopic", postStrength: 0.75, postAuthor: "aenean", postLols: [ChatLols]())
+        PostPreviewView(username: "aenean", postId: 0, parentId: 0, postBody: "This is a post.", replyLines: "A", postCategory: "ontopic", postStrength: 0.75, postAuthor: "aenean", postLols: [ChatLols](), selectedPostDepth: .constant(0), postsToHighlight: .constant([0]))
             .environment(\.colorScheme, .dark)
             .environmentObject(AppSessionStore(service: AuthService()))
     }

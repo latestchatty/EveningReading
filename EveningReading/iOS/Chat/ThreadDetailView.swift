@@ -34,9 +34,11 @@ struct ThreadDetailView: View {
     @State private var postList = [ChatPosts]()
     @State private var postStrength = [Int: Double]()
     @State private var replyLines = [Int: String]()
+    @State private var postsToHighlight = [Int]()
     
     @State private var selectedPost = 0
     @State private var selectedPostRichText = [RichTextBlock]()
+    @State private var selectedPostDepth = 0
     
     @State private var username: String = ""
     
@@ -215,6 +217,15 @@ struct ThreadDetailView: View {
         self.selectedPost = postList[postIndex].id
     }
     
+    private func getChildren(parentId: Int) {
+        let children = self.postList.filter({ $0.parentId == parentId })
+        for child in children {
+            self.postsToHighlight.append(child.id)
+            getChildren(parentId: child.id)
+        }
+    }
+    
+    
     var body: some View {
         VStack {
             
@@ -330,7 +341,7 @@ struct ThreadDetailView: View {
                                     
                                     // Reply preview
                                     if self.selectedPost != post.id {
-                                        PostPreviewView(username: self.username, postId: post.id, postBody: post.body, replyLines: self.replyLines[post.id] == nil ? String(repeating: " ", count: 5) : self.replyLines[post.id]!, postCategory: post.category, postStrength: postStrength[post.id], postAuthor: post.author, postLols: post.lols, op: self.rootPostAuthor
+                                        PostPreviewView(username: self.username, postId: post.id, parentId: post.parentId, postBody: post.body, replyLines: self.replyLines[post.id] == nil ? String(repeating: " ", count: 5) : self.replyLines[post.id]!, postCategory: post.category, postStrength: postStrength[post.id], postAuthor: post.author, postLols: post.lols, op: self.rootPostAuthor, selectedPostDepth: $selectedPostDepth, postsToHighlight: $postsToHighlight
                                         )
                                     }
                                     
@@ -348,6 +359,19 @@ struct ThreadDetailView: View {
                                 }
                                 .onTapGesture(count: 1) {
                                     chatStore.activePostId = post.id
+                                    chatStore.activeParentId = post.parentId
+                                    
+                                    self.selectedPostDepth = self.replyLines[post.id]?.count ?? 999
+                                    self.postsToHighlight.removeAll()
+                                    
+                                    for siblingPost in self.postList.filter({ $0.parentId == post.parentId }) {
+                                        self.postsToHighlight.append(siblingPost.id)
+                                        getChildren(parentId: siblingPost.id)
+                                    }
+                                    
+                                    print("log: threadId = \(self.threadId)")
+                                    print("log: postsToHighlight = \(self.postsToHighlight)")
+                                    
                                     self.chatStore.scrollTargetThread = post.id
                                     self.selectedPostRichText = RichTextBuilder.getRichText(postBody: post.body)
                                     if appSessionStore.disableAnimation {

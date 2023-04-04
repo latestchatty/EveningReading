@@ -10,6 +10,7 @@ import SwiftUI
 struct PostExpandedView: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var chatStore: ChatStore
     
     var username: String
     var postId: Int
@@ -27,11 +28,32 @@ struct PostExpandedView: View {
         VStack {
             HStack {
                 // Reply lines
+                HStack(spacing: 0) {
+                    ForEach(Array(self.replyLines.enumerated()), id: \.offset) { index, character in
+                        Text(String(character))
+                            .lineLimit(1)
+                            .fixedSize()
+                            .font(.custom("replylines", size: 25, relativeTo: .callout))
+                            .foregroundColor(Color("replyLines"))
+                            .overlay(
+                                Text(
+                                    self.postId == chatStore.activePostId && self.replyLines.count - 1 == index && index > 0 ? String(character) : ""
+                                )
+                                    .lineLimit(1)
+                                    .fixedSize()
+                                    .font(.custom("replylines", size: 25, relativeTo: .callout))
+                                    .foregroundColor(Color.red)
+                            )
+                    }
+                }
+                
+                /*
                 Text(self.replyLines)
                     .lineLimit(1)
                     .fixedSize()
                     .font(.custom("replylines", size: 25, relativeTo: .callout))
                     .foregroundColor(Color("replyLines"))
+                */
                 
                 // Author name
                 AuthorNameView(name: appSessionStore.blockedAuthors.contains(self.postAuthor) ? "[blocked]" : self.postAuthor, postId: self.postId, op: self.op)
