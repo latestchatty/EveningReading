@@ -92,7 +92,6 @@ struct PostPreviewView: View {
                 .opacity(postStrength != nil ? postStrength! : 0.75)
                 .frame(maxWidth: .infinity, alignment: .leading)
          
-            
             // Maybe show post author
             if appSessionStore.blockedAuthors.contains(self.postAuthor) && self.appSessionStore.displayPostAuthor {
                 Text("[blocked]")
@@ -106,7 +105,6 @@ struct PostPreviewView: View {
             else if self.appSessionStore.displayPostAuthor {
                 AuthorNameView(name: postAuthor, postId: postId, op: self.op)
             }
-            
             
             // Tags/Lols
             LolView(lols: postLols, postId: postId)

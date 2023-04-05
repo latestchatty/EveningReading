@@ -201,7 +201,7 @@ struct macOSThreadView: View {
                 .padding(.top, 10)
             
                 // Replies
-                VStack {
+                VStack(spacing: 0) {
                     // No replies yet
                     if postList.count < 1 {
                         HStack {
