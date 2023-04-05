@@ -83,16 +83,19 @@ struct macOSSettingsView: View {
                 }
 
                 if self.activeTab == .filters {
-                    VStack (alignment: .leading) {
-                        CategoriesView()
-                            .environmentObject(appSessionStore)
+                    VStack (alignment: .center) {
+                        VStack (alignment: .leading) {
+                            CategoriesView()
+                                .environmentObject(appSessionStore)
+                        }
                         macOSClearHiddenView()
                             .environmentObject(appSessionStore)
                     }
+                    .frame(maxWidth: .infinity)
                 }
                 
                 if self.activeTab == .about {
-                    VStack (alignment: .leading) {
+                    VStack (alignment: .center) {
                         HStack {
                             Text("Version")
                             Text("\(self.version())")
@@ -100,12 +103,11 @@ struct macOSSettingsView: View {
                         .padding(.vertical, 5)
                         HStack {
                             Link("Guidelines", destination: URL(string: "https://www.shacknews.com/guidelines")!).font(.callout).foregroundColor(Color(NSColor.linkColor))
-                            Spacer()
                         }
                     }
+                    .frame(maxWidth: .infinity)
                 }
             }
-            .padding(.leading, 20)
             .padding(.top, 20)
             
             Spacer()

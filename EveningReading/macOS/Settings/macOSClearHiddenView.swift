@@ -27,7 +27,6 @@ struct macOSClearHiddenView: View {
                     
                 })
             }
-            Spacer()
         }
     }
 }

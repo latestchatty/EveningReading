@@ -7,8 +7,9 @@
 
 import SwiftUI
 
-struct macOSNewPostView: View {
+struct macOSComposePostView: View {
     @Environment(\.colorScheme) var colorScheme
+    @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var chatStore: ChatStore
     
     @State private var postBody = ""
