@@ -425,6 +425,8 @@ class ChatStore: ObservableObject {
     @Published var scrollTargetThread: Int?
     @Published var scrollTargetThreadTop: Int?
     
+    @Published var shouldScrollThreadToTop = false
+    
     @Published public var tagDelta = [Int: [String: Int]]()
     @Published public var tagRemovedDelta = [Int: [String: Int]]()
 

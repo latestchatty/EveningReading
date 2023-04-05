@@ -92,6 +92,12 @@ struct macOSChatView: View {
                                 .onReceive(chatStore.$activeThreadId) { value in
                                     scrollProxy.scrollTo(999999991, anchor: .top)
                                 }
+                                .onReceive(chatStore.$shouldScrollThreadToTop) { value in
+                                    if value {
+                                        scrollProxy.scrollTo(999999991, anchor: .top)
+                                        chatStore.shouldScrollThreadToTop = false
+                                    }
+                                }
                             }
                         }
                         
@@ -115,6 +121,8 @@ struct macOSChatView: View {
                         chatStore.showingNewPostSpinner = false
                         if chatStore.newPostParentId == 0 {
                             chatStore.getChat()
+                        } else {
+                            chatStore.shouldScrollThreadToTop = true
                         }
                         chatStore.newPostParentId = 0
                         chatStore.postingNewThread = false
