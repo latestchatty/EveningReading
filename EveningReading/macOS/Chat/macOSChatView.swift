@@ -123,7 +123,10 @@ struct macOSChatView: View {
                         if chatStore.newPostParentId == 0 {
                             chatStore.getChat()
                         } else {
-                            chatStore.shouldScrollThreadToTop = true
+                            chatStore.getThread()
+                            //chatStore.hideReplies = true
+                            //chatStore.shouldScrollThreadToTop = true
+                            //chatStore.hideReplies = false
                         }
                         chatStore.newPostParentId = 0
                         chatStore.postingNewThread = false

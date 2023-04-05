@@ -267,6 +267,15 @@ struct macOSThreadView: View {
             replyLines = [Int: String]()
             getPostList(parentId: self.threadId)
         }
+        .onReceive(chatStore.$didGetThreadFinish) { value in
+            if value {
+                getThreadData()
+                postList = [ChatPosts]()
+                postStrength = [Int: Double]()
+                replyLines = [Int: String]()
+                getPostList(parentId: self.threadId)
+            }
+        }
     }
 }
 
