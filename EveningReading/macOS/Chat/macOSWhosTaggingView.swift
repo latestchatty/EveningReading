@@ -32,7 +32,7 @@ struct macOSWhosTaggingView: View {
     
     var body: some View {
         VStack {
-            EmptyView()
+            Text("")
                 .sheet(isPresented: $showingWhosTaggingView) {
                     ZStack {
                         // It'd be nice to dynamically size this according to the window size but I don't know how to do that.
