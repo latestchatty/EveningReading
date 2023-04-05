@@ -58,6 +58,7 @@ struct macOSContentView: View {
                             })
                             Button(action: {
                                 // compose
+                                chatStore.newPostParentId = 0
                                 chatStore.showingNewPostSheet = true
                             }, label: {
                                 Image(systemName: "square.and.pencil")

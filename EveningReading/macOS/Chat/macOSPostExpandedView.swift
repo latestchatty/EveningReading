@@ -57,10 +57,10 @@ struct macOSPostExpandedView: View {
                                 NSPasteboard.general.setString("https://www.shacknews.com/chatty?id=\(self.postId)#item_\(self.postId)", forType: .URL)
                                 chatStore.didCopyLink = true
                             }
-                        macOSNewPostView(postId: self.postId)
                         Image(systemName: "arrowshape.turn.up.left")
                             .imageScale(.large)
                             .onTapGesture(count: 1) {
+                                chatStore.newPostParentId = self.postId
                                 chatStore.showingNewPostSheet = true
                             }
                     }

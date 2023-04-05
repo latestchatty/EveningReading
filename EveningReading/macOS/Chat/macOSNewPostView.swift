@@ -11,9 +11,6 @@ struct macOSNewPostView: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var chatStore: ChatStore
     
-    public var isRootPost: Bool = false
-    public var postId: Int = 0
-    
     @State private var postBody = ""
     
     var body: some View {
@@ -33,15 +30,13 @@ struct macOSNewPostView: View {
                                 .padding()
                                 .keyboardShortcut(.cancelAction)
                                 
-                                Text("New Thread")
+                                Text(chatStore.newPostParentId != 0 ? "Reply" : "New Thread")
                                     .bold()
                                     .font(.body)
                                 Spacer()
-                                
-                                
                             }
                             TextEditor(text: self.$postBody)
-                                .border(Color.gray)
+                                .border(Color(NSColor.systemGray))
                                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                                 .padding(EdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5))
                         }
