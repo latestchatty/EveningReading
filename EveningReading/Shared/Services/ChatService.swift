@@ -219,8 +219,14 @@ class ChatService {
         //handler(.success(resp))
         //return
         
-        let username: String? = KeychainWrapper.standard.string(forKey: "Username")
-        let password: String? = KeychainWrapper.standard.string(forKey: "Password")
+        var username: String? = KeychainWrapper.standard.string(forKey: "Username")
+        var password: String? = KeychainWrapper.standard.string(forKey: "Password")
+        
+        #if os(macOS)
+        let defaults = UserDefaults.standard
+        username = defaults.object(forKey: "Username") as? String
+        password = defaults.object(forKey: "Password") as? String
+        #endif
         
         print("post submitted to server... post \(postId)")
         
