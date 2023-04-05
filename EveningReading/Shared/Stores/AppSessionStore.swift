@@ -248,6 +248,9 @@ class AppSessionStore : ObservableObject {
         // Collapsed
         self.collapsedThreads = defaults.object(forKey: "CollapsedThreads") as? [Int] ?? [0]
         
+        // Copy Link
+        self.showLinkCopyButton = defaults.object(forKey: "ShowLinkCopyButton") as? Bool ?? false
+
         // Navigation
         #if os(iOS)
         if UIDevice.current.userInterfaceIdiom == .pad {
