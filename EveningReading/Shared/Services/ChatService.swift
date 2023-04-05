@@ -411,7 +411,9 @@ class ChatStore: ObservableObject {
 
     @Published var showingNewPostSheet = false
     @Published var newPostParentId = 0
-    
+    @Published var showingNewPostSpinner = false
+    @Published var postingNewThread = false
+
     @Published var didGetChatStart = false
     @Published var didSubmitNewThread = false
     @Published var didGetChatFinish = false

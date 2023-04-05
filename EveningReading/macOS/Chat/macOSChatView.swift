@@ -59,6 +59,7 @@ struct macOSChatView: View {
                             .onReceive(chatStore.$didGetChatStart) { value in
                                 if value {
                                     scrollProxy.scrollTo(999999991, anchor: .top)
+                                    chatStore.didGetChatStart = false
                                 }
                             }
                         }
@@ -77,11 +78,13 @@ struct macOSChatView: View {
                                 .id(999999991)
                                 LazyVStack {
                                     if chatStore.activeThreadId == 0 {
-                                        Text("No thread selected.")
-                                            .font(.body)
-                                            .bold()
-                                            .foregroundColor(Color("NoDataLabel"))
-                                            .padding(.top, 10)
+                                        if !chatStore.postingNewThread {
+                                            Text("No thread selected.")
+                                                .font(.body)
+                                                .bold()
+                                                .foregroundColor(Color("NoDataLabel"))
+                                                .padding(.top, 10)
+                                        }
                                     } else {
                                         macOSThreadView(threadId: $chatStore.activeThreadId)
                                     }
@@ -97,13 +100,27 @@ struct macOSChatView: View {
                         
                         NoticeView(show: $chatStore.didCopyLink, message: .constant("Copied!"))
                         
-                        
                     }
                     .frame(width: geometry.size.width * 0.65)
 
                 }
             }
+            .overlay(
+                LoadingView(show: $chatStore.showingNewPostSpinner, title: .constant(""))
+            )
             .onAppear(perform: fetchChat)
+            .onReceive(chatStore.$showingNewPostSpinner) { value in
+                if value {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(8)) {
+                        chatStore.showingNewPostSpinner = false
+                        if chatStore.newPostParentId == 0 {
+                            chatStore.getChat()
+                        }
+                        chatStore.newPostParentId = 0
+                        chatStore.postingNewThread = false
+                    }
+                }
+            }
         }
     }
 }

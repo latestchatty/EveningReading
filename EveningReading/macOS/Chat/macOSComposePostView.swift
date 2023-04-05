@@ -57,9 +57,11 @@ struct macOSComposePostView: View {
                                     postBody = ""
                                     chatStore.activeThreadId = 0
                                     chatStore.activePostId = 0
-                                    chatStore.newPostParentId = 0
+                                    if chatStore.newPostParentId == 0 {
+                                        chatStore.postingNewThread = true
+                                    }
                                     chatStore.showingNewPostSheet = false
-                                    chatStore.getChat()
+                                    chatStore.showingNewPostSpinner = true
                                 }, secondaryButton: .cancel() {
                                     
                                 })

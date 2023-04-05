@@ -22,7 +22,7 @@ struct macOSThreadList: View {
     
     var body: some View {
         VStack {
-            if chatStore.gettingChat {
+            if chatStore.gettingChat || chatStore.postingNewThread {
                 ProgressView()
                     .foregroundColor(Color.accentColor)
                     .progressViewStyle(LinearProgressViewStyle())
