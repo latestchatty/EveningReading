@@ -55,7 +55,11 @@ struct macOSComposePostView: View {
                             .alert(isPresented: self.$showingSubmitAlert) {
                                 Alert(title: Text("Submit Post?"), message: Text(""), primaryButton: .destructive(Text("Yes")) {
                                     postBody = ""
+                                    chatStore.activeThreadId = 0
+                                    chatStore.activePostId = 0
+                                    chatStore.newPostParentId = 0
                                     chatStore.showingNewPostSheet = false
+                                    chatStore.getChat()
                                 }, secondaryButton: .cancel() {
                                     
                                 })

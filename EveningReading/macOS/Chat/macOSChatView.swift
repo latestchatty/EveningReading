@@ -50,8 +50,17 @@ struct macOSChatView: View {
                     
                     // Thread List
                     ScrollView {
-                        LazyVStack (spacing: 0) {
-                            macOSThreadList()
+                        ScrollViewReader { scrollProxy in
+                            Spacer().frame(width: 1, height: 1)
+                            .id(999999991)
+                            LazyVStack (spacing: 0) {
+                                macOSThreadList()
+                            }
+                            .onReceive(chatStore.$didGetChatStart) { value in
+                                if value {
+                                    scrollProxy.scrollTo(999999991, anchor: .top)
+                                }
+                            }
                         }
                     }
                     .frame(width: geometry.size.width * 0.35)
