@@ -184,9 +184,11 @@ struct macOSThreadView: View {
                                     NSPasteboard.general.setString("https://www.shacknews.com/chatty?id=\(self.threadId)#item_\(self.threadId)", forType: .URL)
                                     chatStore.didCopyLink = true
                                 }
+                            macOSNewPostView(postId: self.threadId)
                             Image(systemName: "arrowshape.turn.up.left")
                                 .imageScale(.large)
                                 .onTapGesture(count: 1) {
+                                    chatStore.showingNewPostSheet = true
                                 }
                         }
                     }

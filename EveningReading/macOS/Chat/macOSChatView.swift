@@ -38,6 +38,8 @@ struct macOSChatView: View {
                 }
                 .navigationTitle("Chat")
 
+                // New thread
+                macOSNewPostView(isRootPost: true)
                 
                 // Guidelines
                 if self.showingGuidelinesView {

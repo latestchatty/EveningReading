@@ -173,7 +173,6 @@ struct LolView: View {
                             }
                         }
                         macOSWhosTaggingView(showingWhosTaggingView: self.$showTagUsers, postId: self.postId)
-                            .frame(width: 5, height: 0)
                     }
                     .contextMenu {
                         if self.lols.count > 0 {
@@ -188,19 +187,18 @@ struct LolView: View {
                     }
                 } else {
                     // Display as tag icon
-                    HStack {
+                    HStack(spacing: 0) {
                         ForEach(self.lols.sorted(by: <), id: \.self) { lol in
                             if lol.count > 0 {
                                 Text("A") // 'A' is a tag
                                     .lineLimit(1)
                                     .fixedSize()
                                     .font(.custom("tags", size: 8, relativeTo: .caption))
-                                    .padding(EdgeInsets(top: 3, leading: -5, bottom: 0, trailing: 0))
+                                    .padding(EdgeInsets(top: 3, leading: 0, bottom: 0, trailing: 0))
                                     .foregroundColor(PostTagColor[lol.tag])
                             }
                         }
                         macOSWhosTaggingView(showingWhosTaggingView: self.$showTagUsers, postId: self.postId)
-                            .frame(width: 5, height: 0)
                     }
                     .contextMenu {
                         if self.lols.count > 0 {

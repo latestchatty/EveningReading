@@ -58,7 +58,7 @@ struct macOSContentView: View {
                             })
                             Button(action: {
                                 // compose
-                                chatStore.showingNewThreadPrompt = true
+                                chatStore.showingNewPostSheet = true
                             }, label: {
                                 Image(systemName: "square.and.pencil")
                             })
@@ -94,7 +94,6 @@ struct macOSContentView: View {
                 } else {
                     EmptyView()
                 }
-                
             }
         }
         .background(Color("macOSPrimaryBackground"))

@@ -65,7 +65,6 @@ struct macOSThreadPreview: View {
                     Spacer()
 
                     LolView(lols: self.rootPostLols, expanded: false, capsule: false, postId: self.threadId)
-                        .offset(x: 15)
 
                     ReplyCountView(replyCount: self.replyCount)
                     
@@ -84,6 +83,7 @@ struct macOSThreadPreview: View {
                         .lineLimit(3)
                 }
                 .padding(.horizontal, 10)
+                
                 
                 Divider()
                     .frame(height: 1)

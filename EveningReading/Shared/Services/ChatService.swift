@@ -409,7 +409,7 @@ class ChatStore: ObservableObject {
     @Published var didCopyLink = false
     @Published var showingCopiedNotice = false
 
-    @Published var showingNewThreadPrompt = false
+    @Published var showingNewPostSheet = false
 
     @Published var didGetChatStart = false
     @Published var didSubmitNewThread = false
