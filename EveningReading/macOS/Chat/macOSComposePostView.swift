@@ -13,6 +13,7 @@ struct macOSComposePostView: View {
     @EnvironmentObject var chatStore: ChatStore
     
     @State private var postBody = ""
+    @State private var showingSubmitAlert = false
     
     var body: some View {
         VStack(spacing: 0) {
@@ -24,6 +25,7 @@ struct macOSComposePostView: View {
                             HStack {
                                 Button(action: {
                                     chatStore.showingNewPostSheet = false
+                                    postBody = ""
                                 }) {
                                     Image(systemName: "xmark")
                                 }
@@ -36,10 +38,29 @@ struct macOSComposePostView: View {
                                     .font(.body)
                                 Spacer()
                             }
+                            
                             TextEditor(text: self.$postBody)
                                 .border(Color(NSColor.systemGray))
                                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                                 .padding(EdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5))
+                            
+                            Button(action: {
+                                showingSubmitAlert = true
+                            }) {
+                                Text("Submit")
+                                    .frame(minWidth: 180)
+                            }
+                            .padding(.vertical)
+                            .disabled(postBody.count < 5)
+                            .alert(isPresented: self.$showingSubmitAlert) {
+                                Alert(title: Text("Submit Post?"), message: Text(""), primaryButton: .destructive(Text("Yes")) {
+                                    postBody = ""
+                                    chatStore.showingNewPostSheet = false
+                                }, secondaryButton: .cancel() {
+                                    
+                                })
+                            }
+                            
                         }
                     }
                 }
