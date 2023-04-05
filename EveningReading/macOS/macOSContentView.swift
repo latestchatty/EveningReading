@@ -52,17 +52,20 @@ struct macOSContentView: View {
                                 // refresh
                                 chatStore.activeThreadId = 0
                                 chatStore.activePostId = 0
+                                chatStore.newPostParentId = 0
                                 chatStore.getChat()
                             }, label: {
                                 Image(systemName: "arrow.counterclockwise")
                             })
-                            Button(action: {
-                                // compose
-                                chatStore.newPostParentId = 0
-                                chatStore.showingNewPostSheet = true
-                            }, label: {
-                                Image(systemName: "square.and.pencil")
-                            })
+                            if appSessionStore.isSignedIn {
+                                Button(action: {
+                                    // compose
+                                    chatStore.newPostParentId = 0
+                                    chatStore.showingNewPostSheet = true
+                                }, label: {
+                                    Image(systemName: "square.and.pencil")
+                                })
+                            }
                         } else if appSessionStore.showingInboxView {
                             Button(action: {
                                 // refresh

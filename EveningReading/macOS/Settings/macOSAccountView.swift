@@ -10,7 +10,8 @@ import SwiftUI
 struct macOSAccountView: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var messageStore: MessageStore
-
+    @EnvironmentObject var chatStore: ChatStore
+    
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     @State private var showingSignIn = false
@@ -125,6 +126,7 @@ struct macOSAccountView: View {
                     appSessionStore.password = ""
                     appSessionStore.clearNotifications()
                     messageStore.clearMessages()
+                    chatStore.newPostParentId = 0
                 }, secondaryButton: .cancel() {
                     
                 })
