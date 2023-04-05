@@ -396,6 +396,7 @@ class ChatStore: ObservableObject {
     @Published var activePostId: Int = 0
     @Published var activeParentId: Int = 0
     @Published var activePostDepth: Int = 0
+    @Published var hideReplies = true
     
     @Published var didSubmitPost = false
 

@@ -62,9 +62,8 @@ struct macOSChatView: View {
                         // Thread Detail
                         ScrollView {
                             ScrollViewReader { scrollProxy in
-                                VStack {
-                                    Spacer().frame(width: 0, height: 0)
-                                }.id(999999991)
+                                Spacer().frame(width: 1, height: 1)
+                                .id(999999991)
                                 LazyVStack {
                                     if chatStore.activeThreadId == 0 {
                                         Text("No thread selected.")

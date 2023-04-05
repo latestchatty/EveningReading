@@ -22,6 +22,7 @@ struct SidebarButtons: View {
                     navigateTo(&appSessionStore.showingChatView)
                 }
             
+            /*
             SidebarButton(text: .constant("Inbox"), imageName: .constant("envelope.open"), selected: $appSessionStore.showingInboxView)
                 .onTapGesture(count: 1) {
                     navigateTo(&appSessionStore.showingInboxView)
@@ -31,6 +32,7 @@ struct SidebarButtons: View {
                 .onTapGesture(count: 1) {
                     navigateTo(&appSessionStore.showingSearchView)
                 }
+            */
             
             SidebarButton(text: .constant("Tags"), imageName: .constant("tag"), selected: $appSessionStore.showingTagsView)
                 .onTapGesture(count: 1) {

@@ -65,6 +65,7 @@ struct macOSThreadPreview: View {
                     Spacer()
 
                     LolView(lols: self.rootPostLols, expanded: false, capsule: false, postId: self.threadId)
+                        .offset(x: 15)
 
                     ReplyCountView(replyCount: self.replyCount)
                     
@@ -112,6 +113,11 @@ struct macOSThreadPreview: View {
         }
         .onTapGesture(count: 1) {
             chatStore.activeThreadId = self.threadId
+            chatStore.activeParentId = 0
+            chatStore.hideReplies = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                chatStore.hideReplies = false
+            }
         }
     }
 }

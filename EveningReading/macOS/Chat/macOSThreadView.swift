@@ -215,37 +215,41 @@ struct macOSThreadView: View {
                     }
                     
                     // Post list
-                    ForEach(postList, id: \.id) { post in
-                        HStack {
-                            
-                            // Reply expaned row
-                            if self.selectedPost == post.id {
-                                VStack {
-                                    macOSPostExpandedView(postId: .constant(post.id), postAuthor: .constant(post.author), replyLines: self.$replyLines[post.id], lols: .constant(post.lols), postText: self.$selectedPostRichText, postDateTime: .constant(post.date),
-                                        op: .constant(self.rootPostAuthor))
+                    if chatStore.hideReplies {
+                        
+                    } else {
+                        ForEach(postList, id: \.id) { post in
+                            HStack {
+                                
+                                // Reply expaned row
+                                if chatStore.activeParentId == post.id {
+                                    VStack {
+                                        macOSPostExpandedView(postId: .constant(post.id), postAuthor: .constant(post.author), replyLines: self.$replyLines[post.id], lols: .constant(post.lols), postText: self.$selectedPostRichText, postDateTime: .constant(post.date),
+                                            op: .constant(self.rootPostAuthor))
+                                    }
+                                    .onAppear() {
+                                        // Load Rich Text
+                                        self.selectedPostRichText = RichTextBuilder.getRichText(postBody: post.body)
+                                    }
                                 }
-                                .onAppear() {
-                                    // Load Rich Text
-                                    self.selectedPostRichText = RichTextBuilder.getRichText(postBody: post.body)
+                                
+                                // Reply preview row
+                                if chatStore.activeParentId != post.id {
+                                    HStack {
+                                        macOSPostPreviewView(postId: .constant(post.id), postAuthor: .constant(post.author), replyLines: self.$replyLines[post.id], lols: .constant(post.lols), postText: .constant(post.body), postCategory: .constant(post.category), postStrength: .constant(postStrength[post.id]),
+                                            op: .constant(self.rootPostAuthor)
+                                        )}
+                                    .contentShape(Rectangle())
+                                    .onTapGesture(count: 1) {
+                                        //withAnimation {
+                                            chatStore.activeParentId = post.id
+                                        //}
+                                    }
                                 }
+                                
                             }
-                            
-                            // Reply preview row
-                            if self.selectedPost != post.id {
-                                HStack {
-                                    macOSPostPreviewView(postId: .constant(post.id), postAuthor: .constant(post.author), replyLines: self.$replyLines[post.id], lols: .constant(post.lols), postText: .constant(post.body), postCategory: .constant(post.category), postStrength: .constant(postStrength[post.id]),
-                                        op: .constant(self.rootPostAuthor)
-                                    )}
-                                .contentShape(Rectangle())
-                                .onTapGesture(count: 1) {
-                                    //withAnimation {
-                                        selectedPost = post.id
-                                    //}
-                                }
-                            }
-                            
+                            .id(post.id)
                         }
-                        .id(post.id)
                     }
                 }
                 .padding(.horizontal, 20)
