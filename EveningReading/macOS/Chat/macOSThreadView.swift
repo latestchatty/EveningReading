@@ -188,6 +188,7 @@ struct macOSThreadView: View {
                                 .imageScale(.large)
                                 .onTapGesture(count: 1) {
                                     chatStore.newPostParentId = self.threadId
+                                    chatStore.newReplyAuthorName = self.rootPostAuthor
                                     chatStore.showingNewPostSheet = true
                                 }
                         }

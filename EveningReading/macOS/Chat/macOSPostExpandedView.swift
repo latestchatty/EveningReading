@@ -43,7 +43,7 @@ struct macOSPostExpandedView: View {
                     .fixedSize(horizontal: false, vertical: true)
                     .padding(8)
 
-                if appSessionStore.isSignedIn {
+                if appSessionStore.isSignedIn && !appSessionStore.blockedAuthors.contains(self.postAuthor) {
                     HStack {
                         Text(postDateTime.postTimestamp())
                             .font(.caption)
@@ -61,6 +61,7 @@ struct macOSPostExpandedView: View {
                             .imageScale(.large)
                             .onTapGesture(count: 1) {
                                 chatStore.newPostParentId = self.postId
+                                chatStore.newReplyAuthorName = self.postAuthor
                                 chatStore.showingNewPostSheet = true
                             }
                     }

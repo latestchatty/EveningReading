@@ -411,6 +411,7 @@ class ChatStore: ObservableObject {
 
     @Published var showingNewPostSheet = false
     @Published var newPostParentId = 0
+    @Published var newReplyAuthorName = ""
     @Published var showingNewPostSpinner = false
     @Published var postingNewThread = false
 

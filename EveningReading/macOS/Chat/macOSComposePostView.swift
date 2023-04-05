@@ -33,7 +33,7 @@ struct macOSComposePostView: View {
                                 .padding()
                                 .keyboardShortcut(.cancelAction)
                                 
-                                Text(chatStore.newPostParentId != 0 ? "Reply" : "New Thread")
+                                Text(chatStore.newPostParentId != 0 ? "Replying to \(chatStore.newReplyAuthorName)" : "New Thread")
                                     .bold()
                                     .font(.body)
                                 Spacer()

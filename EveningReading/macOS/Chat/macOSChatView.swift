@@ -117,6 +117,7 @@ struct macOSChatView: View {
             .onAppear(perform: fetchChat)
             .onReceive(chatStore.$showingNewPostSpinner) { value in
                 if value {
+                    chatStore.newReplyAuthorName = ""
                     DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(8)) {
                         chatStore.showingNewPostSpinner = false
                         if chatStore.newPostParentId == 0 {
