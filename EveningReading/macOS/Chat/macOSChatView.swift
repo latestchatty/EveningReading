@@ -62,6 +62,8 @@ struct macOSChatView: View {
                                     chatStore.didGetChatStart = false
                                 }
                             }
+                            Spacer().frame(width: 1, height: 12)
+                            .id(999999992)
                         }
                     }
                     .frame(width: geometry.size.width * 0.35)
