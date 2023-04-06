@@ -420,6 +420,8 @@ class ChatStore: ObservableObject {
     @Published var newReplyAuthorName = ""
     @Published var showingNewPostSpinner = false
     @Published var postingNewThread = false
+    
+    @Published var showingRefreshThreadSpinner = false
 
     @Published var didGetChatStart = false
     @Published var didSubmitNewThread = false

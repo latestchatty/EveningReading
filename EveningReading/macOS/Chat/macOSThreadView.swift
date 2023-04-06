@@ -138,7 +138,13 @@ struct macOSThreadView: View {
                             .foregroundColor(Color.gray)
                             .font(.body)
                         */
-                        
+
+                        Image(systemName: "arrow.counterclockwise")
+                            .imageScale(.large)
+                            .onTapGesture(count: 1) {
+                                chatStore.showingRefreshThreadSpinner = true
+                                chatStore.getThread()
+                            }
                         
                         Image(systemName: "eye.slash")
                             .imageScale(.large)
@@ -276,8 +282,12 @@ struct macOSThreadView: View {
                 postStrength = [Int: Double]()
                 replyLines = [Int: String]()
                 getPostList(parentId: self.threadId)
+                chatStore.showingRefreshThreadSpinner = false
             }
         }
+        .overlay(
+            LoadingView(show: $chatStore.showingRefreshThreadSpinner, title: .constant(""))
+        )
     }
 }
 
