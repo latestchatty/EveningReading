@@ -112,6 +112,9 @@ struct macOSThreadPreview: View {
             getThreadData()
         }
         .onTapGesture(count: 1) {
+            if chatStore.activeThreadId == self.threadId {
+                return
+            }
             chatStore.activeThreadId = self.threadId
             chatStore.activeParentId = 0
             chatStore.hideReplies = true
