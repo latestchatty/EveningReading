@@ -169,32 +169,34 @@ struct macOSThreadView: View {
                     .padding(.horizontal, 10)
                     .padding(.bottom, 10)
                     
-                    HStack {
-                        LolView(lols: self.rootPostLols, expanded: true, postId: self.threadId)
-                            .padding(.trailing, 1)
+                    if !appSessionStore.blockedAuthors.contains(self.rootPostAuthor) {
+                        HStack {
+                            LolView(lols: self.rootPostLols, expanded: true, postId: self.threadId)
+                                .padding(.trailing, 1)
 
-                        Spacer()
-                        
-                        if appSessionStore.isSignedIn {
-                            macOSTagPostButton(postId: self.threadId)
-                            Image(systemName: "link")
-                                .imageScale(.large)
-                                .onTapGesture(count: 1) {
-                                    NSPasteboard.general.clearContents()
-                                    NSPasteboard.general.setString("https://www.shacknews.com/chatty?id=\(self.threadId)#item_\(self.threadId)", forType: .URL)
-                                    chatStore.didCopyLink = true
-                                }
-                            Image(systemName: "arrowshape.turn.up.left")
-                                .imageScale(.large)
-                                .onTapGesture(count: 1) {
-                                    chatStore.newPostParentId = self.threadId
-                                    chatStore.newReplyAuthorName = self.rootPostAuthor
-                                    chatStore.showingNewPostSheet = true
-                                }
+                            Spacer()
+                            
+                            if appSessionStore.isSignedIn {
+                                macOSTagPostButton(postId: self.threadId)
+                                Image(systemName: "link")
+                                    .imageScale(.large)
+                                    .onTapGesture(count: 1) {
+                                        NSPasteboard.general.clearContents()
+                                        NSPasteboard.general.setString("https://www.shacknews.com/chatty?id=\(self.threadId)#item_\(self.threadId)", forType: .URL)
+                                        chatStore.didCopyLink = true
+                                    }
+                                Image(systemName: "arrowshape.turn.up.left")
+                                    .imageScale(.large)
+                                    .onTapGesture(count: 1) {
+                                        chatStore.newPostParentId = self.threadId
+                                        chatStore.newReplyAuthorName = self.rootPostAuthor
+                                        chatStore.showingNewPostSheet = true
+                                    }
+                            }
                         }
+                        .padding(.horizontal, 10)
+                        .padding(.bottom, 10)
                     }
-                    .padding(.horizontal, 10)
-                    .padding(.bottom, 10)
                     
                 }
                 .frame(maxWidth: .infinity)
