@@ -285,9 +285,6 @@ struct macOSThreadView: View {
                 chatStore.showingRefreshThreadSpinner = false
             }
         }
-        .overlay(
-            LoadingView(show: $chatStore.showingRefreshThreadSpinner, title: .constant(""))
-        )
     }
 }
 

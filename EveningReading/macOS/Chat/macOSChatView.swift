@@ -67,7 +67,7 @@ struct macOSChatView: View {
                         }
                     }
                     .frame(width: geometry.size.width * 0.35)
-                    .disabled(chatStore.showingNewPostSpinner)
+                    .disabled(chatStore.showingNewPostSpinner || chatStore.showingRefreshThreadSpinner)
                     
                     Divider()
                     
@@ -103,7 +103,7 @@ struct macOSChatView: View {
                                 }
                             }
                         }
-                        .disabled(chatStore.showingNewPostSpinner)
+                        .disabled(chatStore.showingNewPostSpinner || chatStore.showingRefreshThreadSpinner)
                         
                         // Toasts
                         NoticeView(show: $chatStore.showingTagNotice, message: $chatStore.taggingNoticeText)
@@ -117,6 +117,9 @@ struct macOSChatView: View {
             }
             .overlay(
                 LoadingView(show: $chatStore.showingNewPostSpinner, title: .constant(""))
+            )
+            .overlay(
+                LoadingView(show: $chatStore.showingRefreshThreadSpinner, title: .constant(""))
             )
             .onAppear(perform: fetchChat)
             .onReceive(chatStore.$showingNewPostSpinner) { value in
