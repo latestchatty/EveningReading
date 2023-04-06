@@ -34,7 +34,6 @@ struct macOSPostExpandedView: View {
             
             // Lols
             LolView(lols: self.lols, expanded: true, postId: self.postId)
-                .padding(.top, 5)
         }
         HStack {
             VStack (alignment: .leading) {
