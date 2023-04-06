@@ -54,8 +54,14 @@ struct macOSTagPostButton: View {
             }, completionFail: {
                 if !(userTagsForPost[tag] ?? 0 > 0) {
                     chatStore.tag(postId: self.postId, tag: tag, untag: "0")
+                    chatStore.taggingNoticeText = "Tagged!"
                 } else {
                     chatStore.tag(postId: self.postId, tag: tag, untag: "1")
+                    chatStore.taggingNoticeText = "Untagged!"
+                }
+                DispatchQueue.main.async {
+                    chatStore.didTagPost = true
+                    chatStore.showingTagNotice = true
                 }
             }
         )
