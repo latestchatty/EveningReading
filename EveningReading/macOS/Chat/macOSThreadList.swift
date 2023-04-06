@@ -22,12 +22,14 @@ struct macOSThreadList: View {
     
     var body: some View {
         VStack {
-            if chatStore.gettingChat || chatStore.postingNewThread {
+            if chatStore.gettingChat {
                 ProgressView()
                     .foregroundColor(Color.accentColor)
                     .progressViewStyle(LinearProgressViewStyle())
                     .padding()
                 Spacer()
+            } else if chatStore.postingNewThread {
+                EmptyView()
             } else {
                 ForEach(filteredThreads(), id: \.threadId) { thread in
                     macOSThreadPreview(threadId: thread.threadId)
