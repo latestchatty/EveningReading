@@ -39,10 +39,19 @@ struct macOSComposePostView: View {
                                 Spacer()
                             }
                             
+                            /*
+                            ShackTagsTextView(text: $postBody, textStyle: .constant(NSFont.TextStyle.body), disabled: $chatStore.showingNewPostSpinner)
+                                .border(Color(NSColor.systemGray))
+                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                                .padding(EdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5))
+                            */
+                            
+                            
                             TextEditor(text: self.$postBody)
                                 .border(Color(NSColor.systemGray))
                                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                                 .padding(EdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5))
+                            
                             
                             Button(action: {
                                 showingSubmitAlert = true
