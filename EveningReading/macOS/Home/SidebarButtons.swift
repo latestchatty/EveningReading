@@ -22,12 +22,12 @@ struct SidebarButtons: View {
                     navigateTo(&appSessionStore.showingChatView)
                 }
             
-            /*
             SidebarButton(text: .constant("Inbox"), imageName: .constant("envelope.open"), selected: $appSessionStore.showingInboxView)
                 .onTapGesture(count: 1) {
                     navigateTo(&appSessionStore.showingInboxView)
                 }
-            
+
+            /*
             SidebarButton(text: .constant("Search"), imageName: .constant("magnifyingglass"), selected: $appSessionStore.showingSearchView)
                 .onTapGesture(count: 1) {
                     navigateTo(&appSessionStore.showingSearchView)
