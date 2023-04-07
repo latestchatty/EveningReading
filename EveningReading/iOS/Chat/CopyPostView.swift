@@ -37,7 +37,6 @@ struct CopyPostView: View {
                        Spacer()
                    }
                    .padding(.top, 10)
-                   .padding(.bottom, 20)
 
                    HStack {
                        PostWebView(viewModel: PostWebViewModel(body: chatStore.copyPostText, colorScheme: colorScheme), dynamicHeight: $postWebViewHeight, templateA: $chatStore.templateA, templateB: $chatStore.templateB)

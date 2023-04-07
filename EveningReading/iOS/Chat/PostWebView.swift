@@ -13,7 +13,6 @@ import Combine
 class PostWebViewModel: ObservableObject {
     @Published var body: String
     @Published var colorScheme: ColorScheme
-    @Published var didFinishLoading: Bool = false
     @Published var didContentSizeChange: Bool = false
 
     init (body: String, colorScheme: ColorScheme) {
@@ -96,12 +95,6 @@ struct PostWebView: UIViewRepresentable {
         }
         
         func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-            self.viewModel.didFinishLoading = true
-            
-            if self.parent.dynamicHeight > 0.0 && !self.viewModel.didContentSizeChange {
-                return
-            }
-            
             self.parent.webView.evaluateJavaScript("document.readyState", completionHandler: { (complete, error) in
                     if complete != nil {
                         self.parent.webView.evaluateJavaScript("document.body.scrollHeight", completionHandler: { (height, error) in
