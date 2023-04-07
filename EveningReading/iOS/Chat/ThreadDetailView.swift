@@ -370,7 +370,7 @@ struct ThreadDetailView: View {
                                     }
                                     
                                     print("log: threadId = \(self.threadId)")
-                                    print("log: postsToHighlight = \(self.postsToHighlight)")
+                                    //print("log: postsToHighlight = \(self.postsToHighlight)")
                                     
                                     self.chatStore.scrollTargetThread = post.id
                                     self.selectedPostRichText = RichTextBuilder.getRichText(postBody: post.body)
