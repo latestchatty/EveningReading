@@ -34,7 +34,6 @@ body {
   padding: 0;
   -webkit-touch-callout: none !important;
   -webkit-user-select: text !important;
-  <%= reduceFontSizes %>
 }
 
 a {

@@ -31,6 +31,8 @@ struct iPadChatView: View {
             
             //GoToPostView(currentViewName: "ChatView")
             
+            CopyPostView()
+            
             HStack (alignment: .top, spacing: 0) {
                 
                 // Navigation

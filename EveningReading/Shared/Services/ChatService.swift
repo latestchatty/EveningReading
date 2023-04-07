@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct Chat: Hashable, Codable {
     var threads: [ChatThread]
@@ -388,6 +389,9 @@ class ChatStore: ObservableObject {
     private let service: ChatService
     init(service: ChatService) {
         self.service = service
+        #if os(iOS)
+        loadPostTemplate()
+        #endif
     }
 
     @Published var threads: [ChatThread] = []
@@ -432,6 +436,11 @@ class ChatStore: ObservableObject {
     
     @Published public var tagDelta = [Int: [String: Int]]()
     @Published public var tagRemovedDelta = [Int: [String: Int]]()
+
+    @Published var showingCopyPostSheet = false
+    @Published var copyPostText = ""
+    @Published var templateA = ""
+    @Published var templateB = ""
 
     // For pull to refresh
     @Published var gettingChat: Bool = false {
@@ -613,4 +622,33 @@ class ChatStore: ObservableObject {
         }
     }
     
+    #if os(iOS)
+    func loadPostTemplate() {
+        // Preload post template HTML/CSS
+        templateA = "<html><head><meta content='text/html; charset=utf-8' http-equiv='content-type'><meta content='initial-scale=1.0; maximum-scale=1.0; user-scalable=0;' name='viewport'><style>"
+        let templateA2 = "</style></head><body>"
+        templateB = "</body></html>"
+        if let filepath = Bundle.main.path(forResource: "Stylesheet", ofType: "css") {
+            do {
+                let postTemplate = try String(contentsOfFile: filepath)
+                let postTemplateStyled = postTemplate
+                    .replacingOccurrences(of: "<%= linkColorLight %>", with: UIColor.black.toHexString())
+                    .replacingOccurrences(of: "<%= linkColorDark %>", with: UIColor.systemTeal.toHexString())
+                    .replacingOccurrences(of: "<%= jtSpoilerDark %>", with: "#21252b")
+                    .replacingOccurrences(of: "<%= jtSpoilerLight %>", with: "#8e8e93") // systemGray4
+                    .replacingOccurrences(of: "<%= jtOliveDark %>", with: UIColor(Color("uiOlive")).toHexString())
+                    .replacingOccurrences(of: "<%= jtOliveLight %>", with: "#808000")
+                    .replacingOccurrences(of: "<%= jtLimeLight %>", with: "#A2D900")
+                    .replacingOccurrences(of: "<%= jtLimeDark %>", with: "#BFFF00")
+                    .replacingOccurrences(of: "<%= jtPink %>", with: UIColor(Color("uiPink")).toHexString())
+                self.templateA = self.templateA + postTemplateStyled
+            } catch {
+                // contents could not be loaded
+            }
+        } else {
+            // Stylesheet.css not found!
+        }
+        templateA = templateA + templateA2
+    }
+    #endif
 }

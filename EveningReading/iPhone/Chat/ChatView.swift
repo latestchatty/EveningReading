@@ -103,6 +103,8 @@ struct ChatView: View {
                     Spacer()
                 }
             }
+            
+            CopyPostView()
         }
         // View settings
         .background(Color("PrimaryBackground").frame(height: 2600).offset(y: -80))

@@ -59,9 +59,8 @@ struct PostContextView: View {
         }
         
         Button(action: {
-            let board = UIPasteboard.general
-            board.string = self.postBody.getTextOnly
-            chatStore.showingCopiedNotice = true
+            chatStore.copyPostText = self.postBody
+            chatStore.showingCopyPostSheet = true
         }) {
             Text("Copy Post")
             Image(systemName: "doc.on.doc")
