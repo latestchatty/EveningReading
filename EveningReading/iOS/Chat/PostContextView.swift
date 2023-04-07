@@ -28,6 +28,7 @@ struct PostContextView: View {
     var threadId: Int = 0
     var isRootPost: Bool = false
     var postBody: String = ""
+    var showCopyPost: Bool = false
     
     var body: some View {
         Button(action: {
@@ -58,12 +59,14 @@ struct PostContextView: View {
             Image(systemName: "envelope.circle")
         }
         
-        Button(action: {
-            chatStore.copyPostText = self.postBody
-            chatStore.showingCopyPostSheet = true
-        }) {
-            Text("Copy Post")
-            Image(systemName: "doc.on.doc")
+        if showCopyPost {
+            Button(action: {
+                chatStore.copyPostText = self.postBody
+                chatStore.showingCopyPostSheet = true
+            }) {
+                Text("Copy Post")
+                Image(systemName: "doc.on.doc")
+            }
         }
         
         /*

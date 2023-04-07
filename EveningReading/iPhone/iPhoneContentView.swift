@@ -65,6 +65,7 @@ struct iPhoneContentView: View {
             .navigationBarBackButtonHidden(true)
             .navigationBarItems(trailing: SettingsButton())
             .overlay(LoadingPushNotificationView())
+            .overlay(CopyPostView())
         }
         .navigationViewStyle(StackNavigationViewStyle())
         .accentColor(colorScheme == .dark ? Color.white : Color(UIColor.systemBlue))

@@ -192,7 +192,7 @@ struct ThreadRow: View {
         
         // Actions
         .contextMenu {
-            PostContextView(showingWhosTaggingView: self.$showingWhosTaggingView, showingNewMessageView: self.$showingNewMessageView, messageRecipient: self.$messageRecipient, messageSubject: self.$messageSubject, messageBody: self.$messageBody, collapsed: self.$collapseThread, author: self.rootPostAuthor, postId: self.threadId, threadId: self.threadId, postBody: self.rootPostBody)
+            PostContextView(showingWhosTaggingView: self.$showingWhosTaggingView, showingNewMessageView: self.$showingNewMessageView, messageRecipient: self.$messageRecipient, messageSubject: self.$messageSubject, messageBody: self.$messageBody, collapsed: self.$collapseThread, author: self.rootPostAuthor, postId: self.threadId, threadId: self.threadId, postBody: self.rootPostBody, showCopyPost: false)
         }
         
         // Load thread data

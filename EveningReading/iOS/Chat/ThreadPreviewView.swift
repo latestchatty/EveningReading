@@ -122,7 +122,7 @@ struct ThreadPreviewView: View {
         
         // Actions
         .contextMenu {
-            PostContextView(showingWhosTaggingView: self.$showingWhosTaggingView, showingNewMessageView: self.$showingNewMessageView, messageRecipient: self.$messageRecipient, messageSubject: self.$messageSubject, messageBody: self.$messageBody, collapsed: self.$collapseThread, author: self.rootPost.author, postId: self.rootPost.threadId, threadId: self.rootPost.threadId, postBody: self.rootPost.body)
+            PostContextView(showingWhosTaggingView: self.$showingWhosTaggingView, showingNewMessageView: self.$showingNewMessageView, messageRecipient: self.$messageRecipient, messageSubject: self.$messageSubject, messageBody: self.$messageBody, collapsed: self.$collapseThread, author: self.rootPost.author, postId: self.rootPost.threadId, threadId: self.rootPost.threadId, postBody: self.rootPost.body, showCopyPost: false)
         }
         
     }
