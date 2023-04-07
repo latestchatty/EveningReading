@@ -10,6 +10,7 @@ import SwiftUI
 struct AuthorNameView: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var messageStore: MessageStore
     @StateObject var msgStore = MessageStore(service: .init())
     
     var name: String = ""
@@ -66,13 +67,15 @@ struct AuthorNameView: View {
                         Text("Search Post History")
                         Image(systemName: "magnifyingglass.circle")
                     }
+                    */
                     Button(action: {
                         // report user
+                        messageStore.reportAuthorName = self.name
+                        messageStore.showingReportUserSheet = true
                     }) {
                         Text("Report User")
                         Image(systemName: "exclamationmark.circle")
                     }
-                    */
                     Button(action: {
                         // block user
                         self.showingBlockUser = true

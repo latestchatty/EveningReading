@@ -290,6 +290,9 @@ class MessageStore: ObservableObject {
     @Published var fetchComplete: Bool = false
     @Published var markedMessages: [Int] = [0]
     
+    @Published var showingReportUserSheet = false
+    @Published var reportAuthorName = ""
+    
     #if os(iOS)
     @Published var messageTemplateBegin = ""
     @Published var messageTemplateEnd = ""

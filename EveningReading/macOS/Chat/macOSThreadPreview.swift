@@ -21,6 +21,9 @@ struct macOSThreadPreview: View {
     @State private var contributed: Bool = false
     @State private var replyCount: Int = 0
     
+    @State private var showingHideAlert = false
+    @State private var hideThread = false
+    
     private func getThreadData() {
         if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
         {
@@ -83,7 +86,25 @@ struct macOSThreadPreview: View {
                         .lineLimit(3)
                 }
                 .padding(.horizontal, 10)
-                
+                .contextMenu {
+                    Button(action: {
+                        // block user
+                        self.showingHideAlert = true
+                    }) {
+                        Text("Hide Thread")
+                        Image(systemName: "eye.slash")
+                    }
+                }
+                .alert(isPresented: self.$showingHideAlert) {
+                    Alert(title: Text("Hide thread?"), message: Text(""), primaryButton: .default(Text("Yes")) {
+                        // collapse thread
+                        self.appSessionStore.collapsedThreads.append(self.threadId)
+                        chatStore.activeThreadId = 0
+                        self.hideThread = true
+                    }, secondaryButton: .cancel() {
+                        
+                    })
+                }
                 
                 Divider()
                     .frame(height: 1)

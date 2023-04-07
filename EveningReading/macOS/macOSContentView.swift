@@ -87,8 +87,10 @@ struct macOSContentView: View {
                 // Detail View
                 if appSessionStore.showingChatView {
                     macOSChatView()
+                        .environmentObject(messageStore)
                 } else if appSessionStore.showingInboxView {
                     macOSInboxView()
+                        .environmentObject(messageStore)
                 } else if appSessionStore.showingSearchView {
                     macOSSearchView()
                 } else if appSessionStore.showingTagsView {
