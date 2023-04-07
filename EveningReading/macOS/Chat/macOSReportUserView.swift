@@ -37,7 +37,7 @@ struct macOSReportUserView: View {
                                 .padding()
                                 .keyboardShortcut(.cancelAction)
                                 
-                                Text("Report author \(messageStore.reportAuthorName)")
+                                Text("Report user \(messageStore.reportAuthorName)")
                                     .bold()
                                     .font(.body)
                                 Spacer()
@@ -56,10 +56,10 @@ struct macOSReportUserView: View {
                             }
                             .padding(.vertical)
                             .alert(isPresented: self.$showingSubmitAlert) {
-                                Alert(title: Text("Report Author?"), message: Text(""), primaryButton: .destructive(Text("Yes")) {
-                                    //self.chatStore.submitPost(postBody: self.postBody, postId: chatStore.newPostParentId)
-                                    messageBody = ""
+                                Alert(title: Text("Report User?"), message: Text(""), primaryButton: .destructive(Text("Yes")) {
+                                    messageStore.submitComplaint(author: messageStore.reportAuthorName, postId: 0)
                                     messageStore.showingReportUserSheet = false
+                                    messageBody = ""
                                 }, secondaryButton: .cancel() {
                                     
                                 })

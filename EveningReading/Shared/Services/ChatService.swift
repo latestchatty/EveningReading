@@ -219,22 +219,16 @@ class ChatService {
         //handler(.success(resp))
         //return
         
-        var username: String? = KeychainWrapper.standard.string(forKey: "Username")
-        var password: String? = KeychainWrapper.standard.string(forKey: "Password")
-        
-        #if os(macOS)
-        let defaults = UserDefaults.standard
-        username = defaults.object(forKey: "Username") as? String
-        password = defaults.object(forKey: "Password") as? String
-        #endif
+        let username = UserHelper.getUserName()
+        let password = UserHelper.getUserPassword()
         
         print("post submitted to server... post \(postId)")
         
         let newPostUrl = URL(string: "https://winchatty.com/v2/postComment")!
         var components = URLComponents(url: newPostUrl, resolvingAgainstBaseURL: false)!
         components.queryItems = [
-            URLQueryItem(name: "username", value: username?.replacingOccurrences(of: "+", with: "%2B").replacingOccurrences(of: "&", with: "%26")),
-            URLQueryItem(name: "password", value: password?.replacingOccurrences(of: "+", with: "%2B").replacingOccurrences(of: "&", with: "%26")),
+            URLQueryItem(name: "username", value: username.replacingOccurrences(of: "+", with: "%2B").replacingOccurrences(of: "&", with: "%26")),
+            URLQueryItem(name: "password", value: password.replacingOccurrences(of: "+", with: "%2B").replacingOccurrences(of: "&", with: "%26")),
             URLQueryItem(name: "parentId", value: String(postId)),
             URLQueryItem(name: "text", value: postBody.replacingOccurrences(of: "+", with: "%2B").replacingOccurrences(of: "&", with: "%26"))
         ]

@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct macOSInboxView: View {
+    @EnvironmentObject var messageStore: MessageStore
+    
     var body: some View {
         VStack {
             Text("Inbox View")
@@ -20,5 +22,6 @@ struct macOSInboxView: View {
 struct macOSInboxView_Previews: PreviewProvider {
     static var previews: some View {
         macOSInboxView()
+            .environmentObject(MessageStore(service: MessageService()))
     }
 }

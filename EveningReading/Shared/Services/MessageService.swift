@@ -80,8 +80,8 @@ class MessageService {
     }
     
     public func getMessages(page: String, handler: @escaping (Result<MessageResponse, Error>) -> Void) {
-        let username: String? = KeychainWrapper.standard.string(forKey: "Username")
-        let password: String? = KeychainWrapper.standard.string(forKey: "Password")
+        let username = UserHelper.getUserName()
+        let password = UserHelper.getUserPassword()
         
         let msgsUrl = URL(string: "https://winchatty.com/v2/getMessages")!
         var components = URLComponents(url: msgsUrl, resolvingAgainstBaseURL: false)!
@@ -119,8 +119,8 @@ class MessageService {
     }
     
     public func getCount(handler: @escaping (Result<MessageCount, Error>) -> Void) {
-        let username: String? = KeychainWrapper.standard.string(forKey: "Username")
-        let password: String? = KeychainWrapper.standard.string(forKey: "Password")
+        let username = UserHelper.getUserName()
+        let password = UserHelper.getUserPassword()
         
         let msgCountUrl = URL(string: "https://winchatty.com/v2/getMessageCount")!
         var components = URLComponents(url: msgCountUrl, resolvingAgainstBaseURL: false)!
@@ -378,10 +378,11 @@ class MessageStore: ObservableObject {
     }
     
     func submitMessage(recipient: String, subject: String, body: String) {
-        let username: String? = KeychainWrapper.standard.string(forKey: "Username")
-        let password: String? = KeychainWrapper.standard.string(forKey: "Password")
+        
+        let username = UserHelper.getUserName()
+        let password = UserHelper.getUserPassword()
 
-        service.submitMessage(username: username ?? "", password: password ?? "", recipient: recipient, subject: subject, body: body) { [weak self] result in
+        service.submitMessage(username: username, password: password, recipient: recipient, subject: subject, body: body) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let response):
