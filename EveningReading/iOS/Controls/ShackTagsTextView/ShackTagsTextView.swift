@@ -20,9 +20,11 @@ class ShackTags: NSObject, ObservableObject {
     @Published var tagWith: String = ""
     @Published var taggedText: String = ""
     var tagAction: () -> Void = {}
+    
+    var textEditorCurrentRange: UITextRange?
 }
 
-var textEditorCurrentRange: UITextRange?
+// var textEditorCurrentRange: UITextRange?
 
 struct ShackTagsTextView: UIViewRepresentable {
     @Binding var text: String
@@ -45,9 +47,9 @@ struct ShackTagsTextView: UIViewRepresentable {
     func updateUIView(_ uiView: UITextView, context: Context) {
         uiView.text = text
         uiView.font = UIFont.preferredFont(forTextStyle: textStyle)
-        if (textEditorCurrentRange != nil) {
-            uiView.selectedTextRange = textEditorCurrentRange
-            textEditorCurrentRange = nil
+        if (ShackTags.shared.textEditorCurrentRange != nil) {
+            uiView.selectedTextRange = ShackTags.shared.textEditorCurrentRange
+            ShackTags.shared.textEditorCurrentRange = nil
         }
     }
     
@@ -68,7 +70,7 @@ struct ShackTagsTextView: UIViewRepresentable {
         func textViewDidChange(_ textView: UITextView) {
             self.text.wrappedValue = textView.text
             let newRange: UITextRange? = textView.selectedTextRange
-            textEditorCurrentRange = newRange
+            ShackTags.shared.textEditorCurrentRange = newRange
         }
     }
 }
