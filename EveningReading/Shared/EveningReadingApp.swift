@@ -7,6 +7,10 @@
 
 import SwiftUI
 
+#if os(macOS)
+import AppKit
+#endif
+
 @main
 struct EveningReadingApp: App {
     @Environment(\.colorScheme) var colorScheme
@@ -21,6 +25,10 @@ struct EveningReadingApp: App {
     @StateObject var notifications = Notifications.shared //Notifications()
     @UIApplicationDelegateAdaptor private var appDelegate: AppDelegate
     @StateObject var shackTags = ShackTags.shared
+    #endif
+    
+    #if os(macOS)
+    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     #endif
     
     var body: some Scene {
@@ -80,6 +88,14 @@ struct EveningReadingApp: App {
     }
 }
 
+
+#if os(macOS)
+class AppDelegate: NSObject, NSApplicationDelegate {
+    func applicationDidFinishLaunching(_ notification: Notification) {
+        
+    }
+}
+#endif
 
 // Push notifications
 #if os(iOS)
