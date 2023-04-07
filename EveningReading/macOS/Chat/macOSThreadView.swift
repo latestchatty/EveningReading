@@ -120,6 +120,18 @@ struct macOSThreadView: View {
                         
                         ContributedView(contributed: self.contributed)
 
+                        Button(action: {
+                            // refresh
+                            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(250)) {
+                                chatStore.showingRefreshThreadSpinner = true
+                                chatStore.getThread()
+                            }
+                        }, label: {
+                            Spacer().frame(width: 0)
+                        })
+                        .buttonStyle(.plain)
+                        .keyboardShortcut("t", modifiers: [.command])
+                        
                         Spacer()
 
                         Text("\(rootPostDate.getTimeRemaining()) left")
