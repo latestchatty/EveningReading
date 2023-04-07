@@ -12,6 +12,11 @@ struct CategoriesView: View {
     
     var body: some View {
         Group {
+            #if os(macOS)
+            Toggle(isOn: self.$appSessionStore.hideBadWords) {
+                Text("Language")
+            }
+            #endif
             Toggle(isOn: self.$appSessionStore.showInformative) {
                 Text("Informative")
             }

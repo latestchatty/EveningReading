@@ -75,7 +75,6 @@ class AppSessionStore : ObservableObject {
             UserDefaults.standard.set(showLinkCopyButton, forKey: "ShowLinkCopyButton")
         }
     }
-
     
     // Category Filters
     @Published var threadFilters: [String] = ["informative", "ontopic"]
@@ -128,7 +127,21 @@ class AppSessionStore : ObservableObject {
                 self.threadFilters = self.threadFilters.filter { $0 != "nws" }
             }
         }
-    }    
+    }
+    @Published var hideBadWords: Bool = true {
+        didSet {
+            UserDefaults.standard.set(hideBadWords, forKey: "HideBadWords")
+            if self.hideBadWords {
+                badWords = defaultBadWords
+            } else if !self.hideBadWords {
+                badWords = []
+            }
+        }
+    }
+    
+    // Language Filters
+    @Published var defaultBadWords: [String] = ["shit", "fuck", "cunt", "dick", "ass", "asshole", "damn", "nigger", "bitch"]
+    @Published var badWords: [String] = ["shit", "fuck", "cunt", "dick", "ass", "asshole", "damn", "nigger", "bitch"]
     
     // Collapsed
     @Published var collapsedThreads: [Int] = [0] {
@@ -240,6 +253,7 @@ class AppSessionStore : ObservableObject {
         self.showPolitical = defaults.object(forKey: "ShowPolitical") as? Bool ?? false
         self.showStupid = defaults.object(forKey: "ShowStupid") as? Bool ?? false
         self.showNWS = defaults.object(forKey: "ShowNWS") as? Bool ?? false
+        self.hideBadWords = defaults.object(forKey: "HideBadWords") as? Bool ?? true
         
         // Authors
         self.blockedAuthors = defaults.object(forKey: "BlockedAuthors") as? [String] ?? [""]
