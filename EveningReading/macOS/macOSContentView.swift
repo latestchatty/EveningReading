@@ -66,6 +66,18 @@ struct macOSContentView: View {
                                     Image(systemName: "square.and.pencil")
                                 })
                             }
+                            Button(action: {
+                                // refresh
+                                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(250)) {
+                                    chatStore.activeThreadId = 0
+                                    chatStore.activePostId = 0
+                                    chatStore.newPostParentId = 0
+                                    chatStore.getChat()
+                                }
+                            }, label: {
+                                Spacer().frame(width: 0)
+                            })
+                            .keyboardShortcut("r", modifiers: [.command])
                         } else if appSessionStore.showingInboxView {
                             Button(action: {
                                 // refresh
