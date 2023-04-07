@@ -23,7 +23,7 @@ struct macOSReportUserView: View {
                     ZStack {
                         VStack {}.frame(width: 800, height: 450)
                         .onAppear() {
-                            messageBody = "I would like to report user '\(messageStore.reportAuthorName)' for not adhering to the Shacknews guidelines."
+                            messageBody = messageStore.getComplaintText(author: messageStore.reportAuthorName, postId: messageStore.reportAuthorForPostId)
                         }
                         VStack {
                             HStack {
@@ -60,6 +60,8 @@ struct macOSReportUserView: View {
                                     messageStore.submitComplaint(author: messageStore.reportAuthorName, postId: 0)
                                     messageStore.showingReportUserSheet = false
                                     messageBody = ""
+                                    messageStore.reportAuthorForPostId = 0
+                                    messageStore.reportAuthorName = ""
                                 }, secondaryButton: .cancel() {
                                     
                                 })

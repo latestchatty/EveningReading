@@ -292,6 +292,7 @@ class MessageStore: ObservableObject {
     
     @Published var showingReportUserSheet = false
     @Published var reportAuthorName = ""
+    @Published var reportAuthorForPostId = 0
     
     #if os(iOS)
     @Published var messageTemplateBegin = ""

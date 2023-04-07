@@ -72,6 +72,7 @@ struct AuthorNameView: View {
                         // report user
                         messageStore.reportAuthorName = self.name
                         messageStore.showingReportUserSheet = true
+                        messageStore.reportAuthorForPostId = self.postId
                     }) {
                         Text("Report User")
                         Image(systemName: "exclamationmark.circle")
