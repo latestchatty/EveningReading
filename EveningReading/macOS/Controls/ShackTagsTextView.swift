@@ -7,6 +7,8 @@
 
 import Foundation
 import SwiftUI
+import AppKit
+import Cocoa
 
 /*
 class ShackTags: NSObject, ObservableObject {
@@ -72,7 +74,8 @@ struct ShackTagsTextView: NSViewRepresentable {
         Coordinator($text)
     }
     
-    class Coordinator: NSObject, NSTextViewDelegate {
+    class Coordinator: NSObject, NSTextViewDelegate, NSMenuDelegate,
+                        NSMenuItemValidation {
         var text: Binding<String>
 
         init(_ text: Binding<String>) {
@@ -80,11 +83,54 @@ struct ShackTagsTextView: NSViewRepresentable {
         }
         
         func textDidChange(_ notification: Notification) {
+            print("log: textDidChange")
             guard let textView = notification.object as? NSTextView else { return }
             self.text.wrappedValue = textView.string
         }
+        
+        func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
+            print("log: validateMenuItem")
+            switch menuItem.action {
+            case #selector(copy(_:)):
+                return true
+            case #selector(cut(_:)):
+                return true
+            case #selector(paste(_:)):
+                return true
+            default:
+                return false
+            }
+        }
+        
+        @objc open func copy(_ sender: Any?) {
+        }
+        
+        @objc open func cut(_ sender: Any?) {
+        }
+        
+        @objc open func paste(_ sender: Any?) {
+        }
     }
 }
+
+
+
+//extension NSTextView {
+//    var selectedText: String {
+//        var text = ""
+//        for case let range as NSRange in self.selectedRanges {
+//            text.append(string[range]+"\n")
+//        }
+//        text = String(text.dropLast())
+//        return text
+//    }
+//}
+//
+//extension String {
+//    subscript (_ range: NSRange) -> Self {
+//        .init(self[index(startIndex, offsetBy: range.lowerBound) ..< index(startIndex, offsetBy: range.upperBound)])
+//    }
+//}
 
 //class TagMenuItemTextView: NSTextView {
 //
