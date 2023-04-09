@@ -67,6 +67,16 @@ struct macOSPostExpandedView: View {
                     }
                     .padding(.bottom, 8)
                     .padding(.horizontal, 8)
+                } else {
+                    HStack {
+                        Text(postDateTime.postTimestamp())
+                            .font(.caption)
+                            .foregroundColor(Color("NoDataLabel"))
+                        Spacer()
+                        macOSPostActionsView(name: self.postAuthor, postId: self.postId, showingHideThread: false)
+                    }
+                    .padding(.bottom, 8)
+                    .padding(.horizontal, 8)
                 }
             }
             Spacer()
