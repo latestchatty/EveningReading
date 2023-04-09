@@ -16,7 +16,7 @@ struct macOSThreadList: View {
         {
             return Array(chatData.threads)
         }
-        let threads = chatStore.threads.filter({ return self.appSessionStore.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !self.appSessionStore.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId) && !self.appSessionStore.badWords.contains(where: $0.posts.filter({ return $0.parentId == 0 })[0].body.components(separatedBy: " ").contains)})
+        let threads = chatStore.threads.filter({ return self.appSessionStore.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !self.appSessionStore.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId) && !self.appSessionStore.badWords.contains(where: $0.posts.filter({ return $0.parentId == 0 })[0].body.lowercased().components(separatedBy: " ").contains)})
         return Array(threads)
     }
     

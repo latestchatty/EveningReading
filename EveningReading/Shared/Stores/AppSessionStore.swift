@@ -140,8 +140,8 @@ class AppSessionStore : ObservableObject {
     }
     
     // Language Filters
-    @Published var defaultBadWords: [String] = ["shit", "fuck", "cunt", "dick", "ass", "asshole", "damn", "nigger", "bitch"]
-    @Published var badWords: [String] = ["shit", "fuck", "cunt", "dick", "ass", "asshole", "damn", "nigger", "bitch"]
+    @Published var defaultBadWords: [String] = ["shit", "shitting", "shits", "fuck", "fucking", "fucker", "cunt", "dick", "ass", "asshole", "damn", "nigger", "bitch", "dumbass"]
+    @Published var badWords: [String] = ["shit", "shitting", "shits", "fuck", "fucking", "fucker", "cunt", "dick", "ass", "asshole", "damn", "nigger", "bitch", "dumbass"]
     
     // Collapsed
     @Published var collapsedThreads: [Int] = [0] {

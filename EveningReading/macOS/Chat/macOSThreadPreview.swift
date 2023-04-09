@@ -74,6 +74,10 @@ struct macOSThreadPreview: View {
             VStack (alignment: .leading) {
                 HStack {
                     AuthorNameView(name: self.rootPostAuthor, postId: self.threadId)
+                        .contentShape(Rectangle())
+                        .onTapGesture(count: 1) {
+                            loadThread()
+                        }
                     
                     ContributedView(contributed: self.contributed)
 
@@ -87,7 +91,11 @@ struct macOSThreadPreview: View {
                     LolView(lols: self.rootPostLols, expanded: false, capsule: false, postId: self.threadId)
 
                     ReplyCountView(replyCount: self.replyCount)
-                    
+                        .contentShape(Rectangle())
+                        .onTapGesture(count: 1) {
+                            loadThread()
+                        }
+
                     TimeRemainingIndicator(percent: .constant(self.rootPostDate.getTimeRemaining()))
                         .frame(width: 12, height: 12)
                         .padding(.horizontal, 2)
