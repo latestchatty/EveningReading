@@ -55,6 +55,18 @@ struct macOSThreadPreview: View {
         }
     }
     
+    func loadThread() {
+        if chatStore.activeThreadId == self.threadId {
+            return
+        }
+        chatStore.activeThreadId = self.threadId
+        chatStore.activeParentId = 0
+        chatStore.hideReplies = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+            chatStore.hideReplies = false
+        }
+    }
+    
     var body: some View {
         ZStack {
             
@@ -65,7 +77,12 @@ struct macOSThreadPreview: View {
                     
                     ContributedView(contributed: self.contributed)
 
-                    Spacer()
+                    Text("")
+                        .frame(maxWidth: .infinity)
+                        .contentShape(Rectangle())
+                        .onTapGesture(count: 1) {
+                            loadThread()
+                        }
 
                     LolView(lols: self.rootPostLols, expanded: false, capsule: false, postId: self.threadId)
 
@@ -92,15 +109,7 @@ struct macOSThreadPreview: View {
                 .padding(.horizontal, 10)
                 .contentShape(Rectangle())
                 .onTapGesture(count: 1) {
-                    if chatStore.activeThreadId == self.threadId {
-                        return
-                    }
-                    chatStore.activeThreadId = self.threadId
-                    chatStore.activeParentId = 0
-                    chatStore.hideReplies = true
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
-                        chatStore.hideReplies = false
-                    }
+                    loadThread()
                 }
                 /*
                 .contextMenu {

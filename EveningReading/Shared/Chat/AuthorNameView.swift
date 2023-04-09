@@ -53,6 +53,7 @@ struct AuthorNameView: View {
                     self.name == self.op ? Color(NSColor.systemGreen) : self.name == "Shacknews" ? Color(NSColor.systemBlue) : colorScheme == .dark ? Color(NSColor.systemOrange) : Color(NSColor.systemPurple)
                 )
                 .lineLimit(1)
+                .fixedSize()
                 .contextMenu {
                     /*
                     Button(action: {
