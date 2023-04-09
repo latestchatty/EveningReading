@@ -17,6 +17,7 @@
 		83092F3929E0876B00E889BD /* ChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83398105263F0D38005614E8 /* ChatService.swift */; };
 		83092F3A29E0876C00E889BD /* ChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83398105263F0D38005614E8 /* ChatService.swift */; };
 		83092F3C29E1CCF700E889BD /* SyncWatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83092F3B29E1CCF700E889BD /* SyncWatchView.swift */; };
+		83092F3F29E3094400E889BD /* macOSPostActionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83092F3D29E307C200E889BD /* macOSPostActionsView.swift */; };
 		833685C2266FAB2B00ACE618 /* macOSGuidelinesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833685C1266FAB2B00ACE618 /* macOSGuidelinesView.swift */; };
 		833685C4266FB97A00ACE618 /* macOSAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833685C3266FB97A00ACE618 /* macOSAccountView.swift */; };
 		833685C626702CB900ACE618 /* macOSClearHiddenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833685C526702CB900ACE618 /* macOSClearHiddenView.swift */; };
@@ -283,6 +284,7 @@
 		83092F3529E07FA500E889BD /* CopyPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyPostView.swift; sourceTree = "<group>"; };
 		83092F3729E0837400E889BD /* PostWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostWebView.swift; sourceTree = "<group>"; };
 		83092F3B29E1CCF700E889BD /* SyncWatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncWatchView.swift; sourceTree = "<group>"; };
+		83092F3D29E307C200E889BD /* macOSPostActionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSPostActionsView.swift; sourceTree = "<group>"; };
 		833685C1266FAB2B00ACE618 /* macOSGuidelinesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSGuidelinesView.swift; sourceTree = "<group>"; };
 		833685C3266FB97A00ACE618 /* macOSAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSAccountView.swift; sourceTree = "<group>"; };
 		833685C526702CB900ACE618 /* macOSClearHiddenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSClearHiddenView.swift; sourceTree = "<group>"; };
@@ -481,6 +483,7 @@
 				834EFE6027284273004E7BA1 /* macOSTagPostButton.swift */,
 				834EFE68272AEAEF004E7BA1 /* macOSTextPromptSheet.swift */,
 				834EFE6A272AEBCD004E7BA1 /* ShackTagsTextView.swift */,
+				83092F3D29E307C200E889BD /* macOSPostActionsView.swift */,
 			);
 			path = Controls;
 			sourceTree = "<group>";
@@ -1433,6 +1436,7 @@
 				83AA194326462AFC00556E69 /* CategoriesView.swift in Sources */,
 				8339817C264062BB005614E8 /* RoundedCornersView.swift in Sources */,
 				83AA19282645C43500556E69 /* PostDecorator.swift in Sources */,
+				83092F3F29E3094400E889BD /* macOSPostActionsView.swift in Sources */,
 				833981A326412FAC005614E8 /* AuthorNameView.swift in Sources */,
 				83092F3229DDD24300E889BD /* macOSComposePostView.swift in Sources */,
 				834EFE6B272AEBCD004E7BA1 /* ShackTagsTextView.swift in Sources */,

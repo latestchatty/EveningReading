@@ -37,7 +37,7 @@ struct macOSReportUserView: View {
                                 .padding()
                                 .keyboardShortcut(.cancelAction)
                                 
-                                Text("Report user \(messageStore.reportAuthorName)")
+                                Text("Report \(messageStore.reportAuthorName)")
                                     .bold()
                                     .font(.body)
                                 Spacer()

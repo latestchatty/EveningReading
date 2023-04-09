@@ -103,7 +103,7 @@ struct macOSThreadView: View {
     var body: some View {
         VStack (alignment: .leading) {
             
-            if hideThread {
+            if hideThread || appSessionStore.collapsedThreads.contains(self.threadId) {
                 
                 Text("No thread selected.")
                     .font(.body)
@@ -158,6 +158,9 @@ struct macOSThreadView: View {
                                 chatStore.getThread()
                             }
                         
+                        macOSPostActionsView(name: self.rootPostAuthor, postId: self.threadId, showingHideThread: true)
+                        
+                        /*
                         Image(systemName: "eye.slash")
                             .imageScale(.large)
                             .onTapGesture(count: 1) {
@@ -173,7 +176,7 @@ struct macOSThreadView: View {
                                 
                             })
                         }
-                        
+                        */
                     }
                     .padding(.horizontal, 10)
                     .padding(.top, 10)

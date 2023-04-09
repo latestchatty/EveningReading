@@ -48,6 +48,7 @@ struct macOSPostExpandedView: View {
                             .font(.caption)
                             .foregroundColor(Color("NoDataLabel"))
                         Spacer()
+                        macOSPostActionsView(name: self.postAuthor, postId: self.postId, showingHideThread: false)
                         macOSTagPostButton(postId: self.postId)
                         Image(systemName: "link")
                             .imageScale(.large)

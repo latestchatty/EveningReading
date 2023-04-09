@@ -74,18 +74,35 @@ struct macOSThreadPreview: View {
                     TimeRemainingIndicator(percent: .constant(self.rootPostDate.getTimeRemaining()))
                         .frame(width: 12, height: 12)
                         .padding(.horizontal, 2)
+                    
+                    macOSPostActionsView(name: self.rootPostAuthor, postId: self.threadId, showingHideThread: true)
                 }
                 .padding(.horizontal, 10)
                 .padding(.top, 10)
                 
                 // Root post body
-                VStack (alignment: .leading) {
+                HStack (alignment: .top) {
                     Text(appSessionStore.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : self.rootPostBody)
                         .font(.body)
                         .fixedSize(horizontal: false, vertical: true)
                         .lineLimit(3)
+                    Spacer()
                 }
+                .frame(maxWidth: .infinity)
                 .padding(.horizontal, 10)
+                .contentShape(Rectangle())
+                .onTapGesture(count: 1) {
+                    if chatStore.activeThreadId == self.threadId {
+                        return
+                    }
+                    chatStore.activeThreadId = self.threadId
+                    chatStore.activeParentId = 0
+                    chatStore.hideReplies = true
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                        chatStore.hideReplies = false
+                    }
+                }
+                /*
                 .contextMenu {
                     Button(action: {
                         // block user
@@ -105,6 +122,7 @@ struct macOSThreadPreview: View {
                         
                     })
                 }
+                */
                 
                 Divider()
                     .frame(height: 1)
@@ -131,17 +149,6 @@ struct macOSThreadPreview: View {
         .onAppear(perform: getThreadData)
         .onReceive(chatStore.$didGetChatFinish) { value in
             getThreadData()
-        }
-        .onTapGesture(count: 1) {
-            if chatStore.activeThreadId == self.threadId {
-                return
-            }
-            chatStore.activeThreadId = self.threadId
-            chatStore.activeParentId = 0
-            chatStore.hideReplies = true
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
-                chatStore.hideReplies = false
-            }
         }
     }
 }
