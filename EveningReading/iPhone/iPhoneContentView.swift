@@ -18,10 +18,6 @@ struct iPhoneContentView: View {
     
     @State private var showingGuidelinesView = false
     
-    @State private var watchServiceStatus = ""
-    
-    let sendUsernameTimer = Timer.publish(every: 10, on: .main, in: .common).autoconnect()
-    
     var body: some View {
         NavigationView {
             ScrollView {
@@ -74,9 +70,6 @@ struct iPhoneContentView: View {
                 appSessionStore.didRegisterForPush = true
                 NotificationStore(service: .init()).registernew()
             }
-        }
-        .onReceive(sendUsernameTimer) { _ in
-            watchServiceStatus = WatchService.shared.sendUsername()
         }
     }
 }

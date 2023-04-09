@@ -40,17 +40,17 @@ final class WatchService: NSObject, ObservableObject {
         print("sendUsername()")
         guard WCSession.default.activationState == .activated else {
             print("!activationState")
-            return "!activationState"
+            return "Watch App Not Active"
         }
         #if os(watchOS)
         guard WCSession.default.isCompanionAppInstalled else {
             print("!isCompanionAppInstalled")
-            return "!isCompanionAppInstalled"
+            return "Watch App Not Installed"
         }
         #else
         guard WCSession.default.isWatchAppInstalled else {
             print("!isWatchAppInstalled")
-            return "!isWatchAppInstalled"
+            return "Watch App Not Installed"
         }
         #endif
         if let username = KeychainWrapper.standard.string(forKey: "Username") {
@@ -60,9 +60,9 @@ final class WatchService: NSObject, ObservableObject {
                 print(error.localizedDescription)
             }
             //WCSession.default.transferUserInfo(["Username": lowercased])
-            return "Sending username \(lowercased)"
+            return "Successfully synced user \(username)."
         }
-        return "sendUsername()"
+        return "Syncing..."
     }
 }
 

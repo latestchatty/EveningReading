@@ -16,6 +16,7 @@
 		83092F3829E0837400E889BD /* PostWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83092F3729E0837400E889BD /* PostWebView.swift */; };
 		83092F3929E0876B00E889BD /* ChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83398105263F0D38005614E8 /* ChatService.swift */; };
 		83092F3A29E0876C00E889BD /* ChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83398105263F0D38005614E8 /* ChatService.swift */; };
+		83092F3C29E1CCF700E889BD /* SyncWatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83092F3B29E1CCF700E889BD /* SyncWatchView.swift */; };
 		833685C2266FAB2B00ACE618 /* macOSGuidelinesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833685C1266FAB2B00ACE618 /* macOSGuidelinesView.swift */; };
 		833685C4266FB97A00ACE618 /* macOSAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833685C3266FB97A00ACE618 /* macOSAccountView.swift */; };
 		833685C626702CB900ACE618 /* macOSClearHiddenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833685C526702CB900ACE618 /* macOSClearHiddenView.swift */; };
@@ -281,6 +282,7 @@
 		83092F3329E0603600E889BD /* macOSReportUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSReportUserView.swift; sourceTree = "<group>"; };
 		83092F3529E07FA500E889BD /* CopyPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyPostView.swift; sourceTree = "<group>"; };
 		83092F3729E0837400E889BD /* PostWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostWebView.swift; sourceTree = "<group>"; };
+		83092F3B29E1CCF700E889BD /* SyncWatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncWatchView.swift; sourceTree = "<group>"; };
 		833685C1266FAB2B00ACE618 /* macOSGuidelinesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSGuidelinesView.swift; sourceTree = "<group>"; };
 		833685C3266FB97A00ACE618 /* macOSAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSAccountView.swift; sourceTree = "<group>"; };
 		833685C526702CB900ACE618 /* macOSClearHiddenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSClearHiddenView.swift; sourceTree = "<group>"; };
@@ -757,6 +759,7 @@
 				83AA19A8264831D300556E69 /* ClearHiddenView.swift */,
 				838466E229D4DAE500228DDB /* ClearBlockedView.swift */,
 				838466E429D4DE4300228DDB /* FavoriteUsersView.swift */,
+				83092F3B29E1CCF700E889BD /* SyncWatchView.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -1403,6 +1406,7 @@
 				83A85CF326556F60007EBAC3 /* NotificationPreviewView.swift in Sources */,
 				833EE9DE26454DF100345A1D /* SafariView+View.swift in Sources */,
 				83398111263F1794005614E8 /* DateExtensions.swift in Sources */,
+				83092F3C29E1CCF700E889BD /* SyncWatchView.swift in Sources */,
 				83AA1947264630A900556E69 /* GuidelinesView.swift in Sources */,
 				83FE337B27272F46003FB55D /* LoadingView.swift in Sources */,
 				8339818126406402005614E8 /* ThreadRow.swift in Sources */,
