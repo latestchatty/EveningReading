@@ -43,7 +43,6 @@ struct EveningReadingApp: App {
                     .environmentObject(notifications)
                     .environmentObject(shackTags)
                     .preferredColorScheme(appSessionStore.isDarkMode ? .dark : .light)
-
             } else {
                 iPhoneContentView()
                     .environmentObject(appSessionStore)
@@ -60,6 +59,7 @@ struct EveningReadingApp: App {
                     .environmentObject(chatStore)
                     .environmentObject(articleStore)
                     .environmentObject(messageStore)
+                    .preferredColorScheme(appSessionStore.isDarkMode ? .dark : .light)
             #endif
         }
         /*

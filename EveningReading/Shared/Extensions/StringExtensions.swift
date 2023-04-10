@@ -383,6 +383,12 @@ extension String {
         return postPreview
     }
     
+    var replaceGTRT: String {
+        var text = self.replacingOccurrences(of: "&lt;", with: "&#60;")
+        text = text.replacingOccurrences(of: "&gt;", with: "&#62;")
+        return text
+    }
+    
     var getTextOnly: String {
         var postText = self.replacingOccurrences(of: "<br />", with: "\n")
         postText = postText.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil).stringByDecodingHTMLEntities

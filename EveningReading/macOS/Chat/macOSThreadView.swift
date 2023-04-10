@@ -56,7 +56,7 @@ struct macOSThreadView: View {
                     self.rootPostCategory = rootPost.category
                     self.rootPostAuthor = rootPost.author
                     self.rootPostBody = rootPost.body
-                    self.rootPostRichText = RichTextBuilder.getRichText(postBody: rootPost.body)
+                    self.rootPostRichText = RichTextBuilder.getRichText(postBody: rootPost.body.replaceGTRT)
                     self.rootPostDate = rootPost.date
                     self.rootPostLols = rootPost.lols
                 }
