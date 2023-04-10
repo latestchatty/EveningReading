@@ -457,7 +457,7 @@ class RichTextBuilder {
         var richText = [RichTextBlock]()
         
         // Regex matching html/tags
-        let postBodyMarkup = "<body>" + postBody.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: "<br /><a", with: "<a").replacingOccurrences(of: "<br />", with: "\n") + "</body>"
+        let postBodyMarkup = "<body>" + postBody.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: "<br /><a", with: "<a").replacingOccurrences(of: "</a><br /><br />", with: "</a>\n").replacingOccurrences(of: "<br />", with: "\n") + "</body>"
         let rangeTotal = NSRange(location: 0, length: postBodyMarkup.utf16.count)
         let regexTags = try! NSRegularExpression(pattern: #"<(?:"[^"]*"['"]*|'[^']*'['"]*|[^'">])+>"#)
         let matchesTags = regexTags.matches(in: postBodyMarkup, options: [], range: rangeTotal)
