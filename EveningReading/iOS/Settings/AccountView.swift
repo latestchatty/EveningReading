@@ -21,7 +21,7 @@ struct AccountView: View {
     
     var body: some View {
         HStack {
-            Spacer()
+            //Spacer()
             
             // Sign in/out button
             Button(action: {
@@ -58,7 +58,7 @@ struct AccountView: View {
                 })
             }
             
-            Spacer()
+            //Spacer()
         }
     }
 }
