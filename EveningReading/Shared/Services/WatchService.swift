@@ -16,6 +16,7 @@ final class WatchService: NSObject, ObservableObject {
             UserDefaults.standard.set(plainTextUsername, forKey: "PlainTextUsername")
         }
     }
+    @Published var success = false
 
     override private init() {
         super.init()
@@ -39,28 +40,38 @@ final class WatchService: NSObject, ObservableObject {
     public func sendUsername() -> String {
         print("sendUsername()")
         guard WCSession.default.activationState == .activated else {
-            print("!activationState")
+            print("log: !activationState")
             return "Watch App Not Active"
         }
         #if os(watchOS)
         guard WCSession.default.isCompanionAppInstalled else {
-            print("!isCompanionAppInstalled")
+            print("log: !isCompanionAppInstalled")
             return "Watch App Not Installed"
         }
         #else
         guard WCSession.default.isWatchAppInstalled else {
-            print("!isWatchAppInstalled")
+            print("log: !isWatchAppInstalled")
             return "Watch App Not Installed"
         }
         #endif
         if let username = KeychainWrapper.standard.string(forKey: "Username") {
             let lowercased = username.lowercased()
-            print("Sending username \(lowercased)")
-            WCSession.default.sendMessage(["Username": lowercased], replyHandler: nil) { error in
-                print(error.localizedDescription)
+            print("log: Sending username \(lowercased)")
+            //WCSession.default.sendMessage(["Username": lowercased], replyHandler: nil) { error in
+            //    print("log: watcherr \(error.localizedDescription)")
+            //}
+            WCSession.default.sendMessage(["Username": lowercased]) { msg in
+                print("log: Success \(msg)")
+                self.success = true
+            } errorHandler: { Error in
+                print("log: Fail \(Error.localizedDescription)")
+                self.success = false
             }
-            //WCSession.default.transferUserInfo(["Username": lowercased])
-            return "Successfully synced user \(username)."
+            if success {
+                return "Successfully Synced user \(username)..."
+            } else {
+                return "Syncing..."
+            }
         }
         return "Syncing..."
     }
@@ -83,19 +94,31 @@ extension WatchService: WCSessionDelegate {
     }
     #endif
     
-    func session(_ session: WCSession, didReceiveMessage message: [String: Any]) {
-        print("didReceiveMessage")
+    func session(_ session: WCSession, didReceiveMessage message: [String : Any], replyHandler: @escaping ([String : Any]) -> Void) {
+        print("log: didReceiveMessage 1")
         DispatchQueue.main.async {
             guard let user = message["Username"] as? String else {
               return
             }
-            print("Username = \(user)")
+            print("log: Username = \(user)")
+            self.plainTextUsername = user            
+            replyHandler(["Success": true] as [String: Any])
+        }
+    }
+    
+    func session(_ session: WCSession, didReceiveMessage message: [String: Any]) {
+        print("log: didReceiveMessage 2")
+        DispatchQueue.main.async {
+            guard let user = message["Username"] as? String else {
+              return
+            }
+            print("log: Username = \(user)")
             self.plainTextUsername = user
         }
     }
     
     func session(_ session: WCSession, didReceiveUserInfo userInfo: [String: Any] = [:]) {
-        print("didReceiveUserInfo")
+        print("log: didReceiveUserInfo")
         guard let username = userInfo["Username"] as? String else {
             return
         }
