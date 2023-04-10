@@ -11,6 +11,7 @@ struct macOSSettingsView: View {
     enum SettingsTab {
         case account
         case filters
+        case general
         case about
     }
     @EnvironmentObject var appSessionStore: AppSessionStore
@@ -59,6 +60,21 @@ struct macOSSettingsView: View {
                 }
                 
                 VStack {
+                    Image(systemName: "gear.circle")
+                        .resizable()
+                        .frame(width: 24, height: 24)
+                    Text("General")
+                }
+                .foregroundColor(self.activeTab == .general ? Color(NSColor.systemTeal) : Color(NSColor.systemGray))
+                .frame(width: 64, height: 64)
+                .background(self.activeTab == .general ? Color("macOSSettingsButton") : Color.clear)
+                .cornerRadius(4.0)
+                .contentShape(Rectangle())
+                .onTapGesture (count: 1) {
+                    self.activeTab = .general
+                }
+                
+                VStack {
                     Image(systemName: "questionmark.circle")
                         .resizable()
                         .frame(width: 24, height: 24)
@@ -89,6 +105,14 @@ struct macOSSettingsView: View {
                                 .environmentObject(appSessionStore)
                         }
                         macOSClearHiddenView()
+                            .environmentObject(appSessionStore)
+                    }
+                    .frame(maxWidth: .infinity)
+                }
+                
+                if self.activeTab == .general {
+                    VStack (alignment: .center) {
+                        macOSGeneralView()
                             .environmentObject(appSessionStore)
                     }
                     .frame(maxWidth: .infinity)
