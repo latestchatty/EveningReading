@@ -27,14 +27,16 @@ struct SettingsView: View {
             }
             Section(header: Text("ACCOUNT")) {
                 AccountView()
-                NavigationLink(destination: SyncWatchView()) {
-                    HStack {
-                        Text("Sync With Watch")
-                        Spacer()
-                        Image("chevron.right")
-                    }
-                    .contentShape(Rectangle())
-                }.isDetailLink(false)
+                if UIDevice.current.userInterfaceIdiom == .phone {
+                    NavigationLink(destination: SyncWatchView()) {
+                        HStack {
+                            Text("Sync With Watch")
+                            Spacer()
+                            Image("chevron.right")
+                        }
+                        .contentShape(Rectangle())
+                    }.isDetailLink(false)
+                }
             }
             Section(header: Text("FILTERS")) {
                 CategoriesView()
