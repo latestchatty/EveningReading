@@ -221,26 +221,16 @@ struct ThreadDetailView: View {
         
         self.postsToHighlight.removeAll()
         
-        print("log: got here \(postList[postIndex].id) - \(postList[postIndex].parentId) - \(threadId)")
-        
         if postList[postIndex].parentId == threadId {
             return
         }
         
-        print("log: count = \(self.postList.filter({ $0.parentId == chatStore.activeParentId }).count)")
-
         self.selectedPostDepth = self.replyLines[postList[postIndex].id]?.count ?? 999
         
         for siblingPost in self.postList.filter({ $0.parentId == chatStore.activeParentId }) {
             self.postsToHighlight.append(siblingPost.id)
             getChildren(parentId: siblingPost.id)
         }
-        /*
-        for siblingPost in self.postList.filter({ $0.parentId == post.parentId }) {
-            self.postsToHighlight.append(siblingPost.id)
-            getChildren(parentId: siblingPost.id)
-        }
-        */
     }
     
     private func getChildren(parentId: Int) {
