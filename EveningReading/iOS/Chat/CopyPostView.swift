@@ -37,7 +37,8 @@ struct CopyPostView: View {
                        Spacer()
                    }
                    .padding(.top, 10)
-
+                   .padding(.bottom, 20)
+                   
                    HStack {
                        Spacer()
                        Text("Select Text")
