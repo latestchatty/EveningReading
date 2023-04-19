@@ -168,8 +168,8 @@ struct macOSComposePostView: View {
                             */
                             
                             Button(action: {
-                                print("log: text is \(postBody)")
-                                //showingSubmitAlert = true
+                                //print("log: text is \(postBody)")
+                                showingSubmitAlert = true
                             }) {
                                 Text("Submit")
                                     .frame(minWidth: 180)
