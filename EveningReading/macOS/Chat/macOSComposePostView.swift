@@ -15,6 +15,8 @@ struct macOSComposePostView: View {
     @State private var postBody = ""
     @State private var showingSubmitAlert = false
     
+    @StateObject var context = TextContext()
+    
     var body: some View {
         VStack(spacing: 0) {
             Text("")
@@ -39,22 +41,29 @@ struct macOSComposePostView: View {
                                 Spacer()
                             }
                             
-                            /*
-                            ShackTagsTextView(text: $postBody, textStyle: .constant(NSFont.TextStyle.body), disabled: $chatStore.showingNewPostSpinner)
-                                .border(Color(NSColor.systemGray))
-                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-                                .padding(EdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5))
-                            */
-                            
-                            
-                            TextEditor(text: self.$postBody)
+                            ShackTagsTextView(text: $postBody, disabled: $chatStore.showingNewPostSpinner, textContext: context)
                                 .border(Color(NSColor.systemGray))
                                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                                 .padding(EdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5))
                             
                             
                             Button(action: {
-                                showingSubmitAlert = true
+                                context.isSpoiler.toggle()
+                            }) {
+                                Text("Spoiler")
+                                    .frame(minWidth: 180)
+                            }
+                            
+                            /*
+                            TextEditor(text: self.$postBody)
+                                .border(Color(NSColor.systemGray))
+                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                                .padding(EdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5))
+                            */
+                            
+                            Button(action: {
+                                print("log: text is \(postBody)")
+                                //showingSubmitAlert = true
                             }) {
                                 Text("Submit")
                                     .frame(minWidth: 180)

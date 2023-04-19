@@ -20,6 +20,7 @@ struct macOSTextPromptSheet<Label>: View where Label : View {
     let useShackTagsInput: Bool
     @State var inputText: String = ""
     @State var submitting: Bool = false
+    @State var insertTag: String = ""
     
     init(action: @escaping (_ text: String, _ handler: @escaping (Result<Bool, Error>) -> Void) -> Void,
          @ViewBuilder label: () -> Label,
@@ -55,15 +56,15 @@ struct macOSTextPromptSheet<Label>: View where Label : View {
                     self.label
                         .padding(.bottom, 8)
                     
-                    if useShackTagsInput {
-                        ShackTagsTextView(text: self.$inputText, textStyle: .constant(NSFont.TextStyle.body), disabled: self.$submitting)
-                            .frame(minHeight: 100)
-                            .overlay(RoundedRectangle(cornerRadius: 4)
-                                        .stroke(self.inputText.count < 6 ? Color.red : Color.primary, lineWidth: 2))
-                    } else {
+//                    if useShackTagsInput {
+//                        ShackTagsTextView(text: self.$inputText, textStyle: .constant(NSFont.TextStyle.body), disabled: self.$submitting, insertTag: $insertTag)
+//                            .frame(minHeight: 100)
+//                            .overlay(RoundedRectangle(cornerRadius: 4)
+//                                        .stroke(self.inputText.count < 6 ? Color.red : Color.primary, lineWidth: 2))
+//                    } else {
                         TextField(self.title, text: self.$inputText)
                             .disabled(self.submitting)
-                    }
+//                    }
                     
                     HStack {
                         Spacer()
