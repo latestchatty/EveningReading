@@ -46,23 +46,6 @@ struct macOSComposePostView: View {
                                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                                 .padding(EdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5))
                             
-//subscribeToRed()
-//subscribeToGreen()
-//subscribeToBlue()
-//subscribeToYellow()
-//subscribeToLime()
-//subscribeToOrange()
-//subscribeToPink()
-//subscribeToOlive()
-//subscribeToItalic()
-//subscribeToBold()
-//subscribeToQuote()
-//subscribeToSample()
-//subscribeToUnderline()
-//subscribeToStrike()
-//subscribeToSpoiler()
-//subscribeToCode()
-                            
                             VStack {
                                 HStack {
                                     Button(action: {
