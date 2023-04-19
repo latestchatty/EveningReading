@@ -182,7 +182,7 @@ struct ShackTagsTextView: NSViewRepresentable {
         }
         
         func subscribeToItalic() {
-            textContext.$isPink
+            textContext.$isItalic
                 .sink(
                     receiveCompletion: { _ in },
                     receiveValue: { [weak self] in self?.setStyle(.italic, to: $0) })

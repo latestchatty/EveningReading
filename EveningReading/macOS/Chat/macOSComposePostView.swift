@@ -46,12 +46,135 @@ struct macOSComposePostView: View {
                                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                                 .padding(EdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5))
                             
+//subscribeToRed()
+//subscribeToGreen()
+//subscribeToBlue()
+//subscribeToYellow()
+//subscribeToLime()
+//subscribeToOrange()
+//subscribeToPink()
+//subscribeToOlive()
+//subscribeToItalic()
+//subscribeToBold()
+//subscribeToQuote()
+//subscribeToSample()
+//subscribeToUnderline()
+//subscribeToStrike()
+//subscribeToSpoiler()
+//subscribeToCode()
                             
-                            Button(action: {
-                                context.isSpoiler.toggle()
-                            }) {
-                                Text("Spoiler")
-                                    .frame(minWidth: 180)
+                            VStack {
+                                HStack {
+                                    Button(action: {
+                                        context.isRed.toggle()
+                                    }) {
+                                        Text("Red")
+                                            .frame(minWidth: 45)
+                                            .foregroundColor(Color(NSColor.systemRed))
+                                    }
+                                    Button(action: {
+                                        context.isGreen.toggle()
+                                    }) {
+                                        Text("Green")
+                                            .frame(minWidth: 45)
+                                            .foregroundColor(Color(NSColor.systemGreen))
+                                    }
+                                    Button(action: {
+                                        context.isBlue.toggle()
+                                    }) {
+                                        Text("Blue")
+                                            .frame(minWidth: 45)
+                                            .foregroundColor(Color(NSColor.systemBlue))
+                                    }
+                                    Button(action: {
+                                        context.isYellow.toggle()
+                                    }) {
+                                        Text("Yellow")
+                                            .frame(minWidth: 45)
+                                            .foregroundColor(Color("YellowText"))
+                                    }
+                                    Button(action: {
+                                        context.isLime.toggle()
+                                    }) {
+                                        Text("Lime")
+                                            .frame(minWidth: 45)
+                                            .foregroundColor(Color("LimeText"))
+                                    }
+                                    Button(action: {
+                                        context.isOrange.toggle()
+                                    }) {
+                                        Text("Orange")
+                                            .frame(minWidth: 45)
+                                            .foregroundColor(Color(NSColor.systemOrange))
+                                    }
+                                    Button(action: {
+                                        context.isPink.toggle()
+                                    }) {
+                                        Text("Pink")
+                                            .frame(minWidth: 45)
+                                            .foregroundColor(Color("PinkText"))
+                                    }
+                                    Button(action: {
+                                        context.isOlive.toggle()
+                                    }) {
+                                        Text("Olive")
+                                            .frame(minWidth: 45)
+                                            .foregroundColor(Color("OliveText"))
+                                    }
+                                }
+                                HStack {
+                                    Button(action: {
+                                        context.isItalic.toggle()
+                                    }) {
+                                        Text("Italic")
+                                            .italic()
+                                            .frame(minWidth: 45)
+                                    }
+                                    Button(action: {
+                                        context.isBold.toggle()
+                                    }) {
+                                        Text("Bold")
+                                            .bold()
+                                            .frame(minWidth: 45)
+                                    }
+                                    Button(action: {
+                                        context.isUnderline.toggle()
+                                    }) {
+                                        Text("Under")
+                                            .frame(minWidth: 45)
+                                    }
+                                    Button(action: {
+                                        context.isQuote.toggle()
+                                    }) {
+                                        Text("Quote")
+                                            .frame(minWidth: 45)
+                                    }
+                                    Button(action: {
+                                        context.isCode.toggle()
+                                    }) {
+                                        Text("Code")
+                                            .frame(minWidth: 45)
+                                    }
+                                    Button(action: {
+                                        context.isSample.toggle()
+                                    }) {
+                                        Text("Sample")
+                                            .frame(minWidth: 45)
+                                    }
+                                    Button(action: {
+                                        context.isStrike.toggle()
+                                    }) {
+                                        Text("Strike")
+                                            .strikethrough()
+                                            .frame(minWidth: 45)
+                                    }
+                                    Button(action: {
+                                        context.isSpoiler.toggle()
+                                    }) {
+                                        Text("Spoiler")
+                                            .frame(minWidth: 45)
+                                    }
+                                }
                             }
                             
                             /*
