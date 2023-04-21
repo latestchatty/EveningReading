@@ -147,6 +147,15 @@ struct macOSThreadPreview: View {
             .contentShape(Rectangle())
             .background(self.contributed ? (chatStore.activeThreadId == self.threadId ? Color("ChatBubbleSecondaryContributed") : Color("ChatBubblePrimaryContributed")) : (chatStore.activeThreadId == self.threadId ? Color("ChatBubbleSecondary") : Color.clear))
             
+            VStack {
+                Rectangle()
+                    .fill(Color.red.opacity(0.0))
+            }
+            .contentShape(Rectangle())
+            .onTapGesture(count: 1) {
+                loadThread()
+            }
+
             // Category Color
             HStack {
                 GeometryReader { categoryGeo in
