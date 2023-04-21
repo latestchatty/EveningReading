@@ -100,6 +100,9 @@ struct macOSChatView: View {
                                 .onReceive(chatStore.$activeThreadId) { value in
                                     scrollProxy.scrollTo(999999991, anchor: .top)
                                 }
+                                .onReceive(chatStore.$scrollTargetChat) { value in
+                                    scrollProxy.scrollTo(value)
+                                }
                                 .onReceive(chatStore.$shouldScrollThreadToTop) { value in
                                     if value {
                                         scrollProxy.scrollTo(999999991, anchor: .top)

@@ -100,6 +100,50 @@ struct macOSThreadView: View {
         }
     }
     
+    private func setSelectedPost(_ postIndex: Int) {
+        chatStore.activeParentId = postList[postIndex].id
+        selectedPost = postList[postIndex].id
+        chatStore.scrollTargetChat = postList[postIndex].id
+    }
+    
+    private func showNextReply() {
+        if postList.count > 0 {
+            if self.selectedPost == 0 {
+                setSelectedPost(0)
+            } else {
+                for i in 0..<self.postList.count {
+                    if self.selectedPost == self.postList[i].id {
+                        if i + 1 < self.postList.count {
+                            setSelectedPost(i + 1)
+                        } else {
+                            setSelectedPost(0)
+                        }
+                        break
+                    }
+                }
+            }
+        }
+    }
+    
+    private func showPreviousReply() {
+        if postList.count > 0 {
+            if self.selectedPost == 0 {
+                setSelectedPost(postList.count - 1)
+            } else {
+                for i in 0..<self.postList.count {
+                    if self.selectedPost == self.postList[i].id {
+                        if i - 1 > -1 {
+                            setSelectedPost(i - 1)
+                        } else {
+                            setSelectedPost(postList.count - 1)
+                        }
+                        break
+                    }
+                }
+            }
+        }
+    }
+    
     var body: some View {
         VStack (alignment: .leading) {
             
@@ -120,6 +164,26 @@ struct macOSThreadView: View {
                         
                         ContributedView(contributed: self.contributed)
 
+                        HStack {
+                            Button(action: {
+                                // previous
+                                showPreviousReply()
+                            }, label: {
+                                EmptyView()
+                            })
+                            .buttonStyle(.plain)
+                            .keyboardShortcut("a", modifiers: [])
+
+                            Button(action: {
+                                // next
+                                showNextReply()
+                            }, label: {
+                                EmptyView()
+                            })
+                            .buttonStyle(.plain)
+                            .keyboardShortcut("z", modifiers: [])
+                        }
+                        
                         Button(action: {
                             // refresh
                             DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(250)) {
@@ -269,6 +333,7 @@ struct macOSThreadView: View {
                                     .onTapGesture(count: 1) {
                                         //withAnimation {
                                             chatStore.activeParentId = post.id
+                                            selectedPost = post.id
                                         //}
                                     }
                                 }
@@ -289,6 +354,8 @@ struct macOSThreadView: View {
             postStrength = [Int: Double]()
             replyLines = [Int: String]()
             getPostList(parentId: self.threadId)
+            selectedPost = 0
+            chatStore.scrollTargetChat = 0
         }
         .onReceive(chatStore.$didGetThreadFinish) { value in
             if value {
@@ -298,6 +365,7 @@ struct macOSThreadView: View {
                 replyLines = [Int: String]()
                 getPostList(parentId: self.threadId)
                 chatStore.showingRefreshThreadSpinner = false
+                chatStore.scrollTargetChat = 0
             }
         }
     }
