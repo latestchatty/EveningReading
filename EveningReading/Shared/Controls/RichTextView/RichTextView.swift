@@ -252,8 +252,14 @@ struct LinkView: View {
             .foregroundColor(colorScheme == .dark ? Color(NSColor.systemTeal) : Color(NSColor.black))
             .onTapGesture(count: 1) {
                 if let url = URL(string: self.hyperlink) {
-                    NSWorkspace.shared.open(url)
+                    self.hyperlinkUrlStr = self.hyperlink
+                    self.showingLinkWebView = true
+                    //NSWorkspace.shared.open(url)
                 }
+            }
+            .popover(isPresented: self.$showingLinkWebView) {
+                //The view inside the popover is made of the SafariPreview
+                macOSLinkViewerSheet(mesgURL: self.hyperlink)
             }
     }
     #endif
