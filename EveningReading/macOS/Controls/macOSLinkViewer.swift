@@ -18,15 +18,12 @@ struct macOSLinkViewerSheet: View {
     }
     
     var body: some View {
-        // Create a VStack that contains the buttons in a preview as well a the webpage itself
         VStack {
             HStack(alignment: .center) {
                 Spacer()
                 Spacer()
-                // The title of the webpage
                 Text(self.model.didFinishLoading ? self.model.pageTitle : "")
                 Spacer()
-                // The "Open with Safari" button on the top right side of the preview
                 Button(action: {
                     if let url = URL(string: self.model.link) {
                         NSWorkspace.shared.open(url)
@@ -36,7 +33,6 @@ struct macOSLinkViewerSheet: View {
                 }
                 .padding(.vertical)
             }
-            // The webpage itself
             macOSLinkViewer(viewModel: model)
         }
         .frame(width: 800, height: 450, alignment: .bottom)
@@ -77,7 +73,6 @@ struct macOSLinkViewer: NSViewRepresentable {
         private var viewModel: macOSLinkViewerViewModel
 
         init(_ viewModel: macOSLinkViewerViewModel) {
-           // Initialise the WebViewModel
            self.viewModel = viewModel
         }
         
@@ -85,7 +80,6 @@ struct macOSLinkViewer: NSViewRepresentable {
 
         public func webView(_: WKWebView, didFailProvisionalNavigation: WKNavigation!, withError: Error) { }
 
-        // After the webpage is loaded, assign the data in WebViewModel class
         public func webView(_ web: WKWebView, didFinish: WKNavigation!) {
             self.viewModel.pageTitle = web.title!
             self.viewModel.link = web.url?.absoluteString as! String
