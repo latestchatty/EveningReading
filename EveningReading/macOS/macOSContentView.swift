@@ -65,6 +65,7 @@ struct macOSContentView: View {
                                 }, label: {
                                     Image(systemName: "square.and.pencil")
                                 })
+                                .keyboardShortcut("n", modifiers: [.command])
                             }
                             Button(action: {
                                 // refresh
