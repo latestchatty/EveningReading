@@ -258,7 +258,6 @@ struct LinkView: View {
                 }
             }
             .popover(isPresented: self.$showingLinkWebView) {
-                //The view inside the popover is made of the SafariPreview
                 macOSLinkViewerSheet(mesgURL: self.hyperlink)
             }
     }
