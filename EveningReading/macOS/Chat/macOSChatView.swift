@@ -73,6 +73,7 @@ struct macOSChatView: View {
                     }
                     .frame(width: geometry.size.width * 0.35)
                     .disabled(chatStore.showingNewPostSpinner || chatStore.showingRefreshThreadSpinner)
+                    .scrollDisabled(chatStore.showingNewPostSpinner || chatStore.showingRefreshThreadSpinner)
                     
                     Divider()
                     
@@ -112,6 +113,7 @@ struct macOSChatView: View {
                             }
                         }
                         .disabled(chatStore.showingNewPostSpinner || chatStore.showingRefreshThreadSpinner)
+                        .scrollDisabled(chatStore.showingNewPostSpinner || chatStore.showingRefreshThreadSpinner)
                         
                         // Toasts
                         NoticeView(show: $chatStore.showingTagNotice, message: $chatStore.taggingNoticeText)
