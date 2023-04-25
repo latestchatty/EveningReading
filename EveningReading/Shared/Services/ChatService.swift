@@ -636,11 +636,11 @@ class ChatStore: ObservableObject {
                     .replacingOccurrences(of: "<%= linkColorDark %>", with: UIColor.systemTeal.toHexString())
                     .replacingOccurrences(of: "<%= jtSpoilerDark %>", with: "#21252b")
                     .replacingOccurrences(of: "<%= jtSpoilerLight %>", with: "#8e8e93") // systemGray4
-                    .replacingOccurrences(of: "<%= jtOliveDark %>", with: UIColor(Color("uiOlive")).toHexString())
+                    .replacingOccurrences(of: "<%= jtOliveDark %>", with: UIColor(Color("OliveText")).toHexString())
                     .replacingOccurrences(of: "<%= jtOliveLight %>", with: "#808000")
                     .replacingOccurrences(of: "<%= jtLimeLight %>", with: "#A2D900")
                     .replacingOccurrences(of: "<%= jtLimeDark %>", with: "#BFFF00")
-                    .replacingOccurrences(of: "<%= jtPink %>", with: UIColor(Color("uiPink")).toHexString())
+                    .replacingOccurrences(of: "<%= jtPink %>", with: UIColor(Color("PinkText")).toHexString())
                 self.templateA = self.templateA + postTemplateStyled
             } catch {
                 // contents could not be loaded
