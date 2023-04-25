@@ -441,6 +441,9 @@ struct TextBlockView: View {
             #endif
             return atomView
         }.reduce(Text(""), +)
+        #if os(OSX)
+        .textSelection(.enabled)
+        #endif
     }
 
     func renderQuote(_ quote: [RichTextBlock]) -> some View {
