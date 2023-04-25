@@ -253,6 +253,7 @@ struct macOSThreadView: View {
                     }
                     .padding(.horizontal, 10)
                     .padding(.bottom, 10)
+                    .textSelection(.enabled)
                     
                     if !appSessionStore.blockedAuthors.contains(self.rootPostAuthor) {
                         HStack {

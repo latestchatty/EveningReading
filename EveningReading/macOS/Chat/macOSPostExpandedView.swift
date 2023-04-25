@@ -41,6 +41,7 @@ struct macOSPostExpandedView: View {
                 RichTextView(topBlocks: appSessionStore.blockedAuthors.contains(self.postAuthor) ? RichTextBuilder.getRichText(postBody: "[blocked]") : self.postText)
                     .fixedSize(horizontal: false, vertical: true)
                     .padding(8)
+                    .textSelection(.enabled)
 
                 if appSessionStore.isSignedIn && !appSessionStore.blockedAuthors.contains(self.postAuthor) {
                     HStack {
