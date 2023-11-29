@@ -17,6 +17,10 @@ class AppSessionStore : ObservableObject {
         loadDefaults()
     }
     
+    // Sheet fix for iOS 17
+    @Published var showingComposeSheet = false
+    @Published var showingSafariSheet = false
+    
     // Navigation
     @Published var showingHomeScreen = true
     @Published var showingChatView = false

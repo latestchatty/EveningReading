@@ -144,6 +144,7 @@ struct LinkView: View {
                 .underline()
                 .foregroundColor(colorScheme == .dark ? Color(UIColor.systemTeal) : Color(UIColor.black))
                 .onTapGesture(count: 1) {
+                    print("Link tapped!")
                     // YouTube
                     if self.appSessionStore.useYoutubeApp && (self.hyperlink.starts(with: "https://www.youtube.com/") || self.hyperlink.starts(with: "https://youtube.com/") || self.hyperlink.starts(with: "https://youtu.be/")) {
                         let url = URL(string: self.hyperlink.replacingOccurrences(of: "https", with: "youtube"))!
@@ -153,6 +154,7 @@ struct LinkView: View {
                             if let url = URL(string: self.hyperlink) {
                                 self.hyperlinkUrl = url
                                 self.showingSafariSheet = true
+                                appSessionStore.showingSafariSheet = true
                             }
                         } else {
                             UIApplication.shared.open(url, options: [:], completionHandler: nil)
@@ -180,6 +182,7 @@ struct LinkView: View {
                         if let url = URL(string: self.hyperlink) {
                             self.hyperlinkUrl = url
                             self.showingSafariSheet = true
+                            appSessionStore.showingSafariSheet = true
                         }
                     }
                     // Apple
@@ -238,6 +241,7 @@ struct LinkView: View {
         .onReceive(Notifications.shared.$notificationData) { value in
             if value != nil {
                 self.showingSafariSheet = false
+                appSessionStore.showingSafariSheet = false
             }
         }
         

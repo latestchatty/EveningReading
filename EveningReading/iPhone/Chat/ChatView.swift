@@ -74,7 +74,7 @@ struct ChatView: View {
                     // All non-hidden threads
                     ForEach(filteredThreads(), id: \.threadId) { thread in
                         ThreadRow(threadId: .constant(thread.threadId), activeThreadId: .constant(0))
-                            .padding(.bottom, -20)
+                            .padding(.bottom, -15)
                             .id(thread.threadId)
                     }
                     

@@ -183,6 +183,7 @@ struct ComposePostView: View {
             self.uploadImageFail = false
             self.showingComposeSheet = false
             self.showingTagMenu = false
+            appSessionStore.showingComposeSheet = false
         }
     }
     
@@ -227,6 +228,7 @@ struct ComposePostView: View {
                                 }
                                 DispatchQueue.main.async {
                                     self.showingComposeSheet = false
+                                    appSessionStore.showingComposeSheet = false
                                     self.uploadImageFail = false
                                     showImageSheet()
                                 }
@@ -332,6 +334,7 @@ struct ComposePostView: View {
                    onDismiss: {
                         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(20)) {
                             self.showingComposeSheet = true
+                            appSessionStore.showingComposeSheet = true
                             if self.uploadImage != nil {
                                 uploadImageToImgur(image: self.uploadImage!)
                             } else {
@@ -358,6 +361,7 @@ struct ComposePostView: View {
                         self.postBody = ""
                         self.showingLoading = false
                         self.showingComposeSheet = false
+                        appSessionStore.showingComposeSheet = false
                     }
                 }
             }
@@ -399,10 +403,13 @@ struct ComposePostView: View {
             }
             
             // Button style is different depending on context
-            if self.appSessionStore.isSignedIn || ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil {
+            if self.appSessionStore.isSignedIn {
                 Button(action: {
+                    print("Reply tapped!")
                     DispatchQueue.main.async {
                         self.showingComposeSheet = true
+                        appSessionStore.showingComposeSheet = true
+                        print(self.showingComposeSheet)
                     }
                 }) {
                     ZStack {
@@ -417,6 +424,7 @@ struct ComposePostView: View {
                             .foregroundColor(self.colorScheme == .dark ? Color(UIColor.white) : Color(UIColor.systemBlue))
                     }
                 }
+                .buttonStyle(.plain)
             }
             
         }
