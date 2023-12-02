@@ -55,7 +55,14 @@ struct ComposePostView: View {
 
         // Let the loading indicator show for at least a short time
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(200)) {
-            self.chatStore.submitPost(postBody: self.postBody, postId: self.postId)
+            var p = self.postId
+            /*
+            if (self.postId == 0) {
+                print("PostId IS ZERO!!!!!!!!!!!!!!!!!!!")
+                p = 42199357
+            }
+            */
+            self.chatStore.submitPost(postBody: self.postBody, postId: p)
             ShackTags.shared.taggedText = ""
         }
         
@@ -204,6 +211,14 @@ struct ComposePostView: View {
                             HStack {
                                 Spacer()
                                 Text("New Thread")
+                                    .font(.body)
+                                    .padding(.top, 10)
+                                Spacer()
+                            }
+                        } else {
+                            HStack {
+                                Spacer()
+                                Text(String(self.postId))
                                     .font(.body)
                                     .padding(.top, 10)
                                 Spacer()

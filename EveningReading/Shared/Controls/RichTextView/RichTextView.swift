@@ -132,6 +132,8 @@ struct LinkView: View {
     @State private var hyperlinkUrlStr: String?
     @State private var showingLinkWebView = false
     
+    @State private var linkForeground = Color("LinkText")
+    
     #if os(iOS)
     var body: some View {
         
@@ -142,9 +144,17 @@ struct LinkView: View {
         HStack(alignment: .bottom, spacing: 0) {
             Text(self.description)
                 .underline()
-                .foregroundColor(colorScheme == .dark ? Color(UIColor.systemTeal) : Color(UIColor.black))
+                .foregroundColor(linkForeground)
+//                .foregroundColor(colorScheme == .dark ? Color(UIColor.systemTeal) : Color(UIColor.black))
                 .onTapGesture(count: 1) {
                     print("Link tapped!")
+                    
+                    if (colorScheme == .dark) {
+                        linkForeground = Color(UIColor.systemTeal)
+                    } else {
+                        linkForeground = Color(UIColor.black)
+                    }
+                    
                     // YouTube
                     if self.appSessionStore.useYoutubeApp && (self.hyperlink.starts(with: "https://www.youtube.com/") || self.hyperlink.starts(with: "https://youtube.com/") || self.hyperlink.starts(with: "https://youtu.be/")) {
                         let url = URL(string: self.hyperlink.replacingOccurrences(of: "https", with: "youtube"))!
