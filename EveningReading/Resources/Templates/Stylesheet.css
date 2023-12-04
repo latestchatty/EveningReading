@@ -1,0 +1,84 @@
+html { -webkit-text-size-adjust: none; overflow-x: hidden; }
+
+:root {
+    color-scheme: light dark;
+    --jt-pink:       <%= jtPink %>;
+}
+
+
+@media screen and (prefers-color-scheme: light) {
+  :root {
+    --link-color:    <%= linkColorLight %>;
+    --jt-spoiler:    <%= jtSpoilerLight %>;
+    --jt-yellow:     -apple-system-orange;
+    --jt-olive:      <%= jtOliveLight %>;
+    --jt-lime:       <%= jtLimeLight %>;
+  }
+}
+
+@media screen and (prefers-color-scheme: dark) {
+  :root {
+    --link-color:    <%= linkColorDark %>;
+    --jt-spoiler:    <%= jtSpoilerDark %>;
+    --jt-yellow:     -apple-system-yellow;
+    --jt-olive:      <%= jtOliveDark %>;
+    --jt-lime:       <%= jtLimeDark %>;
+  }
+}
+
+body {
+  font: -apple-system-body;
+  margin: 0;
+  overflow-x: hidden;
+  overflow-y: visible;
+  padding: 0;
+  -webkit-touch-callout: none !important;
+  -webkit-user-select: text !important;
+}
+
+a {
+  color: var(--link-color); !important;
+  word-break: break-all !important;
+}
+
+span.jt_red    { color: -apple-system-red; }
+span.jt_green  { color: -apple-system-green; }
+span.jt_blue   { color: -apple-system-blue; }
+span.jt_yellow { color: var(--jt-yellow); }
+span.jt_olive  { color: var(--jt-olive);   }
+span.jt_lime   { color: var(--jt-lime); }
+span.jt_orange { color: -apple-system-orange; }
+span.jt_pink   { color: var(--jt-pink); }
+
+span.jt_spoiler {
+  background-color: var(--jt-spoiler);
+  color: var(--jt-spoiler);
+}
+
+span.jt_spoiler a {
+  border-bottom: 1px solid;
+  border-bottom-color: var(--link-color);
+  color: var(--jt-spoiler);
+}
+
+span.jt_strike {
+  text-decoration: line-through;
+}
+
+span.jt_sample {
+  font-size: 80%;
+}
+
+span.jt_quote {
+  font-family: serif;
+  font-size: 110%;
+}
+
+pre.jt_code {
+  border-left: 1px solid;
+  border-left-color: #666666;
+  display: block;
+  font-family: monospace;
+  margin: 5px 0pt 5px 10px;
+  padding: 3px 0pt 3px 10px;
+}

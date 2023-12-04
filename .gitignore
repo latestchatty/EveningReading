@@ -27,6 +27,7 @@ xcuserdata/
 *.moved-aside
 *.xccheckout
 *.xcscmblueprint
+KeyConfig.xcconfig
 
 ## Obj-C/Swift specific
 *.hmap
