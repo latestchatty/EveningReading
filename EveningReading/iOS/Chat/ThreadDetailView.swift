@@ -316,11 +316,11 @@ struct ThreadDetailView: View {
                                     if self.threadId == 0 {
                                         TagPostView(postId: self.postId)
                                         Spacer().frame(width: 10)
-                                        ComposePostView(postId: self.postId)
+                                        ComposePostView(postId: self.postId, replyToPostBody: self.rootPostBody, replyToAuthor: self.rootPostAuthor)
                                     } else {
                                         TagPostView(postId: self.threadId)
                                         Spacer().frame(width: 10)
-                                        ComposePostView(postId: self.threadId)
+                                        ComposePostView(postId: self.threadId, replyToPostBody: self.rootPostBody, replyToAuthor: self.rootPostAuthor)
                                     }
                                 }
                                 .padding(.horizontal, 10)

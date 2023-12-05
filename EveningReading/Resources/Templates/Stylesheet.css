@@ -41,6 +41,8 @@ a {
   word-break: break-all !important;
 }
 
+div.postAuthor { color: -apple-system-orange; }
+
 span.jt_red    { color: -apple-system-red; }
 span.jt_green  { color: -apple-system-green; }
 span.jt_blue   { color: -apple-system-blue; }
