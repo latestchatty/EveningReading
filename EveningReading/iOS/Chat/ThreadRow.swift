@@ -91,10 +91,10 @@ struct ThreadRow: View {
                 HStack {
                     GeometryReader { categoryGeo in
                         Path { categoryPath in
-                            categoryPath.move(to: CGPoint(x: 0, y: 16))
-                            categoryPath.addLine(to: CGPoint(x: 0, y: categoryGeo.size.height - 21))
-                            categoryPath.addLine(to: CGPoint(x: categoryGeo.size.width, y: categoryGeo.size.height - 21))
-                            categoryPath.addLine(to: CGPoint(x: categoryGeo.size.width, y: 16))
+                            categoryPath.move(to: CGPoint(x: 0, y: 19))
+                            categoryPath.addLine(to: CGPoint(x: 0, y: categoryGeo.size.height - 15))
+                            categoryPath.addLine(to: CGPoint(x: categoryGeo.size.width, y: categoryGeo.size.height - 15))
+                            categoryPath.addLine(to: CGPoint(x: categoryGeo.size.width, y: 19))
                         }
                         .fill(ThreadCategoryColor[self.rootPostCategory]!)
                     }
