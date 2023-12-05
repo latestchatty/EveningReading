@@ -18,6 +18,8 @@ struct ComposePostView: View {
     
     public var isRootPost: Bool = false
     public var postId: Int = 0
+    public var replyToPostBody = ""
+    public var replyToAuthor = ""
     
     @State private var postBody = ""
     @State private var postStyle = UIFont.TextStyle.body
@@ -35,6 +37,9 @@ struct ComposePostView: View {
     @State private var showingSubmitError = false
     
     @State private var showingTagMenu = false
+    
+    @State private var composePage = 0
+    @State private var postWebViewHeight: CGFloat = .zero
     
     private func submitPost() {
         self.loadingMessage = "Submitting"
@@ -280,10 +285,31 @@ struct ComposePostView: View {
                     
                     // TextEditor
                     ZStack {
-                        ShackTagsTextView(text: self.$postBody, textStyle: self.$postStyle, doTagText: self.$showingTagMenu)
-                            .border(Color(UIColor.systemGray5))
-                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-                            .padding(EdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5))
+                        VStack {
+                            if (!self.replyToPostBody.isEmpty) {
+                                Picker("Select", selection: $composePage) {
+                                    Text("Compose").tag(0)
+                                    Text("Replying To").tag(1)
+                                }
+                                .pickerStyle(.segmented)
+                                .padding(.horizontal, 10)
+                            }
+                            if (self.composePage == 0) {
+                                ShackTagsTextView(text: self.$postBody, textStyle: self.$postStyle, doTagText: self.$showingTagMenu)
+                                    .border(Color(UIColor.systemGray5))
+                                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                                    .padding(EdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5))
+                            } else {
+                                ScrollView {
+                                    HStack {
+                                        PostWebView(viewModel: PostWebViewModel(body: "<div class='postAuthor'>" + self.replyToAuthor + "</div><br>" + self.replyToPostBody, colorScheme: colorScheme), dynamicHeight: $postWebViewHeight, templateA: $chatStore.templateA, templateB: $chatStore.templateB)
+                                    }
+                                    .frame(height: postWebViewHeight)
+                                    .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
+                                }
+                                .edgesIgnoringSafeArea(.bottom)
+                            }
+                        }
 
                         /*
                         // no way to change the background yet :(

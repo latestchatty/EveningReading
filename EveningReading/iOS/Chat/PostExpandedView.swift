@@ -92,7 +92,7 @@ struct PostExpandedView: View {
                         Spacer()
                         TagPostView(postId: self.postId)
                         Spacer().frame(width: 10)
-                        ComposePostView(postId: self.postId)
+                        ComposePostView(postId: self.postId, replyToPostBody: self.postBody, replyToAuthor: self.postAuthor)
                     }
                     .padding(.horizontal, 10)
                     .padding(.bottom, 10)
