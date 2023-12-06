@@ -364,9 +364,3 @@ if !resetNotifications {
         }
     }
 }
-
-struct PushNotification : Hashable, Codable {
-    var title = ""
-    var body = ""
-    var postId = 0
-}

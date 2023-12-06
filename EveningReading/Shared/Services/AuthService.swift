@@ -9,11 +9,6 @@
 
 import Foundation
 
-struct AuthResponse: Hashable, Codable {
-    var isValid: Bool
-    var isModerator: Bool
-}
-
 class AuthService {
     private let session: URLSession
     private let decoder: JSONDecoder

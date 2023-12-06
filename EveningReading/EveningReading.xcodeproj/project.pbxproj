@@ -19,6 +19,11 @@
 		83092F3C29E1CCF700E889BD /* SyncWatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83092F3B29E1CCF700E889BD /* SyncWatchView.swift */; };
 		83092F3F29E3094400E889BD /* macOSPostActionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83092F3D29E307C200E889BD /* macOSPostActionsView.swift */; };
 		83092F4229E48BE900E889BD /* macOSGeneralView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83092F4029E48B9300E889BD /* macOSGeneralView.swift */; };
+		830BFB212B20E45500F62089 /* PushNotificationModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830BFB202B20E45500F62089 /* PushNotificationModels.swift */; };
+		830BFB232B20E4A300F62089 /* ChatModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830BFB222B20E4A300F62089 /* ChatModels.swift */; };
+		830BFB252B20E4F800F62089 /* ArticleModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830BFB242B20E4F800F62089 /* ArticleModels.swift */; };
+		830BFB272B20E53500F62089 /* AuthModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830BFB262B20E53500F62089 /* AuthModels.swift */; };
+		830BFB292B20E5A600F62089 /* MessageModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830BFB282B20E5A600F62089 /* MessageModels.swift */; };
 		833685C2266FAB2B00ACE618 /* macOSGuidelinesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833685C1266FAB2B00ACE618 /* macOSGuidelinesView.swift */; };
 		833685C4266FB97A00ACE618 /* macOSAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833685C3266FB97A00ACE618 /* macOSAccountView.swift */; };
 		833685C626702CB900ACE618 /* macOSClearHiddenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833685C526702CB900ACE618 /* macOSClearHiddenView.swift */; };
@@ -288,6 +293,11 @@
 		83092F3B29E1CCF700E889BD /* SyncWatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncWatchView.swift; sourceTree = "<group>"; };
 		83092F3D29E307C200E889BD /* macOSPostActionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSPostActionsView.swift; sourceTree = "<group>"; };
 		83092F4029E48B9300E889BD /* macOSGeneralView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSGeneralView.swift; sourceTree = "<group>"; };
+		830BFB202B20E45500F62089 /* PushNotificationModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationModels.swift; sourceTree = "<group>"; };
+		830BFB222B20E4A300F62089 /* ChatModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModels.swift; sourceTree = "<group>"; };
+		830BFB242B20E4F800F62089 /* ArticleModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleModels.swift; sourceTree = "<group>"; };
+		830BFB262B20E53500F62089 /* AuthModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthModels.swift; sourceTree = "<group>"; };
+		830BFB282B20E5A600F62089 /* MessageModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageModels.swift; sourceTree = "<group>"; };
 		833685C1266FAB2B00ACE618 /* macOSGuidelinesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSGuidelinesView.swift; sourceTree = "<group>"; };
 		833685C3266FB97A00ACE618 /* macOSAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSAccountView.swift; sourceTree = "<group>"; };
 		833685C526702CB900ACE618 /* macOSClearHiddenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSClearHiddenView.swift; sourceTree = "<group>"; };
@@ -480,6 +490,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		830BFB1F2B20E40600F62089 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				830BFB202B20E45500F62089 /* PushNotificationModels.swift */,
+				830BFB222B20E4A300F62089 /* ChatModels.swift */,
+				830BFB242B20E4F800F62089 /* ArticleModels.swift */,
+				830BFB262B20E53500F62089 /* AuthModels.swift */,
+				830BFB282B20E5A600F62089 /* MessageModels.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		833685D12672A36800ACE618 /* Controls */ = {
 			isa = PBXGroup;
 			children = (
@@ -512,6 +534,7 @@
 		8338177E2639AC17007A8B28 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				830BFB1F2B20E40600F62089 /* Models */,
 				833981A026412D2B005614E8 /* Chat */,
 				8339819C2640CA14005614E8 /* Settings */,
 				833980D1263C9B3D005614E8 /* Controls */,
@@ -1321,6 +1344,7 @@
 				8339818F26409C94005614E8 /* AuthorNameView.swift in Sources */,
 				83AA19D8264B367100556E69 /* PostPreviewView.swift in Sources */,
 				83AA19B7264859CA00556E69 /* MessageWebView.swift in Sources */,
+				830BFB272B20E53500F62089 /* AuthModels.swift in Sources */,
 				83AA194C2646353800556E69 /* RedactingView.swift in Sources */,
 				8339810E263F1028005614E8 /* StringExtensions.swift in Sources */,
 				833EE9DB26454DF100345A1D /* SafariViewPresentationModifier.swift in Sources */,
@@ -1350,11 +1374,14 @@
 				83AA19932647110300556E69 /* ImagePickerView.swift in Sources */,
 				838466E529D4DE4300228DDB /* FavoriteUsersView.swift in Sources */,
 				83092F3629E07FA500E889BD /* CopyPostView.swift in Sources */,
+				830BFB292B20E5A600F62089 /* MessageModels.swift in Sources */,
 				8384748A28347F0F00D3D696 /* SwiftUIPullToRefresh.swift in Sources */,
 				833980CE263C9137005614E8 /* iPhoneContentView.swift in Sources */,
 				83398127263F2E59005614E8 /* InboxView.swift in Sources */,
 				83AB388D266A60BC000A67B6 /* TagsWebView.swift in Sources */,
+				830BFB252B20E4F800F62089 /* ArticleModels.swift in Sources */,
 				83398121263F2E39005614E8 /* TagsView.swift in Sources */,
+				830BFB232B20E4A300F62089 /* ChatModels.swift in Sources */,
 				833EE9E226454DFB00345A1D /* WebAuthenticationPresentationModifier.swift in Sources */,
 				833EE9DC26454DF100345A1D /* SafariViewPresenter.swift in Sources */,
 				83AA195F264656BD00556E69 /* KeychainItemAccessibility.swift in Sources */,
@@ -1394,6 +1421,7 @@
 				83092F3829E0837400E889BD /* PostWebView.swift in Sources */,
 				833EE9E426454DFB00345A1D /* WebAuthenticationSession.swift in Sources */,
 				833980EB263F07DC005614E8 /* iPhoneHomeButton.swift in Sources */,
+				830BFB212B20E45500F62089 /* PushNotificationModels.swift in Sources */,
 				83AA19C62648829E00556E69 /* NewMessageView.swift in Sources */,
 				8339814D263F6394005614E8 /* iPadArticlesView.swift in Sources */,
 				83AA198E26470FD400556E69 /* UIImageExtensions.swift in Sources */,
