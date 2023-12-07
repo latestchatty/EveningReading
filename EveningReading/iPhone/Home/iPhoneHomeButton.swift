@@ -38,9 +38,3 @@ struct iPhoneHomeButton: View {
         .frame(width: 84)
     }
 }
-
-struct iPhoneHomeButton_Previews: PreviewProvider {
-    static var previews: some View {
-        iPhoneHomeButton(title: .constant("Chat"), imageName: .constant("glyphicons-basic-122-envelope-empty"), buttonBackground: .constant(Color("HomeButtonChat")))
-    }
-}

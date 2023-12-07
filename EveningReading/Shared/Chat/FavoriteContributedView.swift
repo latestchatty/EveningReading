@@ -33,9 +33,3 @@ struct FavoriteContributedView: View {
         }
     }
 }
-
-struct FavoriteContributedView_Previews: PreviewProvider {
-    static var previews: some View {
-        FavoriteContributedView(contributed: .constant(true))
-    }
-}

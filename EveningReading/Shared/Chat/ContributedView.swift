@@ -34,8 +34,3 @@ struct ContributedView: View {
     }
 }
 
-struct ContributedView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContributedView(contributed: true)
-    }
-}

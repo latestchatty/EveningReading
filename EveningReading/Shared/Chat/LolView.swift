@@ -232,10 +232,3 @@ struct LolView: View {
         #endif
     }
 }
-
-struct LolView_Previews: PreviewProvider {
-    static var previews: some View {
-        LolView(lols: [ChatLols]())
-            .environmentObject(ChatStore(service: ChatService()))
-    }
-}

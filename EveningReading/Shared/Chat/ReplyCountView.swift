@@ -33,9 +33,3 @@ struct ReplyCountView: View {
         #endif
     }
 }
-
-struct ReplyCountView_Previews: PreviewProvider {
-    static var previews: some View {
-        ReplyCountView(replyCount: 33)
-    }
-}

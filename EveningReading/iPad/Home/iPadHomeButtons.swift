@@ -86,12 +86,3 @@ struct iPadHomeButtons: View {
         .padding(.top, 10)
     }
 }
-
-struct iPadHomeButtons_Previews: PreviewProvider {
-    static var previews: some View {
-        iPadHomeButtons()
-            .environmentObject(AppSessionStore(service: AuthService()))
-            .environmentObject(ChatStore(service: ChatService()))
-            .environmentObject(MessageStore(service: MessageService()))
-    }
-}

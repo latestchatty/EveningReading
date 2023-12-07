@@ -160,11 +160,3 @@ struct AuthorNameView: View {
     }
 }
 
-struct AuthorNameView_Previews: PreviewProvider {
-    static var previews: some View {
-        AuthorNameView(name: "tamzyn", postId: 999999996, bold: false, op: "Abercio")
-            .environment(\.colorScheme, .light)
-            .environmentObject(AppSessionStore(service: AuthService()))
-            .environmentObject(MessageStore(service: MessageService()))
-    }
-}

@@ -39,9 +39,3 @@ struct iPadHomeButton: View {
         .shadow(color: Color.black.opacity(0.25), radius: 10, x: 0, y: 10)
     }
 }
-
-struct iPadHomeButton_Previews: PreviewProvider {
-    static var previews: some View {
-        iPadHomeButton(title: .constant("Chaty"), imageName: .constant("glyphicons-basic-238-chat-message"), buttonBackground: .constant(Color("HomeButtonChat")))
-    }
-}

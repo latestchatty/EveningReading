@@ -179,13 +179,3 @@ struct ChatView: View {
         }
     }
 }
-
-struct ChatView_Previews: PreviewProvider {
-    static var previews: some View {
-        ChatView()
-            .environment(\.colorScheme, .dark)
-            .environmentObject(AppSessionStore(service: AuthService()))
-            .environmentObject(ChatStore(service: ChatService()))
-            .environmentObject(Notifications())
-    }
-}

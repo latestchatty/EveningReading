@@ -128,12 +128,3 @@ struct ChatViewPreloaded: View {
         }
     }
 }
-
-struct ChatViewPreloaded_Previews: PreviewProvider {
-    static var previews: some View {
-        ChatViewPreloaded()
-            .environment(\.colorScheme, .dark)
-            .environmentObject(AppSessionStore(service: AuthService()))
-            .environmentObject(ChatStore(service: ChatService()))
-    }
-}

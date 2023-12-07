@@ -74,15 +74,3 @@ struct iPhoneContentView: View {
     }
 }
 
-struct iPhoneContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        iPhoneContentView()
-            .environment(\.colorScheme, .dark)
-            .environmentObject(AppSessionStore(service: AuthService()))
-            .environmentObject(ChatStore(service: ChatService()))
-            .environmentObject(ArticleStore(service: ArticleService()))
-            .environmentObject(MessageStore(service: MessageService()))
-            .environmentObject(Notifications())
-            .environmentObject(ShackTags())
-    }
-}

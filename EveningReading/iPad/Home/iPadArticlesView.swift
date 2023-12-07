@@ -97,10 +97,3 @@ struct iPadArticlesView: View {
         .onAppear(perform: fetchArticles)
     }
 }
-
-struct iPadArticlesView_Previews: PreviewProvider {
-    static var previews: some View {
-        iPadArticlesView()
-            .environmentObject(ArticleStore(service: ArticleService()))
-    }
-}

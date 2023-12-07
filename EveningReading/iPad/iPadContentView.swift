@@ -62,16 +62,3 @@ struct iPadContentView: View {
     }
 }
 
-struct iPadContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        iPadContentView()
-            .previewDevice(PreviewDevice(rawValue: "iPad (8th generation)"))
-            .environment(\.colorScheme, .dark)
-            .environmentObject(AppSessionStore(service: AuthService()))
-            .environmentObject(ChatStore(service: ChatService()))
-            .environmentObject(ArticleStore(service: ArticleService()))
-            .environmentObject(MessageStore(service: MessageService()))
-            .environmentObject(Notifications())
-            .environmentObject(ShackTags())
-    }
-}
