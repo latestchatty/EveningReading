@@ -58,11 +58,3 @@ struct NotificationPreviewView: View {
         .padding(.trailing, -2)
     }
 }
-
-struct NotificationPreviewView_Previews: PreviewProvider {
-    static var previews: some View {
-        NotificationPreviewView(title: "kazantzis", postBody: "Amet volutpat consequat mauris nunc congue nisi vitae.", postId: 0)
-            .environmentObject(AppSessionStore(service: AuthService()))
-            
-    }
-}

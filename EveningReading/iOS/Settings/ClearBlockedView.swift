@@ -33,11 +33,3 @@ struct ClearBlockedView: View {
         }
     }
 }
-
-
-struct ClearBlockedView_Previews: PreviewProvider {
-    static var previews: some View {
-        ClearBlockedView()
-            .environmentObject(AppSessionStore(service: AuthService()))
-    }
-}

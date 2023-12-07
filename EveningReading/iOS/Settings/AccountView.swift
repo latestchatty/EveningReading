@@ -62,12 +62,3 @@ struct AccountView: View {
         }
     }
 }
-
-struct AccountView_Previews: PreviewProvider {
-    static var previews: some View {
-        AccountView()
-            .environment(\.colorScheme, .dark)
-            .environmentObject(AppSessionStore(service: AuthService()))
-            .environmentObject(MessageStore(service: MessageService()))
-    }
-}

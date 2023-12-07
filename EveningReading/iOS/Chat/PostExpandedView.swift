@@ -103,11 +103,3 @@ struct PostExpandedView: View {
         }
     }
 }
-
-struct PostExpandedView_Previews: PreviewProvider {
-    static var previews: some View {
-        PostExpandedView(username: "aenean", postId: 0, postBody: "This is a post.", replyLines: "A", postCategory: "ontopic", postStrength: 0.75, postAuthor: "aenean", postLols: [ChatLols](), postRichText: [RichTextBlock](), postDateTime: "2020-08-14T21:05:00Z")
-        .environment(\.colorScheme, .dark)
-        .environmentObject(AppSessionStore(service: AuthService()))
-    }
-}

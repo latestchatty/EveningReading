@@ -210,11 +210,3 @@ struct TagTextView: View {
         }
     }
 }
-
-struct TagTextView_Previews: PreviewProvider {
-    
-    static var previews: some View {
-        TagTextView(shown: .constant(true))
-            .environment(\.colorScheme, .dark)
-    }
-}

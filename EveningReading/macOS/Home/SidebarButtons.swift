@@ -48,10 +48,3 @@ struct SidebarButtons: View {
         }
     }
 }
-
-struct SidebarButtons_Previews: PreviewProvider {
-    static var previews: some View {
-        SidebarButtons()
-            .environmentObject(AppSessionStore(service: AuthService()))
-    }
-}

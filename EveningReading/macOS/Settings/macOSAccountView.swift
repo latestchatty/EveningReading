@@ -144,12 +144,3 @@ struct macOSAccountView: View {
         }
     }
 }
-
-struct macOSAccountView_Previews: PreviewProvider {
-    static var previews: some View {
-        macOSAccountView()
-            .environment(\.colorScheme, .dark)
-            .environmentObject(AppSessionStore(service: AuthService()))
-            .environmentObject(MessageStore(service: MessageService()))
-    }
-}

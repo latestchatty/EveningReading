@@ -37,9 +37,3 @@ struct TagsView: View {
         .navigationBarItems(leading: Spacer().frame(width: 26, height: 16))
     }
 }
-
-struct TagsView_Previews: PreviewProvider {
-    static var previews: some View {
-        TagsView()
-    }
-}

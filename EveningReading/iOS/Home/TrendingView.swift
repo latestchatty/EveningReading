@@ -82,10 +82,4 @@ struct TrendingView: View {
         .onAppear(perform: fetchChat)
     }
 }
-struct TrendingView_Previews: PreviewProvider {
-    static var previews: some View {
-        TrendingView()
-            .environmentObject(AppSessionStore(service: AuthService()))
-            .environmentObject(ChatStore(service: ChatService()))
-    }
-}
+

@@ -71,12 +71,3 @@ struct GoToPostViewHome: View {
         .frame(width: 0, height: 0)
     }
 }
-
-struct GoToPostViewHome_Previews: PreviewProvider {
-    static var previews: some View {
-        GoToPostViewHome()
-            .environmentObject(AppSessionStore(service: AuthService()))
-            .environmentObject(Notifications())
-            .environmentObject(ChatStore(service: ChatService()))
-    }
-}

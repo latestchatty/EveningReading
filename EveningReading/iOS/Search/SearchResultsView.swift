@@ -110,11 +110,3 @@ struct SearchResultsView: View {
         .navigationBarItems(leading: Spacer().frame(width: 26, height: 16))
     }
 }
-
-struct SearchResultsView_Previews: PreviewProvider {
-    static var previews: some View {
-        SearchResultsView(terms: "", author: "", parentAuthor: "")
-            .environmentObject(AppSessionStore(service: AuthService()))
-            .environmentObject(ChatStore(service: ChatService()))
-    }
-}

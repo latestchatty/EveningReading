@@ -139,12 +139,3 @@ struct InboxView: View {
         .navigationViewStyle(StackNavigationViewStyle())
     }
 }
-
-struct InboxView_Previews: PreviewProvider {
-    static var previews: some View {
-        InboxView()
-            .environment(\.colorScheme, .dark)
-            .environmentObject(AppSessionStore(service: AuthService()))
-            .environmentObject(MessageStore(service: MessageService()))
-    }
-}

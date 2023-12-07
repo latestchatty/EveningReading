@@ -137,11 +137,3 @@ struct MessageWebView: UIViewRepresentable {
         Coordinator(viewModel, self)
     }
 }
-
-struct MessageWebView_Previews: PreviewProvider {
-    static var previews: some View {
-        MessageWebView(viewModel: MessageViewModel(body: "<b>Message...</b>", colorScheme: ColorScheme.light), hyperlinkUrl: .constant(""), showingWebView: .constant(false), dynamicHeight: .constant(0.0), templateA: .constant(""), templateB: .constant(""))
-    }
-}
-
-

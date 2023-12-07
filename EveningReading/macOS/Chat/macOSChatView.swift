@@ -153,12 +153,3 @@ struct macOSChatView: View {
         }
     }
 }
-
-struct macOSChatView_Previews: PreviewProvider {
-    static var previews: some View {
-        macOSChatView()
-            .previewLayout(.fixed(width: 640, height: 480))
-            .environmentObject(AppSessionStore(service: AuthService()))
-            .environmentObject(ChatStore(service: ChatService()))
-    }
-}

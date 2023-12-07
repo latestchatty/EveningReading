@@ -53,12 +53,3 @@ struct GoToShackLinkView: View {
         .frame(width: 0, height: 0)
     }
 }
-
-struct GoToShackLinkView_Previews: PreviewProvider {
-    static var previews: some View {
-        GoToShackLinkView()
-            .environmentObject(AppSessionStore(service: AuthService()))
-            .environmentObject(Notifications())
-            .environmentObject(ChatStore(service: ChatService()))
-    }
-}

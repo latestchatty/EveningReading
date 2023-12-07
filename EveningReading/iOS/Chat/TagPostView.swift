@@ -117,11 +117,3 @@ struct TagPostView: View {
         }
     }
 }
-
-struct TagPostView_Previews: PreviewProvider {
-    static var previews: some View {
-        TagPostView(postId: 0)
-            .environmentObject(AppSessionStore(service: AuthService()))
-            .environmentObject(ChatStore(service: ChatService()))
-    }
-}

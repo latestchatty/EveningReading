@@ -63,11 +63,3 @@ struct NotificationsView: View {
         }
     }
 }
-
-struct NotificationsView_Previews: PreviewProvider {
-    static var previews: some View {
-        NotificationsView()
-            .environment(\.colorScheme, .dark)
-            .environmentObject(AppSessionStore(service: AuthService()))
-    }
-}

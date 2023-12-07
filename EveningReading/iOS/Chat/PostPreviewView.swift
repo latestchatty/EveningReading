@@ -111,11 +111,3 @@ struct PostPreviewView: View {
         }
     }
 }
-
-struct PostPreviewView_Previews: PreviewProvider {
-    static var previews: some View {
-        PostPreviewView(username: "aenean", postId: 0, parentId: 0, postBody: "This is a post.", replyLines: "A", postCategory: "ontopic", postStrength: 0.75, postAuthor: "aenean", postLols: [ChatLols](), selectedPostDepth: .constant(0), postsToHighlight: .constant([0]))
-            .environment(\.colorScheme, .dark)
-            .environmentObject(AppSessionStore(service: AuthService()))
-    }
-}

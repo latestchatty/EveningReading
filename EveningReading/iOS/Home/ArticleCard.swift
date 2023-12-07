@@ -62,9 +62,3 @@ struct ArticleCard: View {
         }
     }
 }
-
-struct ArticleCard_Previews: PreviewProvider {
-    static var previews: some View {
-        ArticleCard(articleTitle: .constant("Lorem Ipsum"), articlePreview: .constant("Omnicos factorial non deposit quid pro quo hic escorol. Olypian quarrels et gorilla congolium sic ad nauseum. Souvlaki ignitus carborundum e pluribus unum."), articleLink: .constant("http://www.shacknews.com"))
-    }
-}

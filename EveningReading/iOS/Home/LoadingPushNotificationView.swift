@@ -22,10 +22,3 @@ struct LoadingPushNotificationView: View {
         }
     }
 }
-
-struct LoadingPushNotificationView_Previews: PreviewProvider {
-    static var previews: some View {
-        LoadingPushNotificationView()
-            .environmentObject(Notifications())
-    }
-}

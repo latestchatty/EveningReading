@@ -63,10 +63,3 @@ struct macOSPostPreviewView: View {
         LolView(lols: self.lols, postId: self.postId)
     }
 }
-
-struct macOSPostPreviewView_Previews: PreviewProvider {
-    static var previews: some View {
-        macOSPostPreviewView(postId: .constant(0), postAuthor: .constant(""), replyLines: .constant(""), lols: .constant([ChatLols]()), postText: .constant(""), postCategory: .constant("ontopic"), postStrength: .constant(1.0), op: .constant(""))
-            .environmentObject(AppSessionStore(service: AuthService()))
-    }
-}

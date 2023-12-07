@@ -45,10 +45,3 @@ struct macOSNoticeView : View {
         }
     }
 }
-
-struct macOSNoticeView_Previews: PreviewProvider {
-    static var previews: some View {
-        macOSNoticeView(show: .constant(true), message: .constant("Tagged!"))
-            .environmentObject(ChatStore(service: ChatService()))
-    }
-}

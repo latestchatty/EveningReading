@@ -44,11 +44,3 @@ struct macOSClearHiddenView: View {
         }
     }
 }
-
-
-struct macOSClearHiddenView_Previews: PreviewProvider {
-    static var previews: some View {
-        macOSClearHiddenView()
-            .environmentObject(AppSessionStore(service: AuthService()))
-    }
-}

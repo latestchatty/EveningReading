@@ -18,10 +18,3 @@ struct macOSInboxView: View {
         .navigationTitle("Inbox")
     }
 }
-
-struct macOSInboxView_Previews: PreviewProvider {
-    static var previews: some View {
-        macOSInboxView()
-            .environmentObject(MessageStore(service: MessageService()))
-    }
-}

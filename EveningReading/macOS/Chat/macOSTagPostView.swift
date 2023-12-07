@@ -23,10 +23,3 @@ struct macOSTagPostView: View {
         }
     }
 }
-
-struct macOSTagPostView_Previews: PreviewProvider {
-    static var previews: some View {
-        macOSTagPostView()
-            .environmentObject(AppSessionStore(service: AuthService()))
-    }
-}

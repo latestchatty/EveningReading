@@ -39,11 +39,3 @@ struct NotificationsClearView: View {
         .padding(.trailing, -2)
     }
 }
-
-struct NotificationsClearView_Previews: PreviewProvider {
-    static var previews: some View {
-        NotificationsClearView()
-            .environmentObject(AppSessionStore(service: AuthService()))
-            
-    }
-}

@@ -86,10 +86,3 @@ struct macOSPostExpandedView: View {
         .cornerRadius(5)
     }
 }
-
-struct macOSPostExpandedView_Previews: PreviewProvider {
-    static var previews: some View {
-        macOSPostExpandedView(postId: .constant(0), postAuthor: .constant(""), replyLines: .constant(""), lols: .constant([ChatLols]()), postText: .constant([RichTextBlock]()), postDateTime: .constant("2020-04-20T09:20:00Z"), op: .constant(""))
-            .environmentObject(AppSessionStore(service: AuthService()))
-    }
-}

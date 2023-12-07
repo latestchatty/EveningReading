@@ -202,10 +202,3 @@ struct macOSGuidelinesView: View {
         }
     }
 }
-
-struct macOSGuidelinesView_Previews: PreviewProvider {
-    static var previews: some View {
-        macOSGuidelinesView(showingGuidelinesView: Binding.constant(true), guidelinesAccepted: Binding.constant(false))
-            .environmentObject(AppSessionStore(service: AuthService()))
-    }
-}

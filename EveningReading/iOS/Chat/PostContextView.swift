@@ -124,12 +124,3 @@ struct PostContextView: View {
         
     }
 }
-
-struct PostContextView_Previews: PreviewProvider {
-    static var previews: some View {
-        PostContextView(showingWhosTaggingView: .constant(false), showingNewMessageView: .constant(false), messageRecipient: .constant(""), messageSubject: .constant(""), messageBody: .constant(""), collapsed: .constant(false))
-            .environmentObject(AppSessionStore(service: AuthService()))
-            .environmentObject(ChatStore(service: ChatService()))
-            .environmentObject(MessageStore(service: MessageService()))
-    }
-}

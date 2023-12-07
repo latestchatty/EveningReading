@@ -33,11 +33,3 @@ struct ClearHiddenView: View {
         }
     }
 }
-
-
-struct ClearHiddenView_Previews: PreviewProvider {
-    static var previews: some View {
-        ClearHiddenView()
-            .environmentObject(AppSessionStore(service: AuthService()))
-    }
-}

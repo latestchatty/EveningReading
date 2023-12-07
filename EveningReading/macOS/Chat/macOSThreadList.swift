@@ -39,11 +39,3 @@ struct macOSThreadList: View {
         }
     }
 }
-
-struct macOSThreadList_Previews: PreviewProvider {
-    static var previews: some View {
-        macOSThreadList()
-            .environmentObject(AppSessionStore(service: AuthService()))
-            .environmentObject(ChatStore(service: ChatService()))
-    }
-}

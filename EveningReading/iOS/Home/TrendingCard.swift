@@ -145,9 +145,3 @@ struct TrendingCard: View {
         .shadow(color: Color("TrendingCardShadow"), radius: 16, x: 0, y: 16)
     }
 }
-
-struct TrendingCard_Previews: PreviewProvider {
-    static var previews: some View {
-        TrendingCard(thread: .constant(chatData.threads[0]))
-    }
-}

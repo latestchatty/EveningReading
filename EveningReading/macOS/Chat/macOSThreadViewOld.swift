@@ -376,12 +376,3 @@ struct macOSThreadViewOld: View {
         
     }
 }
-
-struct macOSThreadViewOld_Previews: PreviewProvider {
-    static var previews: some View {
-        macOSThreadViewOld(threadId: .constant(999999992))
-            .previewLayout(.fixed(width: 640, height: 960))
-            .environmentObject(AppSessionStore(service: AuthService()))
-            .environmentObject(ChatStore(service: ChatService()))
-    }
-}

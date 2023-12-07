@@ -131,10 +131,3 @@ struct GuidelinesView: View {
         }
     }
 }
-
-struct GuidelinesView_Previews: PreviewProvider {
-    static var previews: some View {
-        GuidelinesView(showingGuidelinesView: Binding.constant(true))
-            .environmentObject(AppSessionStore(service: AuthService()))
-    }
-}

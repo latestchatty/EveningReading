@@ -143,10 +143,3 @@ struct macOSSettingsView: View {
         .navigationTitle("Settings")
     }
 }
-
-struct macOSSettingsView_Previews: PreviewProvider {
-    static var previews: some View {
-        macOSSettingsView()
-            .environmentObject(AppSessionStore(service: AuthService()))
-    }
-}

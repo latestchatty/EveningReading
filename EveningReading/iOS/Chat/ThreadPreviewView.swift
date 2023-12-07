@@ -128,13 +128,3 @@ struct ThreadPreviewView: View {
     }
     
 }
-
-struct ThreadPreviewView_Previews: PreviewProvider {
-    static var previews: some View {
-        ThreadPreviewView(activeThreadId: .constant(999999992), rootPost: ChatPosts(id: 999999992, threadId: 999999992, parentId: 0, author: "tamzyn", category: "interesting", date: "2020-08-14T06:44:00Z", body: "", lols: [ChatLols(tag: "lol", count: 2)]), rootPostBodyPreview: "Est sit amet facilisis magna etiam tempor. Amet consectetur adipiscing elit duis tristique sollicitudin nibh sit amet. Sed cras ornare arcu dui. Nisl purus in mollis nunc sed id semper.", rootPostDate: 0, replyCount: 27, contributed: false)
-            .environment(\.colorScheme, .dark)
-            .environmentObject(AppSessionStore(service: AuthService()))
-            .environmentObject(ChatStore(service: ChatService()))
-    }
-}
-

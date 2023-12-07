@@ -68,11 +68,3 @@ struct SettingsView: View {
         .navigationBarItems(leading: Spacer().frame(width: 16, height: 16))
     }
 }
-
-struct SettingsView_Previews: PreviewProvider {
-    static var previews: some View {
-        SettingsView()
-            .environment(\.colorScheme, .dark)
-            .environmentObject(AppSessionStore(service: AuthService()))
-    }
-}

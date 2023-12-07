@@ -471,13 +471,3 @@ struct ComposePostView: View {
         }
     }
 }
-
-struct ComposePostView_Previews: PreviewProvider {
-    static var previews: some View {
-        ComposePostView(isRootPost: false)
-            .environmentObject(AppSessionStore(service: AuthService()))
-            .environmentObject(ChatStore(service: ChatService()))
-            .environmentObject(ShackTags())
-            .environmentObject(Notifications())
-    }
-}

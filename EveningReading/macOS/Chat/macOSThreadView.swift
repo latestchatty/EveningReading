@@ -370,11 +370,3 @@ struct macOSThreadView: View {
         }
     }
 }
-
-struct macOSThreadView_Previews: PreviewProvider {
-    static var previews: some View {
-        macOSThreadView(threadId: .constant(999999992))
-            .environmentObject(AppSessionStore(service: AuthService()))
-            .environmentObject(ChatStore(service: ChatService()))
-    }
-}

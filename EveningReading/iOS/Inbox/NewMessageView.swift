@@ -143,12 +143,3 @@ struct NewMessageView: View {
         
     }
 }
-
-struct NewMessageView_Previews: PreviewProvider {
-    static var previews: some View {
-        NewMessageView(showingNewMessageSheet: .constant(false), messageId: Binding.constant(0), recipientName: Binding.constant(""), subjectText: Binding.constant(""), bodyText: Binding.constant(""))
-            .environmentObject(AppSessionStore(service: AuthService()))
-            .environmentObject(MessageStore(service: MessageService()))
-            .environmentObject(Notifications())
-    }
-}

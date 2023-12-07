@@ -262,12 +262,3 @@ struct TagCloudView: View {
         }
     }
 }
-
-struct WhosTaggingView_Previews: PreviewProvider {
-    static var previews: some View {
-        WhosTaggingView(showingWhosTaggingView: .constant(true))
-            .environment(\.colorScheme, .dark)
-            .environmentObject(ChatStore(service: ChatService()))
-    }
-}
-

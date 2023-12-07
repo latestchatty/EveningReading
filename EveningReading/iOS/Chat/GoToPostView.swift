@@ -250,12 +250,3 @@ struct GoToPostView: View {
         .frame(width: 0, height: 0)
     }
 }
-
-struct GoToPostView_Previews: PreviewProvider {
-    static var previews: some View {
-        GoToPostView()
-            .environmentObject(AppSessionStore(service: AuthService()))
-            .environmentObject(Notifications())
-            .environmentObject(ChatStore(service: ChatService()))
-    }
-}

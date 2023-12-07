@@ -78,14 +78,3 @@ struct PushNotificationViewChat: View {
         }
     }
 }
-
-struct PushNotificationViewChat_Previews: PreviewProvider {
-    
-    static var previews: some View {
-        PushNotificationViewChat()
-            .environment(\.colorScheme, .dark)
-            .environmentObject(AppSessionStore(service: AuthService()))
-            .environmentObject(Notifications())
-            .environmentObject(ChatStore(service: ChatService()))
-    }
-}

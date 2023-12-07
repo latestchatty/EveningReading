@@ -266,12 +266,3 @@ struct macOSTagCloudView: View {
         }
     }
 }
-
-struct macOSWhosTaggingView_Previews: PreviewProvider {
-    static var previews: some View {
-        macOSWhosTaggingView(showingWhosTaggingView: .constant(true))
-            .environment(\.colorScheme, .dark)
-            .environmentObject(ChatStore(service: ChatService()))
-    }
-}
-

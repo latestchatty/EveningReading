@@ -30,10 +30,3 @@ struct NewMessageButton: View {
         }
     }
 }
-
-struct NewMessageButton_Previews: PreviewProvider {
-    static var previews: some View {
-        NewMessageButton(isReply: false, showingNewMessageSheet: .constant(false))
-            .environmentObject(AppSessionStore(service: AuthService()))
-    }
-}

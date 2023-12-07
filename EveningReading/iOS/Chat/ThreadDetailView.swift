@@ -564,12 +564,3 @@ struct ThreadDetailView: View {
         )
     }
 }
-
-struct ThreadDetailView_Previews: PreviewProvider {
-    static var previews: some View {
-        ThreadDetailView(threadId: .constant(999999992), postId: .constant(0), replyCount: .constant(20), isSearchResult: .constant(false))
-            .environment(\.colorScheme, .dark)
-            .environmentObject(AppSessionStore(service: AuthService()))
-            .environmentObject(ChatStore(service: ChatService()))
-    }
-}

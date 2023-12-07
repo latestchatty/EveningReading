@@ -118,11 +118,3 @@ struct SignInView: View {
         }
     }
 }
-
-struct SignInView_Previews: PreviewProvider {
-    static var previews: some View {
-        SignInView()
-            .environmentObject(AppSessionStore(service: AuthService()))
-            .environment(\.colorScheme, .dark)
-    }
-}

@@ -57,10 +57,3 @@ struct CopyPostView: View {
         }
     }
 }
-
-struct CopyPostView_Previews: PreviewProvider {
-    static var previews: some View {
-        CopyPostView()
-            .environmentObject(ChatStore(service: ChatService()))
-    }
-}

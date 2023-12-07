@@ -63,10 +63,3 @@ struct FavoriteUsersView: View {
         appSessionStore.favoriteAuthors = appSessionStore.favoriteAuthors.filter { $0 != currentFavorite }
     }
 }
-
-struct FavoriteUsersView_Previews: PreviewProvider {
-    static var previews: some View {
-        FavoriteUsersView()
-            .environmentObject(AppSessionStore(service: AuthService()))
-    }
-}

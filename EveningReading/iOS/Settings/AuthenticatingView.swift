@@ -30,9 +30,3 @@ struct AuthenticatingView : View {
         }
     }
 }
-
-struct AuthenticatingView_Previews: PreviewProvider {
-    static var previews: some View {
-        AuthenticatingView(isVisible: .constant(true))
-    }
-}

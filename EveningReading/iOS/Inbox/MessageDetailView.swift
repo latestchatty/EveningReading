@@ -83,11 +83,3 @@ struct MessageDetailView: View {
         
     }
 }
-
-struct MessageDetailView_Previews: PreviewProvider {
-    static var previews: some View {
-        MessageDetailView(messageRecipient: .constant("Recipient"), messageSubject: .constant("Subject of message"), messageBody: .constant("Body of message, this is a lot of text, this is a whole big bunch of text, check out this much text please (hurry do it now)."), messageId: .constant(1))
-            .environmentObject(AppSessionStore(service: AuthService()))
-            .environmentObject(MessageStore(service: MessageService()))
-    }
-}
