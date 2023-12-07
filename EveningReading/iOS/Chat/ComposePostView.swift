@@ -302,7 +302,7 @@ struct ComposePostView: View {
                             } else {
                                 ScrollView {
                                     HStack {
-                                        PostWebView(viewModel: PostWebViewModel(body: "<div class='postAuthor'>" + self.replyToAuthor + "</div><br>" + self.replyToPostBody, colorScheme: colorScheme), dynamicHeight: $postWebViewHeight, templateA: $chatStore.templateA, templateB: $chatStore.templateB)
+                                        PostWebView(viewModel: PostWebViewModel(body: "<div class='post_author'>" + self.replyToAuthor + "</div><br>" + self.replyToPostBody, colorScheme: colorScheme), dynamicHeight: $postWebViewHeight, templateA: $chatStore.templateA, templateB: $chatStore.templateB)
                                     }
                                     .frame(height: postWebViewHeight)
                                     .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
