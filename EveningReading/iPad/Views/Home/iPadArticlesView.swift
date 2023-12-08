@@ -9,33 +9,29 @@ import SwiftUI
 
 
 struct iPadArticlesView: View {
-    @EnvironmentObject var articleStore: ArticleStore
+    @StateObject var articleViewModel = ArticleViewModel()
     
     private func fetchArticles() {
-        if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil || articleStore.articles.count > 0
+        if articleViewModel.articles.count > 0
         {
             return
         }
-        articleStore.getArticles()
+        articleViewModel.getArticles()
     }
     
     private func articlesRow(_ row: Int) -> [Article] {
-        if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
-        {
-            return Array(articlesData)
-        }
         // Top 10 articles in two rows
-        if articleStore.articles.count > 0 {
-            let articlesChunked = articleStore.articles.chunked(into: 5)
+        if articleViewModel.articles.count > 0 {
+            let articlesChunked = articleViewModel.articles.chunked(into: 5)
             if articlesChunked.count > 0 && row == 1 {
                 return articlesChunked[0]
             } else if articlesChunked.count > 1 && row == 2 {
                 return articlesChunked[1]
             } else {
-                return Array(articleStore.articles)
+                return Array(articleViewModel.articles)
             }
         } else {
-            return Array(articlesData)
+            return Array(RedactedContentLoader.getArticles())
         }
     }
 

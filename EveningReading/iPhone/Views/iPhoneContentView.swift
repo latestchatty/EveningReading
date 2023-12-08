@@ -11,7 +11,6 @@ struct iPhoneContentView: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var chatStore: ChatStore
-    @EnvironmentObject var articleStore: ArticleStore
     @EnvironmentObject var messageStore: MessageStore
     @EnvironmentObject var notifications: Notifications
     @EnvironmentObject var shackTags: ShackTags
@@ -37,7 +36,6 @@ struct iPhoneContentView: View {
                         .environmentObject(chatStore)
                     TrendingView()
                     iPhoneArticlesView()
-                        .environmentObject(articleStore)
                 }
                 .background(Color("PrimaryBackground").frame(height: 2600).offset(y: -80))
             }

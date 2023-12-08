@@ -8,25 +8,21 @@
 import SwiftUI
 
 struct iPhoneArticlesView: View {
-    @EnvironmentObject var articleStore: ArticleStore
+    @StateObject var articleViewModel = ArticleViewModel()
     
     private func fetchArticles() {
-        if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil || articleStore.articles.count > 0
+        if articleViewModel.articles.count > 0
         {
             return
         }
-        articleStore.getArticles()
+        articleViewModel.getArticles()
     }
     
     private func articles() -> [Article] {
-        if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
-        {
-            return Array(articlesData)
-        }
-        if articleStore.articles.count > 0 {
-            return Array(articleStore.articles)
+        if articleViewModel.articles.count > 0 {
+            return Array(articleViewModel.articles)
         } else {
-            return Array(articlesData)
+            return Array(RedactedContentLoader.getArticles())
         }
     }
 

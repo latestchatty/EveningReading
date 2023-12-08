@@ -34,6 +34,10 @@
 		831EB9C12B223C7500DA9433 /* AuthModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830BFB262B20E53500F62089 /* AuthModels.swift */; };
 		831EB9C22B223C8300DA9433 /* PushNotificationModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830BFB202B20E45500F62089 /* PushNotificationModels.swift */; };
 		831EB9C32B223C8D00DA9433 /* ArticleModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830BFB242B20E4F800F62089 /* ArticleModels.swift */; };
+		831EB9C92B23A00000DA9433 /* ArticleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831EB9C82B23A00000DA9433 /* ArticleViewModel.swift */; };
+		831EB9CA2B23A00300DA9433 /* ArticleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831EB9C82B23A00000DA9433 /* ArticleViewModel.swift */; };
+		831EB9CB2B23A00800DA9433 /* ArticleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831EB9C82B23A00000DA9433 /* ArticleViewModel.swift */; };
+		831EB9CD2B23A60300DA9433 /* RedactedContentLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831EB9CC2B23A60300DA9433 /* RedactedContentLoader.swift */; };
 		833685C2266FAB2B00ACE618 /* macOSGuidelinesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833685C1266FAB2B00ACE618 /* macOSGuidelinesView.swift */; };
 		833685C4266FB97A00ACE618 /* macOSAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833685C3266FB97A00ACE618 /* macOSAccountView.swift */; };
 		833685C626702CB900ACE618 /* macOSClearHiddenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833685C526702CB900ACE618 /* macOSClearHiddenView.swift */; };
@@ -307,6 +311,8 @@
 		830BFB242B20E4F800F62089 /* ArticleModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleModels.swift; sourceTree = "<group>"; };
 		830BFB262B20E53500F62089 /* AuthModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthModels.swift; sourceTree = "<group>"; };
 		830BFB282B20E5A600F62089 /* MessageModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageModels.swift; sourceTree = "<group>"; };
+		831EB9C82B23A00000DA9433 /* ArticleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleViewModel.swift; sourceTree = "<group>"; };
+		831EB9CC2B23A60300DA9433 /* RedactedContentLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedactedContentLoader.swift; sourceTree = "<group>"; };
 		833685C1266FAB2B00ACE618 /* macOSGuidelinesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSGuidelinesView.swift; sourceTree = "<group>"; };
 		833685C3266FB97A00ACE618 /* macOSAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSAccountView.swift; sourceTree = "<group>"; };
 		833685C526702CB900ACE618 /* macOSClearHiddenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSClearHiddenView.swift; sourceTree = "<group>"; };
@@ -513,6 +519,7 @@
 		831EB9C42B23583200DA9433 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				831EB9C82B23A00000DA9433 /* ArticleViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -520,6 +527,8 @@
 		831EB9C52B23584F00DA9433 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				833981A026412D2B005614E8 /* Chat */,
+				8339819C2640CA14005614E8 /* Settings */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -579,8 +588,6 @@
 				830BFB1F2B20E40600F62089 /* Models */,
 				831EB9C42B23583200DA9433 /* ViewModels */,
 				831EB9C52B23584F00DA9433 /* Views */,
-				833981A026412D2B005614E8 /* Chat */,
-				8339819C2640CA14005614E8 /* Settings */,
 				833980D1263C9B3D005614E8 /* Controls */,
 				83398104263F0D24005614E8 /* Services */,
 				833980DD263CAB7D005614E8 /* Stores */,
@@ -942,6 +949,7 @@
 				830292F02644C57F00B974B3 /* ReplyLineBuilder.swift */,
 				83AA19262645C43500556E69 /* PostDecorator.swift */,
 				834EFE6227284603004E7BA1 /* UserHelper.swift */,
+				831EB9CC2B23A60300DA9433 /* RedactedContentLoader.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1419,6 +1427,7 @@
 				83398127263F2E59005614E8 /* InboxView.swift in Sources */,
 				83AB388D266A60BC000A67B6 /* TagsWebView.swift in Sources */,
 				830BFB252B20E4F800F62089 /* ArticleModels.swift in Sources */,
+				831EB9CD2B23A60300DA9433 /* RedactedContentLoader.swift in Sources */,
 				83398121263F2E39005614E8 /* TagsView.swift in Sources */,
 				830BFB232B20E4A300F62089 /* ChatModels.swift in Sources */,
 				833EE9E226454DFB00345A1D /* WebAuthenticationPresentationModifier.swift in Sources */,
@@ -1471,6 +1480,7 @@
 				83398150263F6427005614E8 /* ArrayExtensions.swift in Sources */,
 				8339817B264062BB005614E8 /* RoundedCornersView.swift in Sources */,
 				83AA19982647933300556E69 /* SearchResultsView.swift in Sources */,
+				831EB9C92B23A00000DA9433 /* ArticleViewModel.swift in Sources */,
 				83A85CF5265570BD007EBAC3 /* NotificationsView.swift in Sources */,
 				830292F12644C57F00B974B3 /* ReplyLineBuilder.swift in Sources */,
 				833817922639AC18007A8B28 /* EveningReadingApp.swift in Sources */,
@@ -1511,6 +1521,7 @@
 				83AA19282645C43500556E69 /* PostDecorator.swift in Sources */,
 				83092F3F29E3094400E889BD /* macOSPostActionsView.swift in Sources */,
 				831EB9BA2B223BF800DA9433 /* MessageModels.swift in Sources */,
+				831EB9CA2B23A00300DA9433 /* ArticleViewModel.swift in Sources */,
 				833981A326412FAC005614E8 /* AuthorNameView.swift in Sources */,
 				83092F3229DDD24300E889BD /* macOSComposePostView.swift in Sources */,
 				834EFE6B272AEBCD004E7BA1 /* ShackTagsTextView.swift in Sources */,
@@ -1588,6 +1599,7 @@
 				83AA1964264656BD00556E69 /* KeychainWrapper.swift in Sources */,
 				833981BF26421312005614E8 /* watchOSPostPreview.swift in Sources */,
 				834EFE6627284A8F004E7BA1 /* UserHelper.swift in Sources */,
+				831EB9CB2B23A00800DA9433 /* ArticleViewModel.swift in Sources */,
 				833980B2263C41CF005614E8 /* watchOSContentView.swift in Sources */,
 				833981BB2641C4E9005614E8 /* ReplyCountView.swift in Sources */,
 				833980B0263C41CF005614E8 /* EveningReadingApp.swift in Sources */,
