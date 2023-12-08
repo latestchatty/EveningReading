@@ -26,13 +26,13 @@ struct iPhoneHomeButtons: View {
             Spacer().frame(height: 40)
             
             HStack(alignment: .top) {
-                iPhoneHomeButton(title: .constant("Chat"), imageName: .constant("glyphicons-basic-238-chat-message"), buttonBackground: .constant(Color("HomeButtonChat")))
+                iPhoneHomeButton(title: "Chat", imageName: "glyphicons-basic-238-chat-message", buttonBackground: Color("HomeButtonChat"))
                     .onTapGesture(count: 1) {
                         chatStore.getChat() // Refresh the chat
                         navigateTo(&appSessionStore.showingChatView)
                     }
                 Spacer()
-                iPhoneHomeButton(title: .constant("Inbox"), imageName: .constant("glyphicons-basic-122-envelope-empty"), buttonBackground: .constant(Color("HomeButtonInbox")))
+                iPhoneHomeButton(title: "Inbox", imageName: "glyphicons-basic-122-envelope-empty", buttonBackground: Color("HomeButtonInbox"))
                     .overlay(NewMessageBadgeView(notificationNumber: self.$messageStore.messageCount.unread), alignment: .top)
                     .onTapGesture(count: 1) {
                         navigateTo(&appSessionStore.showingInboxView)
@@ -41,12 +41,12 @@ struct iPhoneHomeButtons: View {
                         getMessageCount()
                     }
                 Spacer()
-                iPhoneHomeButton(title: .constant("Search"), imageName: .constant("glyphicons-basic-28-search"), buttonBackground: .constant(Color("HomeButtonSearch")))
+                iPhoneHomeButton(title: "Search", imageName: "glyphicons-basic-28-search", buttonBackground: Color("HomeButtonSearch"))
                     .onTapGesture(count: 1) {
                         navigateTo(&appSessionStore.showingSearchView)
                     }
                 Spacer()
-                iPhoneHomeButton(title: .constant("Tags"), imageName: .constant("glyphicons-basic-67-tags"), buttonBackground: .constant(Color("HomeButtonTags")))
+                iPhoneHomeButton(title: "Tags", imageName: "glyphicons-basic-67-tags", buttonBackground: Color("HomeButtonTags"))
                     .onTapGesture(count: 1) {
                         navigateTo(&appSessionStore.showingTagsView)
                     }

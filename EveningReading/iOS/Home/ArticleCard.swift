@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct ArticleCard: View {
-    @Binding var articleTitle: String
-    @Binding var articlePreview: String
-    @Binding var articleLink: String
+    var articleTitle: String
+    var articlePreview: String
+    var articleLink: String
     
     @State var showingArticleSheet: Bool = false
     

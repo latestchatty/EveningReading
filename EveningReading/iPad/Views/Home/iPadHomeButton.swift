@@ -9,9 +9,9 @@ import SwiftUI
 
 struct iPadHomeButton: View {
     @Environment(\.colorScheme) var colorScheme
-    @Binding var title: String
-    @Binding var imageName: String
-    @Binding var buttonBackground: Color
+    var title: String
+    var imageName: String
+    var buttonBackground: Color
     
     var body: some View {
         HStack {

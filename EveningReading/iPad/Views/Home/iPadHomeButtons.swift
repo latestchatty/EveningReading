@@ -25,7 +25,7 @@ struct iPadHomeButtons: View {
         HStack() {
             Spacer().frame(width: 20)
             
-            iPadHomeButton(title: .constant("Chat"), imageName: .constant("glyphicons-basic-238-chat-message"), buttonBackground: .constant(Color("HomeButtonChat")))
+            iPadHomeButton(title: "Chat", imageName: "glyphicons-basic-238-chat-message", buttonBackground: Color("HomeButtonChat"))
                 .onTapGesture(count: 1) {
                     chatStore.activeThreadId = 0 // Deselect any threads
                     chatStore.getChat() // Refresh the chat
@@ -33,7 +33,7 @@ struct iPadHomeButtons: View {
                 }
             
             GeometryReader { geometry in
-                iPadHomeButton(title: .constant("Inbox"), imageName: .constant("glyphicons-basic-122-envelope-empty"), buttonBackground: .constant(Color("HomeButtonInbox")))
+                iPadHomeButton(title: "Inbox", imageName: "glyphicons-basic-122-envelope-empty", buttonBackground: Color("HomeButtonInbox"))
                     .overlay(NewMessageBadgeView(notificationNumber: self.$messageStore.messageCount.unread, width: geometry.size.width), alignment: .top)
                     .onTapGesture(count: 1) {
                         navigateTo(&appSessionStore.showingInboxView)
@@ -42,12 +42,12 @@ struct iPadHomeButtons: View {
                         getMessageCount()
                     }
             }
-            iPadHomeButton(title: .constant("Search"), imageName: .constant("glyphicons-basic-28-search"), buttonBackground: .constant(Color("HomeButtonSearch")))
+            iPadHomeButton(title: "Search", imageName: "glyphicons-basic-28-search", buttonBackground: Color("HomeButtonSearch"))
                 .onTapGesture(count: 1) {
                     navigateTo(&appSessionStore.showingSearchView)
                 }
             
-            iPadHomeButton(title: .constant("Tags"), imageName: .constant("glyphicons-basic-67-tags"), buttonBackground: .constant(Color("HomeButtonTags")))
+            iPadHomeButton(title: "Tags", imageName: "glyphicons-basic-67-tags", buttonBackground: Color("HomeButtonTags"))
                 .onTapGesture(count: 1) {
                     navigateTo(&appSessionStore.showingTagsView)
                 }

@@ -180,7 +180,6 @@
 		83A85D4A265EE813007EBAC3 /* TagTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A85D49265EE813007EBAC3 /* TagTextView.swift */; };
 		83A85D4D2663C128007EBAC3 /* MbModalHackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A85D4C2663C128007EBAC3 /* MbModalHackView.swift */; };
 		83A85D512665084A007EBAC3 /* ThreadPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A85D5026650849007EBAC3 /* ThreadPreviewView.swift */; };
-		83A85D5326651638007EBAC3 /* ChatViewPreloaded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A85D5226651638007EBAC3 /* ChatViewPreloaded.swift */; };
 		83A85D5526652F97007EBAC3 /* NewMessageBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A85D5426652F97007EBAC3 /* NewMessageBadgeView.swift */; };
 		83A85D5626668940007EBAC3 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83398134263F324C005614E8 /* PreferencesView.swift */; };
 		83A85D582666A1B2007EBAC3 /* LoadingPushNotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A85D572666A1B2007EBAC3 /* LoadingPushNotificationView.swift */; };
@@ -423,7 +422,6 @@
 		83A85D49265EE813007EBAC3 /* TagTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagTextView.swift; sourceTree = "<group>"; };
 		83A85D4C2663C128007EBAC3 /* MbModalHackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MbModalHackView.swift; sourceTree = "<group>"; };
 		83A85D5026650849007EBAC3 /* ThreadPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadPreviewView.swift; sourceTree = "<group>"; };
-		83A85D5226651638007EBAC3 /* ChatViewPreloaded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewPreloaded.swift; sourceTree = "<group>"; };
 		83A85D5426652F97007EBAC3 /* NewMessageBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageBadgeView.swift; sourceTree = "<group>"; };
 		83A85D572666A1B2007EBAC3 /* LoadingPushNotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingPushNotificationView.swift; sourceTree = "<group>"; };
 		83AA19262645C43500556E69 /* PostDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDecorator.swift; sourceTree = "<group>"; };
@@ -512,6 +510,40 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		831EB9C42B23583200DA9433 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		831EB9C52B23584F00DA9433 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		831EB9C62B23660300DA9433 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				833980ED263F0854005614E8 /* Home */,
+				833980F7263F09E6005614E8 /* Chat */,
+				833980CD263C9137005614E8 /* iPhoneContentView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		831EB9C72B23669800DA9433 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8339813E263F5210005614E8 /* Home */,
+				8339817526405B3D005614E8 /* Chat */,
+				833980CF263C914D005614E8 /* iPadContentView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		833685D12672A36800ACE618 /* Controls */ = {
 			isa = PBXGroup;
 			children = (
@@ -545,6 +577,8 @@
 			isa = PBXGroup;
 			children = (
 				830BFB1F2B20E40600F62089 /* Models */,
+				831EB9C42B23583200DA9433 /* ViewModels */,
+				831EB9C52B23584F00DA9433 /* Views */,
 				833981A026412D2B005614E8 /* Chat */,
 				8339819C2640CA14005614E8 /* Settings */,
 				833980D1263C9B3D005614E8 /* Controls */,
@@ -645,9 +679,7 @@
 		833980CB263C910B005614E8 /* iPad */ = {
 			isa = PBXGroup;
 			children = (
-				8339813E263F5210005614E8 /* Home */,
-				8339817526405B3D005614E8 /* Chat */,
-				833980CF263C914D005614E8 /* iPadContentView.swift */,
+				831EB9C72B23669800DA9433 /* Views */,
 			);
 			path = iPad;
 			sourceTree = "<group>";
@@ -655,9 +687,7 @@
 		833980CC263C9115005614E8 /* iPhone */ = {
 			isa = PBXGroup;
 			children = (
-				833980ED263F0854005614E8 /* Home */,
-				833980F7263F09E6005614E8 /* Chat */,
-				833980CD263C9137005614E8 /* iPhoneContentView.swift */,
+				831EB9C62B23660300DA9433 /* Views */,
 			);
 			path = iPhone;
 			sourceTree = "<group>";
@@ -727,7 +757,6 @@
 		833980F7263F09E6005614E8 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
-				83A85D5226651638007EBAC3 /* ChatViewPreloaded.swift */,
 				83398129263F2E60005614E8 /* ChatView.swift */,
 			);
 			path = Chat;
@@ -1410,7 +1439,6 @@
 				8339816F26405899005614E8 /* RefreshableScrollView.swift in Sources */,
 				83398124263F2E4E005614E8 /* SearchView.swift in Sources */,
 				8339812A263F2E60005614E8 /* ChatView.swift in Sources */,
-				83A85D5326651638007EBAC3 /* ChatViewPreloaded.swift in Sources */,
 				83AA19A0264821D100556E69 /* MessageService.swift in Sources */,
 				833980DF263CAB93005614E8 /* AppSessionStore.swift in Sources */,
 				8339818C264098D5005614E8 /* ReplyCountView.swift in Sources */,

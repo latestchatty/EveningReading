@@ -21,21 +21,7 @@ struct iPhoneContentView: View {
     var body: some View {
         NavigationView {
             ScrollView {
-                VStack {
-                    
-                    /*
-                    Text("watchServiceStatus = \(watchServiceStatus)")
-                    */
-                    
-                    /*
-                    Button(action: {
-                        print("Try to send username")
-                        WatchService.shared.sendUsername()
-                    }) {
-                        Text("Try username")
-                    }
-                    */
-                    
+                VStack {                    
                     GoToPostViewHome()
                     GuidelinesView(showingGuidelinesView: $showingGuidelinesView)
                     .onAppear() {
