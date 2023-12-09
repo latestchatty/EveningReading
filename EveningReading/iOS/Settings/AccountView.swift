@@ -9,7 +9,8 @@ import SwiftUI
 
 struct AccountView: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
-    @EnvironmentObject var messageStore: MessageStore
+
+    @StateObject var messageViewModel = MessageViewModel()
 
     @State private var showingSignIn = false
     @State private var showingSignOut = false
@@ -49,7 +50,7 @@ struct AccountView: View {
                     _ = KeychainWrapper.standard.removeObject(forKey: "Username")
                     _ = KeychainWrapper.standard.removeObject(forKey: "Password")
                     appSessionStore.clearNotifications()
-                    messageStore.clearMessages()
+                    messageViewModel.clearMessages()
                     UIApplication.shared.applicationIconBadgeNumber = 0
                 }, secondaryButton: .cancel() {
                     

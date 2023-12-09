@@ -11,7 +11,7 @@ import SwiftUI
 class MessageViewModel: ObservableObject {
     @Published private(set) var messages: [Message] = []
     @Published var messageCount: MessageCount = MessageCount(total: 0, unread: 0)
-    @Published var markedMessages: [Int] = [0]
+    @Published var markedMessages: [Int] = []
     @Published var fetchComplete: Bool = false
     @Published var scrollTarget: Int?
     @Published var scrollTargetTop: Int?
@@ -24,6 +24,12 @@ class MessageViewModel: ObservableObject {
                 }
             }
         }
+    }
+    
+    public func clearMessages() {
+        self.messages.removeAll()
+        self.messageCount = MessageCount(total: 0, unread: 0)
+        self.fetchComplete = false
     }
     
     public func getCount() {
@@ -81,7 +87,7 @@ class MessageViewModel: ObservableObject {
         }.resume()
     }
     
-    func getMessages(page: Int, append: Bool, delay: Int) {
+    public func getMessages(page: Int, append: Bool, delay: Int) {
         getMessagesFromAPI(page: page) { [weak self] result in
             DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delay)) {
                 switch result {
@@ -112,7 +118,7 @@ class MessageViewModel: ObservableObject {
         }
     }
     
-    public func getMessagesFromAPI(page: Int, handler: @escaping (Result<MessageResponse, Error>) -> Void) {
+    private func getMessagesFromAPI(page: Int, handler: @escaping (Result<MessageResponse, Error>) -> Void) {
         let session: URLSession = .shared
         let decoder: JSONDecoder = .init()
         
@@ -154,7 +160,7 @@ class MessageViewModel: ObservableObject {
         }.resume()
     }
     
-    func formatReply(recipient: String, body: String) -> String {
+    public func formatReply(recipient: String, body: String) -> String {
         var replySpacing = ""
         if recipient != "Duke Nuked" && body != " " {
             replySpacing = "\n\n--------------------\n\n\(recipient) Wrote:\n\n"
@@ -162,7 +168,7 @@ class MessageViewModel: ObservableObject {
         return replySpacing + body.newlineToBR
     }
     
-    func submitMessage(recipient: String, subject: String, body: String) {
+    public func submitMessage(recipient: String, subject: String, body: String) {
         let username = UserHelper.getUserName()
         let password = UserHelper.getUserPassword()
 
@@ -238,7 +244,7 @@ class MessageViewModel: ObservableObject {
         task.resume()
     }
     
-    func markMessage(messageid: Int) {
+    public func markMessage(messageid: Int) {
         markedMessages.append(messageid)
         markMessageViaAPI(messageid: messageid) { [weak self] result in
             DispatchQueue.main.async {
@@ -255,7 +261,7 @@ class MessageViewModel: ObservableObject {
         }
     }
     
-    public func markMessageViaAPI(messageid: Int, handler: @escaping (Result<MarkMessageResponse, Error>) -> Void) {
+    private func markMessageViaAPI(messageid: Int, handler: @escaping (Result<MarkMessageResponse, Error>) -> Void) {
         let session: URLSession = .shared
         let decoder: JSONDecoder = .init()
 
@@ -308,4 +314,25 @@ class MessageViewModel: ObservableObject {
         task.resume()
     }
     
+    private func getComplaintText(author: String, postId: Int) -> String {
+        return String("I would like to report user '\(author)', author of post http://www.shacknews.com/chatty?id=\(postId)#item_\(postId) for not adhering to the Shacknews guidelines.")
+    }
+    
+    public func submitComplaint(author: String, postId: Int) {
+        if let shackERUser = Bundle.main.infoDictionary?["SHACK_ERUSER"] as? String {
+            if let shackERPass = Bundle.main.infoDictionary?["SHACK_ERPASS"] as? String {
+                submitMessageToAPI(username: shackERUser, password: shackERPass, recipient: "Duke Nuked", subject: "Reporting Author of Post", body: getComplaintText(author: author, postId: postId)) { [weak self] result in
+                    DispatchQueue.main.async {
+                        // TODO: Show some sort of indicator if success or fail?
+                        switch result {
+                        case .success:
+                            print("submitComplaint success")
+                        case .failure:
+                            print("submitComplaint failed")
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
