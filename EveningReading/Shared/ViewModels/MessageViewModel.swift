@@ -58,12 +58,12 @@ class MessageViewModel: ObservableObject {
         
         guard
             let query = components.url!.query
-            else { preconditionFailure("Can't create url components...") }
+        else { preconditionFailure("Can't create url components...") }
         
         var request = URLRequest(url: msgCountUrl)
         request.httpMethod = "POST"
         request.httpBody = Data(query.utf8)
-
+        
         session.dataTask(with: request as URLRequest) { data, _, error in
             if let error = error {
                 handler(.failure(error))
@@ -130,12 +130,12 @@ class MessageViewModel: ObservableObject {
         
         guard
             let query = components.url!.query
-            else { preconditionFailure("Can't create url components...") }
+        else { preconditionFailure("Can't create url components...") }
         
         var request = URLRequest(url: msgsUrl)
         request.httpMethod = "POST"
         request.httpBody = Data(query.utf8)
-
+        
         session.dataTask(with: request as URLRequest) { data, _, error in
             if let error = error {
                 handler(.failure(error))
@@ -152,6 +152,14 @@ class MessageViewModel: ObservableObject {
                 }
             }
         }.resume()
+    }
+    
+    func formatReply(recipient: String, body: String) -> String {
+        var replySpacing = ""
+        if recipient != "Duke Nuked" && body != " " {
+            replySpacing = "\n\n--------------------\n\n\(recipient) Wrote:\n\n"
+        }
+        return replySpacing + body.newlineToBR
     }
     
     func submitMessage(recipient: String, subject: String, body: String) {
@@ -179,7 +187,6 @@ class MessageViewModel: ObservableObject {
     }
     
     public func submitMessageToAPI(username: String, password: String, recipient: String, subject: String, body: String, handler: @escaping (Result<SubmitMessageResponse, Error>) -> Void) {
-        
         let session: URLSession = .shared
         let decoder: JSONDecoder = .init()
         
@@ -215,6 +222,76 @@ class MessageViewModel: ObservableObject {
                     var didProcessResponse = false
                     do {
                         let successResponse = try decoder.decode(SubmitMessageResponse.self, from: data)
+                        didProcessResponse = true
+                        handler(.success(successResponse))
+                    } catch {
+                        handler(.failure(error))
+                    }
+                    if !didProcessResponse {
+                        handler(.failure(error!))
+                    }
+                }
+            } catch let error {
+                print(error.localizedDescription)
+            }
+        })
+        task.resume()
+    }
+    
+    func markMessage(messageid: Int) {
+        markedMessages.append(messageid)
+        markMessageViaAPI(messageid: messageid) { [weak self] result in
+            DispatchQueue.main.async {
+                // TODO: Show something in the UI if success vs fail?
+                switch result {
+                case .success(_):
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+                        self?.getCount()
+                    }
+                case .failure:
+                    print("markMessage failure")
+                }
+            }
+        }
+    }
+    
+    public func markMessageViaAPI(messageid: Int, handler: @escaping (Result<MarkMessageResponse, Error>) -> Void) {
+        let session: URLSession = .shared
+        let decoder: JSONDecoder = .init()
+
+        let username: String? = KeychainWrapper.standard.string(forKey: "Username")
+        let password: String? = KeychainWrapper.standard.string(forKey: "Password")
+        
+        let newPostUrl = URL(string: "https://winchatty.com/v2/markMessageRead")!
+        var components = URLComponents(url: newPostUrl, resolvingAgainstBaseURL: false)!
+        components.queryItems = [
+            URLQueryItem(name: "username", value: username),
+            URLQueryItem(name: "password", value: password),
+            URLQueryItem(name: "messageId", value: String(messageid))
+        ]
+        
+        guard
+            let query = components.url!.query
+            else { preconditionFailure("Can't create url components...") }
+        
+        var request = URLRequest(url: newPostUrl)
+        request.httpMethod = "POST"
+        request.httpBody = Data(query.utf8)
+
+        let task = session.dataTask(with: request as URLRequest, completionHandler: { data, response, error in
+            guard error == nil else {
+                handler(.failure(error!))
+                return
+            }
+            guard let data = data else {
+                handler(.failure(error!))
+                return
+            }
+            do {
+                if try JSONSerialization.jsonObject(with: data, options: .mutableContainers) is [String: Any] {
+                    var didProcessResponse = false
+                    do {
+                        let successResponse = try decoder.decode(MarkMessageResponse.self, from: data)
                         didProcessResponse = true
                         handler(.success(successResponse))
                     } catch {
