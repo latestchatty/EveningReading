@@ -10,7 +10,7 @@ import SwiftUI
 import WebKit
 import Combine
 
-class MessageViewModel: ObservableObject {
+class MessageWebViewModel: ObservableObject {
     @Published var body: String
     @Published var colorScheme: ColorScheme
     @Published var didFinishLoading: Bool = false
@@ -23,7 +23,7 @@ class MessageViewModel: ObservableObject {
 }
 
 struct MessageWebView: UIViewRepresentable {
-    @ObservedObject var viewModel: MessageViewModel
+    @ObservedObject var viewModel: MessageWebViewModel
     @Binding var hyperlinkUrl: String?
     @Binding var showingWebView: Bool
     @Binding var dynamicHeight: CGFloat
@@ -53,10 +53,10 @@ struct MessageWebView: UIViewRepresentable {
     }
 
     class Coordinator: NSObject, WKNavigationDelegate {
-        private var viewModel: MessageViewModel
+        private var viewModel: MessageWebViewModel
         var parent: MessageWebView
         
-        init(_ viewModel: MessageViewModel, _ parent: MessageWebView) {
+        init(_ viewModel: MessageWebViewModel, _ parent: MessageWebView) {
             self.viewModel = viewModel
             self.parent = parent
             

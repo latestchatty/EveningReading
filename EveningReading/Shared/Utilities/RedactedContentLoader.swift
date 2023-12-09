@@ -12,7 +12,9 @@ class RedactedContentLoader {
         return loadRedactedData("Articles.json")
     }
     
-    
+    static func getMessages() -> MessageResponse {
+        return loadPreviewData("Messages.json")
+    }
     
     static func loadRedactedData<T: Decodable>(_ filename: String) -> T {
         let data: Data

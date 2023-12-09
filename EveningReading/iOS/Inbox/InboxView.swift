@@ -18,7 +18,7 @@ struct InboxView: View {
     @State private var showNoMessages: Bool = false
     
     private func getMessages() {
-        if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil || self.messageStore.messages.count > 0
+        if self.messageStore.messages.count > 0
         {
             return
         }
@@ -26,18 +26,10 @@ struct InboxView: View {
     }
     
     private func allMessages() -> [Message] {
-        var msgs: [Message] = [Message]()
-        if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
-        {
-            msgs = Array(messageData.messages)
-        }
-        else {
-            msgs = self.messageStore.messages
-        }
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
             self.showRedacted = false
         }
-        return msgs
+        return self.messageStore.messages
     }
     
     var body: some View {

@@ -53,7 +53,7 @@ struct MessageDetailView: View {
                 .padding(.top, 10)
                 VStack {
                     HStack {
-                        MessageWebView(viewModel: MessageViewModel(body: messageBody, colorScheme: colorScheme), hyperlinkUrl: $hyperlinkUrl, showingWebView: $showingWebView, dynamicHeight: $messageWebViewHeight, templateA: self.$messageStore.messageTemplateBegin, templateB: self.$messageStore.messageTemplateEnd)
+                        MessageWebView(viewModel: MessageWebViewModel(body: messageBody, colorScheme: colorScheme), hyperlinkUrl: $hyperlinkUrl, showingWebView: $showingWebView, dynamicHeight: $messageWebViewHeight, templateA: self.$messageStore.messageTemplateBegin, templateB: self.$messageStore.messageTemplateEnd)
                     }
                     .frame(height: self.messageWebViewHeight)
                     Spacer()
