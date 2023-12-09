@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct MessageDetailView: View {
-    @EnvironmentObject var messageStore: MessageStore
     @Environment(\.colorScheme) var colorScheme
     
     @StateObject var messageViewModel = MessageViewModel()
@@ -32,7 +31,6 @@ struct MessageDetailView: View {
     var body: some View {
         VStack {
             NewMessageView(showingNewMessageSheet: self.$showingNewMessageSheet, messageId: self.messageId, recipientName: self.messageRecipient, subjectText: "Re: \(self.messageSubject)", bodyText: "\(self.messageBody.stringByDecodingHTMLEntities.newlineToBR) ")
-            
             ScrollView {
                 VStack {
                     HStack(alignment: .center) {
@@ -54,7 +52,7 @@ struct MessageDetailView: View {
                 .padding(.top, 10)
                 VStack {
                     HStack {
-                        MessageWebView(viewModel: MessageWebViewModel(body: messageBody, colorScheme: colorScheme), hyperlinkUrl: $hyperlinkUrl, showingWebView: $showingWebView, dynamicHeight: $messageWebViewHeight, templateA: self.$messageStore.messageTemplateBegin, templateB: self.$messageStore.messageTemplateEnd)
+                        MessageWebView(viewModel: MessageWebViewModel(body: messageBody, colorScheme: colorScheme), hyperlinkUrl: $hyperlinkUrl, showingWebView: $showingWebView, dynamicHeight: $messageWebViewHeight)
                     }
                     .frame(height: self.messageWebViewHeight)
                     Spacer()

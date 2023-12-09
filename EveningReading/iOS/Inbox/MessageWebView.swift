@@ -27,8 +27,6 @@ struct MessageWebView: UIViewRepresentable {
     @Binding var hyperlinkUrl: String?
     @Binding var showingWebView: Bool
     @Binding var dynamicHeight: CGFloat
-    @Binding var templateA: String
-    @Binding var templateB: String
 
     let webView = WKWebView()
     
@@ -44,7 +42,31 @@ struct MessageWebView: UIViewRepresentable {
             self.webView.backgroundColor = UIColor.clear
             self.webView.scrollView.backgroundColor = UIColor.clear
             
-            self.webView.loadHTMLString(self.templateA + self.viewModel.body + self.templateB, baseURL: nil)
+            var preMessageBody = "<html><head><meta content='text/html; charset=utf-8' http-equiv='content-type'><meta content='initial-scale=1.0; maximum-scale=1.0; user-scalable=0;' name='viewport'><style>"
+            let postMessageBody = "</body></html>"
+            
+            if let filepath = Bundle.main.path(forResource: "Stylesheet", ofType: "css") {
+                do {
+                    let postTemplate = try String(contentsOfFile: filepath)
+                    let postTemplateStyled = postTemplate
+                        .replacingOccurrences(of: "<%= linkColorLight %>", with: UIColor.black.toHexString())
+                        .replacingOccurrences(of: "<%= linkColorDark %>", with: UIColor.systemTeal.toHexString())
+                        .replacingOccurrences(of: "<%= jtSpoilerDark %>", with: "#21252b")
+                        .replacingOccurrences(of: "<%= jtSpoilerLight %>", with: "#8e8e93")
+                        .replacingOccurrences(of: "<%= jtOliveDark %>", with: UIColor(Color("OliveText")).toHexString())
+                        .replacingOccurrences(of: "<%= jtOliveLight %>", with: "#808000")
+                        .replacingOccurrences(of: "<%= jtLimeLight %>", with: "#A2D900")
+                        .replacingOccurrences(of: "<%= jtLimeDark %>", with: "#BFFF00")
+                        .replacingOccurrences(of: "<%= jtPink %>", with: UIColor(Color("PinkText")).toHexString())
+                    preMessageBody += postTemplateStyled + "</style>"
+                } catch {
+                    preMessageBody += "</style>"
+                }
+            } else {
+                preMessageBody += "</style>"
+            }
+            
+            self.webView.loadHTMLString(preMessageBody + self.viewModel.body + postMessageBody, baseURL: nil)
         }
     }
     
