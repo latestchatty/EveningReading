@@ -15,7 +15,6 @@ struct macOSWindowSize {
 struct macOSContentView: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var chatStore: ChatStore
-    @EnvironmentObject var messageStore: MessageStore
         
     @State private var showingChatView = false
     
@@ -99,10 +98,8 @@ struct macOSContentView: View {
                 // Detail View
                 if appSessionStore.showingChatView {
                     macOSChatView()
-                        .environmentObject(messageStore)
                 } else if appSessionStore.showingInboxView {
                     macOSInboxView()
-                        .environmentObject(messageStore)
                 } else if appSessionStore.showingSearchView {
                     macOSSearchView()
                 } else if appSessionStore.showingTagsView {

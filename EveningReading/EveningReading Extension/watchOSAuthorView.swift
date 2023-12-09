@@ -9,7 +9,8 @@ import SwiftUI
 
 struct watchOSAuthorView: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
-    @StateObject var msgStore = MessageStore(service: .init())
+    
+    @StateObject var messageViewModel = MessageViewModel()
     
     @Binding var name: String
     @Binding var postId: Int
@@ -48,7 +49,7 @@ struct watchOSAuthorView: View {
                 // Author was reported
                 Text("User Reported!")
                     .onAppear() {
-                        msgStore.submitComplaint(author: self.name, postId: self.postId)
+                        messageViewModel.submitComplaint(author: self.name, postId: self.postId)
                     }
             } else if self.showBlocked {
                 // Author was reported

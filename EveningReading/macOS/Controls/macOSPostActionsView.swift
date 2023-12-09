@@ -16,7 +16,8 @@ struct macOSPostActionsView: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var chatStore: ChatStore
-    @EnvironmentObject var messageStore: MessageStore
+
+    @StateObject var messageViewModel = MessageViewModel()
     
     var name: String = ""
     var postId: Int = 0
@@ -41,9 +42,9 @@ struct macOSPostActionsView: View {
                 }
             }
             Button(action: {
-                messageStore.reportAuthorName = self.name
-                messageStore.showingReportUserSheet = true
-                messageStore.reportAuthorForPostId = self.postId
+                messageViewModel.reportAuthorName = self.name
+                messageViewModel.showingReportUserSheet = true
+                messageViewModel.reportAuthorForPostId = self.postId
             }) {
                 Text("Report User")
                 Image(systemName: "exclamationmark.circle")

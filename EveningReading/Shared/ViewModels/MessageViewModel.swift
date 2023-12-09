@@ -15,6 +15,9 @@ class MessageViewModel: ObservableObject {
     @Published var fetchComplete: Bool = false
     @Published var scrollTarget: Int?
     @Published var scrollTargetTop: Int?
+    @Published var showingReportUserSheet: Bool = false
+    @Published var reportAuthorName = ""
+    @Published var reportAuthorForPostId = 0
     
     @Published var gettingMessages: Bool = false {
         didSet {
@@ -314,7 +317,7 @@ class MessageViewModel: ObservableObject {
         task.resume()
     }
     
-    private func getComplaintText(author: String, postId: Int) -> String {
+    public func getComplaintText(author: String, postId: Int) -> String {
         return String("I would like to report user '\(author)', author of post http://www.shacknews.com/chatty?id=\(postId)#item_\(postId) for not adhering to the Shacknews guidelines.")
     }
     

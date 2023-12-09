@@ -10,7 +10,6 @@ import SwiftUI
 struct macOSChatView: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var chatStore: ChatStore
-    @EnvironmentObject var messageStore: MessageStore
     
     @State private var showingGuidelinesView = false
     @State private var guidelinesAccepted = false
@@ -44,7 +43,6 @@ struct macOSChatView: View {
                 
                 // Report user
                 macOSReportUserView()
-                    .environmentObject(messageStore)
                 
                 // Guidelines
                 if self.showingGuidelinesView {

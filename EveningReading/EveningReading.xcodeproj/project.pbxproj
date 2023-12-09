@@ -218,7 +218,6 @@
 		83AA198E26470FD400556E69 /* UIImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA198D26470FD400556E69 /* UIImageExtensions.swift */; };
 		83AA19932647110300556E69 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19922647110300556E69 /* ImagePickerView.swift */; };
 		83AA19982647933300556E69 /* SearchResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19972647933300556E69 /* SearchResultsView.swift */; };
-		83AA19A0264821D100556E69 /* MessageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA199F264821D100556E69 /* MessageService.swift */; };
 		83AA19A5264824CB00556E69 /* NoticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19A4264824CB00556E69 /* NoticeView.swift */; };
 		83AA19A9264831D300556E69 /* ClearHiddenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19A8264831D300556E69 /* ClearHiddenView.swift */; };
 		83AA19AC264852F400556E69 /* Messages.json in Resources */ = {isa = PBXBuildFile; fileRef = 83AA19AB264852F400556E69 /* Messages.json */; };
@@ -229,8 +228,6 @@
 		83AA19BA26485AAE00556E69 /* Stylesheet.css in Resources */ = {isa = PBXBuildFile; fileRef = 83AA19B926485AAE00556E69 /* Stylesheet.css */; };
 		83AA19BB26485AB200556E69 /* Stylesheet.css in Resources */ = {isa = PBXBuildFile; fileRef = 83AA19B926485AAE00556E69 /* Stylesheet.css */; };
 		83AA19BC26485AB300556E69 /* Stylesheet.css in Resources */ = {isa = PBXBuildFile; fileRef = 83AA19B926485AAE00556E69 /* Stylesheet.css */; };
-		83AA19BD26485B1F00556E69 /* MessageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA199F264821D100556E69 /* MessageService.swift */; };
-		83AA19BE26485B2000556E69 /* MessageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA199F264821D100556E69 /* MessageService.swift */; };
 		83AA19C026485B9100556E69 /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19BF26485B9100556E69 /* ColorExtensions.swift */; };
 		83AA19C2264862A000556E69 /* NewMessageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19C1264862A000556E69 /* NewMessageButton.swift */; };
 		83AA19C4264870BC00556E69 /* ThreadNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19C3264870BC00556E69 /* ThreadNavigation.swift */; };
@@ -445,7 +442,6 @@
 		83AA19922647110300556E69 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
 		83AA199626472E6900556E69 /* KeyConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = KeyConfig.xcconfig; sourceTree = "<group>"; };
 		83AA19972647933300556E69 /* SearchResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsView.swift; sourceTree = "<group>"; };
-		83AA199F264821D100556E69 /* MessageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageService.swift; sourceTree = "<group>"; };
 		83AA19A4264824CB00556E69 /* NoticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeView.swift; sourceTree = "<group>"; };
 		83AA19A8264831D300556E69 /* ClearHiddenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearHiddenView.swift; sourceTree = "<group>"; };
 		83AA19AB264852F400556E69 /* Messages.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Messages.json; sourceTree = "<group>"; };
@@ -792,7 +788,6 @@
 				833980DE263CAB93005614E8 /* AppSessionStore.swift */,
 				83398105263F0D38005614E8 /* ChatService.swift */,
 				83AA19392645F66500556E69 /* AuthService.swift */,
-				83AA199F264821D100556E69 /* MessageService.swift */,
 				83AA19EA264F24FC00556E69 /* NotificationService.swift */,
 				838466E829D634B300228DDB /* WatchService.swift */,
 			);
@@ -1422,7 +1417,6 @@
 				8339816F26405899005614E8 /* RefreshableScrollView.swift in Sources */,
 				83398124263F2E4E005614E8 /* SearchView.swift in Sources */,
 				8339812A263F2E60005614E8 /* ChatView.swift in Sources */,
-				83AA19A0264821D100556E69 /* MessageService.swift in Sources */,
 				833980DF263CAB93005614E8 /* AppSessionStore.swift in Sources */,
 				8339818C264098D5005614E8 /* ReplyCountView.swift in Sources */,
 				83A85CEF26551087007EBAC3 /* GoToShackLinkView.swift in Sources */,
@@ -1527,7 +1521,6 @@
 				833EE9CC2644DE1A00345A1D /* RichTextView.swift in Sources */,
 				833685C2266FAB2B00ACE618 /* macOSGuidelinesView.swift in Sources */,
 				833981692640439F005614E8 /* macOSSettingsView.swift in Sources */,
-				83AA19BD26485B1F00556E69 /* MessageService.swift in Sources */,
 				83F98F4129F31A4100A828B5 /* macOSLinkViewer.swift in Sources */,
 				831EB9BB2B223BFD00DA9433 /* AuthModels.swift in Sources */,
 				833685D0267284BB00ACE618 /* macOSTagsWebView.swift in Sources */,
@@ -1586,7 +1579,6 @@
 				833980B6263C41CF005614E8 /* NotificationView.swift in Sources */,
 				831EB9C32B223C8D00DA9433 /* ArticleModels.swift in Sources */,
 				833981BD2641E188005614E8 /* watchOSAuthorView.swift in Sources */,
-				83AA19BE26485B2000556E69 /* MessageService.swift in Sources */,
 				83AA1961264656BD00556E69 /* KeychainItemAccessibility.swift in Sources */,
 				83AA1967264656BD00556E69 /* KeychainWrapperSubscript.swift in Sources */,
 				83092F3A29E0876C00E889BD /* ChatService.swift in Sources */,

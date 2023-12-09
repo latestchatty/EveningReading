@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct macOSInboxView: View {
-    @EnvironmentObject var messageStore: MessageStore
-    
     var body: some View {
         VStack {
             Text("Inbox View")

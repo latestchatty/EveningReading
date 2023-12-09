@@ -11,7 +11,6 @@ struct iPadContentView: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var chatStore: ChatStore
-    @EnvironmentObject var messageStore: MessageStore
     @EnvironmentObject var notifications: Notifications
     @EnvironmentObject var shackTags: ShackTags
     

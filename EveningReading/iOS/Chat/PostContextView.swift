@@ -12,7 +12,8 @@ import UniformTypeIdentifiers
 struct PostContextView: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var chatStore: ChatStore
-    @EnvironmentObject var messageStore: MessageStore
+    
+    @StateObject var messageViewModel = MessageViewModel()
     
     @Binding var showingWhosTaggingView: Bool
     @Binding var showingNewMessageView: Bool
@@ -112,7 +113,7 @@ struct PostContextView: View {
         Button(action: {
             self.messageRecipient = "Duke Nuked"
             self.messageSubject = "Reporting Author of Post"
-            self.messageBody = messageStore.getComplaintText(author: self.author, postId: self.postId)
+            self.messageBody = messageViewModel.getComplaintText(author: self.author, postId: self.postId)
             self.showingNewMessageView = true
         }) {
             Text("Report User")
