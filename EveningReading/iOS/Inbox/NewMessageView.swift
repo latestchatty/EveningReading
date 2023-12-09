@@ -12,11 +12,13 @@ struct NewMessageView: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var messageStore: MessageStore
     @EnvironmentObject var notifications: Notifications
+    
     @Binding public var showingNewMessageSheet: Bool
-    @Binding public var messageId: Int
-    @Binding public var recipientName: String
-    @Binding public var subjectText: String
-    @Binding public var bodyText: String
+    public var messageId: Int
+    public var recipientName: String
+    public var subjectText: String
+    public var bodyText: String
+    
     @State private var messageRecipient = ""
     @State private var messageSubjectText = ""
     @State private var messageBodyText = ""
@@ -40,6 +42,7 @@ struct NewMessageView: View {
     private func clearNewMessageSheet() {
         DispatchQueue.main.async {
             self.messageRecipient = ""
+            self.messageSubjectText = ""
             self.messageBodyText = ""
             self.showingNewMessageSheet = false
         }
@@ -63,10 +66,9 @@ struct NewMessageView: View {
                     // Send
                     Button("Send") {
                         DispatchQueue.main.async {
-                            
                             self.messageStore.submitMessage(recipient: self.messageRecipient, subject: self.messageSubjectText, body: self.messageBodyText)
-                            
                             self.messageRecipient = ""
+                            self.messageSubjectText = ""
                             self.messageBodyText = ""
                             self.showingNewMessageSheet = false
                         }
@@ -135,7 +137,7 @@ struct NewMessageView: View {
             }
         }
         
-            // If push notification tapped
+        // If push notification tapped
         .onReceive(notifications.$notificationData) { value in
             if value != nil {
                 clearNewMessageSheet()

@@ -97,7 +97,7 @@ struct ThreadRow: View {
                 HStack (alignment: .center) {
                     WhosTaggingView(showingWhosTaggingView: self.$showingWhosTaggingView)
                     
-                    NewMessageView(showingNewMessageSheet: self.$showingNewMessageView, messageId: Binding.constant(0), recipientName: self.$messageRecipient, subjectText: self.$messageSubject, bodyText: self.$messageBody)
+                    NewMessageView(showingNewMessageSheet: self.$showingNewMessageView, messageId: 0, recipientName: self.messageRecipient, subjectText: self.messageSubject, bodyText: self.messageBody)
                     
                     AuthorNameView(name: appSessionStore.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : self.rootPostAuthor, postId: self.threadId)
 

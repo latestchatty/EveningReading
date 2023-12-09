@@ -227,29 +227,11 @@ struct ThreadDetailView: View {
     
     var body: some View {
         VStack {
-            
-            // Comment out to see preview (as well as overlay below)
             if UIDevice.current.userInterfaceIdiom == .phone {
                 GoToShackLinkView()
             }
             
-            // This little bit of code might not be needed
-            // since these both are navigation items (see
-            // bottom of file)
-            /*
-            if UIDevice.current.userInterfaceIdiom == .pad {
-                HStack {
-                    WhosTaggingView(showingWhosTaggingView: self.$showingWhosTaggingView)
-                    NewMessageView(showingNewMessageSheet: self.$showingNewMessageView, messageId: Binding.constant(0), recipientName: self.$messageRecipient, subjectText: self.$messageSubject, bodyText: self.$messageBody)
-                }
-            }
-            */
-            // End comment out to preview
-            
             if self.showThread {
-                
-                
-                // height: 20
                 RefreshableScrollView(height: 70, refreshing: self.$chatStore.gettingThread, scrollTarget: self.$chatStore.scrollTargetThread, scrollTargetTop: self.$chatStore.scrollTargetThreadTop) {
                     
                     // Root Post
@@ -531,7 +513,7 @@ struct ThreadDetailView: View {
         .navigationBarItems(leading: Spacer().frame(width: 26, height: 16), trailing:
                 HStack {
                     WhosTaggingView(showingWhosTaggingView: self.$showingWhosTaggingView)
-                    NewMessageView(showingNewMessageSheet: self.$showingNewMessageView, messageId: Binding.constant(0), recipientName: self.$messageRecipient, subjectText: self.$messageSubject, bodyText: self.$messageBody)
+                    NewMessageView(showingNewMessageSheet: self.$showingNewMessageView, messageId: 0, recipientName: self.messageRecipient, subjectText: self.messageSubject, bodyText: self.messageBody)
                     
                 }
         )

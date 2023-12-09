@@ -10,7 +10,6 @@ import SwiftUI
 struct InboxView: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var appSessionStore: AppSessionStore
-    @EnvironmentObject var messageStore: MessageStore
 
     @StateObject var messageViewModel = MessageViewModel()
     
@@ -36,7 +35,7 @@ struct InboxView: View {
     
     var body: some View {
         VStack {
-            NewMessageView(showingNewMessageSheet: self.$showingNewMessageSheet, messageId: Binding.constant(0), recipientName: Binding.constant(""), subjectText: Binding.constant(""), bodyText: Binding.constant(""))
+            NewMessageView(showingNewMessageSheet: self.$showingNewMessageSheet, messageId: 0, recipientName: "", subjectText: "", bodyText: "")
 
             RefreshableScrollView(height: 70, refreshing: $messageViewModel.gettingMessages, scrollTarget: $messageViewModel.scrollTarget, scrollTargetTop: $messageViewModel.scrollTargetTop) {
                 
