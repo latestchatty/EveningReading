@@ -95,8 +95,6 @@
 		8339810F263F1028005614E8 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339810D263F1028005614E8 /* StringExtensions.swift */; };
 		83398111263F1794005614E8 /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83398110263F1794005614E8 /* DateExtensions.swift */; };
 		83398112263F1794005614E8 /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83398110263F1794005614E8 /* DateExtensions.swift */; };
-		8339811A263F26CA005614E8 /* PreviewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83398119263F26CA005614E8 /* PreviewService.swift */; };
-		8339811B263F26CA005614E8 /* PreviewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83398119263F26CA005614E8 /* PreviewService.swift */; };
 		8339811E263F288D005614E8 /* ArticleCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339811D263F288D005614E8 /* ArticleCard.swift */; };
 		83398121263F2E39005614E8 /* TagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83398120263F2E39005614E8 /* TagsView.swift */; };
 		83398124263F2E4E005614E8 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83398123263F2E4E005614E8 /* SearchView.swift */; };
@@ -138,7 +136,6 @@
 		833981A62641A051005614E8 /* ContributedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339819126409D77005614E8 /* ContributedView.swift */; };
 		833981A72641A166005614E8 /* AuthorNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339818E26409C94005614E8 /* AuthorNameView.swift */; };
 		833981AB2641A93E005614E8 /* AppSessionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833980DE263CAB93005614E8 /* AppSessionStore.swift */; };
-		833981AC2641A989005614E8 /* PreviewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83398119263F26CA005614E8 /* PreviewService.swift */; };
 		833981AF2641AC58005614E8 /* watchOSThreadRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833981AE2641AC58005614E8 /* watchOSThreadRow.swift */; };
 		833981B02641AC8A005614E8 /* Chat.json in Resources */ = {isa = PBXBuildFile; fileRef = 833980FF263F0C72005614E8 /* Chat.json */; };
 		833981B12641B011005614E8 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339810D263F1028005614E8 /* StringExtensions.swift */; };
@@ -364,7 +361,6 @@
 		83398109263F0F7A005614E8 /* TrendingCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendingCard.swift; sourceTree = "<group>"; };
 		8339810D263F1028005614E8 /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
 		83398110263F1794005614E8 /* DateExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensions.swift; sourceTree = "<group>"; };
-		83398119263F26CA005614E8 /* PreviewService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewService.swift; sourceTree = "<group>"; };
 		8339811D263F288D005614E8 /* ArticleCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleCard.swift; sourceTree = "<group>"; };
 		83398120263F2E39005614E8 /* TagsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsView.swift; sourceTree = "<group>"; };
 		83398123263F2E4E005614E8 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
@@ -796,7 +792,6 @@
 				833980DE263CAB93005614E8 /* AppSessionStore.swift */,
 				83398105263F0D38005614E8 /* ChatService.swift */,
 				83AA19392645F66500556E69 /* AuthService.swift */,
-				83398119263F26CA005614E8 /* PreviewService.swift */,
 				83AA199F264821D100556E69 /* MessageService.swift */,
 				83AA19EA264F24FC00556E69 /* NotificationService.swift */,
 				838466E829D634B300228DDB /* WatchService.swift */,
@@ -1394,7 +1389,6 @@
 				83AA19712646DE7100556E69 /* TagPostView.swift in Sources */,
 				838466E729D4F5D900228DDB /* FavoriteContributedView.swift in Sources */,
 				83AA19C4264870BC00556E69 /* ThreadNavigation.swift in Sources */,
-				8339811A263F26CA005614E8 /* PreviewService.swift in Sources */,
 				833980F2263F08C1005614E8 /* SettingsButton.swift in Sources */,
 				83AA19C026485B9100556E69 /* ColorExtensions.swift in Sources */,
 				83398173264058D9005614E8 /* Haptic.swift in Sources */,
@@ -1505,7 +1499,6 @@
 				83092F3229DDD24300E889BD /* macOSComposePostView.swift in Sources */,
 				834EFE6B272AEBCD004E7BA1 /* ShackTagsTextView.swift in Sources */,
 				833685D52672CB8A00ACE618 /* macOSChatView.swift in Sources */,
-				8339811B263F26CA005614E8 /* PreviewService.swift in Sources */,
 				83398159263F6BB1005614E8 /* macOSInboxView.swift in Sources */,
 				833685CE2672467800ACE618 /* macOSPostExpandedView.swift in Sources */,
 				8339815D263F6FC4005614E8 /* macOSSearchView.swift in Sources */,
@@ -1586,7 +1579,6 @@
 				833EE9E52645517D00345A1D /* RichTextView.swift in Sources */,
 				83AA193C2645F66500556E69 /* AuthService.swift in Sources */,
 				833981B32641B015005614E8 /* ArrayExtensions.swift in Sources */,
-				833981AC2641A989005614E8 /* PreviewService.swift in Sources */,
 				838466EA29D6353900228DDB /* WatchService.swift in Sources */,
 				833981B52641B426005614E8 /* Globals.swift in Sources */,
 				83AA194E2646353800556E69 /* RedactingView.swift in Sources */,

@@ -19,11 +19,6 @@ struct SearchResultsView: View {
     @State private var showingLoading: Bool = true
     
     private func search() {
-        if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil {
-            showingLoading = false
-            searchResults = searchData.posts
-            return
-        }
         chatStore.search(terms: self.terms, author: self.author, parentAuthor: self.parentAuthor, completion: {
                 searchResults = chatStore.searchResults
                 showingLoading = false

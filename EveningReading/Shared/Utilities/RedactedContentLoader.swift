@@ -13,11 +13,15 @@ class RedactedContentLoader {
     }
     
     static func getMessages() -> MessageResponse {
-        return loadPreviewData("Messages.json")
+        return loadRedactedData("Messages.json")
     }
     
     static func getChat() -> Chat {
-        return loadPreviewData("Chat.json")
+        return loadRedactedData("Chat.json")
+    }
+    
+    static func getSearchData() -> SearchChat {
+        return loadRedactedData("SearchResults.json")
     }
     
     static func loadRedactedData<T: Decodable>(_ filename: String) -> T {
