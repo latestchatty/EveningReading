@@ -431,36 +431,3 @@ struct TestViewCompat: View {
 
    }
 }
-
-struct TestView_Previews: PreviewProvider {
-    static var previews: some View {
-        TestView()
-    }
-}
-
-struct TestViewWithLargerThreshold_Previews: PreviewProvider {
-    static var previews: some View {
-        TestViewWithLargerThreshold()
-    }
-}
-
-struct TestViewWithCustomProgress_Previews: PreviewProvider {
-    static var previews: some View {
-        TestViewWithCustomProgress()
-    }
-}
-
-#if compiler(>=5.5)
-@available(iOS 15, *)
-struct TestViewWithAsync_Previews: PreviewProvider {
-    static var previews: some View {
-        TestViewWithAsync()
-    }
-}
-#endif
-
-struct TestViewCompat_Previews: PreviewProvider {
-    static var previews: some View {
-        TestViewCompat()
-    }
-}

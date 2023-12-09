@@ -60,7 +60,6 @@ struct watchOSThreadRow: View {
         VStack {
             
             // Fixes navigation bug
-            // https://developer.apple.com/forums/thread/677333
             NavigationLink(destination: EmptyView(), isActive: .constant(false)) {
                 EmptyView()
             }.frame(width: 0, height: 0)
@@ -115,14 +114,5 @@ struct watchOSThreadRow: View {
             }))
         }
         
-    }
-}
-
-struct watchOSThreadRow_Previews: PreviewProvider {
-    static var previews: some View {
-        watchOSThreadRow(threadId: .constant(999999992))
-            .previewDevice(PreviewDevice(rawValue: "Apple Watch Series 5 - 44mm"))
-            .environmentObject(AppSessionStore(service: AuthService()))
-            .environmentObject(ChatStore(service: ChatService()))
     }
 }

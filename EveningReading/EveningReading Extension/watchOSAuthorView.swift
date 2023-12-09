@@ -21,7 +21,6 @@ struct watchOSAuthorView: View {
     var body: some View {        
         VStack {
             // Fixes navigation bug
-            // https://developer.apple.com/forums/thread/677333
             NavigationLink(destination: EmptyView(), isActive: .constant(false)) {
                 EmptyView()
             }.frame(width: 0, height: 0)            
@@ -80,14 +79,5 @@ struct watchOSAuthorView: View {
                 }
             }
         }
-    }
-}
-
-struct watchOSAuthorView_Previews: PreviewProvider {
-    static var previews: some View {
-        watchOSAuthorView(name: .constant("ellawala"), postId: .constant(999999996))
-            .previewDevice(PreviewDevice(rawValue: "Apple Watch Series 5 - 44mm"))
-            .environmentObject(AppSessionStore(service: AuthService()))
-            .environmentObject(MessageStore(service: MessageService()))
     }
 }

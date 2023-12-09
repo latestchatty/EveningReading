@@ -56,7 +56,6 @@ struct watchOSPostDetail: View {
         ScrollView {
             
             // Fixes navigation bug
-            // https://developer.apple.com/forums/thread/677333
             NavigationLink(destination: EmptyView(), isActive: .constant(false)) {
                 EmptyView()
             }.frame(width: 0, height: 0)
@@ -97,14 +96,5 @@ struct watchOSPostDetail: View {
             
         }
         .onAppear(perform: getThreadData)
-    }
-}
-
-struct watchOSPostDetail_Previews: PreviewProvider {
-    static var previews: some View {
-        watchOSPostDetail(postId: .constant(999999992))
-            .previewDevice(PreviewDevice(rawValue: "Apple Watch Series 5 - 44mm"))
-            .environmentObject(AppSessionStore(service: AuthService()))
-            .environmentObject(ChatStore(service: ChatService()))
     }
 }

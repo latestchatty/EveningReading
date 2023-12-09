@@ -38,6 +38,9 @@
 		831EB9CA2B23A00300DA9433 /* ArticleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831EB9C82B23A00000DA9433 /* ArticleViewModel.swift */; };
 		831EB9CB2B23A00800DA9433 /* ArticleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831EB9C82B23A00000DA9433 /* ArticleViewModel.swift */; };
 		831EB9CD2B23A60300DA9433 /* RedactedContentLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831EB9CC2B23A60300DA9433 /* RedactedContentLoader.swift */; };
+		831EB9CF2B24B9E700DA9433 /* RichTextModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831EB9CE2B24B9E700DA9433 /* RichTextModels.swift */; };
+		831EB9D02B24BA0300DA9433 /* RichTextModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831EB9CE2B24B9E700DA9433 /* RichTextModels.swift */; };
+		831EB9D12B24BA0400DA9433 /* RichTextModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831EB9CE2B24B9E700DA9433 /* RichTextModels.swift */; };
 		833685C2266FAB2B00ACE618 /* macOSGuidelinesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833685C1266FAB2B00ACE618 /* macOSGuidelinesView.swift */; };
 		833685C4266FB97A00ACE618 /* macOSAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833685C3266FB97A00ACE618 /* macOSAccountView.swift */; };
 		833685C626702CB900ACE618 /* macOSClearHiddenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833685C526702CB900ACE618 /* macOSClearHiddenView.swift */; };
@@ -310,6 +313,7 @@
 		830BFB282B20E5A600F62089 /* MessageModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageModels.swift; sourceTree = "<group>"; };
 		831EB9C82B23A00000DA9433 /* ArticleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleViewModel.swift; sourceTree = "<group>"; };
 		831EB9CC2B23A60300DA9433 /* RedactedContentLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedactedContentLoader.swift; sourceTree = "<group>"; };
+		831EB9CE2B24B9E700DA9433 /* RichTextModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextModels.swift; sourceTree = "<group>"; };
 		833685C1266FAB2B00ACE618 /* macOSGuidelinesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSGuidelinesView.swift; sourceTree = "<group>"; };
 		833685C3266FB97A00ACE618 /* macOSAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSAccountView.swift; sourceTree = "<group>"; };
 		833685C526702CB900ACE618 /* macOSClearHiddenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSClearHiddenView.swift; sourceTree = "<group>"; };
@@ -508,6 +512,7 @@
 				830BFB242B20E4F800F62089 /* ArticleModels.swift */,
 				830BFB262B20E53500F62089 /* AuthModels.swift */,
 				830BFB282B20E5A600F62089 /* MessageModels.swift */,
+				831EB9CE2B24B9E700DA9433 /* RichTextModels.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1393,6 +1398,7 @@
 				83A85D48265EC177007EBAC3 /* ShackTagsTextView.swift in Sources */,
 				833EE9CB2644DB2100345A1D /* RichTextView.swift in Sources */,
 				83AA19782646E49A00556E69 /* ComposePostView.swift in Sources */,
+				831EB9CF2B24B9E700DA9433 /* RichTextModels.swift in Sources */,
 				83398140263F525F005614E8 /* iPadHomeButton.swift in Sources */,
 				833980D0263C914D005614E8 /* iPadContentView.swift in Sources */,
 				83A85D512665084A007EBAC3 /* ThreadPreviewView.swift in Sources */,
@@ -1501,6 +1507,7 @@
 				833817952639AC18007A8B28 /* macOSContentView.swift in Sources */,
 				83FE337E2727303E003FB55D /* macOSWhosTaggingView.swift in Sources */,
 				833685D926738B5100ACE618 /* macOSThreadPreview.swift in Sources */,
+				831EB9D02B24BA0300DA9433 /* RichTextModels.swift in Sources */,
 				833981BA2641C4E8005614E8 /* ReplyCountView.swift in Sources */,
 				83AA194326462AFC00556E69 /* CategoriesView.swift in Sources */,
 				8339817C264062BB005614E8 /* RoundedCornersView.swift in Sources */,
@@ -1575,6 +1582,7 @@
 				831EB9C12B223C7500DA9433 /* AuthModels.swift in Sources */,
 				833981A62641A051005614E8 /* ContributedView.swift in Sources */,
 				833981AB2641A93E005614E8 /* AppSessionStore.swift in Sources */,
+				831EB9D12B24BA0400DA9433 /* RichTextModels.swift in Sources */,
 				83AA196B2646648900556E69 /* watchOSGuidelines.swift in Sources */,
 				830292F32644C57F00B974B3 /* ReplyLineBuilder.swift in Sources */,
 				831EB9C02B223C6600DA9433 /* MessageModels.swift in Sources */,

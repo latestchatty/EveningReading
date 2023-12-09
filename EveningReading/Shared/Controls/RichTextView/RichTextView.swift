@@ -4,9 +4,8 @@
 //
 //  Created by Chris Hodge on 5/6/21.
 //
-
-// This repo helped me a lot: https://github.com/JohnHeitmann/SwiftUI-Rich-Text-Demo Thanks!
-// https://stackoverflow.com/questions/25882936/open-appstore-through-button
+//  This repo helped me a lot: https://github.com/JohnHeitmann/SwiftUI-Rich-Text-Demo Thanks!
+//
 
 import Foundation
 import SwiftUI
@@ -48,34 +47,6 @@ enum RichTextBlock: Hashable {
     case spoiler([SpoilerBlock])
     case link([LinkBlock])
     case spoilerlink([SpoilerLinkBlock])
-}
-
-struct InlineText: Hashable {
-    var text: String
-    let attributes: TextAttributes
-}
-
-struct SpoilerBlock: Hashable {
-    var text: String
-}
-
-struct LinkBlock: Hashable {
-    var hyperlink: String
-    var description: String
-}
-
-struct SpoilerLinkBlock: Hashable {
-    var hyperlink: String
-    var description: String
-}
-
-enum ShackMarkupType: Hashable {
-    case tag, content
-}
-
-struct ShackPostMarkup: Hashable {
-    let postMarkup: String
-    let postMarkupType: ShackMarkupType
 }
 
 struct SpoilerView: View {
@@ -174,7 +145,6 @@ struct LinkView: View {
                     else if self.hyperlink.starts(with: "https://www.shacknews.com/chatty?id=") || self.hyperlink.starts(with: "http://www.shacknews.com/chatty?id=")
                     {
                         if let url = URL(string: self.hyperlink) {
-                            print("it is a valid url")
                             let components = URLComponents(url: url, resolvingAgainstBaseURL: false)
                             if let queryItems = components?.queryItems {
                                 for queryItem in queryItems {
@@ -719,10 +689,7 @@ class RichTextBuilder {
                     link = link.replacingOccurrences(of: #"">"#, with: "")
                     richText.append(.link([LinkBlock(hyperlink: link, description: link)]))
                 }
-            }
-            
-            //print(markup.postMarkup)
-            
+            }            
         }
         
         // Append remainder

@@ -45,7 +45,6 @@ struct watchOSPostPreview: View {
             .frame(width: 0, height: 0)
             
             // Fixes NavLink bug in SwiftUI?
-            // https://developer.apple.com/forums/thread/677333
             NavigationLink(destination: EmptyView()) {
                 EmptyView()
             }
@@ -53,13 +52,3 @@ struct watchOSPostPreview: View {
         }
     }
 }
-
-struct watchOSPostPreview_Previews: PreviewProvider {
-    static var previews: some View {
-        watchOSPostPreview(postId: .constant(999999992), replyText: .constant("Quis hendrerit dolor magna eget."), author: .constant("Tim"))
-            .previewDevice(PreviewDevice(rawValue: "Apple Watch Series 5 - 44mm"))
-            .environmentObject(AppSessionStore(service: AuthService()))
-            .environmentObject(ChatStore(service: ChatService()))
-    }
-}
-
