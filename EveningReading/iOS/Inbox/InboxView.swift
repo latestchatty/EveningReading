@@ -12,6 +12,8 @@ struct InboxView: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var messageStore: MessageStore
 
+    @StateObject var messageViewModel = MessageViewModel()
+    
     @State private var messages: [Message] = [Message]()
     @State private var showingNewMessageSheet: Bool = false
     @State private var showRedacted: Bool = true

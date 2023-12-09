@@ -451,14 +451,7 @@ struct ThreadDetailView: View {
         .disabled(self.isGettingThread || chatStore.gettingThread)
         
         // Fetch data and settings on load
-        .onAppear(perform: {            
-            if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil {
-                getUserData()
-                getThreadData()
-                getPostList(parentId: self.threadId)
-                return
-            }
-            
+        .onAppear(perform: {
             func getData() -> Void {
                 print("getData begin")
                 getUserData()

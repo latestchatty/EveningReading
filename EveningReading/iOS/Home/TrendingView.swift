@@ -22,7 +22,7 @@ struct TrendingView: View {
     }
     
     private func fetchChat() {
-        if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil || chatStore.threads.count > 0
+        if chatStore.threads.count > 0
         {
             return
         }

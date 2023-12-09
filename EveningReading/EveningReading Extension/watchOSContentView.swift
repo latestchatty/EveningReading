@@ -16,7 +16,7 @@ struct watchOSContentView: View {
     @ObservedObject private var watchService = WatchService.shared
     
     private func getChat() {
-        if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil || chatStore.threads.count > 0
+        if chatStore.threads.count > 0
         {
             return
         }
@@ -73,14 +73,5 @@ struct watchOSContentView: View {
             
         }
         .onAppear(perform: getChat)
-    }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        watchOSContentView()
-            .previewDevice(PreviewDevice(rawValue: "Apple Watch Series 5 - 44mm"))
-            .environmentObject(AppSessionStore(service: AuthService()))
-            .environmentObject(ChatStore(service: ChatService()))
     }
 }
