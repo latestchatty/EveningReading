@@ -15,7 +15,6 @@ struct macOSWindowSize {
 struct macOSContentView: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var chatStore: ChatStore
-    @EnvironmentObject var articleStore: ArticleStore
     @EnvironmentObject var messageStore: MessageStore
         
     @State private var showingChatView = false
@@ -121,15 +120,5 @@ struct macOSContentView: View {
         .onAppear() {
             appSessionStore.showingChatView = true
         }
-    }
-}
-
-struct macOSContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        macOSContentView()
-            .environmentObject(AppSessionStore(service: AuthService()))
-            .environmentObject(ChatStore(service: ChatService()))
-            .environmentObject(ArticleStore(service: ArticleService()))
-            .environmentObject(MessageStore(service: MessageService()))
     }
 }

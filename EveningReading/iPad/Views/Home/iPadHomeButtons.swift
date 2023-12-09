@@ -26,6 +26,7 @@ struct iPadHomeButtons: View {
         HStack() {
             Spacer().frame(width: 20)
             
+            // Buttons
             iPadHomeButton(title: "Chat", imageName: "glyphicons-basic-238-chat-message", buttonBackground: Color("HomeButtonChat"))
                 .onTapGesture(count: 1) {
                     chatStore.activeThreadId = 0 // Deselect any threads

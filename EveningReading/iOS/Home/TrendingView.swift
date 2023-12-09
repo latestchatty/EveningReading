@@ -30,15 +30,11 @@ struct TrendingView: View {
     }
     
     private func filteredThreads() -> [ChatThread] {
-        if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
-        {
-            return Array(chatData.threads.prefix(4))
-        }
         let threads = self.chatStore.threads.filter({ return self.appSessionStore.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !self.appSessionStore.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)}).sorted(by: { $0.posts.count > $1.posts.count }).prefix(self.threadLimit)
         if threads.count > 0 {
             return Array(threads.prefix(self.threadLimit))
         } else {
-            return Array(chatData.threads.prefix(self.threadLimit))
+            return Array(RedactedContentLoader.getChat().threads.prefix(self.threadLimit))
         }
     }
     

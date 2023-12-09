@@ -36,18 +36,10 @@ struct ThreadRow: View {
     @State private var favoriteContributed: Bool = false
     
     private func getThreadData() {
-        if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
-        {
-            if let currentThread = chatData.threads.filter({ return $0.threadId == self.threadId }).first {
-                setThreadData(currentThread)
-            }
-        } else {
-            if let currentThread = chatStore.threads.filter({ return $0.threadId == self.threadId }).first {
-                setThreadData(currentThread)
-                self.contributed = PostDecorator.checkParticipatedStatus(thread: currentThread, author: self.rootPostAuthor)
-            }
-        }
-        
+        if let currentThread = chatStore.threads.filter({ return $0.threadId == self.threadId }).first {
+            setThreadData(currentThread)
+            self.contributed = PostDecorator.checkParticipatedStatus(thread: currentThread, author: self.rootPostAuthor)
+        }        
     }
     
     private func setThreadData(_ currentThread: ChatThread) {

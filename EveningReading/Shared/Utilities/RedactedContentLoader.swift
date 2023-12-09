@@ -16,6 +16,10 @@ class RedactedContentLoader {
         return loadPreviewData("Messages.json")
     }
     
+    static func getChat() -> Chat {
+        return loadPreviewData("Chat.json")
+    }
+    
     static func loadRedactedData<T: Decodable>(_ filename: String) -> T {
         let data: Data
         

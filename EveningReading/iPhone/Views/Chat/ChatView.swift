@@ -23,12 +23,7 @@ struct ChatView: View {
     //@State private var isPushNotificationAlertShowing: Bool = false
     
     private func filteredThreads() -> [ChatThread] {
-        if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
-        {
-            return Array(chatData.threads)
-        }
-        var threads = chatStore.threads
-        
+        var threads = chatStore.threads        
         if searchTerms != "" {
             threads = chatStore.threads.filter({ return
                 $0.posts.filter({ return $0.parentId == 0  })[0].body.lowercased().contains(searchTerms.lowercased()) &&

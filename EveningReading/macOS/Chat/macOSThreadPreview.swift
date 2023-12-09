@@ -25,33 +25,18 @@ struct macOSThreadPreview: View {
     @State private var hideThread = false
     
     private func getThreadData() {
-        if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
-        {
-            if let thread = chatData.threads.filter({ return $0.threadId == self.threadId }).first {
-                if let rootPost = thread.posts.filter({ return $0.parentId == 0 }).first {
-                    self.rootPostCategory = rootPost.category
-                    self.rootPostAuthor = rootPost.author
-                    self.rootPostBody = rootPost.body.getPreview
-                    self.rootPostDate = rootPost.date
-                    self.rootPostLols = rootPost.lols
-                }
-                self.replyCount = thread.posts.count - 1
-                
+        let threads = chatStore.threads.filter({ return self.appSessionStore.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !appSessionStore.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
+        
+        if let thread = threads.filter({ return $0.threadId == self.threadId }).first {
+            self.contributed = PostDecorator.checkParticipatedStatus(thread: thread, author: self.rootPostAuthor)
+            if let rootPost = thread.posts.filter({ return $0.parentId == 0 }).first {
+                self.rootPostCategory = rootPost.category
+                self.rootPostAuthor = rootPost.author
+                self.rootPostBody = rootPost.body.getPreview
+                self.rootPostDate = rootPost.date
+                self.rootPostLols = rootPost.lols
             }
-        } else {
-            let threads = chatStore.threads.filter({ return self.appSessionStore.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !appSessionStore.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
-            
-            if let thread = threads.filter({ return $0.threadId == self.threadId }).first {
-                self.contributed = PostDecorator.checkParticipatedStatus(thread: thread, author: self.rootPostAuthor)
-                if let rootPost = thread.posts.filter({ return $0.parentId == 0 }).first {
-                    self.rootPostCategory = rootPost.category
-                    self.rootPostAuthor = rootPost.author
-                    self.rootPostBody = rootPost.body.getPreview
-                    self.rootPostDate = rootPost.date
-                    self.rootPostLols = rootPost.lols
-                }
-                self.replyCount = thread.posts.count - 1
-            }
+            self.replyCount = thread.posts.count - 1
         }
     }
     

@@ -25,14 +25,8 @@ struct watchOSPostDetail: View {
     @State private var isRootPost: Bool = false
     
     private func getThreadData() {
-        if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
-        {
-            let thread = chatData.threads.filter { !$0.posts.isEmpty && $0.posts.contains(where: { post in post.id == self.postId }) }.first
-            setThreadData(thread)
-        } else {
-            let thread = chatStore.threads.filter { !$0.posts.isEmpty && $0.posts.contains(where: { post in post.id == self.postId }) }.first
-            setThreadData(thread)
-        }
+        let thread = chatStore.threads.filter { !$0.posts.isEmpty && $0.posts.contains(where: { post in post.id == self.postId }) }.first
+        setThreadData(thread)
     }
     
     private func setThreadData(_ thread: ChatThread?) {

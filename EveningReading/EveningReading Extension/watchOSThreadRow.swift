@@ -31,14 +31,8 @@ struct watchOSThreadRow: View {
     @ObservedObject private var watchService = WatchService.shared
     
     private func getThreadData() {
-        if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil {
-            if let thread = chatData.threads.filter({ return $0.threadId == self.threadId }).first {
-                setThreadData(thread)
-            }
-        } else {
-            if let thread = chatStore.threads.filter({ return $0.threadId == self.threadId }).first {
-                setThreadData(thread)
-            }
+        if let thread = chatStore.threads.filter({ return $0.threadId == self.threadId }).first {
+            setThreadData(thread)
         }
     }
     

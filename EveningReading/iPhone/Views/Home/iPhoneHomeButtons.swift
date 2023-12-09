@@ -26,6 +26,7 @@ struct iPhoneHomeButtons: View {
         VStack {
             Spacer().frame(height: 40)
             
+            // Buttons
             HStack(alignment: .top) {
                 iPhoneHomeButton(title: "Chat", imageName: "glyphicons-basic-238-chat-message", buttonBackground: Color("HomeButtonChat"))
                     .onTapGesture(count: 1) {

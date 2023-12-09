@@ -33,69 +33,35 @@ struct macOSThreadView: View {
     @State private var hideThread = false
     
     private func getThreadData() {
-        if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
-        {
-            if let thread = chatData.threads.filter({ return $0.threadId == self.threadId }).first {
-                if let rootPost = thread.posts.filter({ return $0.parentId == 0 }).first {
-                    self.rootPostCategory = rootPost.category
-                    self.rootPostAuthor = rootPost.author
-                    self.rootPostBody = rootPost.body
-                    self.rootPostRichText = RichTextBuilder.getRichText(postBody: rootPost.body)
-                    self.rootPostDate = rootPost.date
-                    self.rootPostLols = rootPost.lols
-                }
-                self.replyCount = thread.posts.count - 1
-                
+        let threads = chatStore.threads.filter({ return self.appSessionStore.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !appSessionStore.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
+        
+        if let thread = threads.filter({ return $0.threadId == self.threadId }).first {
+            self.contributed = PostDecorator.checkParticipatedStatus(thread: thread, author: self.rootPostAuthor)
+            if let rootPost = thread.posts.filter({ return $0.parentId == 0 }).first {
+                self.rootPostCategory = rootPost.category
+                self.rootPostAuthor = rootPost.author
+                self.rootPostBody = rootPost.body
+                self.rootPostRichText = RichTextBuilder.getRichText(postBody: rootPost.body.replaceGTRT)
+                self.rootPostDate = rootPost.date
+                self.rootPostLols = rootPost.lols
             }
-        } else {
-            let threads = chatStore.threads.filter({ return self.appSessionStore.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !appSessionStore.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
-            
-            if let thread = threads.filter({ return $0.threadId == self.threadId }).first {
-                self.contributed = PostDecorator.checkParticipatedStatus(thread: thread, author: self.rootPostAuthor)
-                if let rootPost = thread.posts.filter({ return $0.parentId == 0 }).first {
-                    self.rootPostCategory = rootPost.category
-                    self.rootPostAuthor = rootPost.author
-                    self.rootPostBody = rootPost.body
-                    self.rootPostRichText = RichTextBuilder.getRichText(postBody: rootPost.body.replaceGTRT)
-                    self.rootPostDate = rootPost.date
-                    self.rootPostLols = rootPost.lols
-                }
-                self.replyCount = thread.posts.count - 1
-            }
+            self.replyCount = thread.posts.count - 1
         }
     }
     
     private func getPostList(parentId: Int) {
-        if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
-                {
-            if let thread = chatData.threads.filter({ return $0.threadId == self.threadId }).first {
-                // Replies to post
-                let replies = thread.posts.filter({ return $0.parentId == parentId }).sorted(by: { $0.id < $1.id })
-                
-                // Font strength for recent posts
-                postStrength = PostDecorator.getPostStrength(thread: thread)
-                
-                // Get replies to this post
-                for post in replies {
-                    self.replyLines[post.id] = ReplyLineBuilder.getLines(post: post, thread: thread)
-                    postList.append(post)
-                    getPostList(parentId: post.id)
-                }
-            }
-        } else {
-            if let thread = chatStore.threads.filter({ return $0.threadId == self.threadId }).first {
-                // Replies to post
-                let replies = thread.posts.filter({ return $0.parentId == parentId }).sorted(by: { $0.id < $1.id })
-                
-                // Font strength for recent posts
-                postStrength = PostDecorator.getPostStrength(thread: thread)
-                
-                // Get replies to this post
-                for post in replies {
-                    self.replyLines[post.id] = ReplyLineBuilder.getLines(post: post, thread: thread)
-                    postList.append(post)
-                    getPostList(parentId: post.id)
-                }
+        if let thread = chatStore.threads.filter({ return $0.threadId == self.threadId }).first {
+            // Replies to post
+            let replies = thread.posts.filter({ return $0.parentId == parentId }).sorted(by: { $0.id < $1.id })
+            
+            // Font strength for recent posts
+            postStrength = PostDecorator.getPostStrength(thread: thread)
+            
+            // Get replies to this post
+            for post in replies {
+                self.replyLines[post.id] = ReplyLineBuilder.getLines(post: post, thread: thread)
+                postList.append(post)
+                getPostList(parentId: post.id)
             }
         }
     }

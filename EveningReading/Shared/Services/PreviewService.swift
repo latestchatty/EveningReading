@@ -7,10 +7,7 @@
 
 import Foundation
 
-let chatData: Chat = loadPreviewData("Chat.json")
-
 #if !os(watchOS)
-let articlesData: [Article] = loadPreviewData("Articles.json")
 let searchData: SearchChat = loadPreviewData("SearchResults.json")
 #endif
 

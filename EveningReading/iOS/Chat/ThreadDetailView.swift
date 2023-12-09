@@ -65,48 +65,36 @@ struct ThreadDetailView: View {
     
     // Get thread data from the appropriate source
     private func getThreadData() {
-        if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
-        {
-            // Get thread data for previews
-            if let thread = chatData.threads.filter({ return $0.threadId == self.threadId }).first {
-                setThreadData(thread)
-                self.showThread = true
-            } else {
-                self.showThread = false
-            }
-        } else {
-            // Get thread data for a linked/pushed post
-            if self.postId > 0 {
-                chatStore.getThreadByPost(postId: self.postId) {
-                    if let thread = chatStore.searchedThreads.first {
-                        setThreadData(thread)
-                        postList.removeAll()
-                        getPostList(parentId: self.threadId)
-                        if let searchedPost = thread.posts.filter({ return $0.id == self.postId }).first {
-                            self.selectedPostRichText = RichTextBuilder.getRichText(postBody: searchedPost.body)
-                            self.selectedPost = self.postId
-                            if self.postId != self.threadId {
-                                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
-                                    self.chatStore.scrollTargetThread = self.postId
-                                }
+        if self.postId > 0 {
+            chatStore.getThreadByPost(postId: self.postId) {
+                if let thread = chatStore.searchedThreads.first {
+                    setThreadData(thread)
+                    postList.removeAll()
+                    getPostList(parentId: self.threadId)
+                    if let searchedPost = thread.posts.filter({ return $0.id == self.postId }).first {
+                        self.selectedPostRichText = RichTextBuilder.getRichText(postBody: searchedPost.body)
+                        self.selectedPost = self.postId
+                        if self.postId != self.threadId {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
+                                self.chatStore.scrollTargetThread = self.postId
                             }
                         }
-                        self.showThread = true
-                    } else {
-                        self.showThread = false
-                    }
-                }
-            } else {
-                // Get thread data from the chatty
-                if let thread = chatStore.threads.filter({ return $0.threadId == self.threadId }).first {
-                    setThreadData(thread)
-                    if UIDevice.current.userInterfaceIdiom == .phone {
-                        chatStore.activeThreadId = thread.threadId
                     }
                     self.showThread = true
                 } else {
                     self.showThread = false
                 }
+            }
+        } else {
+            // Get thread data from the chatty
+            if let thread = chatStore.threads.filter({ return $0.threadId == self.threadId }).first {
+                setThreadData(thread)
+                if UIDevice.current.userInterfaceIdiom == .phone {
+                    chatStore.activeThreadId = thread.threadId
+                }
+                self.showThread = true
+            } else {
+                self.showThread = false
             }
         }
     }
@@ -125,12 +113,7 @@ struct ThreadDetailView: View {
     
     // Loop through posts and build reply lines & post strength
     private func getPostList(parentId: Int) {
-        if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
-                {
-            if let thread = chatData.threads.filter({ return $0.threadId == self.threadId }).first {
-                setPostData(thread: thread, parentId: parentId)
-            }
-        } else if self.postId > 0 {
+        if self.postId > 0 {
             if let thread = chatStore.searchedThreads.first {
                 setPostData(thread: thread, parentId: parentId)
             }
