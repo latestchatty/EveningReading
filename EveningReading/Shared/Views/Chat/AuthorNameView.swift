@@ -88,7 +88,7 @@ struct AuthorNameView: View {
                     
                 }
                 .alert(isPresented: self.$showingBlockUser) {
-                    Alert(title: Text("Block \(self.name)?"), message: Text("For post \(String(self.postId))"), primaryButton: .destructive(Text("Yes")) {
+                    Alert(title: Text("Block \(self.name)?"), message: Text("For post " + String(self.postId)), primaryButton: .destructive(Text("Yes")) {
                         appSessionStore.blockedAuthors.append(self.name)
                     }, secondaryButton: .cancel() {
                         
@@ -125,36 +125,13 @@ struct AuthorNameView: View {
                     .buttonStyle(PlainButtonStyle())
                 }
                 .alert(isPresented: self.$showingAuthor) {
-                    Alert(title: Text("Block \(self.name)"), message: Text("For post \(self.postId)?"),
+                    Alert(title: Text("Block \(self.name)"), message: Text("For post " + String(self.postId)),
                           primaryButton: .default (Text("OK")) {
                             // report user
                             appSessionStore.blockedAuthors.append(self.name)
                           }, secondaryButton: .cancel()
                     )
                 }
-                /*
-                // Block user
-                VStack {
-                    Button(action: {
-                        self.showingAuthor.toggle()
-                    }) {
-                        Text("\(self.name)")
-                            .font(.footnote)
-                            .bold()
-                            .foregroundColor(Color.orange)
-                            .lineLimit(1)
-                    }
-                    .buttonStyle(PlainButtonStyle())
-                }
-                .alert(isPresented: self.$showingAuthor) {
-                    Alert(title: Text("Report \(self.name)"), message: Text("For post \(self.postId)?"),
-                          primaryButton: .default (Text("OK")) {
-                            // report user
-                            msgStore.submitComplaint(author: self.name, postId: self.postId)
-                          }, secondaryButton: .cancel()
-                    )
-                }
-                */
             }
         #endif
     }

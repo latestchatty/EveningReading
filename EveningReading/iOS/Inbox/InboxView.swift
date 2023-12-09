@@ -79,7 +79,7 @@ struct InboxView: View {
                            }
                            HStack {
                                Spacer()
-                               ChatBubble(direction: .left, bgcolor: (message.unread && !messageViewModel.markedMessages.contains(message.id) ? Color("ChatBubblePrimaryUnread") :  Color("ChatBubblePrimary"))) {
+                               ChatBubble(direction: .left, bgcolor: (message.unread && !messageViewModel.markedMessages.contains(message.id) ? Color("ChatBubblePrimaryUnread") : Color("ChatBubblePrimary"))) {
                                    VStack(alignment: .leading) {
                                        HStack {
                                            Text(message.subject)

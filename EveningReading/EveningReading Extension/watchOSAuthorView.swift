@@ -34,7 +34,7 @@ struct watchOSAuthorView: View {
                 ScrollView {
                     Text("I would like to report user '").font(.footnote) +
                     Text("\(self.name)").font(.footnote).foregroundColor(Color.orange) +
-                        Text("', author of post http://www.shacknews.com/chatty?id=\(self.postId)#item_\(self.postId) for not adhering to the Shacknews guidelines.")
+                        Text("', author of post http://www.shacknews.com/chatty?id=\(String(self.postId))#item_\(String(self.postId)) for not adhering to the Shacknews guidelines.")
                         .font(.footnote)
                     Spacer()
                     Button("Send") {

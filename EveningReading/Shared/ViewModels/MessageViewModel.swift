@@ -318,7 +318,7 @@ class MessageViewModel: ObservableObject {
     }
     
     public func getComplaintText(author: String, postId: Int) -> String {
-        return String("I would like to report user '\(author)', author of post http://www.shacknews.com/chatty?id=\(postId)#item_\(postId) for not adhering to the Shacknews guidelines.")
+        return "I would like to report user '\(author)', author of post https://www.shacknews.com/chatty?id=" +  String(postId) + "#item_" + String(postId) + " for not adhering to the Shacknews guidelines."
     }
     
     public func submitComplaint(author: String, postId: Int) {
