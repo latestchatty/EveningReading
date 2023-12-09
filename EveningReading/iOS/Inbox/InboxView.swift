@@ -20,28 +20,28 @@ struct InboxView: View {
     @State private var showNoMessages: Bool = false
     
     private func getMessages() {
-        if self.messageStore.messages.count > 0
+        if messageViewModel.messages.count > 0
         {
             return
         }
-        messageStore.getMessages(page: "1", append: false, delay: 0)
+        messageViewModel.getMessages(page: 1, append: false, delay: 0)
     }
     
     private func allMessages() -> [Message] {
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
             self.showRedacted = false
         }
-        return self.messageStore.messages
+        return messageViewModel.messages
     }
     
     var body: some View {
         VStack {
             NewMessageView(showingNewMessageSheet: self.$showingNewMessageSheet, messageId: Binding.constant(0), recipientName: Binding.constant(""), subjectText: Binding.constant(""), bodyText: Binding.constant(""))
 
-            RefreshableScrollView(height: 70, refreshing: self.$messageStore.gettingMessages, scrollTarget: self.$messageStore.scrollTarget, scrollTargetTop: self.$messageStore.scrollTargetTop) {
+            RefreshableScrollView(height: 70, refreshing: $messageViewModel.gettingMessages, scrollTarget: $messageViewModel.scrollTarget, scrollTargetTop: $messageViewModel.scrollTargetTop) {
                 
                 // No messages
-                if (self.showNoMessages || !self.appSessionStore.isSignedIn || (self.messageStore.fetchComplete && self.messageStore.messages.count < 1)) && !self.showRedacted {
+                if (self.showNoMessages || !self.appSessionStore.isSignedIn || (messageViewModel.fetchComplete && messageViewModel.messages.count < 1)) && !self.showRedacted {
                     VStack {
                         HStack {
                             Spacer()
@@ -80,14 +80,14 @@ struct InboxView: View {
                            }
                            HStack {
                                Spacer()
-                               ChatBubble(direction: .left, bgcolor: (message.unread && !self.messageStore.markedMessages.contains(message.id) ? Color("ChatBubblePrimaryUnread") :  Color("ChatBubblePrimary"))) {
+                               ChatBubble(direction: .left, bgcolor: (message.unread && !messageViewModel.markedMessages.contains(message.id) ? Color("ChatBubblePrimaryUnread") :  Color("ChatBubblePrimary"))) {
                                    VStack(alignment: .leading) {
                                        HStack {
                                            Text(message.subject)
                                                .bold()
                                                .lineLimit(1)
                                                .font(.caption)
-                                            .foregroundColor(message.unread && !self.messageStore.markedMessages.contains(message.id) ? Color(UIColor.systemYellow) :  Color(UIColor.systemBlue))
+                                            .foregroundColor(message.unread && !messageViewModel.markedMessages.contains(message.id) ? Color(UIColor.systemYellow) :  Color(UIColor.systemBlue))
                                                .padding(.init(top: 20, leading: 20, bottom: 5, trailing: 20))
                                            Spacer()
                                            Image(systemName: "chevron.right")
@@ -114,12 +114,11 @@ struct InboxView: View {
                     .id(message.id)
                 }
                 
-            // Padding to show all of the last message
-            VStack {
-                Spacer().frame(width: UIScreen.main.bounds.width, height: 30)
-            }
-            .id(9999999999993)
-                
+                // Padding to show all of the last message
+                VStack {
+                    Spacer().frame(width: UIScreen.main.bounds.width, height: 30)
+                }
+                .id(9999999999993)
             }
         }
         .onAppear(perform: getMessages)

@@ -57,6 +57,7 @@ struct NewMessageView: View {
                     Button("Cancel") {
                         clearNewMessageSheet()
                     }
+                    .foregroundColor(self.colorScheme == .dark ? Color(UIColor.white) : Color(UIColor.systemBlue))
                     Spacer()
                     
                     // Send
