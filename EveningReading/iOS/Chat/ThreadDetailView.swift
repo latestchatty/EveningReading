@@ -349,9 +349,6 @@ struct ThreadDetailView: View {
                                         getChildren(parentId: siblingPost.id)
                                     }
                                     
-                                    print("log: threadId = \(self.threadId)")
-                                    //print("log: postsToHighlight = \(self.postsToHighlight)")
-                                    
                                     self.chatStore.scrollTargetThread = post.id
                                     self.selectedPostRichText = RichTextBuilder.getRichText(postBody: post.body)
                                     if appSessionStore.disableAnimation {

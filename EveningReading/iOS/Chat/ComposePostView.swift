@@ -231,7 +231,7 @@ struct ComposePostView: View {
                             Button("Cancel") {
                                 clearComposeSheet()
                             }
-                            .foregroundColor(self.colorScheme == .dark ? Color(UIColor.white) : Color(UIColor.systemBlue))
+                            //.foregroundColor(self.colorScheme == .dark ? Color(UIColor.white) : Color(UIColor.systemBlue))
                             
                             Spacer()
 
@@ -306,7 +306,7 @@ struct ComposePostView: View {
                         }
 
                         /*
-                        // no way to change the background yet :(
+                        // No way to change the background in supported iOS versions
                         if appSessionStore.isDarkMode {
                             TextEditor(text: self.$postBody)
                                 .border(Color(UIColor.systemGray5))

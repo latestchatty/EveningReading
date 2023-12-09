@@ -154,6 +154,81 @@ class MessageViewModel: ObservableObject {
         }.resume()
     }
     
+    func submitMessage(recipient: String, subject: String, body: String) {
+        let username = UserHelper.getUserName()
+        let password = UserHelper.getUserPassword()
+
+        submitMessageToAPI(username: username, password: password, recipient: recipient, subject: subject, body: body) { result in
+            DispatchQueue.main.async {
+                // TODO: Show something in the UI if success vs fail?
+                switch result {
+                case .success(let response):
+                    if response.result == "success" {
+                        // Send message success
+                        print("submitMessage message sent")
+                    } else {
+                        // Send message failure
+                        print("submitMessage failure")
+                    }
+                case .failure:
+                    // Send message failure
+                    print("submitMessage failure")
+                }
+            }
+        }
+    }
     
+    public func submitMessageToAPI(username: String, password: String, recipient: String, subject: String, body: String, handler: @escaping (Result<SubmitMessageResponse, Error>) -> Void) {
+        
+        let session: URLSession = .shared
+        let decoder: JSONDecoder = .init()
+        
+        let newPostUrl = URL(string: "https://winchatty.com/v2/sendMessage")!
+        var components = URLComponents(url: newPostUrl, resolvingAgainstBaseURL: false)!
+        components.queryItems = [
+            URLQueryItem(name: "username", value: username),
+            URLQueryItem(name: "password", value: password),
+            URLQueryItem(name: "to", value: recipient),
+            URLQueryItem(name: "subject", value: subject),
+            URLQueryItem(name: "body", value: body)
+        ]
+        
+        guard
+            let query = components.url!.query
+            else { preconditionFailure("Can't create url components...") }
+        
+        var request = URLRequest(url: newPostUrl)
+        request.httpMethod = "POST"
+        request.httpBody = Data(query.utf8)
+
+        let task = session.dataTask(with: request as URLRequest, completionHandler: { data, response, error in
+            guard error == nil else {
+                handler(.failure(error!))
+                return
+            }
+            guard let data = data else {
+                handler(.failure(error!))
+                return
+            }
+            do {
+                if try JSONSerialization.jsonObject(with: data, options: .mutableContainers) is [String: Any] {
+                    var didProcessResponse = false
+                    do {
+                        let successResponse = try decoder.decode(SubmitMessageResponse.self, from: data)
+                        didProcessResponse = true
+                        handler(.success(successResponse))
+                    } catch {
+                        handler(.failure(error))
+                    }
+                    if !didProcessResponse {
+                        handler(.failure(error!))
+                    }
+                }
+            } catch let error {
+                print(error.localizedDescription)
+            }
+        })
+        task.resume()
+    }
     
 }

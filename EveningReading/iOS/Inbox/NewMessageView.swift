@@ -10,8 +10,9 @@ import SwiftUI
 struct NewMessageView: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var appSessionStore: AppSessionStore
-    @EnvironmentObject var messageStore: MessageStore
     @EnvironmentObject var notifications: Notifications
+    
+    @StateObject var messageViewModel = MessageViewModel()
     
     @Binding public var showingNewMessageSheet: Bool
     public var messageId: Int
@@ -51,8 +52,7 @@ struct NewMessageView: View {
     var body: some View {
         Spacer().frame(width: 0, height: 0)
         .sheet(isPresented: $showingNewMessageSheet) {
-            VStack {
-                
+            VStack {                
                 // Buttons
                 HStack {
                     Spacer().frame(width: 10)
@@ -60,20 +60,16 @@ struct NewMessageView: View {
                     Button("Cancel") {
                         clearNewMessageSheet()
                     }
-                    .foregroundColor(self.colorScheme == .dark ? Color(UIColor.white) : Color(UIColor.systemBlue))
                     Spacer()
                     
                     // Send
                     Button("Send") {
                         DispatchQueue.main.async {
-                            self.messageStore.submitMessage(recipient: self.messageRecipient, subject: self.messageSubjectText, body: self.messageBodyText)
+                            messageViewModel.submitMessage(recipient: self.messageRecipient, subject: self.messageSubjectText, body: self.messageBodyText)
                             self.messageRecipient = ""
                             self.messageSubjectText = ""
                             self.messageBodyText = ""
                             self.showingNewMessageSheet = false
-                        }
-                        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(10)) {
-                            //self.showingSubmitAlert = true
                         }
                     }
                     .frame(width: 70, height: 30)
@@ -97,6 +93,7 @@ struct NewMessageView: View {
                         .foregroundColor(Color.black)
                         .cornerRadius(4.0)
                         .padding(EdgeInsets(top: 0, leading: 5, bottom: 15, trailing: 5))
+                        .disableAutocorrection(true)
                 }
                 
                 // Subject
@@ -116,7 +113,7 @@ struct NewMessageView: View {
                 }
                 
                 // TextEditor
-                // no way to change the background yet :(
+                // No way to change the background with supported iOS versions
                 if colorScheme == .light {
                     TextEditor(text: self.$messageBodyText)
                         .border(Color(UIColor.systemGray5))
