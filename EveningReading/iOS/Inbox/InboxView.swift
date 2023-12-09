@@ -79,6 +79,7 @@ struct InboxView: View {
                            }
                            HStack {
                                Spacer()
+                               // TODO: Fix bug where the chat bubble is not turning gray after marking as read
                                ChatBubble(direction: .left, bgcolor: (message.unread && !messageViewModel.markedMessages.contains(message.id) ? Color("ChatBubblePrimaryUnread") : Color("ChatBubblePrimary"))) {
                                    VStack(alignment: .leading) {
                                        HStack {

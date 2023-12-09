@@ -321,7 +321,7 @@ class MessageViewModel: ObservableObject {
     public func submitComplaint(author: String, postId: Int) {
         if let shackERUser = Bundle.main.infoDictionary?["SHACK_ERUSER"] as? String {
             if let shackERPass = Bundle.main.infoDictionary?["SHACK_ERPASS"] as? String {
-                submitMessageToAPI(username: shackERUser, password: shackERPass, recipient: "Duke Nuked", subject: "Reporting Author of Post", body: getComplaintText(author: author, postId: postId)) { [weak self] result in
+                submitMessageToAPI(username: shackERUser, password: shackERPass, recipient: "Duke Nuked", subject: "Reporting Author of Post", body: getComplaintText(author: author, postId: postId)) { result in
                     DispatchQueue.main.async {
                         // TODO: Show some sort of indicator if success or fail?
                         switch result {
