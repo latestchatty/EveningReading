@@ -15,9 +15,6 @@ class MessageViewModel: ObservableObject {
     @Published var fetchComplete: Bool = false
     @Published var scrollTarget: Int?
     @Published var scrollTargetTop: Int?
-    @Published var showingReportUserSheet: Bool = false
-    @Published var reportAuthorName = ""
-    @Published var reportAuthorForPostId = 0
     
     @Published var gettingMessages: Bool = false {
         didSet {

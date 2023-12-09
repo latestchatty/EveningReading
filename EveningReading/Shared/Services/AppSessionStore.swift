@@ -35,6 +35,11 @@ class AppSessionStore : ObservableObject {
     @Published var showingPostId = 0
     @Published var showingPostWithId: [Int : Bool] = [:]
     
+    // Report user for post
+    @Published var showingReportUserSheet: Bool = false
+    @Published var reportAuthorName = ""
+    @Published var reportAuthorForPostId = 0
+    
     // Preferences
     @Published var displayPostAuthor: Bool = true {
         didSet {

@@ -20,16 +20,16 @@ struct macOSReportUserView: View {
     var body: some View {
         VStack(spacing: 0) {
             Text("")
-                .sheet(isPresented: $messageViewModel.showingReportUserSheet) {
+                .sheet(isPresented: $appSessionStore.showingReportUserSheet) {
                     ZStack {
                         VStack {}.frame(width: 800, height: 450)
                         .onAppear() {
-                            messageBody = messageViewModel.getComplaintText(author: messageViewModel.reportAuthorName, postId: messageViewModel.reportAuthorForPostId)
+                            messageBody = messageViewModel.getComplaintText(author: appSessionStore.reportAuthorName, postId: appSessionStore.reportAuthorForPostId)
                         }
                         VStack {
                             HStack {
                                 Button(action: {
-                                    messageViewModel.showingReportUserSheet = false
+                                    appSessionStore.showingReportUserSheet = false
                                     messageBody = ""
                                 }) {
                                     Image(systemName: "xmark")
@@ -38,7 +38,7 @@ struct macOSReportUserView: View {
                                 .padding()
                                 .keyboardShortcut(.cancelAction)
                                 
-                                Text("Report \(messageViewModel.reportAuthorName)")
+                                Text("Report \(appSessionStore.reportAuthorName)")
                                     .bold()
                                     .font(.body)
                                 Spacer()
@@ -58,11 +58,11 @@ struct macOSReportUserView: View {
                             .padding(.vertical)
                             .alert(isPresented: self.$showingSubmitAlert) {
                                 Alert(title: Text("Report User?"), message: Text(""), primaryButton: .destructive(Text("Yes")) {
-                                    messageViewModel.submitComplaint(author: messageViewModel.reportAuthorName, postId: 0)
-                                    messageViewModel.showingReportUserSheet = false
+                                    messageViewModel.submitComplaint(author: appSessionStore.reportAuthorName, postId: 0)
+                                    appSessionStore.showingReportUserSheet = false
                                     messageBody = ""
-                                    messageViewModel.reportAuthorForPostId = 0
-                                    messageViewModel.reportAuthorName = ""
+                                    appSessionStore.reportAuthorForPostId = 0
+                                    appSessionStore.reportAuthorName = ""
                                 }, secondaryButton: .cancel() {
                                     
                                 })

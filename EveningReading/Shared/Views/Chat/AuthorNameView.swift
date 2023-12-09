@@ -71,9 +71,9 @@ struct AuthorNameView: View {
                     */
                     Button(action: {
                         // report user
-                        messageViewModel.reportAuthorName = self.name
-                        messageViewModel.showingReportUserSheet = true
-                        messageViewModel.reportAuthorForPostId = self.postId
+                        appSessionStore.reportAuthorName = self.name
+                        appSessionStore.showingReportUserSheet = true
+                        appSessionStore.reportAuthorForPostId = self.postId
                     }) {
                         Text("Report User")
                         Image(systemName: "exclamationmark.circle")
