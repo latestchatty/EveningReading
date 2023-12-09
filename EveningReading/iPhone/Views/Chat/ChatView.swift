@@ -5,9 +5,6 @@
 //  Created by Chris Hodge on 5/2/21.
 //
 
-// https://blckbirds.com/post/mastering-pull-to-refresh-in-swiftui/
-// https://swift-cast.com/2020/10/1/
-
 import SwiftUI
 
 struct ChatView: View {
@@ -48,10 +45,6 @@ struct ChatView: View {
     var body: some View {
         ZStack {
             VStack {
-                // Comment out to preview
-                //GoToPostView(currentViewName: "ChatView")
-                
-                // height: 70
                 RefreshableScrollView(height: 70, refreshing: self.$chatStore.gettingChat, scrollTarget: self.$chatStore.scrollTargetChat, scrollTargetTop: self.$chatStore.scrollTargetChatTop) {
                     
                     // No Internet/Data
@@ -84,7 +77,6 @@ struct ChatView: View {
                     }.id(9999999999993)
                     
                 }
-                //.overlay(PushNotificationView(isAlertShowing: self.$isPushNotificationAlertShowing))
             }
             
             .overlay(NoticeView(show: $chatStore.showingFavoriteNotice, message: .constant("Added User!")))
@@ -172,7 +164,6 @@ struct ChatView: View {
         
         // Reset active thread on iPhone
         .onAppear() {
-            appSessionStore.currentViewName = "ChatView"
             if UIDevice.current.userInterfaceIdiom == .phone {
                 chatStore.activeThreadId = 0
             }

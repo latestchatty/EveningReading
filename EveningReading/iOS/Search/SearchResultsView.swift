@@ -32,8 +32,6 @@ struct SearchResultsView: View {
     
     var body: some View {
         VStack {            
-            //GoToPostView()
-            
             if !showingLoading && searchResults.count < 1 {
                 LazyVStack {
                     Spacer()

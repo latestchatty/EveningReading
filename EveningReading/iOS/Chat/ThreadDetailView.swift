@@ -247,7 +247,6 @@ struct ThreadDetailView: View {
             
             // Comment out to see preview (as well as overlay below)
             if UIDevice.current.userInterfaceIdiom == .phone {
-                //GoToPostView(currentViewName: "ThreadView")
                 GoToShackLinkView()
             }
             
@@ -469,9 +468,7 @@ struct ThreadDetailView: View {
         .disabled(self.isGettingThread || chatStore.gettingThread)
         
         // Fetch data and settings on load
-        .onAppear(perform: {
-            appSessionStore.currentViewName = "ThreadView"
-            
+        .onAppear(perform: {            
             if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil {
                 getUserData()
                 getThreadData()

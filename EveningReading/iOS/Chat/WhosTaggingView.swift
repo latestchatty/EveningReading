@@ -30,165 +30,160 @@ struct WhosTaggingView: View {
     }
     
     var body: some View {
-        //VStack {
-            Spacer().frame(width: 0, height: 0)
-            .sheet(isPresented: $showingWhosTaggingView) {
-                VStack {
-                    ScrollView {
-                        HStack {
-                            Spacer()
-                            Button(action: { self.showingWhosTaggingView = false }) {
-                                Rectangle()
-                                    .foregroundColor(Color(UIColor.systemFill))
-                                    .frame(width: 40, height: 5)
-                                    .cornerRadius(3)
-                                    .opacity(0.5)
-                            }
-                            Spacer()
+        Spacer().frame(width: 0, height: 0)
+        .sheet(isPresented: $showingWhosTaggingView) {
+            VStack {
+                ScrollView {
+                    HStack {
+                        Spacer()
+                        Button(action: { self.showingWhosTaggingView = false }) {
+                            Rectangle()
+                                .foregroundColor(Color(UIColor.systemFill))
+                                .frame(width: 40, height: 5)
+                                .cornerRadius(3)
+                                .opacity(0.5)
                         }
-                        .padding(.top, 10)
-                        .padding(.bottom, 20)
-                        .onAppear(perform: fetchRaters)
-                        .onDisappear(perform: onSheetClosed)
+                        Spacer()
+                    }
+                    .padding(.top, 10)
+                    .padding(.bottom, 20)
+                    .onAppear(perform: fetchRaters)
+                    .onDisappear(perform: onSheetClosed)
 
-                        Text("Who's Tagging?")
-                            .bold()
-                            .font(.body)
-                            .foregroundColor(Color(UIColor.label))
-                            .padding(.horizontal, 20)
-                            .padding(.bottom, self.hideRaters ? 2600 : 1e-10)
-                    
-                        VStack {
-                            if (chatStore.raters.filter{ $0.tag == String(PostTagKey.lol.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames.count > 0 {
-                                VStack {
-                                    HStack {
-                                        Text("lol")
-                                            .bold()
-                                            .font(.body)
-                                            .foregroundColor(PostTagColor["lol"])
-                                            .padding(.leading, 10)
-                                        Spacer()
-                                    }
-                                
-                                    Divider()
-                                    
-                                    TagCloudView(tags: (chatStore.raters.filter{ $0.tag == String(PostTagKey.lol.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames, tagColor: PostTagColor["lol"]!)
-                                }.padding(.bottom, 20)
-                            }
+                    Text("Who's Tagging?")
+                        .bold()
+                        .font(.body)
+                        .foregroundColor(Color(UIColor.label))
+                        .padding(.horizontal, 20)
+                        .padding(.bottom, self.hideRaters ? 2600 : 1e-10)
+                
+                    VStack {
+                        if (chatStore.raters.filter{ $0.tag == String(PostTagKey.lol.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames.count > 0 {
+                            VStack {
+                                HStack {
+                                    Text("lol")
+                                        .bold()
+                                        .font(.body)
+                                        .foregroundColor(PostTagColor["lol"])
+                                        .padding(.leading, 10)
+                                    Spacer()
+                                }
                             
-                            if (chatStore.raters.filter{ $0.tag == String(PostTagKey.inf.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames.count > 0 {
-                                VStack {
-                                    HStack {
-                                        Text("inf")
-                                            .bold()
-                                            .font(.body)
-                                            .foregroundColor(PostTagColor["inf"])
-                                            .padding(.leading, 10)
-                                        Spacer()
-                                    }
+                                Divider()
                                 
-                                    Divider()
-                                    
-                                    TagCloudView(tags: (chatStore.raters.filter{ $0.tag == String(PostTagKey.inf.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames, tagColor: PostTagColor["inf"]!)
-                                }.padding(.bottom, 20)
-                            }
-                            
-                            if (chatStore.raters.filter{ $0.tag == String(PostTagKey.unf.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames.count > 0 {
-                                VStack {
-                                    HStack {
-                                        Text("unf")
-                                            .bold()
-                                            .font(.body)
-                                            .foregroundColor(PostTagColor["unf"])
-                                            .padding(.leading, 10)
-                                        Spacer()
-                                    }
-                                
-                                    Divider()
-
-                                    TagCloudView(tags: (chatStore.raters.filter{ $0.tag == String(PostTagKey.unf.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames, tagColor: PostTagColor["unf"]!)
-                                }.padding(.bottom, 20)
-                            }
-                            
-                            if (chatStore.raters.filter{ $0.tag == String(PostTagKey.tag.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames.count > 0 {
-                                VStack {
-                                    HStack {
-                                        Text("tag")
-                                            .bold()
-                                            .font(.body)
-                                            .foregroundColor(PostTagColor["tag"])
-                                            .padding(.leading, 10)
-                                        Spacer()
-                                    }
-                                
-                                    Divider()
-                                    
-                                    TagCloudView(tags: (chatStore.raters.filter{ $0.tag == String(PostTagKey.tag.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames, tagColor: PostTagColor["tag"]!)
-                                }.padding(.bottom, 20)
-                            }
-                            
-                            if (chatStore.raters.filter{ $0.tag == String(PostTagKey.wtf.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames.count > 0 {
-                                VStack {
-                                    HStack {
-                                        Text("wtf")
-                                            .bold()
-                                            .font(.body)
-                                            .foregroundColor(PostTagColor["wtf"])
-                                            .padding(.leading, 10)
-                                        Spacer()
-                                    }
-                                
-                                    Divider()
-                                    
-                                    TagCloudView(tags: (chatStore.raters.filter{ $0.tag == String(PostTagKey.wtf.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames, tagColor: PostTagColor["wtf"]!)
-                                }.padding(.bottom, 20)
-                            }
-                            
-                            if (chatStore.raters.filter{ $0.tag == String(PostTagKey.wow.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames.count > 0 {
-                                VStack {
-                                    HStack {
-                                        Text("wow")
-                                            .bold()
-                                            .font(.body)
-                                            .foregroundColor(PostTagColor["wow"])
-                                            .padding(.leading, 10)
-                                        Spacer()
-                                    }
-                                
-                                    Divider()
-                                    
-                                    TagCloudView(tags: (chatStore.raters.filter{ $0.tag == String(PostTagKey.wow.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames, tagColor: PostTagColor["wow"]!)
-                                }.padding(.bottom, 20)
-                            }
-                            
-                            if (chatStore.raters.filter{ $0.tag == String(PostTagKey.aww.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames.count > 0 {
-                                VStack {
-                                    HStack {
-                                        Text("aww")
-                                            .bold()
-                                            .font(.body)
-                                            .foregroundColor(PostTagColor["aww"])
-                                            .padding(.leading, 10)
-                                        Spacer()
-                                    }
-                                
-                                    Divider()
-
-                                    
-                                    TagCloudView(tags: (chatStore.raters.filter{ $0.tag == String(PostTagKey.aww.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames, tagColor: PostTagColor["aww"]!)
-                                }.padding(.bottom, 20)
-                            }
-                    
-                            Spacer()
+                                TagCloudView(tags: (chatStore.raters.filter{ $0.tag == String(PostTagKey.lol.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames, tagColor: PostTagColor["lol"]!)
+                            }.padding(.bottom, 20)
                         }
-                    } // ScrollView
-                    
+                        
+                        if (chatStore.raters.filter{ $0.tag == String(PostTagKey.inf.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames.count > 0 {
+                            VStack {
+                                HStack {
+                                    Text("inf")
+                                        .bold()
+                                        .font(.body)
+                                        .foregroundColor(PostTagColor["inf"])
+                                        .padding(.leading, 10)
+                                    Spacer()
+                                }
+                            
+                                Divider()
+                                
+                                TagCloudView(tags: (chatStore.raters.filter{ $0.tag == String(PostTagKey.inf.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames, tagColor: PostTagColor["inf"]!)
+                            }.padding(.bottom, 20)
+                        }
+                        
+                        if (chatStore.raters.filter{ $0.tag == String(PostTagKey.unf.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames.count > 0 {
+                            VStack {
+                                HStack {
+                                    Text("unf")
+                                        .bold()
+                                        .font(.body)
+                                        .foregroundColor(PostTagColor["unf"])
+                                        .padding(.leading, 10)
+                                    Spacer()
+                                }
+                            
+                                Divider()
+
+                                TagCloudView(tags: (chatStore.raters.filter{ $0.tag == String(PostTagKey.unf.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames, tagColor: PostTagColor["unf"]!)
+                            }.padding(.bottom, 20)
+                        }
+                        
+                        if (chatStore.raters.filter{ $0.tag == String(PostTagKey.tag.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames.count > 0 {
+                            VStack {
+                                HStack {
+                                    Text("tag")
+                                        .bold()
+                                        .font(.body)
+                                        .foregroundColor(PostTagColor["tag"])
+                                        .padding(.leading, 10)
+                                    Spacer()
+                                }
+                            
+                                Divider()
+                                
+                                TagCloudView(tags: (chatStore.raters.filter{ $0.tag == String(PostTagKey.tag.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames, tagColor: PostTagColor["tag"]!)
+                            }.padding(.bottom, 20)
+                        }
+                        
+                        if (chatStore.raters.filter{ $0.tag == String(PostTagKey.wtf.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames.count > 0 {
+                            VStack {
+                                HStack {
+                                    Text("wtf")
+                                        .bold()
+                                        .font(.body)
+                                        .foregroundColor(PostTagColor["wtf"])
+                                        .padding(.leading, 10)
+                                    Spacer()
+                                }
+                            
+                                Divider()
+                                
+                                TagCloudView(tags: (chatStore.raters.filter{ $0.tag == String(PostTagKey.wtf.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames, tagColor: PostTagColor["wtf"]!)
+                            }.padding(.bottom, 20)
+                        }
+                        
+                        if (chatStore.raters.filter{ $0.tag == String(PostTagKey.wow.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames.count > 0 {
+                            VStack {
+                                HStack {
+                                    Text("wow")
+                                        .bold()
+                                        .font(.body)
+                                        .foregroundColor(PostTagColor["wow"])
+                                        .padding(.leading, 10)
+                                    Spacer()
+                                }
+                            
+                                Divider()
+                                
+                                TagCloudView(tags: (chatStore.raters.filter{ $0.tag == String(PostTagKey.wow.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames, tagColor: PostTagColor["wow"]!)
+                            }.padding(.bottom, 20)
+                        }
+                        
+                        if (chatStore.raters.filter{ $0.tag == String(PostTagKey.aww.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames.count > 0 {
+                            VStack {
+                                HStack {
+                                    Text("aww")
+                                        .bold()
+                                        .font(.body)
+                                        .foregroundColor(PostTagColor["aww"])
+                                        .padding(.leading, 10)
+                                    Spacer()
+                                }
+                            
+                                Divider()
+                                
+                                TagCloudView(tags: (chatStore.raters.filter{ $0.tag == String(PostTagKey.aww.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames, tagColor: PostTagColor["aww"]!)
+                            }.padding(.bottom, 20)
+                        }
+                
+                        Spacer()
+                    }
                 }
-                .edgesIgnoringSafeArea(.all)
-                .overlay(LoadingView(show: self.$hideRaters, title: .constant("")))
-            } // sheet
-        //}
-        //.frame(height: 25)
+            }
+            .edgesIgnoringSafeArea(.all)
+            .overlay(LoadingView(show: self.$hideRaters, title: .constant("")))
+        }
     }
 }
 

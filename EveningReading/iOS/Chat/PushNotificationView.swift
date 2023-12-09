@@ -65,12 +65,9 @@ struct PushNotificationViewChat: View {
         }
         // Deep link to post from push notification
         .onReceive(notifications.$notificationData) { value in
-            print(".onReceive(notifications.$notificationData) Chat")
             if let postId = value?.notification.request.content.userInfo["postid"] {
-                print("got postId \(postId), previously showed \(appSessionStore.showingPostId)")
                 if String("\(postId)").isInt && appSessionStore.showingPostId != Int(String("\(postId)")) ?? 0 {
                     print("prompting for postID \(postId)")
-                    //appSessionStore.showingPostId = Int(String("\(postId)")) ?? 0
                     appSessionStore.showingPostId = Int(String("\(postId)")) ?? 0
                     self.isAlertShowing = true
                 }

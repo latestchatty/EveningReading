@@ -85,44 +85,23 @@ struct ThreadRow: View {
     
     private var threadRowDetail: some View {
         ZStack {
-            
             // Category Color
-            //if self.rootPostCategory != "ontopic" {
-                HStack {
-                    GeometryReader { categoryGeo in
-                        Path { categoryPath in
-                            categoryPath.move(to: CGPoint(x: 0, y: 19))
-                            categoryPath.addLine(to: CGPoint(x: 0, y: categoryGeo.size.height - 15))
-                            categoryPath.addLine(to: CGPoint(x: categoryGeo.size.width, y: categoryGeo.size.height - 15))
-                            categoryPath.addLine(to: CGPoint(x: categoryGeo.size.width, y: 19))
-                        }
-                        .fill(ThreadCategoryColor[self.rootPostCategory]!)
+            HStack {
+                GeometryReader { categoryGeo in
+                    Path { categoryPath in
+                        categoryPath.move(to: CGPoint(x: 0, y: 19))
+                        categoryPath.addLine(to: CGPoint(x: 0, y: categoryGeo.size.height - 15))
+                        categoryPath.addLine(to: CGPoint(x: categoryGeo.size.width, y: categoryGeo.size.height - 15))
+                        categoryPath.addLine(to: CGPoint(x: categoryGeo.size.width, y: 19))
                     }
-                    .frame(width: 3)
-                    Spacer()
+                    .fill(ThreadCategoryColor[self.rootPostCategory]!)
                 }
-            //}
-            /*
-            else if self.rootPostLols.count > 0 && self.rootPostCategory == "ontopic"  {
-                HStack {
-                    GeometryReader { categoryGeo in
-                        Path { categoryPath in
-                            categoryPath.move(to: CGPoint(x: 0, y: 0))
-                            categoryPath.addLine(to: CGPoint(x: 0, y: categoryGeo.size.height - 21))
-                            categoryPath.addLine(to: CGPoint(x: categoryGeo.size.width, y: categoryGeo.size.height - 21))
-                            categoryPath.addLine(to: CGPoint(x: categoryGeo.size.width, y: 0))
-                        }
-                        .fill(Color(UIColor.systemGray))
-                    }
-                    .frame(width: 3)
-                    Spacer()
-                }
+                .frame(width: 3)
+                Spacer()
             }
-            */
-            
+        
             // Author, Contribution, Lols, Replies, Time, Preview
             VStack {
-                
                 HStack (alignment: .center) {
                     WhosTaggingView(showingWhosTaggingView: self.$showingWhosTaggingView)
                     
@@ -144,23 +123,6 @@ struct ThreadRow: View {
                             .frame(width: 10, height: 10)
                 }
                 
-                
-                /*
-                //if self.rootPostLols.count > 0 {
-                    HStack (alignment: .center) {
-                        Text("\(self.rootPostDate.fromISO8601Time())")
-                            .font(.caption2)
-                            .foregroundColor(Color("NoDataLabel"))
-                            .padding(.bottom, 5)
-                        Spacer()
-                        if self.rootPostLols.count > 0 {
-                            LolView(lols: self.rootPostLols, expanded: true, postId: self.threadId)
-                                .padding(.bottom, 5)
-                        }
-                    }
-                //}
-                */
-                
                 // Post Preview
                 ZStack {
                     HStack (alignment: .top) {
@@ -181,13 +143,10 @@ struct ThreadRow: View {
                 }
                 .frame(maxWidth: .infinity)
                 .background(RoundedCornersView(color: (self.contributed ? (self.activeThreadId == self.threadId ? Color("ChatBubbleSecondaryContributed") : Color("ChatBubblePrimaryContributed")) : (self.activeThreadId == self.threadId ? Color("ChatBubbleSecondary") : Color("ChatBubblePrimary")))))
-                //.padding(.bottom, 5)
                 .offset(y: -5)
                 .padding(.bottom, 10)
             }
             .padding(.horizontal, 10)
-            //.padding(.vertical, 10)
-            
         }
         
         // Actions

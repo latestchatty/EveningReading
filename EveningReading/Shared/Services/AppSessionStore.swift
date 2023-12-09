@@ -29,7 +29,6 @@ class AppSessionStore : ObservableObject {
     @Published var showingTagsView = false
     @Published var showingSettingsView = false
     @Published var showingPushNotificationThread = false
-    @Published var currentViewName = ""
     
     // Links and notifications open posts
     @Published var showingPost = false

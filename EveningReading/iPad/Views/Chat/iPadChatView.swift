@@ -28,11 +28,7 @@ struct iPadChatView: View {
     
     var body: some View {
         GeometryReader { geometry in
-            
-            //GoToPostView(currentViewName: "ChatView")
-            
             HStack (alignment: .top, spacing: 0) {
-                
                 // Navigation
                 VStack {
                     RefreshableScrollView(height: 70, refreshing: self.$chatStore.gettingChat, scrollTarget: self.$chatStore.scrollTargetChat, scrollTargetTop: self.$chatStore.scrollTargetChatTop) {
@@ -77,9 +73,7 @@ struct iPadChatView: View {
                     }
                 }
                 .frame(width: geometry.size.width * 0.65)
-                
             }
-
         }
         
         // View settings
@@ -91,10 +85,5 @@ struct iPadChatView: View {
         
         // New thread button
         .navigationBarItems(leading: Spacer().frame(width: 26, height: 16), trailing: ComposePostView(isRootPost: true))
-        
-        // Track current view
-        .onAppear() {
-            appSessionStore.currentViewName = "ChatView"
-        }
     }
 }

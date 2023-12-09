@@ -122,9 +122,3 @@ struct ModalContentExample: View {
         }
     }
 }
-
-struct MbModalHackViewExample_Previews: PreviewProvider {
-    static var previews: some View {
-        MbModalHackViewExample()
-    }
-}

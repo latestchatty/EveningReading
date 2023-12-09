@@ -172,7 +172,6 @@
 		838466E729D4F5D900228DDB /* FavoriteContributedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838466E629D4F5D900228DDB /* FavoriteContributedView.swift */; };
 		838466E929D634B300228DDB /* WatchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838466E829D634B300228DDB /* WatchService.swift */; };
 		838466EA29D6353900228DDB /* WatchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838466E829D634B300228DDB /* WatchService.swift */; };
-		8384748A28347F0F00D3D696 /* SwiftUIPullToRefresh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8384748928347F0F00D3D696 /* SwiftUIPullToRefresh.swift */; };
 		83A85CE52650360E007EBAC3 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19EA264F24FC00556E69 /* NotificationService.swift */; };
 		83A85CEB26515CBB007EBAC3 /* PushNotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A85CEA26515CBB007EBAC3 /* PushNotificationView.swift */; };
 		83A85CEF26551087007EBAC3 /* GoToShackLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A85CEE26551087007EBAC3 /* GoToShackLinkView.swift */; };
@@ -184,7 +183,6 @@
 		83A85D48265EC177007EBAC3 /* ShackTagsTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A85D47265EC177007EBAC3 /* ShackTagsTextView.swift */; };
 		83A85D4A265EE813007EBAC3 /* TagTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A85D49265EE813007EBAC3 /* TagTextView.swift */; };
 		83A85D4D2663C128007EBAC3 /* MbModalHackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A85D4C2663C128007EBAC3 /* MbModalHackView.swift */; };
-		83A85D512665084A007EBAC3 /* ThreadPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A85D5026650849007EBAC3 /* ThreadPreviewView.swift */; };
 		83A85D5526652F97007EBAC3 /* NewMessageBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A85D5426652F97007EBAC3 /* NewMessageBadgeView.swift */; };
 		83A85D5626668940007EBAC3 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83398134263F324C005614E8 /* PreferencesView.swift */; };
 		83A85D582666A1B2007EBAC3 /* LoadingPushNotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A85D572666A1B2007EBAC3 /* LoadingPushNotificationView.swift */; };
@@ -241,7 +239,6 @@
 		83AA19CB2648A3AD00556E69 /* DarkModeViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19CA2648A3AD00556E69 /* DarkModeViewModifier.swift */; };
 		83AA19CD26497D5300556E69 /* SearchResults.json in Resources */ = {isa = PBXBuildFile; fileRef = 83AA19CC26497D5300556E69 /* SearchResults.json */; };
 		83AA19CE26498FDE00556E69 /* SearchResults.json in Resources */ = {isa = PBXBuildFile; fileRef = 83AA19CC26497D5300556E69 /* SearchResults.json */; };
-		83AA19D02649B72D00556E69 /* GoToPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19CF2649B72D00556E69 /* GoToPostView.swift */; };
 		83AA19D3264ADDFF00556E69 /* LinkViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19D2264ADDFF00556E69 /* LinkViewer.swift */; };
 		83AA19D8264B367100556E69 /* PostPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19D7264B367100556E69 /* PostPreviewView.swift */; };
 		83AA19DA264BFBF100556E69 /* PostExpandedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19D9264BFBF100556E69 /* PostExpandedView.swift */; };
@@ -416,7 +413,6 @@
 		838466E429D4DE4300228DDB /* FavoriteUsersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteUsersView.swift; sourceTree = "<group>"; };
 		838466E629D4F5D900228DDB /* FavoriteContributedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteContributedView.swift; sourceTree = "<group>"; };
 		838466E829D634B300228DDB /* WatchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchService.swift; sourceTree = "<group>"; };
-		8384748928347F0F00D3D696 /* SwiftUIPullToRefresh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIPullToRefresh.swift; sourceTree = "<group>"; };
 		83A85CEA26515CBB007EBAC3 /* PushNotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationView.swift; sourceTree = "<group>"; };
 		83A85CEE26551087007EBAC3 /* GoToShackLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoToShackLinkView.swift; sourceTree = "<group>"; };
 		83A85CF226556F60007EBAC3 /* NotificationPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPreviewView.swift; sourceTree = "<group>"; };
@@ -427,7 +423,6 @@
 		83A85D47265EC177007EBAC3 /* ShackTagsTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShackTagsTextView.swift; sourceTree = "<group>"; };
 		83A85D49265EE813007EBAC3 /* TagTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagTextView.swift; sourceTree = "<group>"; };
 		83A85D4C2663C128007EBAC3 /* MbModalHackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MbModalHackView.swift; sourceTree = "<group>"; };
-		83A85D5026650849007EBAC3 /* ThreadPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadPreviewView.swift; sourceTree = "<group>"; };
 		83A85D5426652F97007EBAC3 /* NewMessageBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageBadgeView.swift; sourceTree = "<group>"; };
 		83A85D572666A1B2007EBAC3 /* LoadingPushNotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingPushNotificationView.swift; sourceTree = "<group>"; };
 		83AA19262645C43500556E69 /* PostDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDecorator.swift; sourceTree = "<group>"; };
@@ -465,7 +460,6 @@
 		83AA19C82648952400556E69 /* PostContextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostContextView.swift; sourceTree = "<group>"; };
 		83AA19CA2648A3AD00556E69 /* DarkModeViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkModeViewModifier.swift; sourceTree = "<group>"; };
 		83AA19CC26497D5300556E69 /* SearchResults.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SearchResults.json; sourceTree = "<group>"; };
-		83AA19CF2649B72D00556E69 /* GoToPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoToPostView.swift; sourceTree = "<group>"; };
 		83AA19D2264ADDFF00556E69 /* LinkViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkViewer.swift; sourceTree = "<group>"; };
 		83AA19D7264B367100556E69 /* PostPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPreviewView.swift; sourceTree = "<group>"; };
 		83AA19D9264BFBF100556E69 /* PostExpandedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostExpandedView.swift; sourceTree = "<group>"; };
@@ -928,7 +922,6 @@
 			isa = PBXGroup;
 			children = (
 				8339816E26405899005614E8 /* RefreshableScrollView.swift */,
-				8384748928347F0F00D3D696 /* SwiftUIPullToRefresh.swift */,
 			);
 			path = RefreshableScrollView;
 			sourceTree = "<group>";
@@ -983,7 +976,6 @@
 			isa = PBXGroup;
 			children = (
 				8339818026406402005614E8 /* ThreadRow.swift */,
-				83A85D5026650849007EBAC3 /* ThreadPreviewView.swift */,
 				8339817D264063E8005614E8 /* ThreadDetailView.swift */,
 				83AA19D7264B367100556E69 /* PostPreviewView.swift */,
 				83AA19D9264BFBF100556E69 /* PostExpandedView.swift */,
@@ -995,7 +987,6 @@
 				83FE336F27272DF8003FB55D /* WhosTaggingView.swift */,
 				83A85CEE26551087007EBAC3 /* GoToShackLinkView.swift */,
 				83A85CEA26515CBB007EBAC3 /* PushNotificationView.swift */,
-				83AA19CF2649B72D00556E69 /* GoToPostView.swift */,
 				83A85D27265BBC98007EBAC3 /* GoToPostViewHome.swift */,
 				83092F3529E07FA500E889BD /* CopyPostView.swift */,
 				83092F3729E0837400E889BD /* PostWebView.swift */,
@@ -1401,7 +1392,6 @@
 				831EB9CF2B24B9E700DA9433 /* RichTextModels.swift in Sources */,
 				83398140263F525F005614E8 /* iPadHomeButton.swift in Sources */,
 				833980D0263C914D005614E8 /* iPadContentView.swift in Sources */,
-				83A85D512665084A007EBAC3 /* ThreadPreviewView.swift in Sources */,
 				83AA19712646DE7100556E69 /* TagPostView.swift in Sources */,
 				838466E729D4F5D900228DDB /* FavoriteContributedView.swift in Sources */,
 				83AA19C4264870BC00556E69 /* ThreadNavigation.swift in Sources */,
@@ -1415,7 +1405,6 @@
 				838466E529D4DE4300228DDB /* FavoriteUsersView.swift in Sources */,
 				83092F3629E07FA500E889BD /* CopyPostView.swift in Sources */,
 				830BFB292B20E5A600F62089 /* MessageModels.swift in Sources */,
-				8384748A28347F0F00D3D696 /* SwiftUIPullToRefresh.swift in Sources */,
 				833980CE263C9137005614E8 /* iPhoneContentView.swift in Sources */,
 				83398127263F2E59005614E8 /* InboxView.swift in Sources */,
 				83AB388D266A60BC000A67B6 /* TagsWebView.swift in Sources */,
@@ -1434,7 +1423,6 @@
 				8339818826406F0B005614E8 /* TimeRemainingIndicator.swift in Sources */,
 				83AA19C2264862A000556E69 /* NewMessageButton.swift in Sources */,
 				833980FC263F0AF3005614E8 /* iPhoneArticlesView.swift in Sources */,
-				83AA19D02649B72D00556E69 /* GoToPostView.swift in Sources */,
 				833980F5263F0958005614E8 /* TrendingView.swift in Sources */,
 				83A85CE52650360E007EBAC3 /* NotificationService.swift in Sources */,
 				833981942640A232005614E8 /* LolView.swift in Sources */,

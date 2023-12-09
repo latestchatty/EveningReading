@@ -47,14 +47,6 @@ struct PostExpandedView: View {
                     }
                 }
                 
-                /*
-                Text(self.replyLines)
-                    .lineLimit(1)
-                    .fixedSize()
-                    .font(.custom("replylines", size: 25, relativeTo: .callout))
-                    .foregroundColor(Color("replyLines"))
-                */
-                
                 // Author name
                 AuthorNameView(name: appSessionStore.blockedAuthors.contains(self.postAuthor) ? "[blocked]" : self.postAuthor, postId: self.postId, op: self.op)
                 

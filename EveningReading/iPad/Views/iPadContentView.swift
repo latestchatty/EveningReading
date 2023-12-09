@@ -30,7 +30,6 @@ struct iPadContentView: View {
                                 let guidelinesAccepted = defaults.object(forKey: "GuidelinesAccepted") as? Bool ?? false
                                 self.showingGuidelinesView = !guidelinesAccepted
                             }
-                            appSessionStore.currentViewName = "HomeView"
                         }
                         iPadHomeButtons()
                             .environmentObject(appSessionStore)

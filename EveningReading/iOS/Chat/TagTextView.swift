@@ -196,7 +196,6 @@ struct TagTextView: View {
                         }
                     }
                 
-                
                 Spacer()
             }
             .frame(width: 290, height: 260)

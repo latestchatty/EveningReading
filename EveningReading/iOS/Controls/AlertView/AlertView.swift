@@ -92,11 +92,3 @@ struct AlertView: View {
         }
     }
 }
-
-struct AlertView_Previews: PreviewProvider {
-    
-    static var previews: some View {
-        AlertView(shown: .constant(true), alertAction: .constant(.others), message: "Submit post?", cancelOnly: false)
-            .environment(\.colorScheme, .dark)
-    }
-}

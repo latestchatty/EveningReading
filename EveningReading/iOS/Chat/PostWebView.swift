@@ -28,8 +28,6 @@ class PostWKWebView {
     let webViewProcessPool: WKProcessPool = WKProcessPool()
     let webViewConfig: WKWebViewConfiguration = WKWebViewConfiguration()
        
-    // Declare an initializer
-    // Because this class is singleton only one instance of this class can be created
     init() {
         self.webViewConfig.processPool = self.webViewProcessPool
         self.webView = WKWebView(frame: .zero, configuration: self.webViewConfig)

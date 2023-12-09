@@ -42,8 +42,6 @@ struct InboxView: View {
     
     var body: some View {
         VStack {
-            //GoToPostView()
-            
             NewMessageView(showingNewMessageSheet: self.$showingNewMessageSheet, messageId: Binding.constant(0), recipientName: Binding.constant(""), subjectText: Binding.constant(""), bodyText: Binding.constant(""))
 
             RefreshableScrollView(height: 70, refreshing: self.$messageStore.gettingMessages, scrollTarget: self.$messageStore.scrollTarget, scrollTargetTop: self.$messageStore.scrollTargetTop) {

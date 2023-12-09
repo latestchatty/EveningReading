@@ -48,19 +48,6 @@ struct PostPreviewView: View {
                 }
             }
             
-            /*
-            Text(String(self.postId))
-                .font(.callout)
-            */
-            
-            /*
-            Text(self.replyLines)
-                .lineLimit(1)
-                .fixedSize()
-                .font(.custom("replylines", size: 25, relativeTo: .callout))
-                .foregroundColor(Color("replyLines"))
-            */
-            
             // Rarely a post category is set on a reply
             if self.postCategory == "nws" {
                 Text("nws")

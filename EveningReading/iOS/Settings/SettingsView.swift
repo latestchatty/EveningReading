@@ -20,7 +20,6 @@ struct SettingsView: View {
     }
     
     var body: some View {
-        //GoToPostView()
         Form {
             Section(header: Text("PREFERENCES")) {
                 PreferencesView()

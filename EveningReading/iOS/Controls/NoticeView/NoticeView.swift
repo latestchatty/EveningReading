@@ -63,10 +63,3 @@ struct NoticeView : View {
         #endif
     }
 }
-
-struct NoticeView_Previews: PreviewProvider {
-    static var previews: some View {
-        NoticeView(show: .constant(true), message: .constant("Tagged!"))
-            .environmentObject(ChatStore(service: ChatService()))
-    }
-}

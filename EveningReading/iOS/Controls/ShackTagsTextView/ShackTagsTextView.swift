@@ -24,8 +24,6 @@ class ShackTags: NSObject, ObservableObject {
     var textEditorCurrentRange: UITextRange?
 }
 
-// var textEditorCurrentRange: UITextRange?
-
 struct ShackTagsTextView: UIViewRepresentable {
     @Binding var text: String
     @Binding var textStyle: UIFont.TextStyle

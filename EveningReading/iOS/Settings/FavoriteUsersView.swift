@@ -16,12 +16,13 @@ struct FavoriteUsersView: View {
     var body: some View {
         ScrollView {
             VStack {
-                if appSessionStore.favoriteAuthors.filter { $0 != "" }.isEmpty {
+                if appSessionStore.favoriteAuthors.filter({ $0 != "" }).isEmpty {
                     HStack {
                         Text("No favorites, long press a post to add users.")
                             .font(.body)
                             .bold()
                             .foregroundColor(Color("NoDataLabel"))
+                            .padding(.top, 20)
                     }
                 }
                 ForEach(appSessionStore.favoriteAuthors.filter { $0 != "" }, id: \.self) { favorite in

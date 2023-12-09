@@ -30,8 +30,6 @@ struct MessageDetailView: View {
     
     var body: some View {
         VStack {
-            //GoToPostView()
-            
             NewMessageView(showingNewMessageSheet: self.$showingNewMessageSheet, messageId: $messageId, recipientName: self.$messageRecipient, subjectText: Binding.constant("Re: \(self.messageSubject)"), bodyText: Binding.constant("\(self.messageBody.stringByDecodingHTMLEntities.newlineToBR) "))
             
             ScrollView {

@@ -21,8 +21,6 @@ struct AccountView: View {
     
     var body: some View {
         HStack {
-            //Spacer()
-            
             // Sign in/out button
             Button(action: {
                 if self.appSessionStore.isSignedIn {
@@ -57,8 +55,6 @@ struct AccountView: View {
                     
                 })
             }
-            
-            //Spacer()
         }
     }
 }
