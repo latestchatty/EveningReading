@@ -32,24 +32,6 @@ struct NotificationPreviewView: View {
                 .lineLimit(2)
                 .padding(.trailing, 20)
             Spacer()
-            /*
-            Button(action: {
-                for index in 0...appSessionStore.pushNotifications.count-1 {
-                    if appSessionStore.pushNotifications[index].postId == self.postId {
-                        appSessionStore.pushNotifications.remove(at: index)
-                        break
-                    }
-                }
-            }) {
-                Image(systemName: "xmark.circle.fill")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .imageScale(.small)
-                    .foregroundColor(.white)
-                    .frame(width: 22)
-                    .padding(.trailing, 20)
-            }
-            */
         }
         .background(Color("ArticleCardBackground"))
         .cornerRadius(10)

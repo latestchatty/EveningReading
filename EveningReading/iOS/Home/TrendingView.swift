@@ -77,7 +77,7 @@ struct TrendingView: View {
                 .frame(height: 480)
                 Spacer()
             }
-            .padding(.top, -40) // -20
+            .padding(.top, -40)
         }
         .onAppear(perform: fetchChat)
     }

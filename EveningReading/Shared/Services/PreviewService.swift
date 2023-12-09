@@ -8,7 +8,6 @@
 import Foundation
 
 let chatData: Chat = loadPreviewData("Chat.json")
-let messageData: MessageResponse = loadPreviewData("Messages.json")
 
 #if !os(watchOS)
 let articlesData: [Article] = loadPreviewData("Articles.json")
