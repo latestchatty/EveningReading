@@ -13,10 +13,10 @@ struct MessageDetailView: View {
     
     @StateObject var messageViewModel = MessageViewModel()
 
-    @Binding public var messageRecipient: String
-    @Binding public var messageSubject: String
-    @Binding public var messageBody: String
-    @Binding public var messageId: Int
+    public var messageRecipient: String
+    public var messageSubject: String
+    public var messageBody: String
+    public var messageId: Int
     
     @State private var showingNewMessageSheet: Bool = false
     @State private var hyperlinkUrl: String?

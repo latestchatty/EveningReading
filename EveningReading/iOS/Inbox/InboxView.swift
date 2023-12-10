@@ -74,7 +74,7 @@ struct InboxView: View {
                 
                 // Messages
                 ForEach(allMessages(), id: \.id) { message in
-                    NavigationLink(destination: MessageDetailView(messageRecipient: Binding.constant(message.from), messageSubject: Binding.constant(message.subject), messageBody: Binding.constant(message.body), messageId: .constant(message.id))) {
+                    NavigationLink(destination: MessageDetailView(messageRecipient: message.from, messageSubject: message.subject, messageBody: message.body, messageId: message.id)) {
                     
                         VStack {
                            HStack {
