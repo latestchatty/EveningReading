@@ -10,7 +10,7 @@ import SwiftUI
 struct InboxView: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var appSessionStore: AppSessionStore
-
+    
     @StateObject var messageViewModel = MessageViewModel()
     
     @State private var messages: [Message] = [Message]()
@@ -31,6 +31,22 @@ struct InboxView: View {
             self.showRedacted = false
         }
         return messageViewModel.messages
+    }
+    
+    func getBackgroundColor(_ message: Message) -> Binding<Color> {
+        var chatBubbleColor = Color("ChatBubblePrimary")
+        if message.unread && !appSessionStore.markedMessages.contains(message.id) {
+            chatBubbleColor = Color("ChatBubblePrimaryUnread")
+        }
+        return Binding(get: {chatBubbleColor}, set: {chatBubbleColor = $0})
+    }
+    
+    func getForegroundColor(_ message: Message) -> Color {
+        var chatBubbleTextColor = Color(UIColor.systemBlue)
+        if message.unread && !appSessionStore.markedMessages.contains(message.id) {
+            chatBubbleTextColor = Color(UIColor.systemYellow)
+        }
+        return chatBubbleTextColor
     }
     
     var body: some View {
@@ -79,15 +95,14 @@ struct InboxView: View {
                            }
                            HStack {
                                Spacer()
-                               // TODO: Fix bug where the chat bubble is not turning gray after marking as read
-                               ChatBubble(direction: .left, bgcolor: (message.unread && !messageViewModel.markedMessages.contains(message.id) ? Color("ChatBubblePrimaryUnread") : Color("ChatBubblePrimary"))) {
+                               ChatBubble(direction: .left, bgcolor: getBackgroundColor(message)) {
                                    VStack(alignment: .leading) {
                                        HStack {
                                            Text(message.subject)
                                                .bold()
                                                .lineLimit(1)
                                                .font(.caption)
-                                            .foregroundColor(message.unread && !messageViewModel.markedMessages.contains(message.id) ? Color(UIColor.systemYellow) :  Color(UIColor.systemBlue))
+                                               .foregroundColor(getForegroundColor(message))
                                                .padding(.init(top: 20, leading: 20, bottom: 5, trailing: 20))
                                            Spacer()
                                            Image(systemName: "chevron.right")

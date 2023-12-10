@@ -11,7 +11,6 @@ import SwiftUI
 class MessageViewModel: ObservableObject {
     @Published private(set) var messages: [Message] = []
     @Published var messageCount: MessageCount = MessageCount(total: 0, unread: 0)
-    @Published var markedMessages: [Int] = []
     @Published var fetchComplete: Bool = false
     @Published var scrollTarget: Int?
     @Published var scrollTargetTop: Int?
@@ -245,7 +244,6 @@ class MessageViewModel: ObservableObject {
     }
     
     public func markMessage(messageid: Int) {
-        markedMessages.append(messageid)
         markMessageViaAPI(messageid: messageid) { [weak self] result in
             DispatchQueue.main.async {
                 // TODO: Show something in the UI if success vs fail?
