@@ -69,7 +69,7 @@ struct InboxView: View {
                         }
                         Spacer()
                     }
-                    .id(9999999999991)
+                    .id(ScrollToTopId)
                 }
                 
                 // Messages
@@ -133,7 +133,7 @@ struct InboxView: View {
                 VStack {
                     Spacer().frame(width: UIScreen.main.bounds.width, height: 30)
                 }
-                .id(9999999999993)
+                .id(ScrollToBottomId)
             }
         }
         .onAppear(perform: getMessages)

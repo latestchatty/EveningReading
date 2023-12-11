@@ -44,7 +44,7 @@ struct iPadChatView: View {
                         // Scroll to bottom / padding
                         VStack {
                             Spacer().frame(maxWidth: .infinity).frame(height: 30)
-                        }.id(9999999999993)
+                        }.id(ScrollToBottomId)
                     }
                 }
                 .frame(width: geometry.size.width * 0.35)

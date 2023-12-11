@@ -22,8 +22,6 @@ struct RefreshableScrollView<Content: View>: View {
     @Binding var scrollTargetTop: Int?
     let content: Content
     
-    //let endRefreshTimer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-
     init(height: CGFloat = 80, refreshing: Binding<Bool>, scrollTarget: Binding<Int?>, scrollTargetTop: Binding<Int?>, @ViewBuilder content: () -> Content) {
         self.threshold = height
         self._refreshing = refreshing

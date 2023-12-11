@@ -296,7 +296,7 @@ struct ThreadDetailView: View {
                         .padding(.bottom, 10)
                     }
                     .padding(EdgeInsets(top: 0, leading: 10, bottom: -5, trailing: 10))
-                    .id(9999999999991)
+                    .id(ScrollToTopId)
                     .contextMenu {
                         PostContextView(showingWhosTaggingView: self.$showingWhosTaggingView, showingNewMessageView: self.$showingNewMessageView, messageRecipient: self.$messageRecipient, messageSubject: self.$messageSubject, messageBody: self.$messageBody, collapsed: self.$collapsePost, author: self.rootPostAuthor, postId: self.threadId, isRootPost: true, postBody: self.rootPostBody, showCopyPost: true)
                     }
@@ -368,7 +368,7 @@ struct ThreadDetailView: View {
                     // Padding so we can see the bottom post (and scroll to bottom)
                     VStack {
                         Spacer().frame(width: UIScreen.main.bounds.width, height: 30)
-                    }.id(9999999999993)
+                    }.id(ScrollToBottomId)
                     
                 }
                 .environmentObject(chatService)
@@ -386,7 +386,7 @@ struct ThreadDetailView: View {
         // Update view contents on iPad when thread selected
         .onReceive(chatService.$activeThreadId) { _ in
             if UIDevice.current.userInterfaceIdiom == .pad {
-                chatService.scrollTargetThreadTop = 9999999999991
+                chatService.scrollTargetThreadTop = ScrollToTopId
                 self.selectedPost = 0
                 getThreadData()
                 self.postList = [ChatPosts]()

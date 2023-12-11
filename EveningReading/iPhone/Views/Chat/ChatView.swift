@@ -55,7 +55,7 @@ struct ChatView: View {
                     // Scroll to top
                     VStack {
                         Spacer().frame(maxWidth: .infinity).frame(height: self.resultsPadding)
-                    }.id(9999999999991)
+                    }.id(ScrollToTopId)
                     
                     // All non-hidden threads
                     ForEach(filteredThreads(), id: \.threadId) { thread in
@@ -67,7 +67,7 @@ struct ChatView: View {
                     // Scroll to bottom / padding
                     VStack {
                         Spacer().frame(maxWidth: .infinity).frame(height: 30)
-                    }.id(9999999999993)
+                    }.id(ScrollToBottomId)
                     
                 }
             }
@@ -124,7 +124,7 @@ struct ChatView: View {
         .overlay(LoadingView(show: self.$isGettingChat))
         
         .onReceive(chatService.$didSubmitNewThread) { value in
-            chatService.scrollTargetChatTop = 9999999999991
+            chatService.scrollTargetChatTop = ScrollToTopId
             chatService.didGetChatStart = false
             self.isGettingChat = true
         }
@@ -132,7 +132,7 @@ struct ChatView: View {
         // Fetching chat data
         .onReceive(chatService.$didGetChatStart) { value in
             if value && chatService.didSubmitPost {
-                chatService.scrollTargetChatTop = 9999999999991
+                chatService.scrollTargetChatTop = ScrollToTopId
                 chatService.didGetChatStart = false
                 self.isGettingChat = true
                 chatService.gettingChat = true

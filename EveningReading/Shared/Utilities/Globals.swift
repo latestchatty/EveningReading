@@ -8,6 +8,9 @@
 import Foundation
 import SwiftUI
 
+let ScrollToTopId: Int = 99999999
+let ScrollToBottomId: Int = 999999999
+
 #if os(iOS)
 let ThreadCategoryColor: [String: Color] = [
     "informative": Color(UIColor.systemBlue),

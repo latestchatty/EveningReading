@@ -54,10 +54,10 @@ struct macOSChatViewOld: View {
                     ScrollViewReader { scrollProxy in
                         VStack {
                             Spacer().frame(maxWidth: .infinity).frame(height: 30)
-                        }.id(9999999999991)
+                        }.id(ScrollToTopId)
                         .onReceive(chatService.$threads) { threads in
                             if threads.count < 1 {
-                                scrollProxy.scrollTo(9999999999991, anchor: .top)
+                                scrollProxy.scrollTo(ScrollToTopId, anchor: .top)
                             }
                         }
                         /*
@@ -73,7 +73,7 @@ struct macOSChatViewOld: View {
                         }
                         VStack {
                             Spacer().frame(maxWidth: .infinity).frame(height: 30)
-                        }.id(9999999999993)
+                        }.id(ScrollToBottomId)
                     }
                 }
                 .onAppear(perform: fetchChat)
