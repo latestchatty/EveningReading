@@ -624,12 +624,7 @@
 		8338178F2639AC18007A8B28 /* macOS */ = {
 			isa = PBXGroup;
 			children = (
-				8339816226404032005614E8 /* Home */,
-				83398152263F69CE005614E8 /* Chat */,
-				83398156263F6BA3005614E8 /* Inbox */,
-				8339815A263F6FAD005614E8 /* Search */,
-				8339816126403F0D005614E8 /* Tags */,
-				833981662640438E005614E8 /* Settings */,
+				83FAB3302B27D12100E0974F /* Views */,
 				833685D12672A36800ACE618 /* Controls */,
 				83501CDD26D043D6008CFBB9 /* Extensions */,
 				833817802639AC17007A8B28 /* macOSContentView.swift */,
@@ -1172,6 +1167,19 @@
 				833980F9263F0A21005614E8 /* Search */,
 				833980FA263F0A29005614E8 /* Tags */,
 				83398130263F2F63005614E8 /* Settings */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		83FAB3302B27D12100E0974F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8339816226404032005614E8 /* Home */,
+				83398152263F69CE005614E8 /* Chat */,
+				83398156263F6BA3005614E8 /* Inbox */,
+				8339815A263F6FAD005614E8 /* Search */,
+				8339816126403F0D005614E8 /* Tags */,
+				833981662640438E005614E8 /* Settings */,
 			);
 			path = Views;
 			sourceTree = "<group>";
