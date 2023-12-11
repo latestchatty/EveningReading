@@ -11,7 +11,7 @@ import Photos
 struct ComposePostView: View {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.presentationMode) var presentationMode
-    @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var appSession: AppSession
     @EnvironmentObject var chatStore: ChatStore
     @EnvironmentObject var shackTags: ShackTags
     @EnvironmentObject var notifications: Notifications
@@ -188,7 +188,7 @@ struct ComposePostView: View {
             self.uploadImageFail = false
             self.showingComposeSheet = false
             self.showingTagMenu = false
-            appSessionStore.showingComposeSheet = false
+            appSession.showingComposeSheet = false
         }
     }
     
@@ -242,7 +242,7 @@ struct ComposePostView: View {
                                 }
                                 DispatchQueue.main.async {
                                     self.showingComposeSheet = false
-                                    appSessionStore.showingComposeSheet = false
+                                    appSession.showingComposeSheet = false
                                     self.uploadImageFail = false
                                     showImageSheet()
                                 }
@@ -307,7 +307,7 @@ struct ComposePostView: View {
 
                         /*
                         // No way to change the background in supported iOS versions
-                        if appSessionStore.isDarkMode {
+                        if appSession.isDarkMode {
                             TextEditor(text: self.$postBody)
                                 .border(Color(UIColor.systemGray5))
                                 .cornerRadius(4.0)
@@ -359,7 +359,7 @@ struct ComposePostView: View {
                     Spacer()                    
                 }
                 //.allowAutoDismiss { false }
-                .background(appSessionStore.isDarkMode ? Color("PrimaryBackgroundDarkMode").frame(height: 2600).offset(y: -80) : Color.clear.frame(height: 2600).offset(y: -80))
+                .background(appSession.isDarkMode ? Color("PrimaryBackgroundDarkMode").frame(height: 2600).offset(y: -80) : Color.clear.frame(height: 2600).offset(y: -80))
                 .interactiveDismissDisabled()
             }
             // End Compose Post Sheet
@@ -369,7 +369,7 @@ struct ComposePostView: View {
                    onDismiss: {
                         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(20)) {
                             self.showingComposeSheet = true
-                            appSessionStore.showingComposeSheet = true
+                            appSession.showingComposeSheet = true
                             if self.uploadImage != nil {
                                 uploadImageToImgur(image: self.uploadImage!)
                             } else {
@@ -396,7 +396,7 @@ struct ComposePostView: View {
                         self.postBody = ""
                         self.showingLoading = false
                         self.showingComposeSheet = false
-                        appSessionStore.showingComposeSheet = false
+                        appSession.showingComposeSheet = false
                     }
                 }
             }
@@ -438,12 +438,12 @@ struct ComposePostView: View {
             }
             
             // Button style is different depending on context
-            if self.appSessionStore.isSignedIn {
+            if self.appSession.isSignedIn {
                 Button(action: {
                     print("Reply tapped!")
                     DispatchQueue.main.async {
                         self.showingComposeSheet = true
-                        appSessionStore.showingComposeSheet = true
+                        appSession.showingComposeSheet = true
                         print(self.showingComposeSheet)
                     }
                 }) {

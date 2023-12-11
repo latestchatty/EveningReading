@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ChatView: View {
     @Environment(\.colorScheme) var colorScheme
-    @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var appSession: AppSession
     @EnvironmentObject var chatStore: ChatStore
 
     @State private var isGettingChat: Bool = false
@@ -27,12 +27,12 @@ struct ChatView: View {
         if searchTerms != "" {
             threads = chatStore.threads.filter({ return
                 $0.posts.filter({ return $0.parentId == 0  })[0].body.lowercased().contains(searchTerms.lowercased()) &&
-            self.appSessionStore.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) &&
-            !self.appSessionStore.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
+            self.appSession.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) &&
+            !self.appSession.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
         } else {
             threads = chatStore.threads.filter({ return
-            self.appSessionStore.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) &&
-            !self.appSessionStore.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
+            self.appSession.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) &&
+            !self.appSession.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
         }        
         return Array(threads)
     }

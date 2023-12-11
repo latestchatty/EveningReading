@@ -8,28 +8,28 @@
 import SwiftUI
 
 struct CategoriesView: View {
-    @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var appSession: AppSession
     
     var body: some View {
         Group {
             #if os(macOS)
-            Toggle(isOn: self.$appSessionStore.hideBadWords) {
+            Toggle(isOn: self.$appSession.hideBadWords) {
                 Text("Language")
             }
             #endif
-            Toggle(isOn: self.$appSessionStore.showInformative) {
+            Toggle(isOn: self.$appSession.showInformative) {
                 Text("Informative")
             }
-            Toggle(isOn: self.$appSessionStore.showOffTopic) {
+            Toggle(isOn: self.$appSession.showOffTopic) {
                 Text("Off Topic")
             }
-            Toggle(isOn: self.$appSessionStore.showPolitical) {
+            Toggle(isOn: self.$appSession.showPolitical) {
                 Text("Political")
             }
-            Toggle(isOn: self.$appSessionStore.showStupid) {
+            Toggle(isOn: self.$appSession.showStupid) {
                 Text("Stupid")
             }
-            Toggle(isOn: self.$appSessionStore.showNWS) {
+            Toggle(isOn: self.$appSession.showNWS) {
                 Text("NWS")
             }
         }

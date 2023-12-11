@@ -1,5 +1,5 @@
 //
-//  AppSessionStore.swift
+//  AppSession.swift
 //  EveningReading
 //
 //  Created by Chris Hodge on 4/30/21.
@@ -9,11 +9,9 @@ import Foundation
 import SwiftUI
 import Combine
 
-class AppSessionStore : ObservableObject {
+class AppSession : ObservableObject {
     // Init
-    private let service: AuthService
-    init(service: AuthService) {
-        self.service = service
+    init() {
         loadDefaults()
     }
     
@@ -338,7 +336,7 @@ if !resetNotifications {
     
     func authenticate() {
         self.isAuthenticating = true
-        service.auth(username: self.signInUsername, password: self.signInPassword) { [weak self] result in
+        authenticateViaAPI(username: self.signInUsername, password: self.signInPassword) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let authSuccess):
@@ -366,5 +364,39 @@ if !resetNotifications {
                 self?.isAuthenticating = false
             }
         }
+    }
+    
+    public func authenticateViaAPI(username: String, password: String, handler: @escaping (Result<Bool, Error>) -> Void) {
+        let session: URLSession = .shared
+        let decoder: JSONDecoder = .init()
+        
+        let loginUrl = URL(string: "https://winchatty.com/v2/verifyCredentials")!
+        var components = URLComponents(url: loginUrl, resolvingAgainstBaseURL: false)!
+        components.queryItems = [
+            URLQueryItem(name: "username", value: username),
+            URLQueryItem(name: "password", value: password)
+        ]
+        components.percentEncodedQuery = components.percentEncodedQuery?
+            .replacingOccurrences(of: "+", with: "%2B")
+
+        let query = components.url!.query
+                
+        var request = URLRequest(url: loginUrl)
+        request.httpMethod = "POST"
+        request.httpBody = Data(query!.utf8)
+
+        session.dataTask(with: request as URLRequest) { data, _, error in
+            if let error = error {
+                handler(.failure(error))
+            } else {
+                do {
+                    let data = data ?? Data()
+                    let response = try decoder.decode(AuthResponse.self, from: data)
+                    handler(.success(response.isValid))
+                } catch {
+                    handler(.failure(error))
+                }
+            }
+        }.resume()
     }
 }

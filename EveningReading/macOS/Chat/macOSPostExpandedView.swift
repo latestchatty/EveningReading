@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct macOSPostExpandedView: View {
-    @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var appSession: AppSession
     @EnvironmentObject var chatStore: ChatStore
     @Binding var postId: Int
     @Binding var postAuthor: String
@@ -38,11 +38,11 @@ struct macOSPostExpandedView: View {
         HStack {
             VStack (alignment: .leading) {
                 // Full post
-                RichTextView(topBlocks: appSessionStore.blockedAuthors.contains(self.postAuthor) ? RichTextBuilder.getRichText(postBody: "[blocked]") : self.postText)
+                RichTextView(topBlocks: appSession.blockedAuthors.contains(self.postAuthor) ? RichTextBuilder.getRichText(postBody: "[blocked]") : self.postText)
                     .fixedSize(horizontal: false, vertical: true)
                     .padding(8)
 
-                if appSessionStore.isSignedIn && !appSessionStore.blockedAuthors.contains(self.postAuthor) {
+                if appSession.isSignedIn && !appSession.blockedAuthors.contains(self.postAuthor) {
                     HStack {
                         Text(postDateTime.postTimestamp())
                             .font(.caption)

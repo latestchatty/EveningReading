@@ -11,7 +11,7 @@ import SwiftUI
 
 struct ThreadDetailView: View {
     @Environment(\.colorScheme) var colorScheme
-    @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var appSession: AppSession
     @EnvironmentObject var chatStore: ChatStore
         
     var threadId: Int = 0
@@ -146,8 +146,8 @@ struct ThreadDetailView: View {
             self.threadNavigationLocation = value.location
         }
         .onEnded { value in
-            self.appSessionStore.threadNavigationLocationX = self.threadNavigationLocation.x
-            self.appSessionStore.threadNavigationLocationY = self.threadNavigationLocation.y
+            self.appSession.threadNavigationLocationX = self.threadNavigationLocation.x
+            self.appSession.threadNavigationLocationY = self.threadNavigationLocation.y
         }
     }
 
@@ -238,7 +238,7 @@ struct ThreadDetailView: View {
                     VStack {
                         // Post details
                         HStack (alignment: .center) {
-                            AuthorNameView(name: appSessionStore.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : self.rootPostAuthor, postId: self.threadId)
+                            AuthorNameView(name: appSession.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : self.rootPostAuthor, postId: self.threadId)
 
                             //ContributedView(contributed: self.contributed)
 
@@ -253,7 +253,7 @@ struct ThreadDetailView: View {
                         
                         // Full root post body and bubble
                         VStack {
-                            if appSessionStore.blockedAuthors.contains(self.rootPostAuthor) {
+                            if appSession.blockedAuthors.contains(self.rootPostAuthor) {
                                 HStack () {
                                     Text("[blocked]")
                                         .fixedSize(horizontal: false, vertical: true)
@@ -271,7 +271,7 @@ struct ThreadDetailView: View {
                             }
                             
                             // Tag and Reply
-                            if appSessionStore.isSignedIn {
+                            if appSession.isSignedIn {
                                 HStack {
                                     Text(self.rootPostDate)
                                         .font(.caption)
@@ -351,7 +351,7 @@ struct ThreadDetailView: View {
                                     
                                     self.chatStore.scrollTargetThread = post.id
                                     self.selectedPostRichText = RichTextBuilder.getRichText(postBody: post.body)
-                                    if appSessionStore.disableAnimation {
+                                    if appSession.disableAnimation {
                                         self.selectedPost = post.id
                                     } else {
                                         withAnimation {
@@ -438,7 +438,7 @@ struct ThreadDetailView: View {
                 if UIDevice.current.userInterfaceIdiom == .phone {
                     getPostList(parentId: self.threadId)
                 }
-                self.threadNavigationLocation = CGPoint(x: self.appSessionStore.threadNavigationLocationX, y: self.appSessionStore.threadNavigationLocationY)
+                self.threadNavigationLocation = CGPoint(x: self.appSession.threadNavigationLocationX, y: self.appSession.threadNavigationLocationY)
                 print("getData end")
             }
             
@@ -474,7 +474,7 @@ struct ThreadDetailView: View {
         .overlay(
             GeometryReader { geometry in
                 VStack (alignment: .trailing) {
-                    if !self.appSessionStore.threadNavigation || self.postCount < 2 {
+                    if !self.appSession.threadNavigation || self.postCount < 2 {
                         EmptyView()
                     }
                     else if self.isGettingThread {

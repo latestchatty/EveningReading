@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct iPadHomeButtons: View {
-    @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var appSession: AppSession
     @EnvironmentObject var chatStore: ChatStore
     
     @StateObject var messageViewModel = MessageViewModel()
     
     private func navigateTo(_ goToDestination: inout Bool) {
-        appSessionStore.resetNavigation()
+        appSession.resetNavigation()
         goToDestination = true
     }
     
@@ -31,14 +31,14 @@ struct iPadHomeButtons: View {
                 .onTapGesture(count: 1) {
                     chatStore.activeThreadId = 0 // Deselect any threads
                     chatStore.getChat() // Refresh the chat
-                    navigateTo(&appSessionStore.showingChatView)
+                    navigateTo(&appSession.showingChatView)
                 }
             
             GeometryReader { geometry in
                 iPadHomeButton(title: "Inbox", imageName: "glyphicons-basic-122-envelope-empty", buttonBackground: Color("HomeButtonInbox"))
                     .overlay(NewMessageBadgeView(notificationNumber: $messageViewModel.messageCount.unread, width: geometry.size.width), alignment: .top)
                     .onTapGesture(count: 1) {
-                        navigateTo(&appSessionStore.showingInboxView)
+                        navigateTo(&appSession.showingInboxView)
                     }
                     .onAppear() {
                         getMessageCount()
@@ -46,12 +46,12 @@ struct iPadHomeButtons: View {
             }
             iPadHomeButton(title: "Search", imageName: "glyphicons-basic-28-search", buttonBackground: Color("HomeButtonSearch"))
                 .onTapGesture(count: 1) {
-                    navigateTo(&appSessionStore.showingSearchView)
+                    navigateTo(&appSession.showingSearchView)
                 }
             
             iPadHomeButton(title: "Tags", imageName: "glyphicons-basic-67-tags", buttonBackground: Color("HomeButtonTags"))
                 .onTapGesture(count: 1) {
-                    navigateTo(&appSessionStore.showingTagsView)
+                    navigateTo(&appSession.showingTagsView)
                 }
             
             Spacer().frame(width: 20)
@@ -59,27 +59,27 @@ struct iPadHomeButtons: View {
             // Home Screen Navigation
             VStack {
                 // go to chat
-                NavigationLink(destination: iPadChatView(), isActive: $appSessionStore.showingChatView) {
+                NavigationLink(destination: iPadChatView(), isActive: $appSession.showingChatView) {
                     EmptyView()
                 }
                 
                 // go to inbox
-                NavigationLink(destination: InboxView(), isActive: $appSessionStore.showingInboxView) {
+                NavigationLink(destination: InboxView(), isActive: $appSession.showingInboxView) {
                     EmptyView()
                 }
                 
                 // go to search
-                NavigationLink(destination: SearchView(populateTerms: .constant(""), populateAuthor: .constant(""), populateParent: .constant("")), isActive: $appSessionStore.showingSearchView) {
+                NavigationLink(destination: SearchView(populateTerms: .constant(""), populateAuthor: .constant(""), populateParent: .constant("")), isActive: $appSession.showingSearchView) {
                     EmptyView()
                 }
                 
                 // go to tags
-                NavigationLink(destination: TagsView(), isActive: $appSessionStore.showingTagsView) {
+                NavigationLink(destination: TagsView(), isActive: $appSession.showingTagsView) {
                     EmptyView()
                 }
                 
                 // go to settings
-                NavigationLink(destination: SettingsView(), isActive: $appSessionStore.showingSettingsView) {
+                NavigationLink(destination: SettingsView(), isActive: $appSession.showingSettingsView) {
                     EmptyView()
                 }
             }

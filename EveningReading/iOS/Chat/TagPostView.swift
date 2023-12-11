@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TagPostView: View {
     @Environment(\.colorScheme) var colorScheme
-    @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var appSession: AppSession
     @EnvironmentObject var chatStore: ChatStore
     
     var postId: Int

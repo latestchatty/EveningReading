@@ -9,7 +9,7 @@ import SwiftUI
 
 struct GoToPostViewHome: View {
     @Environment(\.presentationMode) var presentationMode
-    @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var appSession: AppSession
     @EnvironmentObject var notifications: Notifications
     @EnvironmentObject var chatStore: ChatStore
     
@@ -28,23 +28,23 @@ struct GoToPostViewHome: View {
             }.hidden().disabled(true).allowsHitTesting(false)
             
             // Push ThreadDetailView
-            NavigationLink(destination: ThreadDetailView(threadId: 0, postId: appSessionStore.showingPostId, replyCount: -1, isSearchResult: true), isActive: $appSessionStore.showingPushNotificationThread) {
+            NavigationLink(destination: ThreadDetailView(threadId: 0, postId: appSession.showingPostId, replyCount: -1, isSearchResult: true), isActive: $appSession.showingPushNotificationThread) {
                             EmptyView()
             }.isDetailLink(false).hidden().allowsHitTesting(false)
             
             // Deep link to post from push notification
             .onReceive(notifications.$notificationData) { value in
                 if let postId = value?.notification.request.content.userInfo["postid"], let body = value?.notification.request.content.body, let title = value?.notification.request.content.title {
-                    if String("\(postId)").isInt && appSessionStore.showingPostId != Int(String("\(postId)")) ?? 0 {
-                        appSessionStore.showingPostId = Int(String("\(postId)")) ?? 0
+                    if String("\(postId)").isInt && appSession.showingPostId != Int(String("\(postId)")) ?? 0 {
+                        appSession.showingPostId = Int(String("\(postId)")) ?? 0
                         let newNotification = PushNotification(title: title, body: body, postId: Int(String("\(postId)")) ?? 0)
-                        if !appSessionStore.pushNotifications.contains(newNotification) {
-                            appSessionStore.pushNotifications.append(newNotification)
+                        if !appSession.pushNotifications.contains(newNotification) {
+                            appSession.pushNotifications.append(newNotification)
                             
-                            appSessionStore.resetNavigation()
+                            appSession.resetNavigation()
                             
                             DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1500)) {
-                                appSessionStore.showingPushNotificationThread = true
+                                appSession.showingPushNotificationThread = true
                             }
                         }
                         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(2000)) {

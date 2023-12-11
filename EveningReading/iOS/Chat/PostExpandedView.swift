@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PostExpandedView: View {
     @Environment(\.colorScheme) var colorScheme
-    @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var appSession: AppSession
     @EnvironmentObject var chatStore: ChatStore
     
     var username: String
@@ -48,7 +48,7 @@ struct PostExpandedView: View {
                 }
                 
                 // Author name
-                AuthorNameView(name: appSessionStore.blockedAuthors.contains(self.postAuthor) ? "[blocked]" : self.postAuthor, postId: self.postId, op: self.op)
+                AuthorNameView(name: appSession.blockedAuthors.contains(self.postAuthor) ? "[blocked]" : self.postAuthor, postId: self.postId, op: self.op)
                 
                 Spacer()
                 
@@ -57,7 +57,7 @@ struct PostExpandedView: View {
             }
             VStack {
                 // Post body
-                if appSessionStore.blockedAuthors.contains(self.postAuthor) {
+                if appSession.blockedAuthors.contains(self.postAuthor) {
                     HStack {
                         Text("[blocked]")
                             .fixedSize(horizontal: false, vertical: true)
@@ -76,7 +76,7 @@ struct PostExpandedView: View {
                 }
                 
                 // Tag and reply
-                if appSessionStore.isSignedIn {
+                if appSession.isSignedIn {
                     HStack {
                         Text(postDateTime.postTimestamp())
                             .font(.caption)

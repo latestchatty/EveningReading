@@ -9,7 +9,7 @@ import SwiftUI
 
 struct macOSComposePostView: View {
     @Environment(\.colorScheme) var colorScheme
-    @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var appSession: AppSession
     @EnvironmentObject var chatStore: ChatStore
     
     @State private var postBody = ""

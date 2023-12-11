@@ -16,7 +16,7 @@ struct EveningReadingApp: App {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.scenePhase) var phase
     
-    @StateObject var appSessionStore = AppSessionStore(service: .init())
+    @StateObject var appSession = AppSession()
     @StateObject var chatStore = ChatStore(service: .init())
 
     #if os(iOS)
@@ -34,24 +34,24 @@ struct EveningReadingApp: App {
             #if os(iOS)
             if UIDevice.current.userInterfaceIdiom == .pad {
                 iPadContentView()
-                    .environmentObject(appSessionStore)
+                    .environmentObject(appSession)
                     .environmentObject(chatStore)
                     .environmentObject(notifications)
                     .environmentObject(shackTags)
-                    .preferredColorScheme(appSessionStore.isDarkMode ? .dark : .light)
+                    .preferredColorScheme(appSession.isDarkMode ? .dark : .light)
             } else {
                 iPhoneContentView()
-                    .environmentObject(appSessionStore)
+                    .environmentObject(appSession)
                     .environmentObject(chatStore)
                     .environmentObject(notifications)
                     .environmentObject(shackTags)
-                    .preferredColorScheme(appSessionStore.isDarkMode ? .dark : .light)
+                    .preferredColorScheme(appSession.isDarkMode ? .dark : .light)
             }
             #else
                 macOSContentView()
-                    .environmentObject(appSessionStore)
+                    .environmentObject(appSession)
                     .environmentObject(chatStore)
-                    .preferredColorScheme(appSessionStore.isDarkMode ? .dark : .light)
+                    .preferredColorScheme(appSession.isDarkMode ? .dark : .light)
             #endif
         }
         /*
@@ -60,20 +60,6 @@ struct EveningReadingApp: App {
                 #if os(iOS)
                 UIApplication.shared.applicationIconBadgeNumber = 0
                 #endif
-            }
-        }
-        */
-        /*
-        .onChange(of: phase) { newPhase in
-            switch newPhase {
-            case .active:
-                // App became active
-            case .inactive:
-                // App became inactive
-            case .background:
-                // App is running in the background
-            @unknown default:
-                // Fallback for future cases
             }
         }
         */

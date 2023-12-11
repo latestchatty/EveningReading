@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct macOSTextPromptSheet<Label>: View where Label : View {
-    @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var appSession: AppSession
     @EnvironmentObject var chatStore: ChatStore
     
     @Binding var showPrompt: Bool

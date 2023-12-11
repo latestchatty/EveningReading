@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct macOSThreadView: View {
-    @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var appSession: AppSession
     @EnvironmentObject var chatStore: ChatStore
     
     @Binding var threadId: Int
@@ -33,7 +33,7 @@ struct macOSThreadView: View {
     @State private var hideThread = false
     
     private func getThreadData() {
-        let threads = chatStore.threads.filter({ return self.appSessionStore.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !appSessionStore.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
+        let threads = chatStore.threads.filter({ return self.appSession.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !appSession.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
         
         if let thread = threads.filter({ return $0.threadId == self.threadId }).first {
             self.contributed = PostDecorator.checkParticipatedStatus(thread: thread, author: self.rootPostAuthor)
@@ -113,7 +113,7 @@ struct macOSThreadView: View {
     var body: some View {
         VStack (alignment: .leading) {
             
-            if hideThread || appSessionStore.collapsedThreads.contains(self.threadId) {
+            if hideThread || appSession.collapsedThreads.contains(self.threadId) {
                 
                 Text("No thread selected.")
                     .font(.body)
@@ -199,7 +199,7 @@ struct macOSThreadView: View {
                         .alert(isPresented: self.$showingHideAlert) {
                             Alert(title: Text("Hide thread?"), message: Text(""), primaryButton: .default(Text("Yes")) {
                                 // collapse thread
-                                self.appSessionStore.collapsedThreads.append(self.threadId)
+                                self.appSession.collapsedThreads.append(self.threadId)
                                 chatStore.activeThreadId = 0
                                 self.hideThread = true
                             }, secondaryButton: .cancel() {
@@ -214,20 +214,20 @@ struct macOSThreadView: View {
                     
                     // Root post body
                     VStack (alignment: .leading) {
-                        RichTextView(topBlocks: appSessionStore.blockedAuthors.contains(self.rootPostAuthor) ? RichTextBuilder.getRichText(postBody: "[blocked]") : self.rootPostRichText)
+                        RichTextView(topBlocks: appSession.blockedAuthors.contains(self.rootPostAuthor) ? RichTextBuilder.getRichText(postBody: "[blocked]") : self.rootPostRichText)
                         .fixedSize(horizontal: false, vertical: true)
                     }
                     .padding(.horizontal, 10)
                     .padding(.bottom, 10)
                     
-                    if !appSessionStore.blockedAuthors.contains(self.rootPostAuthor) {
+                    if !appSession.blockedAuthors.contains(self.rootPostAuthor) {
                         HStack {
                             LolView(lols: self.rootPostLols, expanded: true, postId: self.threadId)
                                 .padding(.trailing, 1)
 
                             Spacer()
                             
-                            if appSessionStore.isSignedIn {
+                            if appSession.isSignedIn {
                                 macOSTagPostButton(postId: self.threadId)
                                 Image(systemName: "link")
                                     .imageScale(.large)

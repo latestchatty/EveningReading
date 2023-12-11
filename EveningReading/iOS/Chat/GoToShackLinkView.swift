@@ -9,7 +9,7 @@ import SwiftUI
 
 struct GoToShackLinkView: View {
     @Environment(\.presentationMode) var presentationMode
-    @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var appSession: AppSession
     @EnvironmentObject var notifications: Notifications
     @EnvironmentObject var chatStore: ChatStore
     
@@ -29,15 +29,15 @@ struct GoToShackLinkView: View {
             }.hidden().disabled(true).allowsHitTesting(false)
             
             // Deep link to specific shack post
-            .onChange(of: appSessionStore.showingShackLink, perform: { value in
-                print(".onReceive(appSessionStore.$showingShackLink)")
+            .onChange(of: appSession.showingShackLink, perform: { value in
+                print(".onReceive(appSession.$showingShackLink)")
                 if value {
                     print("going to try to show link")
-                    if appSessionStore.shackLinkPostId != "" {
+                    if appSession.shackLinkPostId != "" {
                         print("showing link")
-                        self.appSessionStore.showingShackLink = false
-                        self.goToPostId = Int(appSessionStore.shackLinkPostId) ?? 0
-                        appSessionStore.showingPostId = Int(appSessionStore.shackLinkPostId) ?? 0
+                        self.appSession.showingShackLink = false
+                        self.goToPostId = Int(appSession.shackLinkPostId) ?? 0
+                        appSession.showingPostId = Int(appSession.shackLinkPostId) ?? 0
                         self.showingPost = true
                     }
                 }

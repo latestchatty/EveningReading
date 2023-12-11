@@ -10,10 +10,10 @@ import Foundation
 import SwiftUI
 
 struct macOSTagPostView: View {
-    @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var appSession: AppSession
     
     var body: some View {
-        if appSessionStore.isSignedIn {
+        if appSession.isSignedIn {
             Image(systemName: "tag")
                 .imageScale(.large)
                 .onTapGesture(count: 1) {

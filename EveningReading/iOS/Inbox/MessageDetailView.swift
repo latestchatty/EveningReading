@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MessageDetailView: View {
     @Environment(\.colorScheme) var colorScheme
-    @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var appSession: AppSession
     @EnvironmentObject var messageViewModel: MessageViewModel
     
     public var messageRecipient: String

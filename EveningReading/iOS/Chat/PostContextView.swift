@@ -10,7 +10,7 @@ import MobileCoreServices
 import UniformTypeIdentifiers
 
 struct PostContextView: View {
-    @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var appSession: AppSession
     @EnvironmentObject var chatStore: ChatStore
     
     @StateObject var messageViewModel = MessageViewModel()
@@ -43,7 +43,7 @@ struct PostContextView: View {
         if self.threadId > 0 && !self.isRootPost {
             Button(action: {
                 self.collapsed = true
-                appSessionStore.collapsedThreads.append(self.threadId)
+                appSession.collapsedThreads.append(self.threadId)
             }) {
                 Text("Hide Thread")
                 Image(systemName: "eye.slash")
@@ -93,9 +93,9 @@ struct PostContextView: View {
             Image(systemName: "doc.on.clipboard")
         }
         
-        if !appSessionStore.favoriteAuthors.contains(self.author) {
+        if !appSession.favoriteAuthors.contains(self.author) {
             Button(action: {
-                appSessionStore.favoriteAuthors.append(self.author)
+                appSession.favoriteAuthors.append(self.author)
                 chatStore.showingFavoriteNotice = true
             }) {
                 Text("Favorite User")
@@ -104,7 +104,7 @@ struct PostContextView: View {
         }
         
         Button(action: {
-            appSessionStore.blockedAuthors.append(self.author)
+            appSession.blockedAuthors.append(self.author)
         }) {
             Text("Block User")
             Image(systemName: "exclamationmark.circle")

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct macOSTagsView: View {
-    @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var appSession: AppSession
     
     @State private var webViewLoading: Bool = true
     @State private var webViewProgress: Double = 0.25
@@ -22,7 +22,7 @@ struct macOSTagsView: View {
                     .progressViewStyle(LinearProgressViewStyle(tint: Color(NSColor.systemBlue)))
                     .frame(maxWidth: .infinity)
             }
-            macOSTagsWebView(webViewLoading: self.$webViewLoading, webViewProgress: self.$webViewProgress, goToPostId: self.$goToPostId, showingPost: self.$showingPost, username: .constant(appSessionStore.username), password: .constant(appSessionStore.password))
+            macOSTagsWebView(webViewLoading: self.$webViewLoading, webViewProgress: self.$webViewProgress, goToPostId: self.$goToPostId, showingPost: self.$showingPost, username: .constant(appSession.username), password: .constant(appSession.password))
         }
         .navigationTitle("Tags")
     }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ThreadRow: View {
-    @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var appSession: AppSession
     @EnvironmentObject var chatStore: ChatStore
 
     @Binding var threadId: Int
@@ -53,7 +53,7 @@ struct ThreadRow: View {
             self.replyCount = currentThread.posts.count - 1
         }
         for post in currentThread.posts {
-            if appSessionStore.favoriteAuthors.contains(post.author) {
+            if appSession.favoriteAuthors.contains(post.author) {
                 self.favoriteContributed = true
             }
         }
@@ -99,7 +99,7 @@ struct ThreadRow: View {
                     
                     NewMessageView(showingNewMessageSheet: self.$showingNewMessageView, messageId: 0, recipientName: self.messageRecipient, subjectText: self.messageSubject, bodyText: self.messageBody)
                     
-                    AuthorNameView(name: appSessionStore.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : self.rootPostAuthor, postId: self.threadId)
+                    AuthorNameView(name: appSession.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : self.rootPostAuthor, postId: self.threadId)
 
                     ContributedView(contributed: self.contributed)
                     
@@ -118,10 +118,10 @@ struct ThreadRow: View {
                 // Post Preview
                 ZStack {
                     HStack (alignment: .top) {
-                        Text(appSessionStore.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : rootPostBodyPreview)
+                        Text(appSession.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : rootPostBodyPreview)
                             .font(.callout)
                             .foregroundColor(Color(UIColor.label))
-                            .lineLimit(appSessionStore.abbreviateThreads ? 3 : 8)
+                            .lineLimit(appSession.abbreviateThreads ? 3 : 8)
                             .multilineTextAlignment(.leading)
                             .frame(minHeight: 30)
                             .padding(10)

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct macOSChatView: View {
-    @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var appSession: AppSession
     @EnvironmentObject var chatStore: ChatStore
     
     @State private var showingGuidelinesView = false

@@ -92,7 +92,7 @@ struct SpoilerView: View {
 
 struct LinkView: View {
     @Environment(\.colorScheme) var colorScheme
-    @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var appSession: AppSession
     @EnvironmentObject var chatStore: ChatStore
     var hyperlink: String = ""
     var description: String = ""
@@ -127,7 +127,7 @@ struct LinkView: View {
                     }
                     
                     // YouTube
-                    if self.appSessionStore.useYoutubeApp && (self.hyperlink.starts(with: "https://www.youtube.com/") || self.hyperlink.starts(with: "https://youtube.com/") || self.hyperlink.starts(with: "https://youtu.be/")) {
+                    if self.appSession.useYoutubeApp && (self.hyperlink.starts(with: "https://www.youtube.com/") || self.hyperlink.starts(with: "https://youtube.com/") || self.hyperlink.starts(with: "https://youtu.be/")) {
                         let url = URL(string: self.hyperlink.replacingOccurrences(of: "https", with: "youtube"))!
                         if !UIApplication.shared.canOpenURL(url)  {
                             //self.hyperlinkUrlStr = self.hyperlink
@@ -135,7 +135,7 @@ struct LinkView: View {
                             if let url = URL(string: self.hyperlink) {
                                 self.hyperlinkUrl = url
                                 self.showingSafariSheet = true
-                                appSessionStore.showingSafariSheet = true
+                                appSession.showingSafariSheet = true
                             }
                         } else {
                             UIApplication.shared.open(url, options: [:], completionHandler: nil)
@@ -149,7 +149,7 @@ struct LinkView: View {
                             if let queryItems = components?.queryItems {
                                 for queryItem in queryItems {
                                     if queryItem.name == "id" {
-                                        appSessionStore.setLink(postId: queryItem.value ?? "")
+                                        appSession.setLink(postId: queryItem.value ?? "")
                                     }
                                 }
                             }
@@ -162,7 +162,7 @@ struct LinkView: View {
                         if let url = URL(string: self.hyperlink) {
                             self.hyperlinkUrl = url
                             self.showingSafariSheet = true
-                            appSessionStore.showingSafariSheet = true
+                            appSession.showingSafariSheet = true
                         }
                     }
                     // Apple
@@ -182,7 +182,7 @@ struct LinkView: View {
                     }
                 }
             
-            if self.appSessionStore.showLinkCopyButton {
+            if self.appSession.showLinkCopyButton {
                 Spacer()
                 Button(action: {
                     UIPasteboard.general.string = self.hyperlink
@@ -221,7 +221,7 @@ struct LinkView: View {
         .onReceive(Notifications.shared.$notificationData) { value in
             if value != nil {
                 self.showingSafariSheet = false
-                appSessionStore.showingSafariSheet = false
+                appSession.showingSafariSheet = false
             }
         }
         

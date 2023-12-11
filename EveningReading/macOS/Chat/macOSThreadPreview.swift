@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct macOSThreadPreview: View {
-    @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var appSession: AppSession
     @EnvironmentObject var chatStore: ChatStore
     
     var threadId: Int
@@ -25,7 +25,7 @@ struct macOSThreadPreview: View {
     @State private var hideThread = false
     
     private func getThreadData() {
-        let threads = chatStore.threads.filter({ return self.appSessionStore.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !appSessionStore.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
+        let threads = chatStore.threads.filter({ return self.appSession.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !appSession.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
         
         if let thread = threads.filter({ return $0.threadId == self.threadId }).first {
             self.contributed = PostDecorator.checkParticipatedStatus(thread: thread, author: self.rootPostAuthor)
@@ -92,7 +92,7 @@ struct macOSThreadPreview: View {
                 
                 // Root post body
                 HStack (alignment: .top) {
-                    Text(appSessionStore.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : self.rootPostBody)
+                    Text(appSession.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : self.rootPostBody)
                         .font(.body)
                         .fixedSize(horizontal: false, vertical: true)
                         .lineLimit(3)
@@ -117,7 +117,7 @@ struct macOSThreadPreview: View {
                 .alert(isPresented: self.$showingHideAlert) {
                     Alert(title: Text("Hide thread?"), message: Text(""), primaryButton: .default(Text("Yes")) {
                         // collapse thread
-                        self.appSessionStore.collapsedThreads.append(self.threadId)
+                        self.appSession.collapsedThreads.append(self.threadId)
                         chatStore.activeThreadId = 0
                         self.hideThread = true
                     }, secondaryButton: .cancel() {

@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct iPadChatView: View {
-    @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var appSession: AppSession
     @EnvironmentObject var chatStore: ChatStore
     
     @State private var isGettingChat: Bool = false
     
     private func filteredThreads() -> [ChatThread] {
-        let threads = chatStore.threads.filter({ return self.appSessionStore.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !self.appSessionStore.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
+        let threads = chatStore.threads.filter({ return self.appSession.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !self.appSession.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
         return Array(threads)
     }
         
@@ -32,7 +32,7 @@ struct iPadChatView: View {
                         // All non-hidden threads
                         ForEach(filteredThreads(), id: \.threadId) { thread in
                             ThreadRow(threadId: .constant(thread.threadId), activeThreadId: $chatStore.activeThreadId)
-                                .environmentObject(appSessionStore)
+                                .environmentObject(appSession)
                                 .environmentObject(chatStore)
                                 .onTapGesture(count: 1) {
                                     selectThreadById(threadId: thread.threadId)
@@ -55,7 +55,7 @@ struct iPadChatView: View {
                 VStack {
                     if chatStore.activeThreadId > 0 {
                         ThreadDetailView(threadId: chatStore.activeThreadId, postId: 0, replyCount: -1, isSearchResult: false)
-                            .environmentObject(appSessionStore)
+                            .environmentObject(appSession)
                             .environmentObject(chatStore)
                     } else {
                         Spacer()

@@ -13,7 +13,7 @@ struct macOSWindowSize {
 }
 
 struct macOSContentView: View {
-    @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var appSession: AppSession
     @EnvironmentObject var chatStore: ChatStore
         
     @State private var showingChatView = false
@@ -45,7 +45,7 @@ struct macOSContentView: View {
                     
                     // Toolbar Buttons
                     ToolbarItemGroup(placement: .navigation) {
-                        if appSessionStore.showingChatView {
+                        if appSession.showingChatView {
                             Button(action: {
                                 // refresh
                                 chatStore.activeThreadId = 0
@@ -55,7 +55,7 @@ struct macOSContentView: View {
                             }, label: {
                                 Image(systemName: "arrow.counterclockwise")
                             })
-                            if appSessionStore.isSignedIn {
+                            if appSession.isSignedIn {
                                 Button(action: {
                                     // compose
                                     chatStore.newPostParentId = 0
@@ -77,7 +77,7 @@ struct macOSContentView: View {
                                 Spacer().frame(width: 0)
                             })
                             .keyboardShortcut("r", modifiers: [.command])
-                        } else if appSessionStore.showingInboxView {
+                        } else if appSession.showingInboxView {
                             Button(action: {
                                 // refresh
                             }, label: {
@@ -96,15 +96,15 @@ struct macOSContentView: View {
                 }
                 
                 // Detail View
-                if appSessionStore.showingChatView {
+                if appSession.showingChatView {
                     macOSChatView()
-                } else if appSessionStore.showingInboxView {
+                } else if appSession.showingInboxView {
                     macOSInboxView()
-                } else if appSessionStore.showingSearchView {
+                } else if appSession.showingSearchView {
                     macOSSearchView()
-                } else if appSessionStore.showingTagsView {
+                } else if appSession.showingTagsView {
                     macOSTagsView()
-                } else if appSessionStore.showingSettingsView {
+                } else if appSession.showingSettingsView {
                     macOSSettingsView()
                 } else {
                     EmptyView()
@@ -115,7 +115,7 @@ struct macOSContentView: View {
         .frame(minWidth: macOSWindowSize().minWidth, minHeight: macOSWindowSize().minHeight)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear() {
-            appSessionStore.showingChatView = true
+            appSession.showingChatView = true
         }
     }
 }

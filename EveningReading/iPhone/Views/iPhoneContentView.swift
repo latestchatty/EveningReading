@@ -9,7 +9,7 @@ import SwiftUI
 
 struct iPhoneContentView: View {
     @Environment(\.colorScheme) var colorScheme
-    @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var appSession: AppSession
     @EnvironmentObject var chatStore: ChatStore
     @EnvironmentObject var notifications: Notifications
     @EnvironmentObject var shackTags: ShackTags
@@ -30,7 +30,7 @@ struct iPhoneContentView: View {
                         }
                     }
                     iPhoneHomeButtons()
-                        .environmentObject(appSessionStore)
+                        .environmentObject(appSession)
                         .environmentObject(chatStore)
                     TrendingView()
                     iPhoneArticlesView()
@@ -48,8 +48,8 @@ struct iPhoneContentView: View {
         .navigationViewStyle(StackNavigationViewStyle())
         .accentColor(colorScheme == .dark ? Color.white : Color(UIColor.systemBlue))
         .onAppear() {
-            if !appSessionStore.didRegisterForPush {
-                appSessionStore.didRegisterForPush = true
+            if !appSession.didRegisterForPush {
+                appSession.didRegisterForPush = true
                 NotificationStore(service: .init()).registernew()
             }
         }

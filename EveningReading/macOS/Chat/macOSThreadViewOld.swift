@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct macOSThreadViewOld: View {
-    @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var appSession: AppSession
     @EnvironmentObject var chatStore: ChatStore
     
     @Binding var threadId: Int
@@ -43,7 +43,7 @@ struct macOSThreadViewOld: View {
     @State private var noticeMessage: String = ""
     
     private func getThreadData() {
-        let threads = chatStore.threads.filter({ return self.appSessionStore.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !appSessionStore.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
+        let threads = chatStore.threads.filter({ return self.appSession.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !appSession.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
         
         if let thread = threads.filter({ return $0.threadId == self.threadId }).first {
             self.contributed = PostDecorator.checkParticipatedStatus(thread: thread, author: self.rootPostAuthor)
@@ -108,7 +108,7 @@ struct macOSThreadViewOld: View {
                                 self.showingCollapseAlert.toggle()
                             }
                         
-                        if appSessionStore.isSignedIn {
+                        if appSession.isSignedIn {
                             Image(systemName: "tag")
                                 .imageScale(.large)
                                 .onTapGesture(count: 1) {
@@ -150,7 +150,7 @@ struct macOSThreadViewOld: View {
                                         HStack {
                                             Text("\(post.body.getPreview)")
                                                 .font(.body)
-                                                .foregroundColor(appSessionStore.username.lowercased() == post.author.lowercased() ? Color(NSColor.systemTeal) : Color.primary)
+                                                .foregroundColor(appSession.username.lowercased() == post.author.lowercased() ? Color(NSColor.systemTeal) : Color.primary)
                                                 .lineLimit(1)
                                             Spacer()
                                             AuthorNameView(name: post.author, postId: post.id)
@@ -300,7 +300,7 @@ struct macOSThreadViewOld: View {
         .alert(isPresented: self.$showingCollapseAlert) {
             Alert(title: Text("Hide Thread?"), message: Text(""), primaryButton: .cancel(), secondaryButton: Alert.Button.default(Text("OK"), action: {
                 self.isThreadCollapsed = true
-                appSessionStore.collapsedThreads.append(self.threadId)
+                appSession.collapsedThreads.append(self.threadId)
             }))
         }
         

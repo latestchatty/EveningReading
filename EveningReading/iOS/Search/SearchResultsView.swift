@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SearchResultsView: View {
-    @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var appSession: AppSession
     @EnvironmentObject var chatStore: ChatStore
     
     var terms: String
@@ -64,7 +64,7 @@ struct SearchResultsView: View {
                                                     .font(.callout)
                                                     .foregroundColor(Color(UIColor.label))
                                                     .multilineTextAlignment(.leading)
-                                                    .lineLimit(appSessionStore.abbreviateThreads ? 3 : 8)
+                                                    .lineLimit(appSession.abbreviateThreads ? 3 : 8)
                                                     .frame(minHeight: 30)
                                                     .padding(10)
                                                 Spacer()

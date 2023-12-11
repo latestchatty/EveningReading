@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct watchOSPostDetail: View {
-    @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var appSession: AppSession
     @EnvironmentObject var chatStore: ChatStore
     
     @Binding var postId: Int
@@ -38,7 +38,7 @@ struct watchOSPostDetail: View {
             self.postLols = childPost.lols
             self.replies = thread?.posts.filter({ return $0.parentId == self.postId }) ?? [ChatPosts]()
             
-            if appSessionStore.blockedAuthors.contains(self.postAuthor) {
+            if appSession.blockedAuthors.contains(self.postAuthor) {
                 self.richTextBody = RichTextBuilder.getRichText(postBody: "[blocked]")
             } else {
                 self.richTextBody = RichTextBuilder.getRichText(postBody: self.postBody)
@@ -59,7 +59,7 @@ struct watchOSPostDetail: View {
                 // Post
                 VStack (alignment: .leading) {
                     HStack {
-                        AuthorNameView(name: appSessionStore.blockedAuthors.contains(self.postAuthor) ? "[blocked]" : self.postAuthor, postId: self.postId)
+                        AuthorNameView(name: appSession.blockedAuthors.contains(self.postAuthor) ? "[blocked]" : self.postAuthor, postId: self.postId)
                         ContributedView(contributed: self.contributed)
                         Spacer()
                         LolView(lols: self.postLols, postId: self.postId)
@@ -79,7 +79,7 @@ struct watchOSPostDetail: View {
                 if self.replies.count > 0 {
                     ForEach(self.replies, id: \.id) { reply in
                         watchOSPostPreview(postId: .constant(reply.id), replyText: .constant(String(reply.body.getPreview.prefix(100))), author: .constant(reply.author))
-                            .environmentObject(appSessionStore)
+                            .environmentObject(appSession)
                             .environmentObject(chatStore)
                     }
                 } else {

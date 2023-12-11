@@ -9,7 +9,7 @@ import SwiftUI
 
 struct InboxView: View {
     @Environment(\.colorScheme) var colorScheme
-    @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var appSession: AppSession
     
     @StateObject var messageViewModel = MessageViewModel()
     
@@ -56,7 +56,7 @@ struct InboxView: View {
             RefreshableScrollView(height: 70, refreshing: $messageViewModel.gettingMessages, scrollTarget: $messageViewModel.scrollTarget, scrollTargetTop: $messageViewModel.scrollTargetTop) {
                 
                 // No messages
-                if (self.showNoMessages || !appSessionStore.isSignedIn || (messageViewModel.fetchComplete && messageViewModel.messages.count < 1)) && !self.showRedacted {
+                if (self.showNoMessages || !appSession.isSignedIn || (messageViewModel.fetchComplete && messageViewModel.messages.count < 1)) && !self.showRedacted {
                     VStack {
                         HStack {
                             Spacer()

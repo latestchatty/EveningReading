@@ -9,7 +9,7 @@ import SwiftUI
 
 struct macOSReportUserView: View {
     @Environment(\.colorScheme) var colorScheme
-    @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var appSession: AppSession
     @EnvironmentObject var chatStore: ChatStore
 
     @StateObject var messageViewModel = MessageViewModel()
@@ -20,16 +20,16 @@ struct macOSReportUserView: View {
     var body: some View {
         VStack(spacing: 0) {
             Text("")
-                .sheet(isPresented: $appSessionStore.showingReportUserSheet) {
+                .sheet(isPresented: $appSession.showingReportUserSheet) {
                     ZStack {
                         VStack {}.frame(width: 800, height: 450)
                         .onAppear() {
-                            messageBody = messageViewModel.getComplaintText(author: appSessionStore.reportAuthorName, postId: appSessionStore.reportAuthorForPostId)
+                            messageBody = messageViewModel.getComplaintText(author: appSession.reportAuthorName, postId: appSession.reportAuthorForPostId)
                         }
                         VStack {
                             HStack {
                                 Button(action: {
-                                    appSessionStore.showingReportUserSheet = false
+                                    appSession.showingReportUserSheet = false
                                     messageBody = ""
                                 }) {
                                     Image(systemName: "xmark")
@@ -38,7 +38,7 @@ struct macOSReportUserView: View {
                                 .padding()
                                 .keyboardShortcut(.cancelAction)
                                 
-                                Text("Report \(appSessionStore.reportAuthorName)")
+                                Text("Report \(appSession.reportAuthorName)")
                                     .bold()
                                     .font(.body)
                                 Spacer()
@@ -58,11 +58,11 @@ struct macOSReportUserView: View {
                             .padding(.vertical)
                             .alert(isPresented: self.$showingSubmitAlert) {
                                 Alert(title: Text("Report User?"), message: Text(""), primaryButton: .destructive(Text("Yes")) {
-                                    messageViewModel.submitComplaint(author: appSessionStore.reportAuthorName, postId: 0)
-                                    appSessionStore.showingReportUserSheet = false
+                                    messageViewModel.submitComplaint(author: appSession.reportAuthorName, postId: 0)
+                                    appSession.showingReportUserSheet = false
                                     messageBody = ""
-                                    appSessionStore.reportAuthorForPostId = 0
-                                    appSessionStore.reportAuthorName = ""
+                                    appSession.reportAuthorForPostId = 0
+                                    appSession.reportAuthorName = ""
                                 }, secondaryButton: .cancel() {
                                     
                                 })

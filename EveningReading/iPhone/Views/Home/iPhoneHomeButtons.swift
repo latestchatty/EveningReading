@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct iPhoneHomeButtons: View {
-    @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var appSession: AppSession
     @EnvironmentObject var chatStore: ChatStore
     
     @StateObject var messageViewModel = MessageViewModel()
     
     private func navigateTo(_ goToDestination: inout Bool) {
-        appSessionStore.resetNavigation()
+        appSession.resetNavigation()
         goToDestination = true
     }
     
@@ -31,13 +31,13 @@ struct iPhoneHomeButtons: View {
                 iPhoneHomeButton(title: "Chat", imageName: "glyphicons-basic-238-chat-message", buttonBackground: Color("HomeButtonChat"))
                     .onTapGesture(count: 1) {
                         chatStore.getChat() // Refresh the chat
-                        navigateTo(&appSessionStore.showingChatView)
+                        navigateTo(&appSession.showingChatView)
                     }
                 Spacer()
                 iPhoneHomeButton(title: "Inbox", imageName: "glyphicons-basic-122-envelope-empty", buttonBackground: Color("HomeButtonInbox"))
                     .overlay(NewMessageBadgeView(notificationNumber: $messageViewModel.messageCount.unread), alignment: .top)
                     .onTapGesture(count: 1) {
-                        navigateTo(&appSessionStore.showingInboxView)
+                        navigateTo(&appSession.showingInboxView)
                     }
                     .onAppear() {
                         getMessageCount()
@@ -45,12 +45,12 @@ struct iPhoneHomeButtons: View {
                 Spacer()
                 iPhoneHomeButton(title: "Search", imageName: "glyphicons-basic-28-search", buttonBackground: Color("HomeButtonSearch"))
                     .onTapGesture(count: 1) {
-                        navigateTo(&appSessionStore.showingSearchView)
+                        navigateTo(&appSession.showingSearchView)
                     }
                 Spacer()
                 iPhoneHomeButton(title: "Tags", imageName: "glyphicons-basic-67-tags", buttonBackground: Color("HomeButtonTags"))
                     .onTapGesture(count: 1) {
-                        navigateTo(&appSessionStore.showingTagsView)
+                        navigateTo(&appSession.showingTagsView)
                     }
             }
             .padding(.horizontal, 15)
@@ -60,27 +60,27 @@ struct iPhoneHomeButtons: View {
             // Home Screen Navigation
             VStack {
                 // go to chat
-                NavigationLink(destination: ChatView(), isActive: $appSessionStore.showingChatView) {
+                NavigationLink(destination: ChatView(), isActive: $appSession.showingChatView) {
                     EmptyView()
                 }.isDetailLink(false)
                 
                 // go to inbox
-                NavigationLink(destination: InboxView(), isActive: $appSessionStore.showingInboxView) {
+                NavigationLink(destination: InboxView(), isActive: $appSession.showingInboxView) {
                     EmptyView()
                 }.isDetailLink(false)
                 
                 // go to search
-                NavigationLink(destination: SearchView(populateTerms: .constant(""), populateAuthor: .constant(""), populateParent: .constant("")), isActive: $appSessionStore.showingSearchView) {
+                NavigationLink(destination: SearchView(populateTerms: .constant(""), populateAuthor: .constant(""), populateParent: .constant("")), isActive: $appSession.showingSearchView) {
                     EmptyView()
                 }.isDetailLink(false)
                 
                 // go to tags
-                NavigationLink(destination: TagsView(), isActive: $appSessionStore.showingTagsView) {
+                NavigationLink(destination: TagsView(), isActive: $appSession.showingTagsView) {
                     EmptyView()
                 }.isDetailLink(false)
                 
                 // go to settings
-                NavigationLink(destination: SettingsView(), isActive: $appSessionStore.showingSettingsView) {
+                NavigationLink(destination: SettingsView(), isActive: $appSession.showingSettingsView) {
                     EmptyView()
                 }.isDetailLink(false)
             }
