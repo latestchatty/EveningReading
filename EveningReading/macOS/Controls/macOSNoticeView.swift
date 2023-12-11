@@ -10,7 +10,7 @@ import SwiftUI
 struct macOSNoticeView : View {
     @Binding public var show: Bool
     @Binding public var message: String
-    @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var chatService: ChatService
     
     var body: some View {
         if show {
@@ -43,12 +43,5 @@ struct macOSNoticeView : View {
         } else {
             EmptyView()
         }
-    }
-}
-
-struct macOSNoticeView_Previews: PreviewProvider {
-    static var previews: some View {
-        macOSNoticeView(show: .constant(true), message: .constant("Tagged!"))
-            .environmentObject(ChatStore(service: ChatService()))
     }
 }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var appService: AppService
     
     private func version() -> String {
         let dict = Bundle.main.infoDictionary!
@@ -20,7 +20,6 @@ struct SettingsView: View {
     }
     
     var body: some View {
-        //GoToPostView()
         Form {
             Section(header: Text("PREFERENCES")) {
                 PreferencesView()
@@ -66,13 +65,5 @@ struct SettingsView: View {
         .edgesIgnoringSafeArea(.bottom)
         .navigationBarTitle("Settings", displayMode: .inline)
         .navigationBarItems(leading: Spacer().frame(width: 16, height: 16))
-    }
-}
-
-struct SettingsView_Previews: PreviewProvider {
-    static var previews: some View {
-        SettingsView()
-            .environment(\.colorScheme, .dark)
-            .environmentObject(AppSessionStore(service: AuthService()))
     }
 }

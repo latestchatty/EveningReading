@@ -8,11 +8,6 @@
 import Foundation
 import SwiftUI
 
-struct RegisterPushResponse {
-    var status: Int
-    var message: String
-}
-
 class NotificationService {
     private let session: URLSession
     private let decoder: JSONDecoder

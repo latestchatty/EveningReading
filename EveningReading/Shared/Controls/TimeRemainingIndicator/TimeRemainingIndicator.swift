@@ -31,12 +31,6 @@ struct TimeRemainingIndicator: View {
     }
 }
 
-struct TimeRemainingIndicator_Previews: PreviewProvider {
-    static var previews: some View {
-        TimeRemainingIndicator(percent: .constant(50))
-    }
-}
-
 struct TimeRemainingIndicatorShape: Shape {
     var percent: Double
     var radius: CGFloat = 100

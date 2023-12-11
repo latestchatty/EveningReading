@@ -8,27 +8,23 @@
 import SwiftUI
 
 struct macOSThreadList: View {
-    @EnvironmentObject var appSessionStore: AppSessionStore
-    @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var appService: AppService
+    @EnvironmentObject var chatService: ChatService
     
     private func filteredThreads() -> [ChatThread] {
-        if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
-        {
-            return Array(chatData.threads)
-        }
-        let threads = chatStore.threads.filter({ return self.appSessionStore.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !self.appSessionStore.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId) && !self.appSessionStore.badWords.contains(where: $0.posts.filter({ return $0.parentId == 0 })[0].body.lowercased().components(separatedBy: " ").contains)})
+        let threads = chatService.threads.filter({ return appService.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !appService.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId) && !appService.badWords.contains(where: $0.posts.filter({ return $0.parentId == 0 })[0].body.lowercased().components(separatedBy: " ").contains)})
         return Array(threads)
     }
     
     var body: some View {
         VStack {
-            if chatStore.gettingChat {
+            if chatService.gettingChat {
                 ProgressView()
                     .foregroundColor(Color.accentColor)
                     .progressViewStyle(LinearProgressViewStyle())
                     .padding()
                 Spacer()
-            } else if chatStore.postingNewThread {
+            } else if chatService.postingNewThread {
                 EmptyView()
             } else {
                 ForEach(filteredThreads(), id: \.threadId) { thread in
@@ -37,13 +33,5 @@ struct macOSThreadList: View {
                 }
             }
         }
-    }
-}
-
-struct macOSThreadList_Previews: PreviewProvider {
-    static var previews: some View {
-        macOSThreadList()
-            .environmentObject(AppSessionStore(service: AuthService()))
-            .environmentObject(ChatStore(service: ChatService()))
     }
 }

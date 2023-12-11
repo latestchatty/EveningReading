@@ -5,12 +5,10 @@
 //  Created by Chris Hodge on 7/20/20.
 //
 
-// This article helped me a lot: https://swiftui-lab.com/scrollview-pull-to-refresh/ Thanks!
-
 import SwiftUI
 
 struct RefreshableScrollView<Content: View>: View {
-    @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var chatService: ChatService
     
     @State private var previousScrollOffset: CGFloat = 0
     @State private var scrollOffset: CGFloat = 0
@@ -42,8 +40,7 @@ struct RefreshableScrollView<Content: View>: View {
                     MovingView()
                     
                     LazyVStack { self.content }
-//.alignmentGuide(.top, computeValue: { d in (self.refreshing && self.frozen) ? -self.threshold : 0.0 })
-.alignmentGuide(.top, computeValue: { d in (self.refreshing) ? -self.threshold : 0.0 })
+                    .alignmentGuide(.top, computeValue: { d in (self.refreshing) ? -self.threshold : 0.0 })
                     .onChange(of: scrollTarget) { target in
                         if let target = target {
                             self.scrollTarget = nil
@@ -60,10 +57,10 @@ struct RefreshableScrollView<Content: View>: View {
                             }
                         }
                     }
-                    .onReceive(chatStore.$scrollTargetThread) { target in
+                    .onReceive(chatService.$scrollTargetThread) { target in
                         scrollProxy.scrollTo(target)
                     }
-                    .onReceive(chatStore.$scrollTargetThreadTop) { targetTop in
+                    .onReceive(chatService.$scrollTargetThreadTop) { targetTop in
                         scrollProxy.scrollTo(targetTop, anchor: .top)
                     }
                     
@@ -75,11 +72,6 @@ struct RefreshableScrollView<Content: View>: View {
             .onPreferenceChange(RefreshableKeyTypes.PrefKey.self) { values in
                 self.refreshLogic(values: values)
             }
-            /*
-            .onReceive(endRefreshTimer) { input in
-                print("self.refreshing = \(self.refreshing) and self.frozen = \(self.frozen)")
-            }
-            */
         }
     }
     
@@ -102,7 +94,6 @@ struct RefreshableScrollView<Content: View>: View {
             if !self.refreshing && (self.scrollOffset > self.threshold && self.previousScrollOffset <= self.threshold) {
                 self.refreshing = true
                 #if os(iOS)
-                //haptic(type: .success)
                 impact(style: .medium)
                 #endif
             }
@@ -211,13 +202,6 @@ struct RefreshableKeyTypes {
         static var defaultValue: [PrefData] = []
 
         static func reduce(value: inout [PrefData], nextValue: () -> [PrefData]) {
-            /*
-            for val in nextValue() {
-                if !value.contains(val) {
-                    value.append(val)
-                }
-            }
-            */
             value.append(contentsOf: nextValue())
         }
 

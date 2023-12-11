@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct macOSPostPreviewView: View {
-    @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var appService: AppService
     @Binding var postId: Int
     @Binding var postAuthor: String
     @Binding var replyLines: String?
@@ -48,11 +48,11 @@ struct macOSPostPreviewView: View {
         }
         
         // Post preview line
-        Text("\(appSessionStore.blockedAuthors.contains(self.postAuthor) ? "[blocked]" : postText.getPreview)")
+        Text("\(appService.blockedAuthors.contains(self.postAuthor) ? "[blocked]" : postText.getPreview)")
             .font(.body)
             .fontWeight(postStrength != nil ? PostWeight[postStrength!] : .regular)
             .opacity(postStrength != nil ? postStrength! : 0.75)
-            .foregroundColor(appSessionStore.username.lowercased() == self.postAuthor.lowercased() ? Color(NSColor.systemTeal) : Color.primary)
+            .foregroundColor(appService.username.lowercased() == self.postAuthor.lowercased() ? Color(NSColor.systemTeal) : Color.primary)
             .lineLimit(1)
         Spacer()
         
@@ -61,12 +61,5 @@ struct macOSPostPreviewView: View {
         
         // Lols
         LolView(lols: self.lols, postId: self.postId)
-    }
-}
-
-struct macOSPostPreviewView_Previews: PreviewProvider {
-    static var previews: some View {
-        macOSPostPreviewView(postId: .constant(0), postAuthor: .constant(""), replyLines: .constant(""), lols: .constant([ChatLols]()), postText: .constant(""), postCategory: .constant("ontopic"), postStrength: .constant(1.0), op: .constant(""))
-            .environmentObject(AppSessionStore(service: AuthService()))
     }
 }

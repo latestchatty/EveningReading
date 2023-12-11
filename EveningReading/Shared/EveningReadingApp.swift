@@ -16,10 +16,8 @@ struct EveningReadingApp: App {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.scenePhase) var phase
     
-    @StateObject var appSessionStore = AppSessionStore(service: .init())
-    @StateObject var chatStore = ChatStore(service: .init())
-    @StateObject var articleStore = ArticleStore(service: .init())
-    @StateObject var messageStore = MessageStore(service: .init())
+    @StateObject var appService = AppService()
+    @StateObject var chatService = ChatService(service: .init())
 
     #if os(iOS)
     @StateObject var notifications = Notifications.shared //Notifications()
@@ -36,30 +34,24 @@ struct EveningReadingApp: App {
             #if os(iOS)
             if UIDevice.current.userInterfaceIdiom == .pad {
                 iPadContentView()
-                    .environmentObject(appSessionStore)
-                    .environmentObject(chatStore)
-                    .environmentObject(articleStore)
-                    .environmentObject(messageStore)
+                    .environmentObject(appService)
+                    .environmentObject(chatService)
                     .environmentObject(notifications)
                     .environmentObject(shackTags)
-                    .preferredColorScheme(appSessionStore.isDarkMode ? .dark : .light)
+                    .preferredColorScheme(appService.isDarkMode ? .dark : .light)
             } else {
                 iPhoneContentView()
-                    .environmentObject(appSessionStore)
-                    .environmentObject(chatStore)
-                    .environmentObject(articleStore)
-                    .environmentObject(messageStore)
+                    .environmentObject(appService)
+                    .environmentObject(chatService)
                     .environmentObject(notifications)
                     .environmentObject(shackTags)
-                    .preferredColorScheme(appSessionStore.isDarkMode ? .dark : .light)
+                    .preferredColorScheme(appService.isDarkMode ? .dark : .light)
             }
             #else
                 macOSContentView()
-                    .environmentObject(appSessionStore)
-                    .environmentObject(chatStore)
-                    .environmentObject(articleStore)
-                    .environmentObject(messageStore)
-                    .preferredColorScheme(appSessionStore.isDarkMode ? .dark : .light)
+                    .environmentObject(appService)
+                    .environmentObject(chatService)
+                    .preferredColorScheme(appService.isDarkMode ? .dark : .light)
             #endif
         }
         /*
@@ -68,20 +60,6 @@ struct EveningReadingApp: App {
                 #if os(iOS)
                 UIApplication.shared.applicationIconBadgeNumber = 0
                 #endif
-            }
-        }
-        */
-        /*
-        .onChange(of: phase) { newPhase in
-            switch newPhase {
-            case .active:
-                // App became active
-            case .inactive:
-                // App became inactive
-            case .background:
-                // App is running in the background
-            @unknown default:
-                // Fallback for future cases
             }
         }
         */

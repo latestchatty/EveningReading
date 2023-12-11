@@ -9,47 +9,54 @@ import SwiftUI
 
 struct InboxView: View {
     @Environment(\.colorScheme) var colorScheme
-    @EnvironmentObject var appSessionStore: AppSessionStore
-    @EnvironmentObject var messageStore: MessageStore
-
+    @EnvironmentObject var appService: AppService
+    
+    @StateObject var messageViewModel = MessageViewModel()
+    
     @State private var messages: [Message] = [Message]()
     @State private var showingNewMessageSheet: Bool = false
     @State private var showRedacted: Bool = true
     @State private var showNoMessages: Bool = false
     
     private func getMessages() {
-        if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil || self.messageStore.messages.count > 0
+        if messageViewModel.messages.count > 0
         {
             return
         }
-        messageStore.getMessages(page: "1", append: false, delay: 0)
+        messageViewModel.getMessages(page: 1, append: false, delay: 0)
     }
     
     private func allMessages() -> [Message] {
-        var msgs: [Message] = [Message]()
-        if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
-        {
-            msgs = Array(messageData.messages)
-        }
-        else {
-            msgs = self.messageStore.messages
-        }
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
             self.showRedacted = false
         }
-        return msgs
+        return messageViewModel.messages
+    }
+    
+    func getBackgroundColor(_ message: Message) -> Binding<Color> {
+        var chatBubbleColor = Color("ChatBubblePrimary")
+        if message.unread && !messageViewModel.markedMessages.contains(message.id) {
+            chatBubbleColor = Color("ChatBubblePrimaryUnread")
+        }
+        return Binding(get: {chatBubbleColor}, set: {chatBubbleColor = $0})
+    }
+    
+    func getForegroundColor(_ message: Message) -> Color {
+        var chatBubbleTextColor = Color(UIColor.systemBlue)
+        if message.unread && !messageViewModel.markedMessages.contains(message.id) {
+            chatBubbleTextColor = Color(UIColor.systemYellow)
+        }
+        return chatBubbleTextColor
     }
     
     var body: some View {
         VStack {
-            //GoToPostView()
-            
-            NewMessageView(showingNewMessageSheet: self.$showingNewMessageSheet, messageId: Binding.constant(0), recipientName: Binding.constant(""), subjectText: Binding.constant(""), bodyText: Binding.constant(""))
+            NewMessageView(showingNewMessageSheet: self.$showingNewMessageSheet)
 
-            RefreshableScrollView(height: 70, refreshing: self.$messageStore.gettingMessages, scrollTarget: self.$messageStore.scrollTarget, scrollTargetTop: self.$messageStore.scrollTargetTop) {
+            RefreshableScrollView(height: 70, refreshing: $messageViewModel.gettingMessages, scrollTarget: $messageViewModel.scrollTarget, scrollTargetTop: $messageViewModel.scrollTargetTop) {
                 
                 // No messages
-                if (self.showNoMessages || !self.appSessionStore.isSignedIn || (self.messageStore.fetchComplete && self.messageStore.messages.count < 1)) && !self.showRedacted {
+                if (self.showNoMessages || !appService.isSignedIn || (messageViewModel.fetchComplete && messageViewModel.messages.count < 1)) && !self.showRedacted {
                     VStack {
                         HStack {
                             Spacer()
@@ -67,7 +74,7 @@ struct InboxView: View {
                 
                 // Messages
                 ForEach(allMessages(), id: \.id) { message in
-                    NavigationLink(destination: MessageDetailView(messageRecipient: Binding.constant(message.from), messageSubject: Binding.constant(message.subject), messageBody: Binding.constant(message.body), messageId: .constant(message.id))) {
+                    NavigationLink(destination: MessageDetailView(messageRecipient: message.from, messageSubject: message.subject, messageBody: message.body, messageId: message.id).environmentObject(messageViewModel)) {
                     
                         VStack {
                            HStack {
@@ -88,14 +95,14 @@ struct InboxView: View {
                            }
                            HStack {
                                Spacer()
-                               ChatBubble(direction: .left, bgcolor: (message.unread && !self.messageStore.markedMessages.contains(message.id) ? Color("ChatBubblePrimaryUnread") :  Color("ChatBubblePrimary"))) {
+                               ChatBubble(direction: .left, bgcolor: getBackgroundColor(message)) {
                                    VStack(alignment: .leading) {
                                        HStack {
                                            Text(message.subject)
                                                .bold()
                                                .lineLimit(1)
                                                .font(.caption)
-                                            .foregroundColor(message.unread && !self.messageStore.markedMessages.contains(message.id) ? Color(UIColor.systemYellow) :  Color(UIColor.systemBlue))
+                                               .foregroundColor(getForegroundColor(message))
                                                .padding(.init(top: 20, leading: 20, bottom: 5, trailing: 20))
                                            Spacer()
                                            Image(systemName: "chevron.right")
@@ -122,12 +129,11 @@ struct InboxView: View {
                     .id(message.id)
                 }
                 
-            // Padding to show all of the last message
-            VStack {
-                Spacer().frame(width: UIScreen.main.bounds.width, height: 30)
-            }
-            .id(9999999999993)
-                
+                // Padding to show all of the last message
+                VStack {
+                    Spacer().frame(width: UIScreen.main.bounds.width, height: 30)
+                }
+                .id(9999999999993)
             }
         }
         .onAppear(perform: getMessages)
@@ -137,14 +143,5 @@ struct InboxView: View {
         .navigationBarTitle("Inbox", displayMode: .inline)
         .navigationBarItems(leading: Spacer().frame(width: 16, height: 16), trailing: NewMessageButton(isReply: false, showingNewMessageSheet: self.$showingNewMessageSheet))
         .navigationViewStyle(StackNavigationViewStyle())
-    }
-}
-
-struct InboxView_Previews: PreviewProvider {
-    static var previews: some View {
-        InboxView()
-            .environment(\.colorScheme, .dark)
-            .environmentObject(AppSessionStore(service: AuthService()))
-            .environmentObject(MessageStore(service: MessageService()))
     }
 }

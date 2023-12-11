@@ -27,9 +27,3 @@ struct SidebarButton: View {
         .contentShape(Rectangle())
     }
 }
-
-struct SidebarButton_Previews: PreviewProvider {
-    static var previews: some View {
-        SidebarButton(text: .constant("Chat"), imageName: .constant("text.bubble"), selected: .constant(true))
-    }
-}

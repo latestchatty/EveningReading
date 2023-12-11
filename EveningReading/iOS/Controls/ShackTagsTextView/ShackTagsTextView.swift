@@ -24,8 +24,6 @@ class ShackTags: NSObject, ObservableObject {
     var textEditorCurrentRange: UITextRange?
 }
 
-// var textEditorCurrentRange: UITextRange?
-
 struct ShackTagsTextView: UIViewRepresentable {
     @Binding var text: String
     @Binding var textStyle: UIFont.TextStyle
@@ -80,10 +78,10 @@ class TagMenuItemTextView: UITextView {
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
 
         // Keep most of the default actions
+        // action == #selector(selectAll(_:)) ||
         if action == #selector(cut(_:)) ||
             action == #selector(copy(_:)) ||
             action == #selector(select(_:)) ||
-            action == #selector(selectAll(_:)) ||
             action == #selector(paste(_:)) ||
             action == Selector(("_promptForReplace:"))
         {

@@ -8,26 +8,22 @@
 import SwiftUI
 
 struct macOSChatViewOld: View {
-    @EnvironmentObject var appSessionStore: AppSessionStore
-    @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var appService: AppService
+    @EnvironmentObject var chatService: ChatService
     
     @State private var showingGuidelinesView = false
     @State private var guidelinesAccepted = false
     
     private func fetchChat() {
-        if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil || chatStore.threads.count > 0
+        if chatService.threads.count > 0
         {
             return
         }
-        chatStore.getChat()
+        chatService.getChat()
     }
     
     private func filteredThreads() -> [ChatThread] {
-        if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
-        {
-            return Array(chatData.threads)
-        }
-        let threads = chatStore.threads.filter({ return self.appSessionStore.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !self.appSessionStore.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
+        let threads = chatService.threads.filter({ return appService.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !appService.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
         return Array(threads)
     }
     
@@ -59,13 +55,13 @@ struct macOSChatViewOld: View {
                         VStack {
                             Spacer().frame(maxWidth: .infinity).frame(height: 30)
                         }.id(9999999999991)
-                        .onReceive(chatStore.$threads) { threads in
+                        .onReceive(chatService.$threads) { threads in
                             if threads.count < 1 {
                                 scrollProxy.scrollTo(9999999999991, anchor: .top)
                             }
                         }
                         /*
-                        .onReceive(chatStore.$activeThreadId) { thread in
+                        .onReceive(chatService.$activeThreadId) { thread in
                             if thread != 0 {
                                 scrollProxy.scrollTo(thread)
                             }
@@ -84,14 +80,5 @@ struct macOSChatViewOld: View {
             }
             .frame(maxHeight: .infinity)
         }
-    }
-}
-
-struct macOSChatViewOld_Previews: PreviewProvider {
-    static var previews: some View {
-        macOSChatViewOld()
-            .previewLayout(.fixed(width: 640, height: 480))
-            .environmentObject(AppSessionStore(service: AuthService()))
-            .environmentObject(ChatStore(service: ChatService()))
     }
 }

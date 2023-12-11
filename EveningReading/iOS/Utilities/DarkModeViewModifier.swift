@@ -63,11 +63,3 @@ private struct ColorRow: View {
         }
     }
 }
-
-struct DarkModeColorView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            DarkModeColorView()
-        }
-    }
-}

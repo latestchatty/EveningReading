@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct ArticleCard: View {
-    @Binding var articleTitle: String
-    @Binding var articlePreview: String
-    @Binding var articleLink: String
+    var articleTitle: String
+    var articlePreview: String
+    var articleLink: String
     
     @State var showingArticleSheet: Bool = false
     
@@ -60,11 +60,5 @@ struct ArticleCard: View {
             .preferredControlAccentColor(.accentColor)
             .dismissButtonStyle(.done)
         }
-    }
-}
-
-struct ArticleCard_Previews: PreviewProvider {
-    static var previews: some View {
-        ArticleCard(articleTitle: .constant("Lorem Ipsum"), articlePreview: .constant("Omnicos factorial non deposit quid pro quo hic escorol. Olypian quarrels et gorilla congolium sic ad nauseum. Souvlaki ignitus carborundum e pluribus unum."), articleLink: .constant("http://www.shacknews.com"))
     }
 }

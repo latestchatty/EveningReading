@@ -4,9 +4,8 @@
 //
 //  Created by Chris Hodge on 5/6/21.
 //
-
-// This repo helped me a lot: https://github.com/JohnHeitmann/SwiftUI-Rich-Text-Demo Thanks!
-// https://stackoverflow.com/questions/25882936/open-appstore-through-button
+//  This repo helped me a lot: https://github.com/JohnHeitmann/SwiftUI-Rich-Text-Demo Thanks!
+//
 
 import Foundation
 import SwiftUI
@@ -48,34 +47,6 @@ enum RichTextBlock: Hashable {
     case spoiler([SpoilerBlock])
     case link([LinkBlock])
     case spoilerlink([SpoilerLinkBlock])
-}
-
-struct InlineText: Hashable {
-    var text: String
-    let attributes: TextAttributes
-}
-
-struct SpoilerBlock: Hashable {
-    var text: String
-}
-
-struct LinkBlock: Hashable {
-    var hyperlink: String
-    var description: String
-}
-
-struct SpoilerLinkBlock: Hashable {
-    var hyperlink: String
-    var description: String
-}
-
-enum ShackMarkupType: Hashable {
-    case tag, content
-}
-
-struct ShackPostMarkup: Hashable {
-    let postMarkup: String
-    let postMarkupType: ShackMarkupType
 }
 
 struct SpoilerView: View {
@@ -121,8 +92,8 @@ struct SpoilerView: View {
 
 struct LinkView: View {
     @Environment(\.colorScheme) var colorScheme
-    @EnvironmentObject var appSessionStore: AppSessionStore
-    @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var appService: AppService
+    @EnvironmentObject var chatService: ChatService
     var hyperlink: String = ""
     var description: String = ""
     
@@ -156,7 +127,7 @@ struct LinkView: View {
                     }
                     
                     // YouTube
-                    if self.appSessionStore.useYoutubeApp && (self.hyperlink.starts(with: "https://www.youtube.com/") || self.hyperlink.starts(with: "https://youtube.com/") || self.hyperlink.starts(with: "https://youtu.be/")) {
+                    if appService.useYoutubeApp && (self.hyperlink.starts(with: "https://www.youtube.com/") || self.hyperlink.starts(with: "https://youtube.com/") || self.hyperlink.starts(with: "https://youtu.be/")) {
                         let url = URL(string: self.hyperlink.replacingOccurrences(of: "https", with: "youtube"))!
                         if !UIApplication.shared.canOpenURL(url)  {
                             //self.hyperlinkUrlStr = self.hyperlink
@@ -164,7 +135,7 @@ struct LinkView: View {
                             if let url = URL(string: self.hyperlink) {
                                 self.hyperlinkUrl = url
                                 self.showingSafariSheet = true
-                                appSessionStore.showingSafariSheet = true
+                                appService.showingSafariSheet = true
                             }
                         } else {
                             UIApplication.shared.open(url, options: [:], completionHandler: nil)
@@ -174,12 +145,11 @@ struct LinkView: View {
                     else if self.hyperlink.starts(with: "https://www.shacknews.com/chatty?id=") || self.hyperlink.starts(with: "http://www.shacknews.com/chatty?id=")
                     {
                         if let url = URL(string: self.hyperlink) {
-                            print("it is a valid url")
                             let components = URLComponents(url: url, resolvingAgainstBaseURL: false)
                             if let queryItems = components?.queryItems {
                                 for queryItem in queryItems {
                                     if queryItem.name == "id" {
-                                        appSessionStore.setLink(postId: queryItem.value ?? "")
+                                        appService.setLink(postId: queryItem.value ?? "")
                                     }
                                 }
                             }
@@ -192,7 +162,7 @@ struct LinkView: View {
                         if let url = URL(string: self.hyperlink) {
                             self.hyperlinkUrl = url
                             self.showingSafariSheet = true
-                            appSessionStore.showingSafariSheet = true
+                            appService.showingSafariSheet = true
                         }
                     }
                     // Apple
@@ -212,11 +182,11 @@ struct LinkView: View {
                     }
                 }
             
-            if self.appSessionStore.showLinkCopyButton {
+            if appService.showLinkCopyButton {
                 Spacer()
                 Button(action: {
                     UIPasteboard.general.string = self.hyperlink
-                    chatStore.showingCopiedNotice = true
+                    chatService.showingCopiedNotice = true
                 }) {
                     Image(systemName: "doc.on.doc")
                         .imageScale(.small)
@@ -251,7 +221,7 @@ struct LinkView: View {
         .onReceive(Notifications.shared.$notificationData) { value in
             if value != nil {
                 self.showingSafariSheet = false
-                appSessionStore.showingSafariSheet = false
+                appService.showingSafariSheet = false
             }
         }
         
@@ -719,10 +689,7 @@ class RichTextBuilder {
                     link = link.replacingOccurrences(of: #"">"#, with: "")
                     richText.append(.link([LinkBlock(hyperlink: link, description: link)]))
                 }
-            }
-            
-            //print(markup.postMarkup)
-            
+            }            
         }
         
         // Append remainder

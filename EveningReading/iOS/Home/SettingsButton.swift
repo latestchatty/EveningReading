@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct SettingsButton: View {
-    @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var appService: AppService
     @EnvironmentObject var notifications: Notifications
     var hide: Bool = false
 
     private func navigateTo(_ goToDestination: inout Bool) {
-        appSessionStore.resetNavigation()
+        appService.resetNavigation()
         goToDestination = true
     }
     
@@ -23,7 +23,7 @@ struct SettingsButton: View {
         } else {
             HStack {
                 Button(action: {
-                    navigateTo(&appSessionStore.showingSettingsView)
+                    navigateTo(&appService.showingSettingsView)
                 }) {
                     Image(systemName: "person.circle")
                         .resizable()
@@ -36,10 +36,3 @@ struct SettingsButton: View {
     }
 }
 
-struct SettingsButton_Previews: PreviewProvider {
-    static var previews: some View {
-        SettingsButton()
-            .environmentObject(AppSessionStore(service: AuthService()))
-            .environmentObject(Notifications())
-    }
-}

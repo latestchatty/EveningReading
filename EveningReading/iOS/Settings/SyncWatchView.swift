@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SyncWatchView: View {
-    @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var appService: AppService
     
     @State private var watchServiceStatus = "Open Evening Reading on your Watch..."
     let sendUsernameTimer = Timer.publish(every: 10, on: .main, in: .common).autoconnect()

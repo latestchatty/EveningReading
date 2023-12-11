@@ -52,7 +52,7 @@ class ReplyLineBuilder {
                     }
                     replyLineDepth = replyLineDepth + 1
                 }
-                // get the next postId up the heirchy
+                // get the next postId up the hierarchy
                 postId = thread.posts.filter({ return $0.id == postId })[0].parentId
             }
         }

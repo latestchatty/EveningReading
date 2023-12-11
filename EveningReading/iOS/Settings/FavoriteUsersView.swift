@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct FavoriteUsersView: View {
-    @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var appService: AppService
     
     @State private var showingDeleteAlert = false
     @State private var currentFavorite = ""
@@ -16,15 +16,16 @@ struct FavoriteUsersView: View {
     var body: some View {
         ScrollView {
             VStack {
-                if appSessionStore.favoriteAuthors.filter { $0 != "" }.isEmpty {
+                if appService.favoriteAuthors.filter({ $0 != "" }).isEmpty {
                     HStack {
                         Text("No favorites, long press a post to add users.")
                             .font(.body)
                             .bold()
                             .foregroundColor(Color("NoDataLabel"))
+                            .padding(.top, 20)
                     }
                 }
-                ForEach(appSessionStore.favoriteAuthors.filter { $0 != "" }, id: \.self) { favorite in
+                ForEach(appService.favoriteAuthors.filter { $0 != "" }, id: \.self) { favorite in
                     HStack {
                         Image(systemName: "star")
                             .imageScale(.medium)
@@ -60,13 +61,6 @@ struct FavoriteUsersView: View {
     }
     
     func deleteFavorite() {
-        appSessionStore.favoriteAuthors = appSessionStore.favoriteAuthors.filter { $0 != currentFavorite }
-    }
-}
-
-struct FavoriteUsersView_Previews: PreviewProvider {
-    static var previews: some View {
-        FavoriteUsersView()
-            .environmentObject(AppSessionStore(service: AuthService()))
+        appService.favoriteAuthors = appService.favoriteAuthors.filter { $0 != currentFavorite }
     }
 }

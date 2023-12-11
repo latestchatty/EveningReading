@@ -10,14 +10,13 @@ import SwiftUI
 struct ChatBubble<Content>: View where Content: View {
     let direction: ChatBubbleShape.Direction
 
-    let bgcolor: Color
+    @Binding var bgcolor: Color
 
     let content: () -> Content
-    init(direction: ChatBubbleShape.Direction, bgcolor: Color, @ViewBuilder content: @escaping () -> Content) {
+    init(direction: ChatBubbleShape.Direction, bgcolor: Binding<Color>, @ViewBuilder content: @escaping () -> Content) {
             self.content = content
             self.direction = direction
-        
-            self.bgcolor = bgcolor
+            self._bgcolor = bgcolor
     }
     
     var body: some View {

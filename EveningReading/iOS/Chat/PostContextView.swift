@@ -10,9 +10,10 @@ import MobileCoreServices
 import UniformTypeIdentifiers
 
 struct PostContextView: View {
-    @EnvironmentObject var appSessionStore: AppSessionStore
-    @EnvironmentObject var chatStore: ChatStore
-    @EnvironmentObject var messageStore: MessageStore
+    @EnvironmentObject var appService: AppService
+    @EnvironmentObject var chatService: ChatService
+    
+    @StateObject var messageViewModel = MessageViewModel()
     
     @Binding var showingWhosTaggingView: Bool
     @Binding var showingNewMessageView: Bool
@@ -32,7 +33,7 @@ struct PostContextView: View {
     
     var body: some View {
         Button(action: {
-            chatStore.activePostId = postId
+            chatService.activePostId = postId
             self.showingWhosTaggingView = true
         }) {
             Text("Who's Tagging?")
@@ -42,7 +43,7 @@ struct PostContextView: View {
         if self.threadId > 0 && !self.isRootPost {
             Button(action: {
                 self.collapsed = true
-                appSessionStore.collapsedThreads.append(self.threadId)
+                appService.collapsedThreads.append(self.threadId)
             }) {
                 Text("Hide Thread")
                 Image(systemName: "eye.slash")
@@ -61,8 +62,8 @@ struct PostContextView: View {
         
         if showCopyPost {
             Button(action: {
-                chatStore.copyPostText = self.postBody
-                chatStore.showingCopyPostSheet = true
+                chatService.copyPostText = self.postBody
+                chatService.showingCopyPostSheet = true
             }) {
                 Text("Copy Post")
                 Image(systemName: "doc.on.doc")
@@ -82,7 +83,7 @@ struct PostContextView: View {
             let shackURL = "https://www.shacknews.com/chatty?id=\(self.postId)#item_\(self.postId)"
             let board = UIPasteboard.general
             board.string = shackURL
-            chatStore.showingCopiedNotice = true
+            chatService.showingCopiedNotice = true
             /*
             UIPasteboard.general.setValue(shackURL,
                         forPasteboardType: kUTTypePlainText as String)
@@ -92,10 +93,10 @@ struct PostContextView: View {
             Image(systemName: "doc.on.clipboard")
         }
         
-        if !appSessionStore.favoriteAuthors.contains(self.author) {
+        if !appService.favoriteAuthors.contains(self.author) {
             Button(action: {
-                appSessionStore.favoriteAuthors.append(self.author)
-                chatStore.showingFavoriteNotice = true
+                appService.favoriteAuthors.append(self.author)
+                chatService.showingFavoriteNotice = true
             }) {
                 Text("Favorite User")
                 Image(systemName: "star")
@@ -103,7 +104,7 @@ struct PostContextView: View {
         }
         
         Button(action: {
-            appSessionStore.blockedAuthors.append(self.author)
+            appService.blockedAuthors.append(self.author)
         }) {
             Text("Block User")
             Image(systemName: "exclamationmark.circle")
@@ -112,24 +113,15 @@ struct PostContextView: View {
         Button(action: {
             self.messageRecipient = "Duke Nuked"
             self.messageSubject = "Reporting Author of Post"
-            self.messageBody = messageStore.getComplaintText(author: self.author, postId: self.postId)
+            self.messageBody = messageViewModel.getComplaintText(author: self.author, postId: self.postId)
             self.showingNewMessageView = true
         }) {
             Text("Report User")
             Image(systemName: "exclamationmark.circle")
         }
         .onAppear() {
-            chatStore.activePostId = self.postId
+            chatService.activePostId = self.postId
         }
         
-    }
-}
-
-struct PostContextView_Previews: PreviewProvider {
-    static var previews: some View {
-        PostContextView(showingWhosTaggingView: .constant(false), showingNewMessageView: .constant(false), messageRecipient: .constant(""), messageSubject: .constant(""), messageBody: .constant(""), collapsed: .constant(false))
-            .environmentObject(AppSessionStore(service: AuthService()))
-            .environmentObject(ChatStore(service: ChatService()))
-            .environmentObject(MessageStore(service: MessageService()))
     }
 }

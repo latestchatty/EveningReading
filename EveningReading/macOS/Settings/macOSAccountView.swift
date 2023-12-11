@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct macOSAccountView: View {
-    @EnvironmentObject var appSessionStore: AppSessionStore
-    @EnvironmentObject var messageStore: MessageStore
-    @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var appService: AppService
+    @EnvironmentObject var chatService: ChatService
+    
+    @StateObject var messageViewModel = MessageViewModel()
     
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
@@ -22,16 +23,16 @@ struct macOSAccountView: View {
     }
     
     private func cancelSignIn() {
-        appSessionStore.signInUsername = ""
-        appSessionStore.signInPassword = ""
+        appService.signInUsername = ""
+        appService.signInPassword = ""
         self.showingSignIn = false
     }
 
     private func signIn() {
-        if self.appSessionStore.signInUsername.count < 1 || self.appSessionStore.signInPassword.count < 1 {
-            self.appSessionStore.showingSignInWarning = true
+        if appService.signInUsername.count < 1 || appService.signInPassword.count < 1 {
+            appService.showingSignInWarning = true
         } else {
-            self.appSessionStore.authenticate()
+            appService.authenticate()
         }
     }
     
@@ -40,7 +41,7 @@ struct macOSAccountView: View {
     }
     
     private func closeAlert() {
-        appSessionStore.showingSignInWarning = false
+        appService.showingSignInWarning = false
     }
     
     var body: some View {
@@ -48,8 +49,8 @@ struct macOSAccountView: View {
             
             // Sign in/out button
             VStack (alignment: .center) {
-                if self.appSessionStore.isSignedIn {
-                    Text("Signed In As: ") + Text("\(appSessionStore.username)").foregroundColor(Color(NSColor.systemBlue))
+                if appService.isSignedIn {
+                    Text("Signed In As: ") + Text("\(appService.username)").foregroundColor(Color(NSColor.systemBlue))
                     Button(action: showSignOut) {
                         Text("Sign Out")
                             .frame(width: 200)
@@ -73,32 +74,32 @@ struct macOSAccountView: View {
                         Text("Sign In").bold().font(.title)
                             .padding(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0))
                         
-                        TextField("Username", text: $appSessionStore.signInUsername)
+                        TextField("Username", text: $appService.signInUsername)
                         .padding()
                         .textContentType(.username)
                         .padding(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0))
-                        .disabled(appSessionStore.showingSignInWarning)
+                        .disabled(appService.showingSignInWarning)
                         
-                        SecureField("Password", text: $appSessionStore.signInPassword) {
+                        SecureField("Password", text: $appService.signInPassword) {
                         }
                         .padding()
                         .textContentType(.password)
                         .padding(.bottom, 10)
-                        .disabled(appSessionStore.showingSignInWarning)
+                        .disabled(appService.showingSignInWarning)
                         
                         HStack {
                             Button(action: cancelSignIn) {
                                 Text("Cancel").foregroundColor(Color.primary).bold()
                             }
-                            .disabled(appSessionStore.showingSignInWarning)
+                            .disabled(appService.showingSignInWarning)
                             Button(action: signIn) {
                                 Text("Sign In").foregroundColor(Color.primary).bold()
                             }
-                            .disabled(appSessionStore.showingSignInWarning)
+                            .disabled(appService.showingSignInWarning)
                             .keyboardShortcut(.defaultAction)
                         }
                     }
-                    if appSessionStore.showingSignInWarning {
+                    if appService.showingSignInWarning {
                         VStack {}
                         .frame(width: 240, height: 120)
                         .background(Color("macOSAlertBackground"))
@@ -121,12 +122,12 @@ struct macOSAccountView: View {
             // Sign Out
             .alert(isPresented: self.$showingSignOut) {
                 Alert(title: Text("Sign Out?"), message: Text(""), primaryButton: .destructive(Text("Yes")) {
-                    appSessionStore.isSignedIn = false
-                    appSessionStore.username = ""
-                    appSessionStore.password = ""
-                    appSessionStore.clearNotifications()
-                    messageStore.clearMessages()
-                    chatStore.newPostParentId = 0
+                    appService.isSignedIn = false
+                    appService.username = ""
+                    appService.password = ""
+                    appService.clearNotifications()
+                    messageViewModel.clearMessages()
+                    chatService.newPostParentId = 0
                 }, secondaryButton: .cancel() {
                     
                 })
@@ -134,7 +135,7 @@ struct macOSAccountView: View {
             
             // Did sign in
             .onReceive(timer) { _ in
-                if appSessionStore.isSignedIn {
+                if appService.isSignedIn {
                     self.timer.upstream.connect().cancel()
                     self.showingSignIn = false
                 }
@@ -142,14 +143,5 @@ struct macOSAccountView: View {
             
             Spacer()
         }
-    }
-}
-
-struct macOSAccountView_Previews: PreviewProvider {
-    static var previews: some View {
-        macOSAccountView()
-            .environment(\.colorScheme, .dark)
-            .environmentObject(AppSessionStore(service: AuthService()))
-            .environmentObject(MessageStore(service: MessageService()))
     }
 }

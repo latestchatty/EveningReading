@@ -42,9 +42,3 @@ struct RoundedCornersView: View {
         .shadow(color: shadowColor, radius: 6, x: 0, y: 6)
     }
 }
-
-struct RoundedCornersView_Previews: PreviewProvider {
-    static var previews: some View {
-        RoundedCornersView(color: Color("ChatBubblePrimary"), tl: 0, tr: 10, bl: 10, br: 10)
-    }
-}

@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct SearchView: View {
-    @Binding public var populateTerms: String
-    @Binding public var populateAuthor: String
-    @Binding public var populateParent: String
+    public var populateTerms: String = ""
+    public var populateAuthor: String = ""
+    public var populateParent: String = ""
     @State var terms = ""
     @State var author = ""
     @State var parent = ""
@@ -50,8 +50,6 @@ struct SearchView: View {
     
     var body: some View {
         VStack {            
-            //GoToPostView()
-            
             NavigationLink(destination: SearchResultsView(terms: self.terms, author: self.author, parentAuthor: self.parent),
                 isActive: self.$showingResults) {
                 EmptyView()
@@ -116,11 +114,5 @@ struct SearchView: View {
         .alert(isPresented: self.$showingNoCriteraAlert) {
             Alert(title: Text("No Criteria"), message: Text("Enter search criteria"), dismissButton: .default(Text("OK")))
         }
-    }
-}
-
-struct SearchView_Previews: PreviewProvider {
-    static var previews: some View {
-        SearchView(populateTerms: .constant(""), populateAuthor: .constant(""), populateParent: .constant(""))
     }
 }

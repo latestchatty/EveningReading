@@ -16,9 +16,3 @@ struct macOSSearchView: View {
         .navigationTitle("Search")
     }
 }
-
-struct macOSSearchView_Previews: PreviewProvider {
-    static var previews: some View {
-        macOSSearchView()
-    }
-}

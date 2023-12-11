@@ -9,15 +9,15 @@ import SwiftUI
 
 struct SignInView: View {
     @Environment(\.presentationMode) var presentationMode
-    @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var appService: AppService
     
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     private func signIn() {
-        if self.appSessionStore.signInUsername.count < 1 || self.appSessionStore.signInPassword.count < 1 {
-            self.appSessionStore.showingSignInWarning = true
+        if appService.signInUsername.count < 1 || appService.signInPassword.count < 1 {
+            appService.showingSignInWarning = true
         } else {
-            self.appSessionStore.authenticate()
+            appService.authenticate()
         }
     }
 
@@ -41,23 +41,15 @@ struct SignInView: View {
                     Text("Lamp, Sand, Lime.").font(.subheadline)
                         .padding(EdgeInsets(top: 0, leading: 0, bottom: 70, trailing: 0))
                     
-                    TextField("Username", text: $appSessionStore.signInUsername)
+                    TextField("Username", text: $appService.signInUsername)
                         .padding()
                         .textContentType(.username)
                         .autocapitalization(.none)
                         .background(Color("SignInField"))
                         .cornerRadius(4.0)
                         .padding(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0))
-                    
-                    /*
-                    HStack() {
-                        Spacer()
-                        Text("Case Sensitive")
-                            .foregroundColor(Color.primary)
-                    }.padding(.bottom, 20)
-                    */
-                    
-                    SecureField("Password", text: $appSessionStore.signInPassword) {
+                                        
+                    SecureField("Password", text: $appService.signInPassword) {
                     }
                     .padding()
                     .textContentType(.password)
@@ -80,17 +72,17 @@ struct SignInView: View {
                 }
                 .padding()
                 
-                .alert(isPresented: $appSessionStore.showingSignInWarning) {
+                .alert(isPresented: $appService.showingSignInWarning) {
                     Alert(title: Text("Sign In Failed"), message: Text("Incorrect username or password."), dismissButton: .default(Text("Okay")))
                 }
                 
             }
             .padding()
             .background(Color("SignInBackground").frame(height: 2600).offset(y: -80))
-            .disabled(appSessionStore.isAuthenticating)
-            .overlay(AuthenticatingView(isVisible: $appSessionStore.isAuthenticating))
+            .disabled(appService.isAuthenticating)
+            .overlay(AuthenticatingView(isVisible: $appService.isAuthenticating))
             .onReceive(timer) { _ in
-                if appSessionStore.isSignedIn {
+                if appService.isSignedIn {
                     self.timer.upstream.connect().cancel()
                     NotificationStore(service: .init()).register()
                     NotificationStore(service: .init()).registernew()
@@ -116,13 +108,5 @@ struct SignInView: View {
             .padding()
 
         }
-    }
-}
-
-struct SignInView_Previews: PreviewProvider {
-    static var previews: some View {
-        SignInView()
-            .environmentObject(AppSessionStore(service: AuthService()))
-            .environment(\.colorScheme, .dark)
     }
 }

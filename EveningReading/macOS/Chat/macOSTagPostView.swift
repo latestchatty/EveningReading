@@ -10,10 +10,10 @@ import Foundation
 import SwiftUI
 
 struct macOSTagPostView: View {
-    @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var appService: AppService
     
     var body: some View {
-        if appSessionStore.isSignedIn {
+        if appService.isSignedIn {
             Image(systemName: "tag")
                 .imageScale(.large)
                 .onTapGesture(count: 1) {
@@ -21,12 +21,5 @@ struct macOSTagPostView: View {
         } else {
             EmptyView()
         }
-    }
-}
-
-struct macOSTagPostView_Previews: PreviewProvider {
-    static var previews: some View {
-        macOSTagPostView()
-            .environmentObject(AppSessionStore(service: AuthService()))
     }
 }

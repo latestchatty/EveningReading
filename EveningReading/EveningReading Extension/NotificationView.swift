@@ -12,9 +12,3 @@ struct NotificationView: View {
         Text("Evening Reading!")
     }
 }
-
-struct NotificationView_Previews: PreviewProvider {
-    static var previews: some View {
-        NotificationView()
-    }
-}

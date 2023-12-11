@@ -15,14 +15,13 @@ struct TagsView: View {
     
     var body: some View {
         VStack {
-            //GoToPostView()
             if self.webViewLoading {
                 ProgressView(value: self.webViewProgress, total: 1.0)
                     .progressViewStyle(LinearProgressViewStyle(tint: Color(UIColor.systemBlue)))
                     .frame(maxWidth: .infinity)
             }
             
-            NavigationLink(destination: ThreadDetailView(threadId: .constant(0), postId: self.$goToPostId, replyCount: .constant(-1), isSearchResult: .constant(true)), isActive: self.$showingPost) {
+            NavigationLink(destination: ThreadDetailView(threadId: 0, postId: self.goToPostId, replyCount: -1, isSearchResult: true), isActive: self.$showingPost) {
                 EmptyView()
             }.isDetailLink(false).hidden().allowsHitTesting(false)
             
@@ -35,11 +34,5 @@ struct TagsView: View {
         .navigationViewStyle(StackNavigationViewStyle())
         .navigationBarTitle("Tags", displayMode: .inline)
         .navigationBarItems(leading: Spacer().frame(width: 26, height: 16))
-    }
-}
-
-struct TagsView_Previews: PreviewProvider {
-    static var previews: some View {
-        TagsView()
     }
 }

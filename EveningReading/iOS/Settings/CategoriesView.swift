@@ -8,37 +8,31 @@
 import SwiftUI
 
 struct CategoriesView: View {
-    @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var appService: AppService
     
     var body: some View {
         Group {
             #if os(macOS)
-            Toggle(isOn: self.$appSessionStore.hideBadWords) {
+            Toggle(isOn: self.$appService.hideBadWords) {
                 Text("Language")
             }
             #endif
-            Toggle(isOn: self.$appSessionStore.showInformative) {
+            Toggle(isOn: self.$appService.showInformative) {
                 Text("Informative")
             }
-            Toggle(isOn: self.$appSessionStore.showOffTopic) {
+            Toggle(isOn: self.$appService.showOffTopic) {
                 Text("Off Topic")
             }
-            Toggle(isOn: self.$appSessionStore.showPolitical) {
+            Toggle(isOn: self.$appService.showPolitical) {
                 Text("Political")
             }
-            Toggle(isOn: self.$appSessionStore.showStupid) {
+            Toggle(isOn: self.$appService.showStupid) {
                 Text("Stupid")
             }
-            Toggle(isOn: self.$appSessionStore.showNWS) {
+            Toggle(isOn: self.$appService.showNWS) {
                 Text("NWS")
             }
         }
     }
 }
 
-struct CategoriesView_Previews: PreviewProvider {
-    static var previews: some View {
-        CategoriesView()
-            .environmentObject(AppSessionStore(service: AuthService()))
-    }
-}

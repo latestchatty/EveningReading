@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct TrendingView: View {
-    @EnvironmentObject var appSessionStore: AppSessionStore
-    @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var appService: AppService
+    @EnvironmentObject var chatService: ChatService
     
     @State private var showPlaceholder = true
     @State private var selectedThreadId: Int? = 0
@@ -17,28 +17,24 @@ struct TrendingView: View {
     private var threadLimit = 6
 
     private func navigateTo(_ goToDestination: inout Bool) {
-        appSessionStore.resetNavigation()
+        appService.resetNavigation()
         goToDestination = true
     }
     
-    private func fetchChat() {
-        if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil || chatStore.threads.count > 0
+    private func getChat() {
+        if chatService.threads.count > 0
         {
             return
         }
-        chatStore.getChat()
+        chatService.getChat()
     }
     
     private func filteredThreads() -> [ChatThread] {
-        if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
-        {
-            return Array(chatData.threads.prefix(4))
-        }
-        let threads = self.chatStore.threads.filter({ return self.appSessionStore.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !self.appSessionStore.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)}).sorted(by: { $0.posts.count > $1.posts.count }).prefix(self.threadLimit)
+        let threads = chatService.threads.filter({ return appService.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !appService.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)}).sorted(by: { $0.posts.count > $1.posts.count }).prefix(self.threadLimit)
         if threads.count > 0 {
             return Array(threads.prefix(self.threadLimit))
         } else {
-            return Array(chatData.threads.prefix(self.threadLimit))
+            return Array(RedactedContentLoader.getChat().threads.prefix(self.threadLimit))
         }
     }
     
@@ -61,7 +57,7 @@ struct TrendingView: View {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
                         ForEach(filteredThreads(), id: \.threadId) { thread in
-                            NavigationLink(destination: ThreadDetailView(threadId: .constant(thread.threadId), postId: .constant(0), replyCount: .constant(thread.posts.count - 1), isSearchResult: .constant(false)), tag: thread.threadId, selection: $selectedThreadId) { EmptyView() }
+                            NavigationLink(destination: ThreadDetailView(threadId: thread.threadId, postId: 0, replyCount: thread.posts.count - 1), tag: thread.threadId, selection: $selectedThreadId) { EmptyView() }
                             TrendingCard(thread: .constant(thread))
                             .conditionalModifier(thread.threadId, RedactedModifier())
                             .background(Color.clear)
@@ -77,15 +73,9 @@ struct TrendingView: View {
                 .frame(height: 480)
                 Spacer()
             }
-            .padding(.top, -40) // -20
+            .padding(.top, -40)
         }
-        .onAppear(perform: fetchChat)
+        .onAppear(perform: getChat)
     }
 }
-struct TrendingView_Previews: PreviewProvider {
-    static var previews: some View {
-        TrendingView()
-            .environmentObject(AppSessionStore(service: AuthService()))
-            .environmentObject(ChatStore(service: ChatService()))
-    }
-}
+

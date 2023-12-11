@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct watchOSPostDetail: View {
-    @EnvironmentObject var appSessionStore: AppSessionStore
-    @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var appService: AppService
+    @EnvironmentObject var chatService: ChatService
     
     @Binding var postId: Int
     
@@ -25,14 +25,8 @@ struct watchOSPostDetail: View {
     @State private var isRootPost: Bool = false
     
     private func getThreadData() {
-        if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
-        {
-            let thread = chatData.threads.filter { !$0.posts.isEmpty && $0.posts.contains(where: { post in post.id == self.postId }) }.first
-            setThreadData(thread)
-        } else {
-            let thread = chatStore.threads.filter { !$0.posts.isEmpty && $0.posts.contains(where: { post in post.id == self.postId }) }.first
-            setThreadData(thread)
-        }
+        let thread = chatService.threads.filter { !$0.posts.isEmpty && $0.posts.contains(where: { post in post.id == self.postId }) }.first
+        setThreadData(thread)
     }
     
     private func setThreadData(_ thread: ChatThread?) {
@@ -44,7 +38,7 @@ struct watchOSPostDetail: View {
             self.postLols = childPost.lols
             self.replies = thread?.posts.filter({ return $0.parentId == self.postId }) ?? [ChatPosts]()
             
-            if appSessionStore.blockedAuthors.contains(self.postAuthor) {
+            if appService.blockedAuthors.contains(self.postAuthor) {
                 self.richTextBody = RichTextBuilder.getRichText(postBody: "[blocked]")
             } else {
                 self.richTextBody = RichTextBuilder.getRichText(postBody: self.postBody)
@@ -56,7 +50,6 @@ struct watchOSPostDetail: View {
         ScrollView {
             
             // Fixes navigation bug
-            // https://developer.apple.com/forums/thread/677333
             NavigationLink(destination: EmptyView(), isActive: .constant(false)) {
                 EmptyView()
             }.frame(width: 0, height: 0)
@@ -66,7 +59,7 @@ struct watchOSPostDetail: View {
                 // Post
                 VStack (alignment: .leading) {
                     HStack {
-                        AuthorNameView(name: appSessionStore.blockedAuthors.contains(self.postAuthor) ? "[blocked]" : self.postAuthor, postId: self.postId)
+                        AuthorNameView(name: appService.blockedAuthors.contains(self.postAuthor) ? "[blocked]" : self.postAuthor, postId: self.postId)
                         ContributedView(contributed: self.contributed)
                         Spacer()
                         LolView(lols: self.postLols, postId: self.postId)
@@ -86,8 +79,8 @@ struct watchOSPostDetail: View {
                 if self.replies.count > 0 {
                     ForEach(self.replies, id: \.id) { reply in
                         watchOSPostPreview(postId: .constant(reply.id), replyText: .constant(String(reply.body.getPreview.prefix(100))), author: .constant(reply.author))
-                            .environmentObject(appSessionStore)
-                            .environmentObject(chatStore)
+                            .environmentObject(appService)
+                            .environmentObject(chatService)
                     }
                 } else {
                     EmptyView()
@@ -97,14 +90,5 @@ struct watchOSPostDetail: View {
             
         }
         .onAppear(perform: getThreadData)
-    }
-}
-
-struct watchOSPostDetail_Previews: PreviewProvider {
-    static var previews: some View {
-        watchOSPostDetail(postId: .constant(999999992))
-            .previewDevice(PreviewDevice(rawValue: "Apple Watch Series 5 - 44mm"))
-            .environmentObject(AppSessionStore(service: AuthService()))
-            .environmentObject(ChatStore(service: ChatService()))
     }
 }

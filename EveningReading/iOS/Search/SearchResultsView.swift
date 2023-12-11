@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct SearchResultsView: View {
-    @EnvironmentObject var appSessionStore: AppSessionStore
-    @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var appService: AppService
+    @EnvironmentObject var chatService: ChatService
     
     var terms: String
     var author: String
@@ -19,21 +19,14 @@ struct SearchResultsView: View {
     @State private var showingLoading: Bool = true
     
     private func search() {
-        if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil {
-            showingLoading = false
-            searchResults = searchData.posts
-            return
-        }
-        chatStore.search(terms: self.terms, author: self.author, parentAuthor: self.parentAuthor, completion: {
-                searchResults = chatStore.searchResults
+        chatService.search(terms: self.terms, author: self.author, parentAuthor: self.parentAuthor, completion: {
+                searchResults = chatService.searchResults
                 showingLoading = false
             })
     }
     
     var body: some View {
         VStack {            
-            //GoToPostView()
-            
             if !showingLoading && searchResults.count < 1 {
                 LazyVStack {
                     Spacer()
@@ -47,7 +40,7 @@ struct SearchResultsView: View {
                 ScrollView {
                     LazyVStack(spacing: 0) {
                         ForEach(searchResults, id: \.id) { post in
-                            NavigationLink(destination: ThreadDetailView(threadId: .constant(post.threadId), postId: .constant(post.id), replyCount: .constant(-1), isSearchResult: .constant(true))) {
+                            NavigationLink(destination: ThreadDetailView(threadId: post.threadId, postId: post.id, replyCount: -1, isSearchResult: true)) {
                                 HStack {
                                     VStack (alignment: .leading) {
                                         
@@ -71,7 +64,7 @@ struct SearchResultsView: View {
                                                     .font(.callout)
                                                     .foregroundColor(Color(UIColor.label))
                                                     .multilineTextAlignment(.leading)
-                                                    .lineLimit(appSessionStore.abbreviateThreads ? 3 : 8)
+                                                    .lineLimit(appService.abbreviateThreads ? 3 : 8)
                                                     .frame(minHeight: 30)
                                                     .padding(10)
                                                 Spacer()
@@ -108,13 +101,5 @@ struct SearchResultsView: View {
         .navigationViewStyle(StackNavigationViewStyle())
         .navigationBarTitle("Results", displayMode: .inline)
         .navigationBarItems(leading: Spacer().frame(width: 26, height: 16))
-    }
-}
-
-struct SearchResultsView_Previews: PreviewProvider {
-    static var previews: some View {
-        SearchResultsView(terms: "", author: "", parentAuthor: "")
-            .environmentObject(AppSessionStore(service: AuthService()))
-            .environmentObject(ChatStore(service: ChatService()))
     }
 }

@@ -8,50 +8,43 @@
 import SwiftUI
 
 struct SidebarButtons: View {
-    @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var appService: AppService
     
     private func navigateTo(_ goToDestination: inout Bool) {
-        appSessionStore.resetNavigation()
+        appService.resetNavigation()
         goToDestination = true
     }
     
     var body: some View {
         VStack (alignment: .leading, spacing: 10) {
-            SidebarButton(text: .constant("Chat"), imageName: .constant("text.bubble"), selected: $appSessionStore.showingChatView)
+            SidebarButton(text: .constant("Chat"), imageName: .constant("text.bubble"), selected: $appService.showingChatView)
                 .onTapGesture(count: 1) {
-                    navigateTo(&appSessionStore.showingChatView)
+                    navigateTo(&appService.showingChatView)
                 }
             
             /*
-            SidebarButton(text: .constant("Inbox"), imageName: .constant("envelope.open"), selected: $appSessionStore.showingInboxView)
+            SidebarButton(text: .constant("Inbox"), imageName: .constant("envelope.open"), selected: $appService.showingInboxView)
                 .onTapGesture(count: 1) {
-                    navigateTo(&appSessionStore.showingInboxView)
+                    navigateTo(&appService.showingInboxView)
                 }
             */
             
             /*
-            SidebarButton(text: .constant("Search"), imageName: .constant("magnifyingglass"), selected: $appSessionStore.showingSearchView)
+            SidebarButton(text: .constant("Search"), imageName: .constant("magnifyingglass"), selected: $appService.showingSearchView)
                 .onTapGesture(count: 1) {
-                    navigateTo(&appSessionStore.showingSearchView)
+                    navigateTo(&appService.showingSearchView)
                 }
             */
             
-            SidebarButton(text: .constant("Tags"), imageName: .constant("tag"), selected: $appSessionStore.showingTagsView)
+            SidebarButton(text: .constant("Tags"), imageName: .constant("tag"), selected: $appService.showingTagsView)
                 .onTapGesture(count: 1) {
-                    navigateTo(&appSessionStore.showingTagsView)
+                    navigateTo(&appService.showingTagsView)
                 }
             
-            SidebarButton(text: .constant("Settings"), imageName: .constant("gear"), selected: $appSessionStore.showingSettingsView)
+            SidebarButton(text: .constant("Settings"), imageName: .constant("gear"), selected: $appService.showingSettingsView)
                 .onTapGesture(count: 1) {
-                    navigateTo(&appSessionStore.showingSettingsView)
+                    navigateTo(&appService.showingSettingsView)
                 }
         }
-    }
-}
-
-struct SidebarButtons_Previews: PreviewProvider {
-    static var previews: some View {
-        SidebarButtons()
-            .environmentObject(AppSessionStore(service: AuthService()))
     }
 }

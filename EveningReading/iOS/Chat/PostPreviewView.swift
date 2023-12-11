@@ -9,8 +9,8 @@ import SwiftUI
 
 struct PostPreviewView: View {
     @Environment(\.colorScheme) var colorScheme
-    @EnvironmentObject var appSessionStore: AppSessionStore
-    @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var appService: AppService
+    @EnvironmentObject var chatService: ChatService
     
     var username: String
     var postId: Int
@@ -48,19 +48,6 @@ struct PostPreviewView: View {
                 }
             }
             
-            /*
-            Text(String(self.postId))
-                .font(.callout)
-            */
-            
-            /*
-            Text(self.replyLines)
-                .lineLimit(1)
-                .fixedSize()
-                .font(.custom("replylines", size: 25, relativeTo: .callout))
-                .foregroundColor(Color("replyLines"))
-            */
-            
             // Rarely a post category is set on a reply
             if self.postCategory == "nws" {
                 Text("nws")
@@ -83,7 +70,7 @@ struct PostPreviewView: View {
             }
             
             // One line preview of post body, blue if it is the users post
-            Text(appSessionStore.blockedAuthors.contains(self.postAuthor) ? "[blocked]" : self.postBody.getPreview)
+            Text(appService.blockedAuthors.contains(self.postAuthor) ? "[blocked]" : self.postBody.getPreview)
                 .fontWeight(postStrength != nil ? PostWeight[postStrength!] : .regular)
                 .lineLimit(1)
                 .truncationMode(.tail)
@@ -93,7 +80,7 @@ struct PostPreviewView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
          
             // Maybe show post author
-            if appSessionStore.blockedAuthors.contains(self.postAuthor) && self.appSessionStore.displayPostAuthor {
+            if appService.blockedAuthors.contains(self.postAuthor) && appService.displayPostAuthor {
                 Text("[blocked]")
                     .font(.footnote)
                     .bold()
@@ -102,20 +89,12 @@ struct PostPreviewView: View {
                     .truncationMode(.tail)
                     .fixedSize()
             }
-            else if self.appSessionStore.displayPostAuthor {
+            else if appService.displayPostAuthor {
                 AuthorNameView(name: postAuthor, postId: postId, op: self.op)
             }
             
             // Tags/Lols
             LolView(lols: postLols, postId: postId)
         }
-    }
-}
-
-struct PostPreviewView_Previews: PreviewProvider {
-    static var previews: some View {
-        PostPreviewView(username: "aenean", postId: 0, parentId: 0, postBody: "This is a post.", replyLines: "A", postCategory: "ontopic", postStrength: 0.75, postAuthor: "aenean", postLols: [ChatLols](), selectedPostDepth: .constant(0), postsToHighlight: .constant([0]))
-            .environment(\.colorScheme, .dark)
-            .environmentObject(AppSessionStore(service: AuthService()))
     }
 }

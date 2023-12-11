@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct AccountView: View {
-    @EnvironmentObject var appSessionStore: AppSessionStore
-    @EnvironmentObject var messageStore: MessageStore
+    @EnvironmentObject var appService: AppService
+
+    @StateObject var messageViewModel = MessageViewModel()
 
     @State private var showingSignIn = false
     @State private var showingSignOut = false
@@ -21,17 +22,15 @@ struct AccountView: View {
     
     var body: some View {
         HStack {
-            //Spacer()
-            
             // Sign in/out button
             Button(action: {
-                if self.appSessionStore.isSignedIn {
+                if appService.isSignedIn {
                     self.showingSignOut = true
                 } else {
                     self.showingSignIn = true
                 }
             }) {
-                if self.appSessionStore.isSignedIn {
+                if appService.isSignedIn {
                     Text("Sign Out As \(user())")
                         .foregroundColor(Color(UIColor.link))
                 } else {
@@ -47,27 +46,16 @@ struct AccountView: View {
             // Sign Out?
             .alert(isPresented: self.$showingSignOut) {
                 Alert(title: Text("Sign Out?"), message: Text(""), primaryButton: .destructive(Text("Yes")) {
-                    appSessionStore.isSignedIn = false
+                    appService.isSignedIn = false
                     _ = KeychainWrapper.standard.removeObject(forKey: "Username")
                     _ = KeychainWrapper.standard.removeObject(forKey: "Password")
-                    appSessionStore.clearNotifications()
-                    messageStore.clearMessages()
+                    appService.clearNotifications()
+                    messageViewModel.clearMessages()
                     UIApplication.shared.applicationIconBadgeNumber = 0
                 }, secondaryButton: .cancel() {
                     
                 })
             }
-            
-            //Spacer()
         }
-    }
-}
-
-struct AccountView_Previews: PreviewProvider {
-    static var previews: some View {
-        AccountView()
-            .environment(\.colorScheme, .dark)
-            .environmentObject(AppSessionStore(service: AuthService()))
-            .environmentObject(MessageStore(service: MessageService()))
     }
 }

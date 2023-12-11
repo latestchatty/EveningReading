@@ -9,8 +9,8 @@ import SwiftUI
 
 struct PostExpandedView: View {
     @Environment(\.colorScheme) var colorScheme
-    @EnvironmentObject var appSessionStore: AppSessionStore
-    @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var appService: AppService
+    @EnvironmentObject var chatService: ChatService
     
     var username: String
     var postId: Int
@@ -37,7 +37,7 @@ struct PostExpandedView: View {
                             .foregroundColor(Color("replyLines"))
                             .overlay(
                                 Text(
-                                    self.postId == chatStore.activePostId && self.replyLines.count - 1 == index && index > 0 ? String(character) : ""
+                                    self.postId == chatService.activePostId && self.replyLines.count - 1 == index && index > 0 ? String(character) : ""
                                 )
                                     .lineLimit(1)
                                     .fixedSize()
@@ -47,16 +47,8 @@ struct PostExpandedView: View {
                     }
                 }
                 
-                /*
-                Text(self.replyLines)
-                    .lineLimit(1)
-                    .fixedSize()
-                    .font(.custom("replylines", size: 25, relativeTo: .callout))
-                    .foregroundColor(Color("replyLines"))
-                */
-                
                 // Author name
-                AuthorNameView(name: appSessionStore.blockedAuthors.contains(self.postAuthor) ? "[blocked]" : self.postAuthor, postId: self.postId, op: self.op)
+                AuthorNameView(name: appService.blockedAuthors.contains(self.postAuthor) ? "[blocked]" : self.postAuthor, postId: self.postId, op: self.op)
                 
                 Spacer()
                 
@@ -65,7 +57,7 @@ struct PostExpandedView: View {
             }
             VStack {
                 // Post body
-                if appSessionStore.blockedAuthors.contains(self.postAuthor) {
+                if appService.blockedAuthors.contains(self.postAuthor) {
                     HStack {
                         Text("[blocked]")
                             .fixedSize(horizontal: false, vertical: true)
@@ -84,7 +76,7 @@ struct PostExpandedView: View {
                 }
                 
                 // Tag and reply
-                if appSessionStore.isSignedIn {
+                if appService.isSignedIn {
                     HStack {
                         Text(postDateTime.postTimestamp())
                             .font(.caption)
@@ -101,13 +93,5 @@ struct PostExpandedView: View {
             .background(RoundedCornersView(color: Color("ChatBubbleSecondary")))
             .padding(.bottom, 5)
         }
-    }
-}
-
-struct PostExpandedView_Previews: PreviewProvider {
-    static var previews: some View {
-        PostExpandedView(username: "aenean", postId: 0, postBody: "This is a post.", replyLines: "A", postCategory: "ontopic", postStrength: 0.75, postAuthor: "aenean", postLols: [ChatLols](), postRichText: [RichTextBlock](), postDateTime: "2020-08-14T21:05:00Z")
-        .environment(\.colorScheme, .dark)
-        .environmentObject(AppSessionStore(service: AuthService()))
     }
 }

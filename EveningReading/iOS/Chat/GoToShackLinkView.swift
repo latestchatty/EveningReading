@@ -9,9 +9,9 @@ import SwiftUI
 
 struct GoToShackLinkView: View {
     @Environment(\.presentationMode) var presentationMode
-    @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var appService: AppService
     @EnvironmentObject var notifications: Notifications
-    @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var chatService: ChatService
     
     @State private var goToPostId: Int = 0
     @State private var showingPost: Bool = false
@@ -20,7 +20,6 @@ struct GoToShackLinkView: View {
     var body: some View {
         VStack {
             // Fixes navigation bug
-            // https://developer.apple.com/forums/thread/677333
             NavigationLink(destination: EmptyView(), isActive: .constant(false)) {
                 EmptyView()
             }.hidden().disabled(true).allowsHitTesting(false)
@@ -30,35 +29,26 @@ struct GoToShackLinkView: View {
             }.hidden().disabled(true).allowsHitTesting(false)
             
             // Deep link to specific shack post
-            .onChange(of: appSessionStore.showingShackLink, perform: { value in
-                print(".onReceive(appSessionStore.$showingShackLink)")
+            .onChange(of: appService.showingShackLink, perform: { value in
+                print(".onReceive(appService.$showingShackLink)")
                 if value {
                     print("going to try to show link")
-                    if appSessionStore.shackLinkPostId != "" {
+                    if appService.shackLinkPostId != "" {
                         print("showing link")
-                        self.appSessionStore.showingShackLink = false
-                        self.goToPostId = Int(appSessionStore.shackLinkPostId) ?? 0
-                        appSessionStore.showingPostId = Int(appSessionStore.shackLinkPostId) ?? 0
+                        appService.showingShackLink = false
+                        self.goToPostId = Int(appService.shackLinkPostId) ?? 0
+                        appService.showingPostId = Int(appService.shackLinkPostId) ?? 0
                         self.showingPost = true
                     }
                 }
             })
             
             // Push ThreadDetailView
-            NavigationLink(destination: ThreadDetailView(threadId: .constant(0), postId: self.$goToPostId, replyCount: .constant(-1), isSearchResult: .constant(true)), isActive: self.$showingPost) {
+            NavigationLink(destination: ThreadDetailView(threadId: 0, postId: self.goToPostId, replyCount: -1, isSearchResult: true), isActive: self.$showingPost) {
                 EmptyView()
             }.isDetailLink(false).hidden().allowsHitTesting(false)
             
         }
         .frame(width: 0, height: 0)
-    }
-}
-
-struct GoToShackLinkView_Previews: PreviewProvider {
-    static var previews: some View {
-        GoToShackLinkView()
-            .environmentObject(AppSessionStore(service: AuthService()))
-            .environmentObject(Notifications())
-            .environmentObject(ChatStore(service: ChatService()))
     }
 }

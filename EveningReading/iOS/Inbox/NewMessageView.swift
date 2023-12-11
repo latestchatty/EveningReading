@@ -9,14 +9,17 @@ import SwiftUI
 
 struct NewMessageView: View {
     @Environment(\.colorScheme) var colorScheme
-    @EnvironmentObject var appSessionStore: AppSessionStore
-    @EnvironmentObject var messageStore: MessageStore
+    @EnvironmentObject var appService: AppService
     @EnvironmentObject var notifications: Notifications
+    
+    @StateObject var messageViewModel = MessageViewModel()
+    
     @Binding public var showingNewMessageSheet: Bool
-    @Binding public var messageId: Int
-    @Binding public var recipientName: String
-    @Binding public var subjectText: String
-    @Binding public var bodyText: String
+    public var messageId: Int = 0
+    public var recipientName: String = ""
+    public var subjectText: String = ""
+    public var bodyText: String = ""
+    
     @State private var messageRecipient = ""
     @State private var messageSubjectText = ""
     @State private var messageBodyText = ""
@@ -29,27 +32,21 @@ struct NewMessageView: View {
             self.messageSubjectText = self.subjectText
         }
         if self.bodyText != "" {
-            var replySpacing = ""
-            if self.recipientName != "Duke Nuked" && self.bodyText != " " {
-                replySpacing = "\n\n--------------------\n\n\(self.messageRecipient) Wrote:\n\n"
-            }
-            self.messageBodyText = replySpacing + self.bodyText.newlineToBR
+            self.messageBodyText = messageViewModel.formatReply(recipient: self.messageRecipient, body: self.bodyText)
         }
     }
     
     private func clearNewMessageSheet() {
-        DispatchQueue.main.async {
-            self.messageRecipient = ""
-            self.messageBodyText = ""
-            self.showingNewMessageSheet = false
-        }
+        self.messageRecipient = ""
+        self.messageSubjectText = ""
+        self.messageBodyText = ""
+        self.showingNewMessageSheet = false
     }
     
     var body: some View {
         Spacer().frame(width: 0, height: 0)
         .sheet(isPresented: $showingNewMessageSheet) {
-            VStack {
-                
+            VStack {                
                 // Buttons
                 HStack {
                     Spacer().frame(width: 10)
@@ -57,23 +54,16 @@ struct NewMessageView: View {
                     Button("Cancel") {
                         clearNewMessageSheet()
                     }
+                    .foregroundColor(Color(UIColor.systemBlue))
                     Spacer()
                     
                     // Send
                     Button("Send") {
-                        DispatchQueue.main.async {
-                            
-                            self.messageStore.submitMessage(recipient: self.messageRecipient, subject: self.messageSubjectText, body: self.messageBodyText)
-                            
-                            self.messageRecipient = ""
-                            self.messageBodyText = ""
-                            self.showingNewMessageSheet = false
-                        }
-                        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(10)) {
-                            //self.showingSubmitAlert = true
-                        }
+                        messageViewModel.submitMessage(recipient: self.messageRecipient, subject: self.messageSubjectText, body: self.messageBodyText)
+                        clearNewMessageSheet()
                     }
                     .frame(width: 70, height: 30)
+                    .foregroundColor(Color(UIColor.systemBlue))
                     Spacer().frame(width: 10)
                 }
                 .padding(.top, 10)
@@ -94,6 +84,7 @@ struct NewMessageView: View {
                         .foregroundColor(Color.black)
                         .cornerRadius(4.0)
                         .padding(EdgeInsets(top: 0, leading: 5, bottom: 15, trailing: 5))
+                        .disableAutocorrection(true)
                 }
                 
                 // Subject
@@ -113,7 +104,7 @@ struct NewMessageView: View {
                 }
                 
                 // TextEditor
-                // no way to change the background yet :(
+                // No way to change the background with supported iOS versions
                 if colorScheme == .light {
                     TextEditor(text: self.$messageBodyText)
                         .border(Color(UIColor.systemGray5))
@@ -134,21 +125,12 @@ struct NewMessageView: View {
             }
         }
         
-            // If push notification tapped
+        // If push notification tapped
         .onReceive(notifications.$notificationData) { value in
             if value != nil {
                 clearNewMessageSheet()
             }
         }
         
-    }
-}
-
-struct NewMessageView_Previews: PreviewProvider {
-    static var previews: some View {
-        NewMessageView(showingNewMessageSheet: .constant(false), messageId: Binding.constant(0), recipientName: Binding.constant(""), subjectText: Binding.constant(""), bodyText: Binding.constant(""))
-            .environmentObject(AppSessionStore(service: AuthService()))
-            .environmentObject(MessageStore(service: MessageService()))
-            .environmentObject(Notifications())
     }
 }

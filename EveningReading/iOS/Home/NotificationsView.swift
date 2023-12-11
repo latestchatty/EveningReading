@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct NotificationsView: View {
-    @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var appService: AppService
     
     var body: some View {
         VStack {
@@ -26,12 +26,12 @@ struct NotificationsView: View {
             .padding(.top, 20)
             
             // Notification list
-            if appSessionStore.pushNotifications.count > 0 {
+            if appService.pushNotifications.count > 0 {
                 ScrollView(.horizontal) {
                     HStack {
                         Spacer().frame(width: 25)
-                        ForEach(appSessionStore.pushNotifications.reversed(), id: \.self) { notification in
-                            NavigationLink(destination: ThreadDetailView(threadId: .constant(0), postId: .constant(notification.postId), replyCount: .constant(-1), isSearchResult: .constant(true))) {
+                        ForEach(appService.pushNotifications.reversed(), id: \.self) { notification in
+                            NavigationLink(destination: ThreadDetailView(threadId: 0, postId: notification.postId, replyCount: -1, isSearchResult: true)) {
                             
                                 NotificationPreviewView(title: notification.title, postBody: notification.body, postId: notification.postId)
 
@@ -61,13 +61,5 @@ struct NotificationsView: View {
                 .frame(maxWidth: .infinity)
             }
         }
-    }
-}
-
-struct NotificationsView_Previews: PreviewProvider {
-    static var previews: some View {
-        NotificationsView()
-            .environment(\.colorScheme, .dark)
-            .environmentObject(AppSessionStore(service: AuthService()))
     }
 }

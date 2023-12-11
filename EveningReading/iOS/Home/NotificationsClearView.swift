@@ -9,7 +9,7 @@ import SwiftUI
 
 struct NotificationsClearView: View {
     @Environment(\.colorScheme) var colorScheme
-    @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var appService: AppService
     
     var body: some View {
         HStack {
@@ -22,7 +22,7 @@ struct NotificationsClearView: View {
             .frame(alignment: .leading)
             .padding(EdgeInsets(top: 20, leading: 10, bottom: 20, trailing: 0))
             Button(action: {
-                appSessionStore.pushNotifications.removeAll()
+                appService.pushNotifications.removeAll()
             }) {
                 Image(systemName: "xmark.circle.fill")
                     .resizable()
@@ -37,13 +37,5 @@ struct NotificationsClearView: View {
         .cornerRadius(10)
         .shadow(color: Color.black.opacity(0.25), radius: 10, x: 0, y: 10)
         .padding(.trailing, -2)
-    }
-}
-
-struct NotificationsClearView_Previews: PreviewProvider {
-    static var previews: some View {
-        NotificationsClearView()
-            .environmentObject(AppSessionStore(service: AuthService()))
-            
     }
 }

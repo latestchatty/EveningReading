@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct watchOSPostPreview: View {
-    @EnvironmentObject var appSessionStore: AppSessionStore
-    @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var appService: AppService
+    @EnvironmentObject var chatService: ChatService
     
     @Binding var postId: Int
     @Binding var replyText: String
@@ -25,7 +25,7 @@ struct watchOSPostPreview: View {
                 self.showingPost.toggle()
             }) {
                 HStack {
-                    Text("\(appSessionStore.blockedAuthors.contains(author) ? "[blocked]" : self.replyText)")
+                    Text("\(appService.blockedAuthors.contains(author) ? "[blocked]" : self.replyText)")
                         .font(.footnote)
                         .lineLimit(3)
                         .truncationMode(.tail)
@@ -39,13 +39,12 @@ struct watchOSPostPreview: View {
             )
             .cornerRadius(5)
             
-            NavigationLink(destination: watchOSPostDetail(postId: .constant(self.postId)).environmentObject(appSessionStore).environmentObject(chatStore), isActive: self.$showingPost) {
+            NavigationLink(destination: watchOSPostDetail(postId: .constant(self.postId)).environmentObject(appService).environmentObject(chatService), isActive: self.$showingPost) {
                 EmptyView()
             }
             .frame(width: 0, height: 0)
             
             // Fixes NavLink bug in SwiftUI?
-            // https://developer.apple.com/forums/thread/677333
             NavigationLink(destination: EmptyView()) {
                 EmptyView()
             }
@@ -53,13 +52,3 @@ struct watchOSPostPreview: View {
         }
     }
 }
-
-struct watchOSPostPreview_Previews: PreviewProvider {
-    static var previews: some View {
-        watchOSPostPreview(postId: .constant(999999992), replyText: .constant("Quis hendrerit dolor magna eget."), author: .constant("Tim"))
-            .previewDevice(PreviewDevice(rawValue: "Apple Watch Series 5 - 44mm"))
-            .environmentObject(AppSessionStore(service: AuthService()))
-            .environmentObject(ChatStore(service: ChatService()))
-    }
-}
-

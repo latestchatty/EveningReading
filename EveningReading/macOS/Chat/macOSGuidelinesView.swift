@@ -10,7 +10,7 @@ import SwiftUI
 struct macOSGuidelinesView: View {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.presentationMode) var presentationMode
-    @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var appService: AppService
     @Binding public var showingGuidelinesView: Bool
     @Binding public var guidelinesAccepted: Bool
     
@@ -200,12 +200,5 @@ struct macOSGuidelinesView: View {
             .padding()
             */
         }
-    }
-}
-
-struct macOSGuidelinesView_Previews: PreviewProvider {
-    static var previews: some View {
-        macOSGuidelinesView(showingGuidelinesView: Binding.constant(true), guidelinesAccepted: Binding.constant(false))
-            .environmentObject(AppSessionStore(service: AuthService()))
     }
 }

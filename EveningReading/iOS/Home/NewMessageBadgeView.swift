@@ -31,10 +31,3 @@ struct NewMessageBadgeView: View {
         }
     }
 }
-
-
-struct NewMessageBadgeView_Previews: PreviewProvider {
-    static var previews: some View {
-        NewMessageBadgeView(notificationNumber: Binding.constant(13), width: 0.0)
-    }
-}

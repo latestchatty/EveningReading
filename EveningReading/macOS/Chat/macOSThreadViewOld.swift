@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct macOSThreadViewOld: View {
-    @EnvironmentObject var appSessionStore: AppSessionStore
-    @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var appService: AppService
+    @EnvironmentObject var chatService: ChatService
     
     @Binding var threadId: Int
     
@@ -43,69 +43,35 @@ struct macOSThreadViewOld: View {
     @State private var noticeMessage: String = ""
     
     private func getThreadData() {
-        if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
-        {
-            if let thread = chatData.threads.filter({ return $0.threadId == self.threadId }).first {
-                if let rootPost = thread.posts.filter({ return $0.parentId == 0 }).first {
-                    self.rootPostCategory = rootPost.category
-                    self.rootPostAuthor = rootPost.author
-                    self.rootPostBody = rootPost.body
-                    self.rootPostDate = rootPost.date
-                    self.rootPostLols = rootPost.lols
-                }
-                self.replyCount = thread.posts.count - 1
-                self.recentPosts = thread.posts.filter({ return $0.parentId != 0 }).sorted(by: { $0.id > $1.id })
-                
+        let threads = chatService.threads.filter({ return appService.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !appService.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
+        
+        if let thread = threads.filter({ return $0.threadId == self.threadId }).first {
+            self.contributed = PostDecorator.checkParticipatedStatus(thread: thread, author: self.rootPostAuthor)
+            if let rootPost = thread.posts.filter({ return $0.parentId == 0 }).first {
+                self.rootPostCategory = rootPost.category
+                self.rootPostAuthor = rootPost.author
+                self.rootPostBody = rootPost.body
+                self.rootPostDate = rootPost.date
+                self.rootPostLols = rootPost.lols
             }
-        } else {
-            let threads = chatStore.threads.filter({ return self.appSessionStore.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !appSessionStore.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
-            
-            if let thread = threads.filter({ return $0.threadId == self.threadId }).first {
-                self.contributed = PostDecorator.checkParticipatedStatus(thread: thread, author: self.rootPostAuthor)
-                if let rootPost = thread.posts.filter({ return $0.parentId == 0 }).first {
-                    self.rootPostCategory = rootPost.category
-                    self.rootPostAuthor = rootPost.author
-                    self.rootPostBody = rootPost.body
-                    self.rootPostDate = rootPost.date
-                    self.rootPostLols = rootPost.lols
-                }
-                self.replyCount = thread.posts.count - 1
-                self.recentPosts = thread.posts.filter({ return $0.parentId != 0 }).sorted(by: { $0.id > $1.id })
-            }
+            self.replyCount = thread.posts.count - 1
+            self.recentPosts = thread.posts.filter({ return $0.parentId != 0 }).sorted(by: { $0.id > $1.id })
         }
     }
     
     private func getPostList(parentId: Int) {
-        if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
-                {
-            if let thread = chatData.threads.filter({ return $0.threadId == self.threadId }).first {
-                // Replies to post
-                let replies = thread.posts.filter({ return $0.parentId == parentId }).sorted(by: { $0.id < $1.id })
-                
-                // Font strength for recent posts
-                postStrength = PostDecorator.getPostStrength(thread: thread)
-                
-                // Get replies to this post
-                for post in replies {
-                    self.replyLines[post.id] = ReplyLineBuilder.getLines(post: post, thread: thread)
-                    postList.append(post)
-                    getPostList(parentId: post.id)
-                }
-            }
-        } else {
-            if let thread = chatStore.threads.filter({ return $0.threadId == self.threadId }).first {
-                // Replies to post
-                let replies = thread.posts.filter({ return $0.parentId == parentId }).sorted(by: { $0.id < $1.id })
-                
-                // Font strength for recent posts
-                postStrength = PostDecorator.getPostStrength(thread: thread)
-                
-                // Get replies to this post
-                for post in replies {
-                    self.replyLines[post.id] = ReplyLineBuilder.getLines(post: post, thread: thread)
-                    postList.append(post)
-                    getPostList(parentId: post.id)
-                }
+        if let thread = chatService.threads.filter({ return $0.threadId == self.threadId }).first {
+            // Replies to post
+            let replies = thread.posts.filter({ return $0.parentId == parentId }).sorted(by: { $0.id < $1.id })
+            
+            // Font strength for recent posts
+            postStrength = PostDecorator.getPostStrength(thread: thread)
+            
+            // Get replies to this post
+            for post in replies {
+                self.replyLines[post.id] = ReplyLineBuilder.getLines(post: post, thread: thread)
+                postList.append(post)
+                getPostList(parentId: post.id)
             }
         }
     }
@@ -142,7 +108,7 @@ struct macOSThreadViewOld: View {
                                 self.showingCollapseAlert.toggle()
                             }
                         
-                        if appSessionStore.isSignedIn {
+                        if appService.isSignedIn {
                             Image(systemName: "tag")
                                 .imageScale(.large)
                                 .onTapGesture(count: 1) {
@@ -184,7 +150,7 @@ struct macOSThreadViewOld: View {
                                         HStack {
                                             Text("\(post.body.getPreview)")
                                                 .font(.body)
-                                                .foregroundColor(appSessionStore.username.lowercased() == post.author.lowercased() ? Color(NSColor.systemTeal) : Color.primary)
+                                                .foregroundColor(appService.username.lowercased() == post.author.lowercased() ? Color(NSColor.systemTeal) : Color.primary)
                                                 .lineLimit(1)
                                             Spacer()
                                             AuthorNameView(name: post.author, postId: post.id)
@@ -334,7 +300,7 @@ struct macOSThreadViewOld: View {
         .alert(isPresented: self.$showingCollapseAlert) {
             Alert(title: Text("Hide Thread?"), message: Text(""), primaryButton: .cancel(), secondaryButton: Alert.Button.default(Text("OK"), action: {
                 self.isThreadCollapsed = true
-                appSessionStore.collapsedThreads.append(self.threadId)
+                appService.collapsedThreads.append(self.threadId)
             }))
         }
         
@@ -374,14 +340,5 @@ struct macOSThreadViewOld: View {
             .frame(width: 300, height: 200)
         }
         
-    }
-}
-
-struct macOSThreadViewOld_Previews: PreviewProvider {
-    static var previews: some View {
-        macOSThreadViewOld(threadId: .constant(999999992))
-            .previewLayout(.fixed(width: 640, height: 960))
-            .environmentObject(AppSessionStore(service: AuthService()))
-            .environmentObject(ChatStore(service: ChatService()))
     }
 }

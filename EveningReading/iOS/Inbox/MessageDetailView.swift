@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct MessageDetailView: View {
-    @EnvironmentObject var appSessionStore: AppSessionStore
-    @EnvironmentObject var messageStore: MessageStore
     @Environment(\.colorScheme) var colorScheme
-
-    @Binding public var messageRecipient: String
-    @Binding public var messageSubject: String
-    @Binding public var messageBody: String
-    @Binding public var messageId: Int
+    @EnvironmentObject var appService: AppService
+    @EnvironmentObject var messageViewModel: MessageViewModel
+    
+    public var messageRecipient: String
+    public var messageSubject: String
+    public var messageBody: String
+    public var messageId: Int
     
     @State private var showingNewMessageSheet: Bool = false
     @State private var hyperlinkUrl: String?
@@ -24,16 +24,13 @@ struct MessageDetailView: View {
     
     func markMessage() {
         DispatchQueue.main.async {
-            self.messageStore.markMessage(messageid: self.messageId)
+            messageViewModel.markMessage(messageId: self.messageId)
         }
     }
     
     var body: some View {
         VStack {
-            //GoToPostView()
-            
-            NewMessageView(showingNewMessageSheet: self.$showingNewMessageSheet, messageId: $messageId, recipientName: self.$messageRecipient, subjectText: Binding.constant("Re: \(self.messageSubject)"), bodyText: Binding.constant("\(self.messageBody.stringByDecodingHTMLEntities.newlineToBR) "))
-            
+            NewMessageView(showingNewMessageSheet: self.$showingNewMessageSheet, messageId: self.messageId, recipientName: self.messageRecipient, subjectText: "Re: \(self.messageSubject)", bodyText: "\(self.messageBody.stringByDecodingHTMLEntities.newlineToBR) ")
             ScrollView {
                 VStack {
                     HStack(alignment: .center) {
@@ -55,7 +52,7 @@ struct MessageDetailView: View {
                 .padding(.top, 10)
                 VStack {
                     HStack {
-                        MessageWebView(viewModel: MessageViewModel(body: messageBody, colorScheme: colorScheme), hyperlinkUrl: $hyperlinkUrl, showingWebView: $showingWebView, dynamicHeight: $messageWebViewHeight, templateA: self.$messageStore.messageTemplateBegin, templateB: self.$messageStore.messageTemplateEnd)
+                        MessageWebView(viewModel: MessageWebViewModel(body: messageBody, colorScheme: colorScheme), hyperlinkUrl: $hyperlinkUrl, showingWebView: $showingWebView, dynamicHeight: $messageWebViewHeight)
                     }
                     .frame(height: self.messageWebViewHeight)
                     Spacer()
@@ -81,13 +78,5 @@ struct MessageDetailView: View {
         )
         .navigationViewStyle(StackNavigationViewStyle())
         
-    }
-}
-
-struct MessageDetailView_Previews: PreviewProvider {
-    static var previews: some View {
-        MessageDetailView(messageRecipient: .constant("Recipient"), messageSubject: .constant("Subject of message"), messageBody: .constant("Body of message, this is a lot of text, this is a whole big bunch of text, check out this much text please (hurry do it now)."), messageId: .constant(1))
-            .environmentObject(AppSessionStore(service: AuthService()))
-            .environmentObject(MessageStore(service: MessageService()))
     }
 }

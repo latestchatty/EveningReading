@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct macOSThreadPreview: View {
-    @EnvironmentObject var appSessionStore: AppSessionStore
-    @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var appService: AppService
+    @EnvironmentObject var chatService: ChatService
     
     var threadId: Int
     
@@ -25,45 +25,30 @@ struct macOSThreadPreview: View {
     @State private var hideThread = false
     
     private func getThreadData() {
-        if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
-        {
-            if let thread = chatData.threads.filter({ return $0.threadId == self.threadId }).first {
-                if let rootPost = thread.posts.filter({ return $0.parentId == 0 }).first {
-                    self.rootPostCategory = rootPost.category
-                    self.rootPostAuthor = rootPost.author
-                    self.rootPostBody = rootPost.body.getPreview
-                    self.rootPostDate = rootPost.date
-                    self.rootPostLols = rootPost.lols
-                }
-                self.replyCount = thread.posts.count - 1
-                
+        let threads = chatService.threads.filter({ return appService.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !appService.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
+        
+        if let thread = threads.filter({ return $0.threadId == self.threadId }).first {
+            self.contributed = PostDecorator.checkParticipatedStatus(thread: thread, author: self.rootPostAuthor)
+            if let rootPost = thread.posts.filter({ return $0.parentId == 0 }).first {
+                self.rootPostCategory = rootPost.category
+                self.rootPostAuthor = rootPost.author
+                self.rootPostBody = rootPost.body.getPreview
+                self.rootPostDate = rootPost.date
+                self.rootPostLols = rootPost.lols
             }
-        } else {
-            let threads = chatStore.threads.filter({ return self.appSessionStore.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !appSessionStore.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
-            
-            if let thread = threads.filter({ return $0.threadId == self.threadId }).first {
-                self.contributed = PostDecorator.checkParticipatedStatus(thread: thread, author: self.rootPostAuthor)
-                if let rootPost = thread.posts.filter({ return $0.parentId == 0 }).first {
-                    self.rootPostCategory = rootPost.category
-                    self.rootPostAuthor = rootPost.author
-                    self.rootPostBody = rootPost.body.getPreview
-                    self.rootPostDate = rootPost.date
-                    self.rootPostLols = rootPost.lols
-                }
-                self.replyCount = thread.posts.count - 1
-            }
+            self.replyCount = thread.posts.count - 1
         }
     }
     
     func loadThread() {
-        if chatStore.activeThreadId == self.threadId {
+        if chatService.activeThreadId == self.threadId {
             return
         }
-        chatStore.activeThreadId = self.threadId
-        chatStore.activeParentId = 0
-        chatStore.hideReplies = true
+        chatService.activeThreadId = self.threadId
+        chatService.activeParentId = 0
+        chatService.hideReplies = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
-            chatStore.hideReplies = false
+            chatService.hideReplies = false
         }
     }
     
@@ -107,7 +92,7 @@ struct macOSThreadPreview: View {
                 
                 // Root post body
                 HStack (alignment: .top) {
-                    Text(appSessionStore.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : self.rootPostBody)
+                    Text(appService.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : self.rootPostBody)
                         .font(.body)
                         .fixedSize(horizontal: false, vertical: true)
                         .lineLimit(3)
@@ -132,8 +117,8 @@ struct macOSThreadPreview: View {
                 .alert(isPresented: self.$showingHideAlert) {
                     Alert(title: Text("Hide thread?"), message: Text(""), primaryButton: .default(Text("Yes")) {
                         // collapse thread
-                        self.appSessionStore.collapsedThreads.append(self.threadId)
-                        chatStore.activeThreadId = 0
+                        appService.collapsedThreads.append(self.threadId)
+                        chatService.activeThreadId = 0
                         self.hideThread = true
                     }, secondaryButton: .cancel() {
                         
@@ -145,7 +130,7 @@ struct macOSThreadPreview: View {
                     .frame(height: 1)
             }
             .contentShape(Rectangle())
-            .background(self.contributed ? (chatStore.activeThreadId == self.threadId ? Color("ChatBubbleSecondaryContributed") : Color("ChatBubblePrimaryContributed")) : (chatStore.activeThreadId == self.threadId ? Color("ChatBubbleSecondary") : Color.clear))
+            .background(self.contributed ? (chatService.activeThreadId == self.threadId ? Color("ChatBubbleSecondaryContributed") : Color("ChatBubblePrimaryContributed")) : (chatService.activeThreadId == self.threadId ? Color("ChatBubbleSecondary") : Color.clear))
             
             VStack {
                 Rectangle()
@@ -173,16 +158,8 @@ struct macOSThreadPreview: View {
             
         }
         .onAppear(perform: getThreadData)
-        .onReceive(chatStore.$didGetChatFinish) { value in
+        .onReceive(chatService.$didGetChatFinish) { value in
             getThreadData()
         }
-    }
-}
-
-struct macOSThreadPreview_Previews: PreviewProvider {
-    static var previews: some View {
-        macOSThreadPreview(threadId: 999999992)
-            .environmentObject(AppSessionStore(service: AuthService()))
-            .environmentObject(ChatStore(service: ChatService()))
     }
 }

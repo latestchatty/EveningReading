@@ -123,9 +123,3 @@ struct watchOSGuidelines: View {
         }
     }
 }
-
-struct watchOSGuidelines_Previews: PreviewProvider {
-    static var previews: some View {
-        watchOSGuidelines(showingGuidelinesView: .constant(true))
-    }
-}

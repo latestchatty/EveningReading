@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct macOSClearHiddenView: View {
-    @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var appService: AppService
     
     @State private var showingClearHiddenThreadsAlert = false
     @State private var showingClearBlockedUsersAlert = false
@@ -23,7 +23,7 @@ struct macOSClearHiddenView: View {
             }
             .alert(isPresented: self.$showingClearHiddenThreadsAlert) {
                 Alert(title: Text("Clear Hidden Threads?"), message: Text(""), primaryButton: .destructive(Text("Yes")) {
-                    appSessionStore.collapsedThreads.removeAll()
+                    appService.collapsedThreads.removeAll()
                 }, secondaryButton: .cancel() {
                     
                 })
@@ -36,19 +36,11 @@ struct macOSClearHiddenView: View {
             }
             .alert(isPresented: self.$showingClearBlockedUsersAlert) {
                 Alert(title: Text("Clear Blocked Users?"), message: Text(""), primaryButton: .destructive(Text("Yes")) {
-                    appSessionStore.blockedAuthors.removeAll()
+                    appService.blockedAuthors.removeAll()
                 }, secondaryButton: .cancel() {
                     
                 })
             }
         }
-    }
-}
-
-
-struct macOSClearHiddenView_Previews: PreviewProvider {
-    static var previews: some View {
-        macOSClearHiddenView()
-            .environmentObject(AppSessionStore(service: AuthService()))
     }
 }

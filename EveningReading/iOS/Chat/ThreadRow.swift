@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct ThreadRow: View {
-    @EnvironmentObject var appSessionStore: AppSessionStore
-    @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var appService: AppService
+    @EnvironmentObject var chatService: ChatService
 
     @Binding var threadId: Int
     @Binding var activeThreadId: Int
@@ -36,18 +36,10 @@ struct ThreadRow: View {
     @State private var favoriteContributed: Bool = false
     
     private func getThreadData() {
-        if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
-        {
-            if let currentThread = chatData.threads.filter({ return $0.threadId == self.threadId }).first {
-                setThreadData(currentThread)
-            }
-        } else {
-            if let currentThread = chatStore.threads.filter({ return $0.threadId == self.threadId }).first {
-                setThreadData(currentThread)
-                self.contributed = PostDecorator.checkParticipatedStatus(thread: currentThread, author: self.rootPostAuthor)
-            }
-        }
-        
+        if let currentThread = chatService.threads.filter({ return $0.threadId == self.threadId }).first {
+            setThreadData(currentThread)
+            self.contributed = PostDecorator.checkParticipatedStatus(thread: currentThread, author: self.rootPostAuthor)
+        }        
     }
     
     private func setThreadData(_ currentThread: ChatThread) {
@@ -61,7 +53,7 @@ struct ThreadRow: View {
             self.replyCount = currentThread.posts.count - 1
         }
         for post in currentThread.posts {
-            if appSessionStore.favoriteAuthors.contains(post.author) {
+            if appService.favoriteAuthors.contains(post.author) {
                 self.favoriteContributed = true
             }
         }
@@ -71,11 +63,11 @@ struct ThreadRow: View {
         if !self.collapseThread {
             if UIDevice.current.userInterfaceIdiom == .phone {
                 // NavLink for iPhone
-                NavigationLink(destination: ThreadDetailView(threadId: self.$threadId, postId: .constant(0), replyCount: self.$replyCount, isSearchResult: .constant(false))) {
+                NavigationLink(destination: ThreadDetailView(threadId: self.threadId, postId: 0, replyCount: self.replyCount)) {
                     self.threadRowDetail
                 }.isDetailLink(false)
             } else {
-                // No NavLink needed on iPad, uses chatStore.activeThreadId
+                // No NavLink needed on iPad, uses chatService.activeThreadId
                 self.threadRowDetail
             }
         } else {
@@ -85,50 +77,29 @@ struct ThreadRow: View {
     
     private var threadRowDetail: some View {
         ZStack {
-            
             // Category Color
-            //if self.rootPostCategory != "ontopic" {
-                HStack {
-                    GeometryReader { categoryGeo in
-                        Path { categoryPath in
-                            categoryPath.move(to: CGPoint(x: 0, y: 19))
-                            categoryPath.addLine(to: CGPoint(x: 0, y: categoryGeo.size.height - 15))
-                            categoryPath.addLine(to: CGPoint(x: categoryGeo.size.width, y: categoryGeo.size.height - 15))
-                            categoryPath.addLine(to: CGPoint(x: categoryGeo.size.width, y: 19))
-                        }
-                        .fill(ThreadCategoryColor[self.rootPostCategory]!)
+            HStack {
+                GeometryReader { categoryGeo in
+                    Path { categoryPath in
+                        categoryPath.move(to: CGPoint(x: 0, y: 19))
+                        categoryPath.addLine(to: CGPoint(x: 0, y: categoryGeo.size.height - 15))
+                        categoryPath.addLine(to: CGPoint(x: categoryGeo.size.width, y: categoryGeo.size.height - 15))
+                        categoryPath.addLine(to: CGPoint(x: categoryGeo.size.width, y: 19))
                     }
-                    .frame(width: 3)
-                    Spacer()
+                    .fill(ThreadCategoryColor[self.rootPostCategory]!)
                 }
-            //}
-            /*
-            else if self.rootPostLols.count > 0 && self.rootPostCategory == "ontopic"  {
-                HStack {
-                    GeometryReader { categoryGeo in
-                        Path { categoryPath in
-                            categoryPath.move(to: CGPoint(x: 0, y: 0))
-                            categoryPath.addLine(to: CGPoint(x: 0, y: categoryGeo.size.height - 21))
-                            categoryPath.addLine(to: CGPoint(x: categoryGeo.size.width, y: categoryGeo.size.height - 21))
-                            categoryPath.addLine(to: CGPoint(x: categoryGeo.size.width, y: 0))
-                        }
-                        .fill(Color(UIColor.systemGray))
-                    }
-                    .frame(width: 3)
-                    Spacer()
-                }
+                .frame(width: 3)
+                Spacer()
             }
-            */
-            
+        
             // Author, Contribution, Lols, Replies, Time, Preview
             VStack {
-                
                 HStack (alignment: .center) {
                     WhosTaggingView(showingWhosTaggingView: self.$showingWhosTaggingView)
                     
-                    NewMessageView(showingNewMessageSheet: self.$showingNewMessageView, messageId: Binding.constant(0), recipientName: self.$messageRecipient, subjectText: self.$messageSubject, bodyText: self.$messageBody)
+                    NewMessageView(showingNewMessageSheet: self.$showingNewMessageView, messageId: 0, recipientName: self.messageRecipient, subjectText: self.messageSubject, bodyText: self.messageBody)
                     
-                    AuthorNameView(name: appSessionStore.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : self.rootPostAuthor, postId: self.threadId)
+                    AuthorNameView(name: appService.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : self.rootPostAuthor, postId: self.threadId)
 
                     ContributedView(contributed: self.contributed)
                     
@@ -144,30 +115,13 @@ struct ThreadRow: View {
                             .frame(width: 10, height: 10)
                 }
                 
-                
-                /*
-                //if self.rootPostLols.count > 0 {
-                    HStack (alignment: .center) {
-                        Text("\(self.rootPostDate.fromISO8601Time())")
-                            .font(.caption2)
-                            .foregroundColor(Color("NoDataLabel"))
-                            .padding(.bottom, 5)
-                        Spacer()
-                        if self.rootPostLols.count > 0 {
-                            LolView(lols: self.rootPostLols, expanded: true, postId: self.threadId)
-                                .padding(.bottom, 5)
-                        }
-                    }
-                //}
-                */
-                
                 // Post Preview
                 ZStack {
                     HStack (alignment: .top) {
-                        Text(appSessionStore.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : rootPostBodyPreview)
+                        Text(appService.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : rootPostBodyPreview)
                             .font(.callout)
                             .foregroundColor(Color(UIColor.label))
-                            .lineLimit(appSessionStore.abbreviateThreads ? 3 : 8)
+                            .lineLimit(appService.abbreviateThreads ? 3 : 8)
                             .multilineTextAlignment(.leading)
                             .frame(minHeight: 30)
                             .padding(10)
@@ -181,13 +135,10 @@ struct ThreadRow: View {
                 }
                 .frame(maxWidth: .infinity)
                 .background(RoundedCornersView(color: (self.contributed ? (self.activeThreadId == self.threadId ? Color("ChatBubbleSecondaryContributed") : Color("ChatBubblePrimaryContributed")) : (self.activeThreadId == self.threadId ? Color("ChatBubbleSecondary") : Color("ChatBubblePrimary")))))
-                //.padding(.bottom, 5)
                 .offset(y: -5)
                 .padding(.bottom, 10)
             }
             .padding(.horizontal, 10)
-            //.padding(.vertical, 10)
-            
         }
         
         // Actions
@@ -197,17 +148,8 @@ struct ThreadRow: View {
         
         // Load thread data
         .onAppear(perform: getThreadData)
-        .onReceive(chatStore.$didGetChatFinish) { value in
+        .onReceive(chatService.$didGetChatFinish) { value in
             getThreadData()
         }
-    }
-}
-
-struct ThreadRow_Previews: PreviewProvider {
-    static var previews: some View {
-        ThreadRow(threadId: .constant(999999992), activeThreadId: .constant(999999992))
-            .environment(\.colorScheme, .dark)
-            .environmentObject(AppSessionStore(service: AuthService()))
-            .environmentObject(ChatStore(service: ChatService()))
     }
 }
