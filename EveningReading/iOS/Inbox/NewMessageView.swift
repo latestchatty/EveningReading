@@ -15,10 +15,10 @@ struct NewMessageView: View {
     @StateObject var messageViewModel = MessageViewModel()
     
     @Binding public var showingNewMessageSheet: Bool
-    public var messageId: Int
-    public var recipientName: String
-    public var subjectText: String
-    public var bodyText: String
+    public var messageId: Int = 0
+    public var recipientName: String = ""
+    public var subjectText: String = ""
+    public var bodyText: String = ""
     
     @State private var messageRecipient = ""
     @State private var messageSubjectText = ""
