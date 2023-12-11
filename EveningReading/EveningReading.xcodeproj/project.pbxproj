@@ -54,8 +54,7 @@
 		831EB9E42B2762CA00DA9433 /* WordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831EB9E12B2762CA00DA9433 /* WordModel.swift */; };
 		831EB9E62B2773CD00DA9433 /* ShackTagModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831EB9E52B2773CD00DA9433 /* ShackTagModels.swift */; };
 		831EB9E72B2773CD00DA9433 /* ShackTagModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831EB9E52B2773CD00DA9433 /* ShackTagModels.swift */; };
-		831EB9EA2B2773EA00DA9433 /* ShackTagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831EB9E92B2773EA00DA9433 /* ShackTagViewModel.swift */; };
-		831EB9EB2B2773EA00DA9433 /* ShackTagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831EB9E92B2773EA00DA9433 /* ShackTagViewModel.swift */; };
+		831EB9ED2B277E9D00DA9433 /* ShackTagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831EB9E92B2773EA00DA9433 /* ShackTagViewModel.swift */; };
 		833685C2266FAB2B00ACE618 /* macOSGuidelinesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833685C1266FAB2B00ACE618 /* macOSGuidelinesView.swift */; };
 		833685C4266FB97A00ACE618 /* macOSAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833685C3266FB97A00ACE618 /* macOSAccountView.swift */; };
 		833685C626702CB900ACE618 /* macOSClearHiddenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833685C526702CB900ACE618 /* macOSClearHiddenView.swift */; };
@@ -1409,6 +1408,7 @@
 				838466E529D4DE4300228DDB /* FavoriteUsersView.swift in Sources */,
 				83092F3629E07FA500E889BD /* CopyPostView.swift in Sources */,
 				830BFB292B20E5A600F62089 /* MessageModels.swift in Sources */,
+				831EB9ED2B277E9D00DA9433 /* ShackTagViewModel.swift in Sources */,
 				833980CE263C9137005614E8 /* iPhoneContentView.swift in Sources */,
 				83398127263F2E59005614E8 /* InboxView.swift in Sources */,
 				83AB388D266A60BC000A67B6 /* TagsWebView.swift in Sources */,
@@ -1417,7 +1417,6 @@
 				83398121263F2E39005614E8 /* TagsView.swift in Sources */,
 				830BFB232B20E4A300F62089 /* ChatModels.swift in Sources */,
 				833EE9E226454DFB00345A1D /* WebAuthenticationPresentationModifier.swift in Sources */,
-				831EB9EA2B2773EA00DA9433 /* ShackTagViewModel.swift in Sources */,
 				833EE9DC26454DF100345A1D /* SafariViewPresenter.swift in Sources */,
 				83AA195F264656BD00556E69 /* KeychainItemAccessibility.swift in Sources */,
 				83AA19CB2648A3AD00556E69 /* DarkModeViewModifier.swift in Sources */,
@@ -1524,7 +1523,6 @@
 				8339816526404049005614E8 /* SidebarButton.swift in Sources */,
 				833981A526418DCD005614E8 /* LolView.swift in Sources */,
 				83398151263F6427005614E8 /* ArrayExtensions.swift in Sources */,
-				831EB9EB2B2773EA00DA9433 /* ShackTagViewModel.swift in Sources */,
 				83092F3929E0876B00E889BD /* ChatService.swift in Sources */,
 				83AA194D2646353800556E69 /* RedactingView.swift in Sources */,
 				833980E0263CAB93005614E8 /* AppService.swift in Sources */,
@@ -1747,7 +1745,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = EveningReading.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = U3SY428MXR;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
@@ -1773,7 +1771,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = EveningReading.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = U3SY428MXR;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
@@ -1856,7 +1854,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = U3SY428MXR;
 				IBSC_MODULE = EveningReading_Extension;
 				INFOPLIST_FILE = EveningReading/Info.plist;
@@ -1878,7 +1876,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = U3SY428MXR;
 				IBSC_MODULE = EveningReading_Extension;
 				INFOPLIST_FILE = EveningReading/Info.plist;
@@ -1898,7 +1896,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"EveningReading Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = U3SY428MXR;
 				ENABLE_PREVIEWS = YES;
@@ -1923,7 +1921,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"EveningReading Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = U3SY428MXR;
 				ENABLE_PREVIEWS = YES;

@@ -109,72 +109,16 @@ struct ComposePostView: View {
         }
     }
     
-    private func getBase64Image(image: UIImage, complete: @escaping (String?) -> ()) {
-        DispatchQueue.main.async {
-            let imageData = image.pngData()
-            let base64Image = imageData?.base64EncodedString(options: .lineLength64Characters)
-            complete(base64Image)
-        }
-    }
-    
     private func uploadImageToImgur(image: UIImage) {
-        if let imgurKey = Bundle.main.infoDictionary?["IMGUR_KEY"] as? String {
-            var resizedImage = image
-            let imageSize = image.getSizeIn(.megabyte)
-            
-            if imageSize > 9.0 {
-                resizedImage = image.resized(withPercentage: 0.5) ?? image
+        chatService.uploadImageToImgur(image: image, postBody: self.postBody) { success, body in
+            if success {
+                self.showingLoading = false
+                self.uploadImageFail = false
+                self.postBody = body
+            } else {
+                self.showingLoading = false
+                self.uploadImageFail = true
             }
-            
-            getBase64Image(image: resizedImage) { base64Image in
-                let boundary = "Boundary-\(UUID().uuidString)"
-
-                var request = URLRequest(url: URL(string: "https://api.imgur.com/3/image")!)
-                request.addValue("Client-ID \(imgurKey)", forHTTPHeaderField: "Authorization")
-                request.addValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
-
-                request.httpMethod = "POST"
-
-                var body = ""
-                body += "--\(boundary)\r\n"
-                body += "Content-Disposition:form-data; name=\"image\""
-                body += "\r\n\r\n\(base64Image ?? "")\r\n"
-                body += "--\(boundary)--\r\n"
-                let postData = body.data(using: .utf8)
-
-                request.httpBody = postData
-                request.timeoutInterval = 60
-
-                URLSession.shared.dataTask(with: request) { data, response, error in
-                    if let error = error {
-                        self.showingLoading = false
-                        self.uploadImageFail = true
-                        return
-                    }
-                    guard let response = response as? HTTPURLResponse,
-                          (200...299).contains(response.statusCode) else {
-                        self.showingLoading = false
-                        self.uploadImageFail = true
-                        return
-                    }
-                    if let mimeType = response.mimeType, mimeType == "application/json", let data = data, let dataString = String(data: data, encoding: .utf8) {
-                        let parsedResult: [String: AnyObject]
-                        do {
-                            parsedResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String: AnyObject]
-                            if let dataJson = parsedResult["data"] as? [String: Any] {
-                                self.postBody += "\(dataJson["link"] as? String ?? "[Error Uploading Image]")"
-                                self.showingLoading = false
-                                self.uploadImageFail = false
-                            }
-                        } catch {
-                            self.uploadImageFail = true
-                        }
-                    }
-                }.resume()
-            }
-        } else {
-            // NO API KEY
-            self.uploadImageFail = true
         }
     }
     
@@ -358,7 +302,6 @@ struct ComposePostView: View {
                     }
                     Spacer()                    
                 }
-                //.allowAutoDismiss { false }
                 .background(appService.isDarkMode ? Color("PrimaryBackgroundDarkMode").frame(height: 2600).offset(y: -80) : Color.clear.frame(height: 2600).offset(y: -80))
                 .interactiveDismissDisabled()
             }
