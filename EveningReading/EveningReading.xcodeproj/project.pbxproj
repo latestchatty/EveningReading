@@ -612,13 +612,7 @@
 		833817882639AC18007A8B28 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
-				8339813D263F47B6005614E8 /* Home */,
-				83AA19452646308C00556E69 /* Guidelines */,
-				833981992640C3D0005614E8 /* Chat */,
-				833980F8263F0A0F005614E8 /* Inbox */,
-				833980F9263F0A21005614E8 /* Search */,
-				833980FA263F0A29005614E8 /* Tags */,
-				83398130263F2F63005614E8 /* Settings */,
+				83FAB32F2B27D04A00E0974F /* Views */,
 				83AA195426464FA600556E69 /* Controls */,
 				83AA198C26470FB900556E69 /* Extensions */,
 				8339818A264070E9005614E8 /* Utilities */,
@@ -1166,6 +1160,20 @@
 				83AA19D2264ADDFF00556E69 /* LinkViewer.swift */,
 			);
 			path = LinkViewer;
+			sourceTree = "<group>";
+		};
+		83FAB32F2B27D04A00E0974F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8339813D263F47B6005614E8 /* Home */,
+				83AA19452646308C00556E69 /* Guidelines */,
+				833981992640C3D0005614E8 /* Chat */,
+				833980F8263F0A0F005614E8 /* Inbox */,
+				833980F9263F0A21005614E8 /* Search */,
+				833980FA263F0A29005614E8 /* Tags */,
+				83398130263F2F63005614E8 /* Settings */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		83FE337627272ECD003FB55D /* BlurView */ = {

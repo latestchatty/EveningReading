@@ -24,7 +24,7 @@ struct ChatView: View {
         var threads = chatService.threads
         if searchTerms != "" {
             threads = chatService.threads.filter({ return
-                $0.posts.filter({ return $0.parentId == 0  })[0].body.lowercased().contains(searchTerms.lowercased()) &&
+                $0.posts.filter({ return $0.parentId == 0 })[0].body.lowercased().contains(searchTerms.lowercased()) &&
             appService.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) &&
             !appService.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
         } else {
