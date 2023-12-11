@@ -80,7 +80,7 @@ struct PostPreviewView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
          
             // Maybe show post author
-            if appService.blockedAuthors.contains(self.postAuthor) && self.appService.displayPostAuthor {
+            if appService.blockedAuthors.contains(self.postAuthor) && appService.displayPostAuthor {
                 Text("[blocked]")
                     .font(.footnote)
                     .bold()
@@ -89,7 +89,7 @@ struct PostPreviewView: View {
                     .truncationMode(.tail)
                     .fixedSize()
             }
-            else if self.appService.displayPostAuthor {
+            else if appService.displayPostAuthor {
                 AuthorNameView(name: postAuthor, postId: postId, op: self.op)
             }
             

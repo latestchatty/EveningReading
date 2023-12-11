@@ -104,7 +104,7 @@ struct watchOSThreadRow: View {
         .alert(isPresented: self.$showingCollapseAlert) {
             Alert(title: Text("Hide Thread?"), message: Text(""), primaryButton: .cancel(), secondaryButton: Alert.Button.default(Text("OK"), action: {
                 self.isThreadCollapsed = true
-                self.appService.collapsedThreads.append(threadId)
+                appService.collapsedThreads.append(threadId)
             }))
         }
         

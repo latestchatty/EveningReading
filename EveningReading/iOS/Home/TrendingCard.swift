@@ -37,7 +37,7 @@ struct TrendingCard: View {
             .alert(isPresented: self.$showingHideAlert) {
                 Alert(title: Text("Hide thread?"), message: Text(""), primaryButton: .default(Text("Yes")) {
                     // collapse thread
-                    self.appService.collapsedThreads.append(thread.threadId)
+                    appService.collapsedThreads.append(thread.threadId)
                 }, secondaryButton: .cancel() {
                     
                 })

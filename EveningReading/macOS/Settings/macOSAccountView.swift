@@ -29,10 +29,10 @@ struct macOSAccountView: View {
     }
 
     private func signIn() {
-        if self.appService.signInUsername.count < 1 || self.appService.signInPassword.count < 1 {
-            self.appService.showingSignInWarning = true
+        if appService.signInUsername.count < 1 || appService.signInPassword.count < 1 {
+            appService.showingSignInWarning = true
         } else {
-            self.appService.authenticate()
+            appService.authenticate()
         }
     }
     
@@ -49,7 +49,7 @@ struct macOSAccountView: View {
             
             // Sign in/out button
             VStack (alignment: .center) {
-                if self.appService.isSignedIn {
+                if appService.isSignedIn {
                     Text("Signed In As: ") + Text("\(appService.username)").foregroundColor(Color(NSColor.systemBlue))
                     Button(action: showSignOut) {
                         Text("Sign Out")

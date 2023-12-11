@@ -127,7 +127,7 @@ struct LinkView: View {
                     }
                     
                     // YouTube
-                    if self.appService.useYoutubeApp && (self.hyperlink.starts(with: "https://www.youtube.com/") || self.hyperlink.starts(with: "https://youtube.com/") || self.hyperlink.starts(with: "https://youtu.be/")) {
+                    if appService.useYoutubeApp && (self.hyperlink.starts(with: "https://www.youtube.com/") || self.hyperlink.starts(with: "https://youtube.com/") || self.hyperlink.starts(with: "https://youtu.be/")) {
                         let url = URL(string: self.hyperlink.replacingOccurrences(of: "https", with: "youtube"))!
                         if !UIApplication.shared.canOpenURL(url)  {
                             //self.hyperlinkUrlStr = self.hyperlink
@@ -182,7 +182,7 @@ struct LinkView: View {
                     }
                 }
             
-            if self.appService.showLinkCopyButton {
+            if appService.showLinkCopyButton {
                 Spacer()
                 Button(action: {
                     UIPasteboard.general.string = self.hyperlink

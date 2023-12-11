@@ -24,13 +24,13 @@ struct AccountView: View {
         HStack {
             // Sign in/out button
             Button(action: {
-                if self.appService.isSignedIn {
+                if appService.isSignedIn {
                     self.showingSignOut = true
                 } else {
                     self.showingSignIn = true
                 }
             }) {
-                if self.appService.isSignedIn {
+                if appService.isSignedIn {
                     Text("Sign Out As \(user())")
                         .foregroundColor(Color(UIColor.link))
                 } else {

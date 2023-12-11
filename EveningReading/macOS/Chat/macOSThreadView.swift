@@ -33,7 +33,7 @@ struct macOSThreadView: View {
     @State private var hideThread = false
     
     private func getThreadData() {
-        let threads = chatService.threads.filter({ return self.appService.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !appService.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
+        let threads = chatService.threads.filter({ return appService.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !appService.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
         
         if let thread = threads.filter({ return $0.threadId == self.threadId }).first {
             self.contributed = PostDecorator.checkParticipatedStatus(thread: thread, author: self.rootPostAuthor)
@@ -199,7 +199,7 @@ struct macOSThreadView: View {
                         .alert(isPresented: self.$showingHideAlert) {
                             Alert(title: Text("Hide thread?"), message: Text(""), primaryButton: .default(Text("Yes")) {
                                 // collapse thread
-                                self.appService.collapsedThreads.append(self.threadId)
+                                appService.collapsedThreads.append(self.threadId)
                                 chatService.activeThreadId = 0
                                 self.hideThread = true
                             }, secondaryButton: .cancel() {

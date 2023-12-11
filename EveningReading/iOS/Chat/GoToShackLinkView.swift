@@ -35,7 +35,7 @@ struct GoToShackLinkView: View {
                     print("going to try to show link")
                     if appService.shackLinkPostId != "" {
                         print("showing link")
-                        self.appService.showingShackLink = false
+                        appService.showingShackLink = false
                         self.goToPostId = Int(appService.shackLinkPostId) ?? 0
                         appService.showingPostId = Int(appService.shackLinkPostId) ?? 0
                         self.showingPost = true

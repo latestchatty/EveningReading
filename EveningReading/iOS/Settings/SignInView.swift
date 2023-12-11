@@ -14,10 +14,10 @@ struct SignInView: View {
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     private func signIn() {
-        if self.appService.signInUsername.count < 1 || self.appService.signInPassword.count < 1 {
-            self.appService.showingSignInWarning = true
+        if appService.signInUsername.count < 1 || appService.signInPassword.count < 1 {
+            appService.showingSignInWarning = true
         } else {
-            self.appService.authenticate()
+            appService.authenticate()
         }
     }
 
