@@ -114,9 +114,9 @@ struct macOSChatView: View {
                         .scrollDisabled(chatService.showingNewPostSpinner || chatService.showingRefreshThreadSpinner)
                         
                         // Toasts
-                        NoticeView(show: $chatService.showingTagNotice, message: $chatService.taggingNoticeText)
+                        NoticeView(show: $chatService.showingTagNotice, message: chatService.taggingNoticeText)
                         
-                        NoticeView(show: $chatService.didCopyLink, message: .constant("Copied!"))
+                        NoticeView(show: $chatService.didCopyLink, message: "Copied!")
                         
                     }
                     .frame(width: geometry.size.width * 0.65)

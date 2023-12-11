@@ -293,7 +293,7 @@ struct macOSThreadViewOld: View {
             }
             
             // Notices liked "Tagged!" etc...
-            macOSNoticeView(show: self.$showingNotice, message: self.$noticeMessage)
+            macOSNoticeView(show: self.$showingNotice, message: self.noticeMessage)
         }
         
         // Collapse thread?

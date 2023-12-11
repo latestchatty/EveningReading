@@ -466,9 +466,9 @@ struct ThreadDetailView: View {
         
         // Loading and Alerts
         .overlay(LoadingView(show: self.$isGettingThread))
-        .overlay(NoticeView(show: $chatService.showingTagNotice, message: $chatService.taggingNoticeText))
-        .overlay(NoticeView(show: $chatService.showingFavoriteNotice, message: .constant("Added User!")))
-        .overlay(NoticeView(show: $chatService.showingCopiedNotice, message: .constant("Copied!")))
+        .overlay(NoticeView(show: $chatService.showingTagNotice, message: chatService.taggingNoticeText))
+        .overlay(NoticeView(show: $chatService.showingFavoriteNotice, message: "Added User!"))
+        .overlay(NoticeView(show: $chatService.showingCopiedNotice, message: "Copied!"))
         
         // Thread Navigation
         .overlay(

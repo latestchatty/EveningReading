@@ -9,7 +9,7 @@ import SwiftUI
 
 struct NoticeView : View {
     @Binding public var show: Bool
-    @Binding public var message: String
+    public var message: String
     @EnvironmentObject var chatService: ChatService
     
     var body: some View {

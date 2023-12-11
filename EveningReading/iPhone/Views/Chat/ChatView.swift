@@ -72,9 +72,9 @@ struct ChatView: View {
                 }
             }
             
-            .overlay(NoticeView(show: $chatService.showingFavoriteNotice, message: .constant("Added User!")))
+            .overlay(NoticeView(show: $chatService.showingFavoriteNotice, message: "Added User!"))
             
-            .overlay(NoticeView(show: $chatService.showingCopiedNotice, message: .constant("Copied!")))
+            .overlay(NoticeView(show: $chatService.showingCopiedNotice, message: "Copied!"))
             
             if showingSearch {
                 VStack {
