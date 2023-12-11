@@ -148,7 +148,7 @@ struct PostWebView: UIViewRepresentable {
             }
         }
         
-        // if dynamic type font size changes
+        // If dynamic type font size changes
         @objc private func contentSizeDidChange(_ notification: Notification) {
             self.viewModel.didContentSizeChange = true
             
