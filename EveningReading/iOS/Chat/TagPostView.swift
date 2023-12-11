@@ -9,8 +9,8 @@ import SwiftUI
 
 struct TagPostView: View {
     @Environment(\.colorScheme) var colorScheme
-    @EnvironmentObject var appSession: AppSession
-    @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var appService: AppService
+    @EnvironmentObject var chatService: ChatService
     
     var postId: Int
     
@@ -27,9 +27,9 @@ struct TagPostView: View {
         }
         
         // Find out if we are tagging or untagging then proceed
-        chatStore.getRaters(postId: postId, completionSuccess: {
+        chatService.getRaters(postId: postId, completionSuccess: {
                 // Check if user already tagged
-                for rater in chatStore.raters {
+                for rater in chatService.raters {
                     for username in rater.usernames {
                         if username == user {
                             if let userTagged = PostTagCode[rater.tag] {
@@ -41,40 +41,40 @@ struct TagPostView: View {
                 
                 // Tag or untag
                 if (userTagsForPost[tag] ?? 0 < 1) {
-                    chatStore.tag(postId: self.postId, tag: tag, untag: "0")
-                    chatStore.taggingNoticeText = "Tagged!"
-                    chatStore.tagDelta[self.postId, default: [:]][tag] = 1
-                    chatStore.tagRemovedDelta[self.postId, default: [:]][tag] = 0
+                    chatService.tag(postId: self.postId, tag: tag, untag: "0")
+                    chatService.taggingNoticeText = "Tagged!"
+                    chatService.tagDelta[self.postId, default: [:]][tag] = 1
+                    chatService.tagRemovedDelta[self.postId, default: [:]][tag] = 0
                 } else {
-                    chatStore.tag(postId: self.postId, tag: tag, untag: "1")
-                    chatStore.taggingNoticeText = "Untagged!"
-                    chatStore.tagDelta[self.postId, default: [:]][tag] = 0
-                    chatStore.tagRemovedDelta[self.postId, default: [:]][tag] = 1
+                    chatService.tag(postId: self.postId, tag: tag, untag: "1")
+                    chatService.taggingNoticeText = "Untagged!"
+                    chatService.tagDelta[self.postId, default: [:]][tag] = 0
+                    chatService.tagRemovedDelta[self.postId, default: [:]][tag] = 1
                 }
                 
                 // Show notice
                 DispatchQueue.main.async {
                     print("Should show Tagged! toast?")
-                    chatStore.didTagPost = true
-                    chatStore.showingTagNotice = true
+                    chatService.didTagPost = true
+                    chatService.showingTagNotice = true
                 }
             }, completionFail: {
                 print("getRaters completionFail")
                 if !(userTagsForPost[tag] ?? 0 > 0) {
-                    chatStore.tag(postId: self.postId, tag: tag, untag: "0")
-                    chatStore.taggingNoticeText = "Tagged!"
-                    chatStore.tagDelta[self.postId, default: [:]][tag] = 1
-                    chatStore.tagRemovedDelta[self.postId, default: [:]][tag] = 0
+                    chatService.tag(postId: self.postId, tag: tag, untag: "0")
+                    chatService.taggingNoticeText = "Tagged!"
+                    chatService.tagDelta[self.postId, default: [:]][tag] = 1
+                    chatService.tagRemovedDelta[self.postId, default: [:]][tag] = 0
                 } else {
-                    chatStore.tag(postId: self.postId, tag: tag, untag: "1")
-                    chatStore.taggingNoticeText = "Untagged!"
-                    chatStore.tagDelta[self.postId, default: [:]][tag] = 0
-                    chatStore.tagRemovedDelta[self.postId, default: [:]][tag] = 1
+                    chatService.tag(postId: self.postId, tag: tag, untag: "1")
+                    chatService.taggingNoticeText = "Untagged!"
+                    chatService.tagDelta[self.postId, default: [:]][tag] = 0
+                    chatService.tagRemovedDelta[self.postId, default: [:]][tag] = 1
                 }
                 DispatchQueue.main.async {
                     print("Should show Tagged! toast?")
-                    chatStore.didTagPost = true
-                    chatStore.showingTagNotice = true
+                    chatService.didTagPost = true
+                    chatService.showingTagNotice = true
                 }
             }
         )
@@ -92,7 +92,7 @@ struct TagPostView: View {
     var body: some View {
         VStack {
             Button(action: {
-                chatStore.didTagPost = false
+                chatService.didTagPost = false
                 self.showingTagActionSheet = true
             }) {
                 ZStack{

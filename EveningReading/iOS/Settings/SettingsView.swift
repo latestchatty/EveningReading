@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @EnvironmentObject var appSession: AppSession
+    @EnvironmentObject var appService: AppService
     
     private func version() -> String {
         let dict = Bundle.main.infoDictionary!

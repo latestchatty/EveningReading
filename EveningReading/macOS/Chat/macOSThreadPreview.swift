@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct macOSThreadPreview: View {
-    @EnvironmentObject var appSession: AppSession
-    @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var appService: AppService
+    @EnvironmentObject var chatService: ChatService
     
     var threadId: Int
     
@@ -25,7 +25,7 @@ struct macOSThreadPreview: View {
     @State private var hideThread = false
     
     private func getThreadData() {
-        let threads = chatStore.threads.filter({ return self.appSession.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !appSession.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
+        let threads = chatService.threads.filter({ return self.appService.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !appService.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
         
         if let thread = threads.filter({ return $0.threadId == self.threadId }).first {
             self.contributed = PostDecorator.checkParticipatedStatus(thread: thread, author: self.rootPostAuthor)
@@ -41,14 +41,14 @@ struct macOSThreadPreview: View {
     }
     
     func loadThread() {
-        if chatStore.activeThreadId == self.threadId {
+        if chatService.activeThreadId == self.threadId {
             return
         }
-        chatStore.activeThreadId = self.threadId
-        chatStore.activeParentId = 0
-        chatStore.hideReplies = true
+        chatService.activeThreadId = self.threadId
+        chatService.activeParentId = 0
+        chatService.hideReplies = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
-            chatStore.hideReplies = false
+            chatService.hideReplies = false
         }
     }
     
@@ -92,7 +92,7 @@ struct macOSThreadPreview: View {
                 
                 // Root post body
                 HStack (alignment: .top) {
-                    Text(appSession.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : self.rootPostBody)
+                    Text(appService.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : self.rootPostBody)
                         .font(.body)
                         .fixedSize(horizontal: false, vertical: true)
                         .lineLimit(3)
@@ -117,8 +117,8 @@ struct macOSThreadPreview: View {
                 .alert(isPresented: self.$showingHideAlert) {
                     Alert(title: Text("Hide thread?"), message: Text(""), primaryButton: .default(Text("Yes")) {
                         // collapse thread
-                        self.appSession.collapsedThreads.append(self.threadId)
-                        chatStore.activeThreadId = 0
+                        self.appService.collapsedThreads.append(self.threadId)
+                        chatService.activeThreadId = 0
                         self.hideThread = true
                     }, secondaryButton: .cancel() {
                         
@@ -130,7 +130,7 @@ struct macOSThreadPreview: View {
                     .frame(height: 1)
             }
             .contentShape(Rectangle())
-            .background(self.contributed ? (chatStore.activeThreadId == self.threadId ? Color("ChatBubbleSecondaryContributed") : Color("ChatBubblePrimaryContributed")) : (chatStore.activeThreadId == self.threadId ? Color("ChatBubbleSecondary") : Color.clear))
+            .background(self.contributed ? (chatService.activeThreadId == self.threadId ? Color("ChatBubbleSecondaryContributed") : Color("ChatBubblePrimaryContributed")) : (chatService.activeThreadId == self.threadId ? Color("ChatBubbleSecondary") : Color.clear))
             
             VStack {
                 Rectangle()
@@ -158,7 +158,7 @@ struct macOSThreadPreview: View {
             
         }
         .onAppear(perform: getThreadData)
-        .onReceive(chatStore.$didGetChatFinish) { value in
+        .onReceive(chatService.$didGetChatFinish) { value in
             getThreadData()
         }
     }

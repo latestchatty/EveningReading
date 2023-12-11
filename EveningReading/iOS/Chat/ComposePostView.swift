@@ -11,8 +11,8 @@ import Photos
 struct ComposePostView: View {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.presentationMode) var presentationMode
-    @EnvironmentObject var appSession: AppSession
-    @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var appService: AppService
+    @EnvironmentObject var chatService: ChatService
     @EnvironmentObject var shackTags: ShackTags
     @EnvironmentObject var notifications: Notifications
     
@@ -44,28 +44,28 @@ struct ComposePostView: View {
     private func submitPost() {
         self.loadingMessage = "Submitting"
         self.showingLoading = true
-        self.chatStore.didSubmitPost = true
+        self.chatService.didSubmitPost = true
         
         // Hide keyboard
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
         
         if self.isRootPost {
-            self.chatStore.didSubmitNewThread = true
+            self.chatService.didSubmitNewThread = true
             DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5)) {
-                self.chatStore.didGetChatStart = true
+                self.chatService.didGetChatStart = true
             }
         } else {
-            self.chatStore.didGetThreadStart = true
+            self.chatService.didGetThreadStart = true
         }
 
         // Let the loading indicator show for at least a short time
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(200)) {
-            self.chatStore.submitPost(postBody: self.postBody, postId: self.postId)
+            self.chatService.submitPost(postBody: self.postBody, postId: self.postId)
             ShackTags.shared.taggedText = ""
         }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(8)) {
-            self.chatStore.getThread()
+            self.chatService.getThread()
         }
     }
 
@@ -180,15 +180,15 @@ struct ComposePostView: View {
     
     private func clearComposeSheet() {
         DispatchQueue.main.async {
-            chatStore.submitPostSuccessMessage = ""
-            chatStore.submitPostErrorMessage = ""
+            chatService.submitPostSuccessMessage = ""
+            chatService.submitPostErrorMessage = ""
             self.postBody = ""
             ShackTags.shared.taggedText = ""
             self.showingLoading = false
             self.uploadImageFail = false
             self.showingComposeSheet = false
             self.showingTagMenu = false
-            appSession.showingComposeSheet = false
+            appService.showingComposeSheet = false
         }
     }
     
@@ -242,7 +242,7 @@ struct ComposePostView: View {
                                 }
                                 DispatchQueue.main.async {
                                     self.showingComposeSheet = false
-                                    appSession.showingComposeSheet = false
+                                    appService.showingComposeSheet = false
                                     self.uploadImageFail = false
                                     showImageSheet()
                                 }
@@ -296,7 +296,7 @@ struct ComposePostView: View {
                             } else {
                                 ScrollView {
                                     HStack {
-                                        PostWebView(viewModel: PostWebViewModel(body: "<div class='post_author'>" + self.replyToAuthor + "</div><br>" + self.replyToPostBody, colorScheme: colorScheme), dynamicHeight: $postWebViewHeight, templateA: $chatStore.templateA, templateB: $chatStore.templateB)
+                                        PostWebView(viewModel: PostWebViewModel(body: "<div class='post_author'>" + self.replyToAuthor + "</div><br>" + self.replyToPostBody, colorScheme: colorScheme), dynamicHeight: $postWebViewHeight, templateA: $chatService.templateA, templateB: $chatService.templateB)
                                     }
                                     .frame(height: postWebViewHeight)
                                     .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
@@ -307,7 +307,7 @@ struct ComposePostView: View {
 
                         /*
                         // No way to change the background in supported iOS versions
-                        if appSession.isDarkMode {
+                        if appService.isDarkMode {
                             TextEditor(text: self.$postBody)
                                 .border(Color(UIColor.systemGray5))
                                 .cornerRadius(4.0)
@@ -352,14 +352,14 @@ struct ComposePostView: View {
                         
                         // Some kind of posting error
                         AlertView(shown: self.$showingSubmitError, alertAction: .constant(.others), message: "Error Posting", cancelOnly: true, confirmAction: {
-                            self.chatStore.submitPostSuccessMessage = ""
-                            self.chatStore.submitPostErrorMessage = ""
+                            self.chatService.submitPostSuccessMessage = ""
+                            self.chatService.submitPostErrorMessage = ""
                         })
                     }
                     Spacer()                    
                 }
                 //.allowAutoDismiss { false }
-                .background(appSession.isDarkMode ? Color("PrimaryBackgroundDarkMode").frame(height: 2600).offset(y: -80) : Color.clear.frame(height: 2600).offset(y: -80))
+                .background(appService.isDarkMode ? Color("PrimaryBackgroundDarkMode").frame(height: 2600).offset(y: -80) : Color.clear.frame(height: 2600).offset(y: -80))
                 .interactiveDismissDisabled()
             }
             // End Compose Post Sheet
@@ -369,7 +369,7 @@ struct ComposePostView: View {
                    onDismiss: {
                         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(20)) {
                             self.showingComposeSheet = true
-                            appSession.showingComposeSheet = true
+                            appService.showingComposeSheet = true
                             if self.uploadImage != nil {
                                 uploadImageToImgur(image: self.uploadImage!)
                             } else {
@@ -386,23 +386,23 @@ struct ComposePostView: View {
             }
             
             // Post Success
-            .onReceive(self.chatStore.$submitPostSuccessMessage) { successMsg in
+            .onReceive(self.chatService.$submitPostSuccessMessage) { successMsg in
                 if successMsg != "" {
                     DispatchQueue.main.async {
-                        self.chatStore.submitPostSuccessMessage = ""
-                        self.chatStore.submitPostErrorMessage = ""
+                        self.chatService.submitPostSuccessMessage = ""
+                        self.chatService.submitPostErrorMessage = ""
                     }
                     DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(10)) {
                         self.postBody = ""
                         self.showingLoading = false
                         self.showingComposeSheet = false
-                        appSession.showingComposeSheet = false
+                        appService.showingComposeSheet = false
                     }
                 }
             }
             
             // Post Fail
-            .onReceive(self.chatStore.$submitPostErrorMessage) { errorMsg in
+            .onReceive(self.chatService.$submitPostErrorMessage) { errorMsg in
                 if errorMsg != "" {
                     DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(10)) {
                         self.showingLoading = false
@@ -438,12 +438,12 @@ struct ComposePostView: View {
             }
             
             // Button style is different depending on context
-            if self.appSession.isSignedIn {
+            if self.appService.isSignedIn {
                 Button(action: {
                     print("Reply tapped!")
                     DispatchQueue.main.async {
                         self.showingComposeSheet = true
-                        appSession.showingComposeSheet = true
+                        appService.showingComposeSheet = true
                         print(self.showingComposeSheet)
                     }
                 }) {

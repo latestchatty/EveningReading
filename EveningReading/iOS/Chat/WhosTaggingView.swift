@@ -9,14 +9,14 @@ import SwiftUI
 
 struct WhosTaggingView: View {
     @Environment(\.colorScheme) var colorScheme
-    @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var chatService: ChatService
     
     @Binding public var showingWhosTaggingView: Bool
     
     @State private var hideRaters: Bool = true
     
     private func fetchRaters() {
-        chatStore.getRaters(postId: chatStore.activePostId, completionSuccess: {
+        chatService.getRaters(postId: chatService.activePostId, completionSuccess: {
                 self.hideRaters = false
             },
             completionFail: {
@@ -58,7 +58,7 @@ struct WhosTaggingView: View {
                         .padding(.bottom, self.hideRaters ? 2600 : 1e-10)
                 
                     VStack {
-                        if (chatStore.raters.filter{ $0.tag == String(PostTagKey.lol.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames.count > 0 {
+                        if (chatService.raters.filter{ $0.tag == String(PostTagKey.lol.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames.count > 0 {
                             VStack {
                                 HStack {
                                     Text("lol")
@@ -71,11 +71,11 @@ struct WhosTaggingView: View {
                             
                                 Divider()
                                 
-                                TagCloudView(tags: (chatStore.raters.filter{ $0.tag == String(PostTagKey.lol.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames, tagColor: PostTagColor["lol"]!)
+                                TagCloudView(tags: (chatService.raters.filter{ $0.tag == String(PostTagKey.lol.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames, tagColor: PostTagColor["lol"]!)
                             }.padding(.bottom, 20)
                         }
                         
-                        if (chatStore.raters.filter{ $0.tag == String(PostTagKey.inf.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames.count > 0 {
+                        if (chatService.raters.filter{ $0.tag == String(PostTagKey.inf.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames.count > 0 {
                             VStack {
                                 HStack {
                                     Text("inf")
@@ -88,11 +88,11 @@ struct WhosTaggingView: View {
                             
                                 Divider()
                                 
-                                TagCloudView(tags: (chatStore.raters.filter{ $0.tag == String(PostTagKey.inf.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames, tagColor: PostTagColor["inf"]!)
+                                TagCloudView(tags: (chatService.raters.filter{ $0.tag == String(PostTagKey.inf.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames, tagColor: PostTagColor["inf"]!)
                             }.padding(.bottom, 20)
                         }
                         
-                        if (chatStore.raters.filter{ $0.tag == String(PostTagKey.unf.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames.count > 0 {
+                        if (chatService.raters.filter{ $0.tag == String(PostTagKey.unf.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames.count > 0 {
                             VStack {
                                 HStack {
                                     Text("unf")
@@ -105,11 +105,11 @@ struct WhosTaggingView: View {
                             
                                 Divider()
 
-                                TagCloudView(tags: (chatStore.raters.filter{ $0.tag == String(PostTagKey.unf.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames, tagColor: PostTagColor["unf"]!)
+                                TagCloudView(tags: (chatService.raters.filter{ $0.tag == String(PostTagKey.unf.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames, tagColor: PostTagColor["unf"]!)
                             }.padding(.bottom, 20)
                         }
                         
-                        if (chatStore.raters.filter{ $0.tag == String(PostTagKey.tag.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames.count > 0 {
+                        if (chatService.raters.filter{ $0.tag == String(PostTagKey.tag.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames.count > 0 {
                             VStack {
                                 HStack {
                                     Text("tag")
@@ -122,11 +122,11 @@ struct WhosTaggingView: View {
                             
                                 Divider()
                                 
-                                TagCloudView(tags: (chatStore.raters.filter{ $0.tag == String(PostTagKey.tag.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames, tagColor: PostTagColor["tag"]!)
+                                TagCloudView(tags: (chatService.raters.filter{ $0.tag == String(PostTagKey.tag.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames, tagColor: PostTagColor["tag"]!)
                             }.padding(.bottom, 20)
                         }
                         
-                        if (chatStore.raters.filter{ $0.tag == String(PostTagKey.wtf.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames.count > 0 {
+                        if (chatService.raters.filter{ $0.tag == String(PostTagKey.wtf.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames.count > 0 {
                             VStack {
                                 HStack {
                                     Text("wtf")
@@ -139,11 +139,11 @@ struct WhosTaggingView: View {
                             
                                 Divider()
                                 
-                                TagCloudView(tags: (chatStore.raters.filter{ $0.tag == String(PostTagKey.wtf.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames, tagColor: PostTagColor["wtf"]!)
+                                TagCloudView(tags: (chatService.raters.filter{ $0.tag == String(PostTagKey.wtf.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames, tagColor: PostTagColor["wtf"]!)
                             }.padding(.bottom, 20)
                         }
                         
-                        if (chatStore.raters.filter{ $0.tag == String(PostTagKey.wow.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames.count > 0 {
+                        if (chatService.raters.filter{ $0.tag == String(PostTagKey.wow.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames.count > 0 {
                             VStack {
                                 HStack {
                                     Text("wow")
@@ -156,11 +156,11 @@ struct WhosTaggingView: View {
                             
                                 Divider()
                                 
-                                TagCloudView(tags: (chatStore.raters.filter{ $0.tag == String(PostTagKey.wow.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames, tagColor: PostTagColor["wow"]!)
+                                TagCloudView(tags: (chatService.raters.filter{ $0.tag == String(PostTagKey.wow.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames, tagColor: PostTagColor["wow"]!)
                             }.padding(.bottom, 20)
                         }
                         
-                        if (chatStore.raters.filter{ $0.tag == String(PostTagKey.aww.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames.count > 0 {
+                        if (chatService.raters.filter{ $0.tag == String(PostTagKey.aww.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames.count > 0 {
                             VStack {
                                 HStack {
                                     Text("aww")
@@ -173,7 +173,7 @@ struct WhosTaggingView: View {
                             
                                 Divider()
                                 
-                                TagCloudView(tags: (chatStore.raters.filter{ $0.tag == String(PostTagKey.aww.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames, tagColor: PostTagColor["aww"]!)
+                                TagCloudView(tags: (chatService.raters.filter{ $0.tag == String(PostTagKey.aww.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames, tagColor: PostTagColor["aww"]!)
                             }.padding(.bottom, 20)
                         }
                 

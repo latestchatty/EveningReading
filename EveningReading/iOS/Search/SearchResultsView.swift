@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct SearchResultsView: View {
-    @EnvironmentObject var appSession: AppSession
-    @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var appService: AppService
+    @EnvironmentObject var chatService: ChatService
     
     var terms: String
     var author: String
@@ -19,8 +19,8 @@ struct SearchResultsView: View {
     @State private var showingLoading: Bool = true
     
     private func search() {
-        chatStore.search(terms: self.terms, author: self.author, parentAuthor: self.parentAuthor, completion: {
-                searchResults = chatStore.searchResults
+        chatService.search(terms: self.terms, author: self.author, parentAuthor: self.parentAuthor, completion: {
+                searchResults = chatService.searchResults
                 showingLoading = false
             })
     }
@@ -64,7 +64,7 @@ struct SearchResultsView: View {
                                                     .font(.callout)
                                                     .foregroundColor(Color(UIColor.label))
                                                     .multilineTextAlignment(.leading)
-                                                    .lineLimit(appSession.abbreviateThreads ? 3 : 8)
+                                                    .lineLimit(appService.abbreviateThreads ? 3 : 8)
                                                     .frame(minHeight: 30)
                                                     .padding(10)
                                                 Spacer()

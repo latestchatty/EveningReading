@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct watchOSPostPreview: View {
-    @EnvironmentObject var appSession: AppSession
-    @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var appService: AppService
+    @EnvironmentObject var chatService: ChatService
     
     @Binding var postId: Int
     @Binding var replyText: String
@@ -25,7 +25,7 @@ struct watchOSPostPreview: View {
                 self.showingPost.toggle()
             }) {
                 HStack {
-                    Text("\(appSession.blockedAuthors.contains(author) ? "[blocked]" : self.replyText)")
+                    Text("\(appService.blockedAuthors.contains(author) ? "[blocked]" : self.replyText)")
                         .font(.footnote)
                         .lineLimit(3)
                         .truncationMode(.tail)
@@ -39,7 +39,7 @@ struct watchOSPostPreview: View {
             )
             .cornerRadius(5)
             
-            NavigationLink(destination: watchOSPostDetail(postId: .constant(self.postId)).environmentObject(appSession).environmentObject(chatStore), isActive: self.$showingPost) {
+            NavigationLink(destination: watchOSPostDetail(postId: .constant(self.postId)).environmentObject(appService).environmentObject(chatService), isActive: self.$showingPost) {
                 EmptyView()
             }
             .frame(width: 0, height: 0)

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct RefreshableScrollView<Content: View>: View {
-    @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var chatService: ChatService
     
     @State private var previousScrollOffset: CGFloat = 0
     @State private var scrollOffset: CGFloat = 0
@@ -57,10 +57,10 @@ struct RefreshableScrollView<Content: View>: View {
                             }
                         }
                     }
-                    .onReceive(chatStore.$scrollTargetThread) { target in
+                    .onReceive(chatService.$scrollTargetThread) { target in
                         scrollProxy.scrollTo(target)
                     }
-                    .onReceive(chatStore.$scrollTargetThreadTop) { targetTop in
+                    .onReceive(chatService.$scrollTargetThreadTop) { targetTop in
                         scrollProxy.scrollTo(targetTop, anchor: .top)
                     }
                     

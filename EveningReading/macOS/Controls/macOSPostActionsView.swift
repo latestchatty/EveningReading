@@ -14,8 +14,8 @@ enum PostActionAlertTypes {
 
 struct macOSPostActionsView: View {
     @Environment(\.colorScheme) var colorScheme
-    @EnvironmentObject var appSession: AppSession
-    @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var appService: AppService
+    @EnvironmentObject var chatService: ChatService
 
     @StateObject var messageViewModel = MessageViewModel()
     
@@ -42,9 +42,9 @@ struct macOSPostActionsView: View {
                 }
             }
             Button(action: {
-                appSession.reportAuthorName = self.name
-                appSession.showingReportUserSheet = true
-                appSession.reportAuthorForPostId = self.postId
+                appService.reportAuthorName = self.name
+                appService.showingReportUserSheet = true
+                appService.reportAuthorForPostId = self.postId
             }) {
                 Text("Report User")
                 Image(systemName: "exclamationmark.circle")
@@ -71,12 +71,12 @@ struct macOSPostActionsView: View {
                 switch alertAction {
                 case .hideThread:
                     // collapse thread
-                    appSession.collapsedThreads.append(self.postId)
-                    chatStore.activeThreadId = 0
-                    chatStore.getThread()
+                    appService.collapsedThreads.append(self.postId)
+                    chatService.activeThreadId = 0
+                    chatService.getThread()
                 case .blockUser:
                     // block user
-                    appSession.blockedAuthors.append(self.name)
+                    appService.blockedAuthors.append(self.name)
                 }
             }, secondaryButton: .cancel() {
                 

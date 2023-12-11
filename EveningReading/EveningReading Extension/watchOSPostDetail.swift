@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct watchOSPostDetail: View {
-    @EnvironmentObject var appSession: AppSession
-    @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var appService: AppService
+    @EnvironmentObject var chatService: ChatService
     
     @Binding var postId: Int
     
@@ -25,7 +25,7 @@ struct watchOSPostDetail: View {
     @State private var isRootPost: Bool = false
     
     private func getThreadData() {
-        let thread = chatStore.threads.filter { !$0.posts.isEmpty && $0.posts.contains(where: { post in post.id == self.postId }) }.first
+        let thread = chatService.threads.filter { !$0.posts.isEmpty && $0.posts.contains(where: { post in post.id == self.postId }) }.first
         setThreadData(thread)
     }
     
@@ -38,7 +38,7 @@ struct watchOSPostDetail: View {
             self.postLols = childPost.lols
             self.replies = thread?.posts.filter({ return $0.parentId == self.postId }) ?? [ChatPosts]()
             
-            if appSession.blockedAuthors.contains(self.postAuthor) {
+            if appService.blockedAuthors.contains(self.postAuthor) {
                 self.richTextBody = RichTextBuilder.getRichText(postBody: "[blocked]")
             } else {
                 self.richTextBody = RichTextBuilder.getRichText(postBody: self.postBody)
@@ -59,7 +59,7 @@ struct watchOSPostDetail: View {
                 // Post
                 VStack (alignment: .leading) {
                     HStack {
-                        AuthorNameView(name: appSession.blockedAuthors.contains(self.postAuthor) ? "[blocked]" : self.postAuthor, postId: self.postId)
+                        AuthorNameView(name: appService.blockedAuthors.contains(self.postAuthor) ? "[blocked]" : self.postAuthor, postId: self.postId)
                         ContributedView(contributed: self.contributed)
                         Spacer()
                         LolView(lols: self.postLols, postId: self.postId)
@@ -79,8 +79,8 @@ struct watchOSPostDetail: View {
                 if self.replies.count > 0 {
                     ForEach(self.replies, id: \.id) { reply in
                         watchOSPostPreview(postId: .constant(reply.id), replyText: .constant(String(reply.body.getPreview.prefix(100))), author: .constant(reply.author))
-                            .environmentObject(appSession)
-                            .environmentObject(chatStore)
+                            .environmentObject(appService)
+                            .environmentObject(chatService)
                     }
                 } else {
                     EmptyView()

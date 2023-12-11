@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct macOSPostPreviewView: View {
-    @EnvironmentObject var appSession: AppSession
+    @EnvironmentObject var appService: AppService
     @Binding var postId: Int
     @Binding var postAuthor: String
     @Binding var replyLines: String?
@@ -48,11 +48,11 @@ struct macOSPostPreviewView: View {
         }
         
         // Post preview line
-        Text("\(appSession.blockedAuthors.contains(self.postAuthor) ? "[blocked]" : postText.getPreview)")
+        Text("\(appService.blockedAuthors.contains(self.postAuthor) ? "[blocked]" : postText.getPreview)")
             .font(.body)
             .fontWeight(postStrength != nil ? PostWeight[postStrength!] : .regular)
             .opacity(postStrength != nil ? postStrength! : 0.75)
-            .foregroundColor(appSession.username.lowercased() == self.postAuthor.lowercased() ? Color(NSColor.systemTeal) : Color.primary)
+            .foregroundColor(appService.username.lowercased() == self.postAuthor.lowercased() ? Color(NSColor.systemTeal) : Color.primary)
             .lineLimit(1)
         Spacer()
         

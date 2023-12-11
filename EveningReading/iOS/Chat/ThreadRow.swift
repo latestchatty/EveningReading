@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct ThreadRow: View {
-    @EnvironmentObject var appSession: AppSession
-    @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var appService: AppService
+    @EnvironmentObject var chatService: ChatService
 
     @Binding var threadId: Int
     @Binding var activeThreadId: Int
@@ -36,7 +36,7 @@ struct ThreadRow: View {
     @State private var favoriteContributed: Bool = false
     
     private func getThreadData() {
-        if let currentThread = chatStore.threads.filter({ return $0.threadId == self.threadId }).first {
+        if let currentThread = chatService.threads.filter({ return $0.threadId == self.threadId }).first {
             setThreadData(currentThread)
             self.contributed = PostDecorator.checkParticipatedStatus(thread: currentThread, author: self.rootPostAuthor)
         }        
@@ -53,7 +53,7 @@ struct ThreadRow: View {
             self.replyCount = currentThread.posts.count - 1
         }
         for post in currentThread.posts {
-            if appSession.favoriteAuthors.contains(post.author) {
+            if appService.favoriteAuthors.contains(post.author) {
                 self.favoriteContributed = true
             }
         }
@@ -67,7 +67,7 @@ struct ThreadRow: View {
                     self.threadRowDetail
                 }.isDetailLink(false)
             } else {
-                // No NavLink needed on iPad, uses chatStore.activeThreadId
+                // No NavLink needed on iPad, uses chatService.activeThreadId
                 self.threadRowDetail
             }
         } else {
@@ -99,7 +99,7 @@ struct ThreadRow: View {
                     
                     NewMessageView(showingNewMessageSheet: self.$showingNewMessageView, messageId: 0, recipientName: self.messageRecipient, subjectText: self.messageSubject, bodyText: self.messageBody)
                     
-                    AuthorNameView(name: appSession.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : self.rootPostAuthor, postId: self.threadId)
+                    AuthorNameView(name: appService.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : self.rootPostAuthor, postId: self.threadId)
 
                     ContributedView(contributed: self.contributed)
                     
@@ -118,10 +118,10 @@ struct ThreadRow: View {
                 // Post Preview
                 ZStack {
                     HStack (alignment: .top) {
-                        Text(appSession.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : rootPostBodyPreview)
+                        Text(appService.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : rootPostBodyPreview)
                             .font(.callout)
                             .foregroundColor(Color(UIColor.label))
-                            .lineLimit(appSession.abbreviateThreads ? 3 : 8)
+                            .lineLimit(appService.abbreviateThreads ? 3 : 8)
                             .multilineTextAlignment(.leading)
                             .frame(minHeight: 30)
                             .padding(10)
@@ -148,7 +148,7 @@ struct ThreadRow: View {
         
         // Load thread data
         .onAppear(perform: getThreadData)
-        .onReceive(chatStore.$didGetChatFinish) { value in
+        .onReceive(chatService.$didGetChatFinish) { value in
             getThreadData()
         }
     }

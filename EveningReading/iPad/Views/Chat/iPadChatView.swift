@@ -8,18 +8,18 @@
 import SwiftUI
 
 struct iPadChatView: View {
-    @EnvironmentObject var appSession: AppSession
-    @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var appService: AppService
+    @EnvironmentObject var chatService: ChatService
     
     @State private var isGettingChat: Bool = false
     
     private func filteredThreads() -> [ChatThread] {
-        let threads = chatStore.threads.filter({ return self.appSession.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !self.appSession.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
+        let threads = chatService.threads.filter({ return self.appService.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !self.appService.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
         return Array(threads)
     }
         
     private func selectThreadById(threadId: Int) {
-        chatStore.activeThreadId = threadId
+        chatService.activeThreadId = threadId
     }
     
     var body: some View {
@@ -27,13 +27,13 @@ struct iPadChatView: View {
             HStack (alignment: .top, spacing: 0) {
                 // Navigation
                 VStack {
-                    RefreshableScrollView(height: 70, refreshing: self.$chatStore.gettingChat, scrollTarget: self.$chatStore.scrollTargetChat, scrollTargetTop: self.$chatStore.scrollTargetChatTop) {
+                    RefreshableScrollView(height: 70, refreshing: self.$chatService.gettingChat, scrollTarget: self.$chatService.scrollTargetChat, scrollTargetTop: self.$chatService.scrollTargetChatTop) {
                         
                         // All non-hidden threads
                         ForEach(filteredThreads(), id: \.threadId) { thread in
-                            ThreadRow(threadId: .constant(thread.threadId), activeThreadId: $chatStore.activeThreadId)
-                                .environmentObject(appSession)
-                                .environmentObject(chatStore)
+                            ThreadRow(threadId: .constant(thread.threadId), activeThreadId: $chatService.activeThreadId)
+                                .environmentObject(appService)
+                                .environmentObject(chatService)
                                 .onTapGesture(count: 1) {
                                     selectThreadById(threadId: thread.threadId)
                                 }
@@ -53,10 +53,10 @@ struct iPadChatView: View {
                 
                 // Detail
                 VStack {
-                    if chatStore.activeThreadId > 0 {
-                        ThreadDetailView(threadId: chatStore.activeThreadId, postId: 0, replyCount: -1, isSearchResult: false)
-                            .environmentObject(appSession)
-                            .environmentObject(chatStore)
+                    if chatService.activeThreadId > 0 {
+                        ThreadDetailView(threadId: chatService.activeThreadId, postId: 0, replyCount: -1, isSearchResult: false)
+                            .environmentObject(appService)
+                            .environmentObject(chatService)
                     } else {
                         Spacer()
                         HStack {

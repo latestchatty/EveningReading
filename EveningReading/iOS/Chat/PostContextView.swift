@@ -10,8 +10,8 @@ import MobileCoreServices
 import UniformTypeIdentifiers
 
 struct PostContextView: View {
-    @EnvironmentObject var appSession: AppSession
-    @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var appService: AppService
+    @EnvironmentObject var chatService: ChatService
     
     @StateObject var messageViewModel = MessageViewModel()
     
@@ -33,7 +33,7 @@ struct PostContextView: View {
     
     var body: some View {
         Button(action: {
-            chatStore.activePostId = postId
+            chatService.activePostId = postId
             self.showingWhosTaggingView = true
         }) {
             Text("Who's Tagging?")
@@ -43,7 +43,7 @@ struct PostContextView: View {
         if self.threadId > 0 && !self.isRootPost {
             Button(action: {
                 self.collapsed = true
-                appSession.collapsedThreads.append(self.threadId)
+                appService.collapsedThreads.append(self.threadId)
             }) {
                 Text("Hide Thread")
                 Image(systemName: "eye.slash")
@@ -62,8 +62,8 @@ struct PostContextView: View {
         
         if showCopyPost {
             Button(action: {
-                chatStore.copyPostText = self.postBody
-                chatStore.showingCopyPostSheet = true
+                chatService.copyPostText = self.postBody
+                chatService.showingCopyPostSheet = true
             }) {
                 Text("Copy Post")
                 Image(systemName: "doc.on.doc")
@@ -83,7 +83,7 @@ struct PostContextView: View {
             let shackURL = "https://www.shacknews.com/chatty?id=\(self.postId)#item_\(self.postId)"
             let board = UIPasteboard.general
             board.string = shackURL
-            chatStore.showingCopiedNotice = true
+            chatService.showingCopiedNotice = true
             /*
             UIPasteboard.general.setValue(shackURL,
                         forPasteboardType: kUTTypePlainText as String)
@@ -93,10 +93,10 @@ struct PostContextView: View {
             Image(systemName: "doc.on.clipboard")
         }
         
-        if !appSession.favoriteAuthors.contains(self.author) {
+        if !appService.favoriteAuthors.contains(self.author) {
             Button(action: {
-                appSession.favoriteAuthors.append(self.author)
-                chatStore.showingFavoriteNotice = true
+                appService.favoriteAuthors.append(self.author)
+                chatService.showingFavoriteNotice = true
             }) {
                 Text("Favorite User")
                 Image(systemName: "star")
@@ -104,7 +104,7 @@ struct PostContextView: View {
         }
         
         Button(action: {
-            appSession.blockedAuthors.append(self.author)
+            appService.blockedAuthors.append(self.author)
         }) {
             Text("Block User")
             Image(systemName: "exclamationmark.circle")
@@ -120,7 +120,7 @@ struct PostContextView: View {
             Image(systemName: "exclamationmark.circle")
         }
         .onAppear() {
-            chatStore.activePostId = self.postId
+            chatService.activePostId = self.postId
         }
         
     }

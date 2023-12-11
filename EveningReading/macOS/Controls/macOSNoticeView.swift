@@ -10,7 +10,7 @@ import SwiftUI
 struct macOSNoticeView : View {
     @Binding public var show: Bool
     @Binding public var message: String
-    @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var chatService: ChatService
     
     var body: some View {
         if show {

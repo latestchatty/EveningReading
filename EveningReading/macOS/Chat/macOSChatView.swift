@@ -8,18 +8,18 @@
 import SwiftUI
 
 struct macOSChatView: View {
-    @EnvironmentObject var appSession: AppSession
-    @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var appService: AppService
+    @EnvironmentObject var chatService: ChatService
     
     @State private var showingGuidelinesView = false
     @State private var guidelinesAccepted = false
     
     private func fetchChat() {
-        if chatStore.threads.count > 0
+        if chatService.threads.count > 0
         {
             return
         }
-        chatStore.getChat()
+        chatService.getChat()
     }
     
     var body: some View {
@@ -59,10 +59,10 @@ struct macOSChatView: View {
                             LazyVStack (spacing: 0) {
                                 macOSThreadList()
                             }
-                            .onReceive(chatStore.$didGetChatStart) { value in
+                            .onReceive(chatService.$didGetChatStart) { value in
                                 if value {
                                     scrollProxy.scrollTo(999999991, anchor: .top)
-                                    chatStore.didGetChatStart = false
+                                    chatService.didGetChatStart = false
                                 }
                             }
                             Spacer().frame(width: 1, height: 12)
@@ -70,8 +70,8 @@ struct macOSChatView: View {
                         }
                     }
                     .frame(width: geometry.size.width * 0.35)
-                    .disabled(chatStore.showingNewPostSpinner || chatStore.showingRefreshThreadSpinner)
-                    .scrollDisabled(chatStore.showingNewPostSpinner || chatStore.showingRefreshThreadSpinner)
+                    .disabled(chatService.showingNewPostSpinner || chatService.showingRefreshThreadSpinner)
+                    .scrollDisabled(chatService.showingNewPostSpinner || chatService.showingRefreshThreadSpinner)
                     
                     Divider()
                     
@@ -84,8 +84,8 @@ struct macOSChatView: View {
                                 Spacer().frame(width: 1, height: 1)
                                 .id(999999991)
                                 LazyVStack {
-                                    if chatStore.activeThreadId == 0 {
-                                        if !chatStore.postingNewThread {
+                                    if chatService.activeThreadId == 0 {
+                                        if !chatService.postingNewThread {
                                             Text("No thread selected.")
                                                 .font(.body)
                                                 .bold()
@@ -93,30 +93,30 @@ struct macOSChatView: View {
                                                 .padding(.top, 10)
                                         }
                                     } else {
-                                        macOSThreadView(threadId: $chatStore.activeThreadId)
+                                        macOSThreadView(threadId: $chatService.activeThreadId)
                                     }
                                 }
-                                .onReceive(chatStore.$activeThreadId) { value in
+                                .onReceive(chatService.$activeThreadId) { value in
                                     scrollProxy.scrollTo(999999991, anchor: .top)
                                 }
-                                .onReceive(chatStore.$scrollTargetChat) { value in
+                                .onReceive(chatService.$scrollTargetChat) { value in
                                     scrollProxy.scrollTo(value)
                                 }
-                                .onReceive(chatStore.$shouldScrollThreadToTop) { value in
+                                .onReceive(chatService.$shouldScrollThreadToTop) { value in
                                     if value {
                                         scrollProxy.scrollTo(999999991, anchor: .top)
-                                        chatStore.shouldScrollThreadToTop = false
+                                        chatService.shouldScrollThreadToTop = false
                                     }
                                 }
                             }
                         }
-                        .disabled(chatStore.showingNewPostSpinner || chatStore.showingRefreshThreadSpinner)
-                        .scrollDisabled(chatStore.showingNewPostSpinner || chatStore.showingRefreshThreadSpinner)
+                        .disabled(chatService.showingNewPostSpinner || chatService.showingRefreshThreadSpinner)
+                        .scrollDisabled(chatService.showingNewPostSpinner || chatService.showingRefreshThreadSpinner)
                         
                         // Toasts
-                        NoticeView(show: $chatStore.showingTagNotice, message: $chatStore.taggingNoticeText)
+                        NoticeView(show: $chatService.showingTagNotice, message: $chatService.taggingNoticeText)
                         
-                        NoticeView(show: $chatStore.didCopyLink, message: .constant("Copied!"))
+                        NoticeView(show: $chatService.didCopyLink, message: .constant("Copied!"))
                         
                     }
                     .frame(width: geometry.size.width * 0.65)
@@ -124,27 +124,27 @@ struct macOSChatView: View {
                 }
             }
             .overlay(
-                LoadingView(show: $chatStore.showingNewPostSpinner, title: .constant(""))
+                LoadingView(show: $chatService.showingNewPostSpinner, title: .constant(""))
             )
             .overlay(
-                LoadingView(show: $chatStore.showingRefreshThreadSpinner, title: .constant(""))
+                LoadingView(show: $chatService.showingRefreshThreadSpinner, title: .constant(""))
             )
             .onAppear(perform: fetchChat)
-            .onReceive(chatStore.$showingNewPostSpinner) { value in
+            .onReceive(chatService.$showingNewPostSpinner) { value in
                 if value {
-                    chatStore.newReplyAuthorName = ""
+                    chatService.newReplyAuthorName = ""
                     DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(8)) {
-                        chatStore.showingNewPostSpinner = false
-                        if chatStore.newPostParentId == 0 {
-                            chatStore.getChat()
+                        chatService.showingNewPostSpinner = false
+                        if chatService.newPostParentId == 0 {
+                            chatService.getChat()
                         } else {
-                            chatStore.getThread()
-                            //chatStore.hideReplies = true
-                            //chatStore.shouldScrollThreadToTop = true
-                            //chatStore.hideReplies = false
+                            chatService.getThread()
+                            //chatService.hideReplies = true
+                            //chatService.shouldScrollThreadToTop = true
+                            //chatService.hideReplies = false
                         }
-                        chatStore.newPostParentId = 0
-                        chatStore.postingNewThread = false
+                        chatService.newPostParentId = 0
+                        chatService.postingNewThread = false
                     }
                 }
             }

@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct macOSPostExpandedView: View {
-    @EnvironmentObject var appSession: AppSession
-    @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var appService: AppService
+    @EnvironmentObject var chatService: ChatService
     @Binding var postId: Int
     @Binding var postAuthor: String
     @Binding var replyLines: String?
@@ -38,11 +38,11 @@ struct macOSPostExpandedView: View {
         HStack {
             VStack (alignment: .leading) {
                 // Full post
-                RichTextView(topBlocks: appSession.blockedAuthors.contains(self.postAuthor) ? RichTextBuilder.getRichText(postBody: "[blocked]") : self.postText)
+                RichTextView(topBlocks: appService.blockedAuthors.contains(self.postAuthor) ? RichTextBuilder.getRichText(postBody: "[blocked]") : self.postText)
                     .fixedSize(horizontal: false, vertical: true)
                     .padding(8)
 
-                if appSession.isSignedIn && !appSession.blockedAuthors.contains(self.postAuthor) {
+                if appService.isSignedIn && !appService.blockedAuthors.contains(self.postAuthor) {
                     HStack {
                         Text(postDateTime.postTimestamp())
                             .font(.caption)
@@ -55,14 +55,14 @@ struct macOSPostExpandedView: View {
                             .onTapGesture(count: 1) {
                                 NSPasteboard.general.clearContents()
                                 NSPasteboard.general.setString("https://www.shacknews.com/chatty?id=\(self.postId)#item_\(self.postId)", forType: .URL)
-                                chatStore.didCopyLink = true
+                                chatService.didCopyLink = true
                             }
                         Image(systemName: "arrowshape.turn.up.left")
                             .imageScale(.large)
                             .onTapGesture(count: 1) {
-                                chatStore.newPostParentId = self.postId
-                                chatStore.newReplyAuthorName = self.postAuthor
-                                chatStore.showingNewPostSheet = true
+                                chatService.newPostParentId = self.postId
+                                chatService.newReplyAuthorName = self.postAuthor
+                                chatService.showingNewPostSheet = true
                             }
                     }
                     .padding(.bottom, 8)

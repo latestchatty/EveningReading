@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct macOSGeneralView: View {
-    @EnvironmentObject var appSession: AppSession
+    @EnvironmentObject var appService: AppService
     
     var body: some View {
         Group {
-            Toggle(isOn: self.$appSession.isDarkMode) {
+            Toggle(isOn: self.$appService.isDarkMode) {
                 Text("Dark Mode")
             }
         }

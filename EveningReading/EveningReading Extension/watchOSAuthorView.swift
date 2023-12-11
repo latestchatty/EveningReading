@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct watchOSAuthorView: View {
-    @EnvironmentObject var appSession: AppSession
+    @EnvironmentObject var appService: AppService
     
     @StateObject var messageViewModel = MessageViewModel()
     
@@ -74,7 +74,7 @@ struct watchOSAuthorView: View {
                 Button("Block User") {
                     // Show message
                     withAnimation {
-                        appSession.blockedAuthors.append(self.name)
+                        appService.blockedAuthors.append(self.name)
                         self.showBlocked = true
                     }
                 }

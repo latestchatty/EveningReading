@@ -9,15 +9,15 @@ import SwiftUI
 
 struct SignInView: View {
     @Environment(\.presentationMode) var presentationMode
-    @EnvironmentObject var appSession: AppSession
+    @EnvironmentObject var appService: AppService
     
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     private func signIn() {
-        if self.appSession.signInUsername.count < 1 || self.appSession.signInPassword.count < 1 {
-            self.appSession.showingSignInWarning = true
+        if self.appService.signInUsername.count < 1 || self.appService.signInPassword.count < 1 {
+            self.appService.showingSignInWarning = true
         } else {
-            self.appSession.authenticate()
+            self.appService.authenticate()
         }
     }
 
@@ -41,7 +41,7 @@ struct SignInView: View {
                     Text("Lamp, Sand, Lime.").font(.subheadline)
                         .padding(EdgeInsets(top: 0, leading: 0, bottom: 70, trailing: 0))
                     
-                    TextField("Username", text: $appSession.signInUsername)
+                    TextField("Username", text: $appService.signInUsername)
                         .padding()
                         .textContentType(.username)
                         .autocapitalization(.none)
@@ -49,7 +49,7 @@ struct SignInView: View {
                         .cornerRadius(4.0)
                         .padding(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0))
                                         
-                    SecureField("Password", text: $appSession.signInPassword) {
+                    SecureField("Password", text: $appService.signInPassword) {
                     }
                     .padding()
                     .textContentType(.password)
@@ -72,17 +72,17 @@ struct SignInView: View {
                 }
                 .padding()
                 
-                .alert(isPresented: $appSession.showingSignInWarning) {
+                .alert(isPresented: $appService.showingSignInWarning) {
                     Alert(title: Text("Sign In Failed"), message: Text("Incorrect username or password."), dismissButton: .default(Text("Okay")))
                 }
                 
             }
             .padding()
             .background(Color("SignInBackground").frame(height: 2600).offset(y: -80))
-            .disabled(appSession.isAuthenticating)
-            .overlay(AuthenticatingView(isVisible: $appSession.isAuthenticating))
+            .disabled(appService.isAuthenticating)
+            .overlay(AuthenticatingView(isVisible: $appService.isAuthenticating))
             .onReceive(timer) { _ in
-                if appSession.isSignedIn {
+                if appService.isSignedIn {
                     self.timer.upstream.connect().cancel()
                     NotificationStore(service: .init()).register()
                     NotificationStore(service: .init()).registernew()

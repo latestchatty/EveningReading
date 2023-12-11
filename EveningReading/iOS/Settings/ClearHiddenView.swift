@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ClearHiddenView: View {
-    @EnvironmentObject var appSession: AppSession
+    @EnvironmentObject var appService: AppService
     
     @State private var showingClearHiddenAlert = false
     
@@ -24,7 +24,7 @@ struct ClearHiddenView: View {
             .buttonStyle(DefaultButtonStyle())
             .alert(isPresented: self.$showingClearHiddenAlert) {
                 Alert(title: Text("Clear Hidden Threads?"), message: Text(""), primaryButton: .destructive(Text("Yes")) {
-                    appSession.collapsedThreads.removeAll()
+                    appService.collapsedThreads.removeAll()
                 }, secondaryButton: .cancel() {
                     
                 })

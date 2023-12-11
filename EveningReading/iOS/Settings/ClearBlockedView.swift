@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ClearBlockedView: View {
-    @EnvironmentObject var appSession: AppSession
+    @EnvironmentObject var appService: AppService
     
     @State private var showingClearBlockedAlert = false
     
@@ -24,7 +24,7 @@ struct ClearBlockedView: View {
             .buttonStyle(DefaultButtonStyle())
             .alert(isPresented: self.$showingClearBlockedAlert) {
                 Alert(title: Text("Clear Blocked Users?"), message: Text(""), primaryButton: .destructive(Text("Yes")) {
-                    appSession.blockedAuthors.removeAll()
+                    appService.blockedAuthors.removeAll()
                 }, secondaryButton: .cancel() {
                     
                 })

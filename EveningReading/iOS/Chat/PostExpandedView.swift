@@ -9,8 +9,8 @@ import SwiftUI
 
 struct PostExpandedView: View {
     @Environment(\.colorScheme) var colorScheme
-    @EnvironmentObject var appSession: AppSession
-    @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var appService: AppService
+    @EnvironmentObject var chatService: ChatService
     
     var username: String
     var postId: Int
@@ -37,7 +37,7 @@ struct PostExpandedView: View {
                             .foregroundColor(Color("replyLines"))
                             .overlay(
                                 Text(
-                                    self.postId == chatStore.activePostId && self.replyLines.count - 1 == index && index > 0 ? String(character) : ""
+                                    self.postId == chatService.activePostId && self.replyLines.count - 1 == index && index > 0 ? String(character) : ""
                                 )
                                     .lineLimit(1)
                                     .fixedSize()
@@ -48,7 +48,7 @@ struct PostExpandedView: View {
                 }
                 
                 // Author name
-                AuthorNameView(name: appSession.blockedAuthors.contains(self.postAuthor) ? "[blocked]" : self.postAuthor, postId: self.postId, op: self.op)
+                AuthorNameView(name: appService.blockedAuthors.contains(self.postAuthor) ? "[blocked]" : self.postAuthor, postId: self.postId, op: self.op)
                 
                 Spacer()
                 
@@ -57,7 +57,7 @@ struct PostExpandedView: View {
             }
             VStack {
                 // Post body
-                if appSession.blockedAuthors.contains(self.postAuthor) {
+                if appService.blockedAuthors.contains(self.postAuthor) {
                     HStack {
                         Text("[blocked]")
                             .fixedSize(horizontal: false, vertical: true)
@@ -76,7 +76,7 @@ struct PostExpandedView: View {
                 }
                 
                 // Tag and reply
-                if appSession.isSignedIn {
+                if appService.isSignedIn {
                     HStack {
                         Text(postDateTime.postTimestamp())
                             .font(.caption)

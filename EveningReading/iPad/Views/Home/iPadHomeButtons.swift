@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct iPadHomeButtons: View {
-    @EnvironmentObject var appSession: AppSession
-    @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var appService: AppService
+    @EnvironmentObject var chatService: ChatService
     
     @StateObject var messageViewModel = MessageViewModel()
     
     private func navigateTo(_ goToDestination: inout Bool) {
-        appSession.resetNavigation()
+        appService.resetNavigation()
         goToDestination = true
     }
     
@@ -29,16 +29,16 @@ struct iPadHomeButtons: View {
             // Buttons
             iPadHomeButton(title: "Chat", imageName: "glyphicons-basic-238-chat-message", buttonBackground: Color("HomeButtonChat"))
                 .onTapGesture(count: 1) {
-                    chatStore.activeThreadId = 0 // Deselect any threads
-                    chatStore.getChat() // Refresh the chat
-                    navigateTo(&appSession.showingChatView)
+                    chatService.activeThreadId = 0
+                    chatService.getChat()
+                    navigateTo(&appService.showingChatView)
                 }
             
             GeometryReader { geometry in
                 iPadHomeButton(title: "Inbox", imageName: "glyphicons-basic-122-envelope-empty", buttonBackground: Color("HomeButtonInbox"))
                     .overlay(NewMessageBadgeView(notificationNumber: $messageViewModel.messageCount.unread, width: geometry.size.width), alignment: .top)
                     .onTapGesture(count: 1) {
-                        navigateTo(&appSession.showingInboxView)
+                        navigateTo(&appService.showingInboxView)
                     }
                     .onAppear() {
                         getMessageCount()
@@ -46,12 +46,12 @@ struct iPadHomeButtons: View {
             }
             iPadHomeButton(title: "Search", imageName: "glyphicons-basic-28-search", buttonBackground: Color("HomeButtonSearch"))
                 .onTapGesture(count: 1) {
-                    navigateTo(&appSession.showingSearchView)
+                    navigateTo(&appService.showingSearchView)
                 }
             
             iPadHomeButton(title: "Tags", imageName: "glyphicons-basic-67-tags", buttonBackground: Color("HomeButtonTags"))
                 .onTapGesture(count: 1) {
-                    navigateTo(&appSession.showingTagsView)
+                    navigateTo(&appService.showingTagsView)
                 }
             
             Spacer().frame(width: 20)
@@ -59,27 +59,27 @@ struct iPadHomeButtons: View {
             // Home Screen Navigation
             VStack {
                 // go to chat
-                NavigationLink(destination: iPadChatView(), isActive: $appSession.showingChatView) {
+                NavigationLink(destination: iPadChatView(), isActive: $appService.showingChatView) {
                     EmptyView()
                 }
                 
                 // go to inbox
-                NavigationLink(destination: InboxView(), isActive: $appSession.showingInboxView) {
+                NavigationLink(destination: InboxView(), isActive: $appService.showingInboxView) {
                     EmptyView()
                 }
                 
                 // go to search
-                NavigationLink(destination: SearchView(), isActive: $appSession.showingSearchView) {
+                NavigationLink(destination: SearchView(), isActive: $appService.showingSearchView) {
                     EmptyView()
                 }
                 
                 // go to tags
-                NavigationLink(destination: TagsView(), isActive: $appSession.showingTagsView) {
+                NavigationLink(destination: TagsView(), isActive: $appService.showingTagsView) {
                     EmptyView()
                 }
                 
                 // go to settings
-                NavigationLink(destination: SettingsView(), isActive: $appSession.showingSettingsView) {
+                NavigationLink(destination: SettingsView(), isActive: $appService.showingSettingsView) {
                     EmptyView()
                 }
             }

@@ -14,7 +14,7 @@ struct macOSSettingsView: View {
         case general
         case about
     }
-    @EnvironmentObject var appSession: AppSession
+    @EnvironmentObject var appService: AppService
     @State private var activeTab: SettingsTab = SettingsTab.account
     
     private func version() -> String {
@@ -95,17 +95,17 @@ struct macOSSettingsView: View {
             Form {
                 if self.activeTab == .account {
                     macOSAccountView()
-                        .environmentObject(appSession)
+                        .environmentObject(appService)
                 }
 
                 if self.activeTab == .filters {
                     VStack (alignment: .center) {
                         VStack (alignment: .leading) {
                             CategoriesView()
-                                .environmentObject(appSession)
+                                .environmentObject(appService)
                         }
                         macOSClearHiddenView()
-                            .environmentObject(appSession)
+                            .environmentObject(appService)
                     }
                     .frame(maxWidth: .infinity)
                 }
@@ -113,7 +113,7 @@ struct macOSSettingsView: View {
                 if self.activeTab == .general {
                     VStack (alignment: .center) {
                         macOSGeneralView()
-                            .environmentObject(appSession)
+                            .environmentObject(appService)
                     }
                     .frame(maxWidth: .infinity)
                 }

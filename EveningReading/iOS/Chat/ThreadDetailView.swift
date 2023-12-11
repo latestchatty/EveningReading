@@ -11,8 +11,8 @@ import SwiftUI
 
 struct ThreadDetailView: View {
     @Environment(\.colorScheme) var colorScheme
-    @EnvironmentObject var appSession: AppSession
-    @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var appService: AppService
+    @EnvironmentObject var chatService: ChatService
         
     var threadId: Int = 0
     var postId: Int = 0
@@ -66,8 +66,8 @@ struct ThreadDetailView: View {
     // Get thread data from the appropriate source
     private func getThreadData() {
         if self.postId > 0 {
-            chatStore.getThreadByPost(postId: self.postId) {
-                if let thread = chatStore.searchedThreads.first {
+            chatService.getThreadByPost(postId: self.postId) {
+                if let thread = chatService.searchedThreads.first {
                     setThreadData(thread)
                     postList.removeAll()
                     getPostList(parentId: self.threadId)
@@ -76,7 +76,7 @@ struct ThreadDetailView: View {
                         self.selectedPost = self.postId
                         if self.postId != self.threadId {
                             DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
-                                self.chatStore.scrollTargetThread = self.postId
+                                self.chatService.scrollTargetThread = self.postId
                             }
                         }
                     }
@@ -87,10 +87,10 @@ struct ThreadDetailView: View {
             }
         } else {
             // Get thread data from the chatty
-            if let thread = chatStore.threads.filter({ return $0.threadId == self.threadId }).first {
+            if let thread = chatService.threads.filter({ return $0.threadId == self.threadId }).first {
                 setThreadData(thread)
                 if UIDevice.current.userInterfaceIdiom == .phone {
-                    chatStore.activeThreadId = thread.threadId
+                    chatService.activeThreadId = thread.threadId
                 }
                 self.showThread = true
             } else {
@@ -114,11 +114,11 @@ struct ThreadDetailView: View {
     // Loop through posts and build reply lines & post strength
     private func getPostList(parentId: Int) {
         if self.postId > 0 {
-            if let thread = chatStore.searchedThreads.first {
+            if let thread = chatService.searchedThreads.first {
                 setPostData(thread: thread, parentId: parentId)
             }
         } else {
-            if let thread = chatStore.threads.filter({ return $0.threadId == self.threadId }).first {
+            if let thread = chatService.threads.filter({ return $0.threadId == self.threadId }).first {
                 setPostData(thread: thread, parentId: parentId)
             }
         }
@@ -146,8 +146,8 @@ struct ThreadDetailView: View {
             self.threadNavigationLocation = value.location
         }
         .onEnded { value in
-            self.appSession.threadNavigationLocationX = self.threadNavigationLocation.x
-            self.appSession.threadNavigationLocationY = self.threadNavigationLocation.y
+            self.appService.threadNavigationLocationX = self.threadNavigationLocation.x
+            self.appService.threadNavigationLocationY = self.threadNavigationLocation.y
         }
     }
 
@@ -169,7 +169,7 @@ struct ThreadDetailView: View {
                     }
                 }
             }
-            self.chatStore.scrollTargetThread = self.selectedPost
+            self.chatService.scrollTargetThread = self.selectedPost
         }
     }
     
@@ -191,7 +191,7 @@ struct ThreadDetailView: View {
                     }
                 }
             }
-            self.chatStore.scrollTargetThread = self.selectedPost
+            self.chatService.scrollTargetThread = self.selectedPost
         }
     }
     
@@ -199,8 +199,8 @@ struct ThreadDetailView: View {
         self.selectedPostRichText = RichTextBuilder.getRichText(postBody: postList[postIndex].body)
         self.selectedPost = postList[postIndex].id
         
-        chatStore.activePostId = postList[postIndex].id
-        chatStore.activeParentId = postList[postIndex].parentId
+        chatService.activePostId = postList[postIndex].id
+        chatService.activeParentId = postList[postIndex].parentId
         
         self.postsToHighlight.removeAll()
         
@@ -210,7 +210,7 @@ struct ThreadDetailView: View {
         
         self.selectedPostDepth = self.replyLines[postList[postIndex].id]?.count ?? 999
         
-        for siblingPost in self.postList.filter({ $0.parentId == chatStore.activeParentId }) {
+        for siblingPost in self.postList.filter({ $0.parentId == chatService.activeParentId }) {
             self.postsToHighlight.append(siblingPost.id)
             getChildren(parentId: siblingPost.id)
         }
@@ -232,13 +232,13 @@ struct ThreadDetailView: View {
             }
             
             if self.showThread {
-                RefreshableScrollView(height: 70, refreshing: self.$chatStore.gettingThread, scrollTarget: self.$chatStore.scrollTargetThread, scrollTargetTop: self.$chatStore.scrollTargetThreadTop) {
+                RefreshableScrollView(height: 70, refreshing: self.$chatService.gettingThread, scrollTarget: self.$chatService.scrollTargetThread, scrollTargetTop: self.$chatService.scrollTargetThreadTop) {
                     
                     // Root Post
                     VStack {
                         // Post details
                         HStack (alignment: .center) {
-                            AuthorNameView(name: appSession.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : self.rootPostAuthor, postId: self.threadId)
+                            AuthorNameView(name: appService.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : self.rootPostAuthor, postId: self.threadId)
 
                             //ContributedView(contributed: self.contributed)
 
@@ -253,7 +253,7 @@ struct ThreadDetailView: View {
                         
                         // Full root post body and bubble
                         VStack {
-                            if appSession.blockedAuthors.contains(self.rootPostAuthor) {
+                            if appService.blockedAuthors.contains(self.rootPostAuthor) {
                                 HStack () {
                                     Text("[blocked]")
                                         .fixedSize(horizontal: false, vertical: true)
@@ -271,7 +271,7 @@ struct ThreadDetailView: View {
                             }
                             
                             // Tag and Reply
-                            if appSession.isSignedIn {
+                            if appService.isSignedIn {
                                 HStack {
                                     Text(self.rootPostDate)
                                         .font(.caption)
@@ -338,8 +338,8 @@ struct ThreadDetailView: View {
                                     PostContextView(showingWhosTaggingView: self.$showingWhosTaggingView, showingNewMessageView: self.$showingNewMessageView, messageRecipient: self.$messageRecipient, messageSubject: self.$messageSubject, messageBody: self.$messageBody, collapsed: self.$collapsePost, author: post.author, postId: post.id, postBody: post.body, showCopyPost: true)
                                 }
                                 .onTapGesture(count: 1) {
-                                    chatStore.activePostId = post.id
-                                    chatStore.activeParentId = post.parentId
+                                    chatService.activePostId = post.id
+                                    chatService.activeParentId = post.parentId
                                     
                                     self.selectedPostDepth = self.replyLines[post.id]?.count ?? 999
                                     self.postsToHighlight.removeAll()
@@ -349,9 +349,9 @@ struct ThreadDetailView: View {
                                         getChildren(parentId: siblingPost.id)
                                     }
                                     
-                                    self.chatStore.scrollTargetThread = post.id
+                                    self.chatService.scrollTargetThread = post.id
                                     self.selectedPostRichText = RichTextBuilder.getRichText(postBody: post.body)
-                                    if appSession.disableAnimation {
+                                    if appService.disableAnimation {
                                         self.selectedPost = post.id
                                     } else {
                                         withAnimation {
@@ -371,7 +371,7 @@ struct ThreadDetailView: View {
                     }.id(9999999999993)
                     
                 }
-                .environmentObject(chatStore)
+                .environmentObject(chatService)
             } else {
                 LazyVStack {
                     if self.postId > 0 || self.replyCount >= self.loadingLimit {
@@ -384,9 +384,9 @@ struct ThreadDetailView: View {
         }
         
         // Update view contents on iPad when thread selected
-        .onReceive(chatStore.$activeThreadId) { _ in
+        .onReceive(chatService.$activeThreadId) { _ in
             if UIDevice.current.userInterfaceIdiom == .pad {
-                chatStore.scrollTargetThreadTop = 9999999999991
+                chatService.scrollTargetThreadTop = 9999999999991
                 self.selectedPost = 0
                 getThreadData()
                 self.postList = [ChatPosts]()
@@ -396,26 +396,26 @@ struct ThreadDetailView: View {
         }
         
         // If refreshing thread after posting
-        .onReceive(chatStore.$didGetThreadStart) { value in
-            if value && self.chatStore.didSubmitPost && chatStore.activeThreadId == self.threadId {
-                chatStore.didGetThreadStart = false
+        .onReceive(chatService.$didGetThreadStart) { value in
+            if value && self.chatService.didSubmitPost && chatService.activeThreadId == self.threadId {
+                chatService.didGetThreadStart = false
                 self.selectedPost = 0
                 self.isGettingThread = true
                 /*
                 DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(15)) {
-                    chatStore.didGetThreadFinish = true
+                    chatService.didGetThreadFinish = true
                 }
                 */
             }
         }
         
         // When done refreshing (after posting or pull to refresh)
-        .onReceive(chatStore.$didGetThreadFinish) { value in
-            if value && chatStore.activeThreadId == self.threadId && canRefresh {
+        .onReceive(chatService.$didGetThreadFinish) { value in
+            if value && chatService.activeThreadId == self.threadId && canRefresh {
                 self.canRefresh = false
-                self.chatStore.didSubmitPost = false
-                self.chatStore.didGetThreadStart = false
-                self.chatStore.didGetThreadFinish = false
+                self.chatService.didSubmitPost = false
+                self.chatService.didGetThreadStart = false
+                self.chatService.didGetThreadFinish = false
                 self.selectedPost = 0
                 getThreadData()
                 self.postList = [ChatPosts]()
@@ -427,7 +427,7 @@ struct ThreadDetailView: View {
         }
         
         // Disable while getting new data
-        .disabled(self.isGettingThread || chatStore.gettingThread)
+        .disabled(self.isGettingThread || chatService.gettingThread)
         
         // Fetch data and settings on load
         .onAppear(perform: {
@@ -438,7 +438,7 @@ struct ThreadDetailView: View {
                 if UIDevice.current.userInterfaceIdiom == .phone {
                     getPostList(parentId: self.threadId)
                 }
-                self.threadNavigationLocation = CGPoint(x: self.appSession.threadNavigationLocationX, y: self.appSession.threadNavigationLocationY)
+                self.threadNavigationLocation = CGPoint(x: self.appService.threadNavigationLocationX, y: self.appService.threadNavigationLocationY)
                 print("getData end")
             }
             
@@ -457,24 +457,24 @@ struct ThreadDetailView: View {
         .onDisappear {
             self.postList = [ChatPosts]()
             self.postStrength = [Int: Double]()
-            self.chatStore.didSubmitPost = false
-            self.chatStore.didGetThreadStart = false
-            self.chatStore.didGetThreadFinish = false
+            self.chatService.didSubmitPost = false
+            self.chatService.didGetThreadStart = false
+            self.chatService.didGetThreadFinish = false
             self.isGettingThread = false
-            chatStore.showingTagNotice = false
+            chatService.showingTagNotice = false
         }
         
         // Loading and Alerts
         .overlay(LoadingView(show: self.$isGettingThread, title: .constant("")))
-        .overlay(NoticeView(show: $chatStore.showingTagNotice, message: $chatStore.taggingNoticeText))
-        .overlay(NoticeView(show: $chatStore.showingFavoriteNotice, message: .constant("Added User!")))
-        .overlay(NoticeView(show: $chatStore.showingCopiedNotice, message: .constant("Copied!")))
+        .overlay(NoticeView(show: $chatService.showingTagNotice, message: $chatService.taggingNoticeText))
+        .overlay(NoticeView(show: $chatService.showingFavoriteNotice, message: .constant("Added User!")))
+        .overlay(NoticeView(show: $chatService.showingCopiedNotice, message: .constant("Copied!")))
         
         // Thread Navigation
         .overlay(
             GeometryReader { geometry in
                 VStack (alignment: .trailing) {
-                    if !self.appSession.threadNavigation || self.postCount < 2 {
+                    if !self.appService.threadNavigation || self.postCount < 2 {
                         EmptyView()
                     }
                     else if self.isGettingThread {

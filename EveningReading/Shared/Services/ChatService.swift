@@ -9,7 +9,276 @@ import Foundation
 import SwiftUI
 
 // Service for chat related functionality
-class ChatService {
+class ChatService: ObservableObject {
+    
+    private let service: ChatAPIService
+    init(service: ChatAPIService) {
+        self.service = service
+        #if os(iOS)
+        loadPostTemplate()
+        #endif
+    }
+
+    @Published var threads: [ChatThread] = []
+    @Published var activeThreadId: Int = 0
+    
+    @Published var activePostId: Int = 0
+    @Published var activeParentId: Int = 0
+    @Published var activePostDepth: Int = 0
+    @Published var hideReplies = true
+    
+    @Published var didSubmitPost = false
+
+    @Published var didTagPost = false
+    @Published var showingTagNotice = false
+    @Published var taggingNoticeText = "Tagged!"
+    
+    @Published var showingFavoriteNotice = false
+    
+    @Published var didCopyLink = false
+    @Published var showingCopiedNotice = false
+
+    @Published var showingNewPostSheet = false
+    @Published var newPostParentId = 0
+    @Published var newReplyAuthorName = ""
+    @Published var showingNewPostSpinner = false
+    @Published var postingNewThread = false
+    
+    @Published var showingRefreshThreadSpinner = false
+
+    @Published var didGetChatStart = false
+    @Published var didSubmitNewThread = false
+    @Published var didGetChatFinish = false
+    @Published var didGetThreadStart = false
+    @Published var didGetThreadFinish = false
+    
+    @Published var scrollTargetChat: Int?
+    @Published var scrollTargetChatTop: Int?
+    @Published var scrollTargetThread: Int?
+    @Published var scrollTargetThreadTop: Int?
+    
+    @Published var shouldScrollThreadToTop = false
+    
+    @Published public var tagDelta = [Int: [String: Int]]()
+    @Published public var tagRemovedDelta = [Int: [String: Int]]()
+
+    @Published var showingCopyPostSheet = false
+    @Published var copyPostText = ""
+    @Published var templateA = ""
+    @Published var templateB = ""
+
+    // For pull to refresh
+    @Published var gettingChat: Bool = false {
+        didSet {
+            if oldValue == false && gettingChat == true {
+                #if os(iOS)
+                // Delay long enough for the pull to refresh animation to complete...
+                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+                    self.getChat()
+                }
+                #endif
+            }
+        }
+    }
+    
+    @Published var gettingThread: Bool = false {
+        didSet {
+            if oldValue == false && gettingThread == true {
+                #if os(iOS)
+                // Delay long enough for the pull to refresh animation to complete...
+                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+                    self.getThread()
+                }
+                #endif
+            }
+        }
+    }
+
+    func getChat() {
+        self.didGetChatStart = true
+        #if os(watchOS)
+        self.threads = []
+        self.gettingChat = true
+        #endif
+        #if os(OSX)
+        self.threads = []
+        self.gettingChat = true
+        #endif
+        service.getChat() { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let threads):
+                    self?.threads = threads
+                    self?.tagDelta = [Int: [String: Int]]()
+                    self?.tagRemovedDelta = [Int: [String: Int]]()
+                case .failure:
+                    self?.threads = []
+                    
+                }
+                DispatchQueue.main.async {
+                    self?.didGetChatFinish = true
+                    self?.gettingChat = false
+                }
+            }
+        }
+    }
+    
+    func getThread() {
+        self.didGetThreadStart = true
+        service.getThread(threadId: self.activeThreadId) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let threads):
+                    let threadId = self?.activeThreadId ?? 0
+                    if let row = self?.threads.firstIndex(where: {$0.threadId == threadId}) {
+                        if threads[0].posts.count > 0 {
+                            self?.threads[row] = threads[0]
+                        }
+                    }
+                case .failure:
+                    print("failure to getThread")
+                }
+                DispatchQueue.main.async {
+                    self?.tagDelta.removeValue(forKey: self?.activeThreadId ?? 0)
+                    self?.tagRemovedDelta.removeValue(forKey: self?.activeThreadId ?? 0)
+                    self?.didGetThreadFinish = true
+                    self?.gettingThread = false
+                }
+            }
+        }
+    }
+    
+    // Tag post
+    @Published private(set) var tagResponse: TagReponse = TagReponse(status: "0", data: nil, message: "")
+    func tag(postId: Int, tag: String, untag: String) {
+        service.tag(postId: postId, tag: tag, untag: untag) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let response):
+                    self?.tagResponse = response
+                case .failure:
+                    self?.tagResponse = TagReponse(status: "0", data: nil, message: "")
+                }
+            }
+        }
+    }
+    
+    // Submit post
+    @Published var submitPostSuccessMessage: String = ""
+    @Published var submitPostErrorMessage: String = ""
+    @Published private(set) var submitPostResponse: SubmitPostResponseContainer = SubmitPostResponseContainer(success: SubmitPostReponse(result: ""), fail: SubmitPostError(error: false, code: "ERR_NONE", message: "No error."))
+    func submitPost(postBody: String, postId: Int) {
+        self.didSubmitPost = true
+        service.submitPost(postBody: postBody, postId: postId) { [weak self] result in
+            DispatchQueue.main.async {
+                self?.submitPostSuccessMessage = ""
+                self?.submitPostErrorMessage = ""
+
+                switch result {
+                case .success(let response):
+                    self?.submitPostResponse = response
+                    if response.success.result == "success" {
+                        self?.submitPostSuccessMessage = "Post submitted successfully."
+                        self?.submitPostErrorMessage = ""
+                    } else {
+                        self?.submitPostSuccessMessage = ""
+                        self?.submitPostErrorMessage = response.fail.message
+                    }
+                case .failure:
+                    self?.submitPostResponse = SubmitPostResponseContainer(success: SubmitPostReponse(result: "failure"), fail: SubmitPostError(error: true, code: "ERR_SERVER", message: "Error posting."))
+                    self?.submitPostSuccessMessage = ""
+                    self?.submitPostErrorMessage = "Error posting.  Please try again."
+                }
+            }
+        }
+    }
+    
+    // Taggers / Lolers
+    @Published var raters: [Raters] = []
+    func getRaters(postId: Int, completionSuccess: @escaping ()->(), completionFail: @escaping ()->()) {
+        service.getRaters(postId: postId) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let ratersResponse):
+                    self?.raters = ratersResponse.data
+                    completionSuccess()
+                case .failure:
+                    self?.raters = []
+                    completionFail()
+                }
+            }
+        }
+    }
+    
+    // Search
+    @Published private(set) var searchResults: [SearchChatPosts] = []
+    func search(terms: String, author: String, parentAuthor: String, completion: @escaping ()->()) {
+        service.search(terms: terms, author: author, parentAuthor: parentAuthor) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let foundPosts):
+                    print("search results: \(foundPosts.count)")
+                    self?.searchResults = foundPosts
+                    completion()
+                case .failure:
+                    print("search failure")
+                    self?.searchResults = []
+                }
+            }
+        }
+    }
+
+    // Load any thread
+    @Published private(set) var searchedThreads: [ChatThread] = []
+    func getThreadByPost(postId: Int, completion: @escaping ()->()) {
+        print("ChatService.getThreadByPost")
+        service.getThreadByPost(postId: postId) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let foundThreads):
+                    print("loadThreadByPost results: \(foundThreads.count)")
+                    self?.searchedThreads = foundThreads
+                    completion()
+                case .failure:
+                    print("loadThreadByPost failure")
+                    self?.searchedThreads = []
+                }
+            }
+        }
+    }
+    
+    #if os(iOS)
+    func loadPostTemplate() {
+        // Preload post template HTML/CSS
+        templateA = "<html><head><meta content='text/html; charset=utf-8' http-equiv='content-type'><meta content='initial-scale=1.0; maximum-scale=1.0; user-scalable=0;' name='viewport'><style>"
+        let templateA2 = "</style></head><body>"
+        templateB = "</body></html>"
+        if let filepath = Bundle.main.path(forResource: "Stylesheet", ofType: "css") {
+            do {
+                let postTemplate = try String(contentsOfFile: filepath)
+                let postTemplateStyled = postTemplate
+                    .replacingOccurrences(of: "<%= linkColorLight %>", with: UIColor.black.toHexString())
+                    .replacingOccurrences(of: "<%= linkColorDark %>", with: UIColor.systemTeal.toHexString())
+                    .replacingOccurrences(of: "<%= jtSpoilerDark %>", with: "#21252b")
+                    .replacingOccurrences(of: "<%= jtSpoilerLight %>", with: "#8e8e93") // systemGray4
+                    .replacingOccurrences(of: "<%= jtOliveDark %>", with: UIColor(Color("OliveText")).toHexString())
+                    .replacingOccurrences(of: "<%= jtOliveLight %>", with: "#808000")
+                    .replacingOccurrences(of: "<%= jtLimeLight %>", with: "#A2D900")
+                    .replacingOccurrences(of: "<%= jtLimeDark %>", with: "#BFFF00")
+                    .replacingOccurrences(of: "<%= jtPink %>", with: UIColor(Color("PinkText")).toHexString())
+                self.templateA = self.templateA + postTemplateStyled
+            } catch {
+                // contents could not be loaded
+            }
+        } else {
+            // Stylesheet.css not found!
+        }
+        templateA = templateA + templateA2
+    }
+    #endif
+}
+
+class ChatAPIService {
     private let session: URLSession
     private let decoder: JSONDecoder
 
@@ -294,273 +563,4 @@ class ChatService {
             }
         }.resume()
     }
-}
-
-class ChatStore: ObservableObject {
-    
-    private let service: ChatService
-    init(service: ChatService) {
-        self.service = service
-        #if os(iOS)
-        loadPostTemplate()
-        #endif
-    }
-
-    @Published var threads: [ChatThread] = []
-    @Published var activeThreadId: Int = 0
-    
-    @Published var activePostId: Int = 0
-    @Published var activeParentId: Int = 0
-    @Published var activePostDepth: Int = 0
-    @Published var hideReplies = true
-    
-    @Published var didSubmitPost = false
-
-    @Published var didTagPost = false
-    @Published var showingTagNotice = false
-    @Published var taggingNoticeText = "Tagged!"
-    
-    @Published var showingFavoriteNotice = false
-    
-    @Published var didCopyLink = false
-    @Published var showingCopiedNotice = false
-
-    @Published var showingNewPostSheet = false
-    @Published var newPostParentId = 0
-    @Published var newReplyAuthorName = ""
-    @Published var showingNewPostSpinner = false
-    @Published var postingNewThread = false
-    
-    @Published var showingRefreshThreadSpinner = false
-
-    @Published var didGetChatStart = false
-    @Published var didSubmitNewThread = false
-    @Published var didGetChatFinish = false
-    @Published var didGetThreadStart = false
-    @Published var didGetThreadFinish = false
-    
-    @Published var scrollTargetChat: Int?
-    @Published var scrollTargetChatTop: Int?
-    @Published var scrollTargetThread: Int?
-    @Published var scrollTargetThreadTop: Int?
-    
-    @Published var shouldScrollThreadToTop = false
-    
-    @Published public var tagDelta = [Int: [String: Int]]()
-    @Published public var tagRemovedDelta = [Int: [String: Int]]()
-
-    @Published var showingCopyPostSheet = false
-    @Published var copyPostText = ""
-    @Published var templateA = ""
-    @Published var templateB = ""
-
-    // For pull to refresh
-    @Published var gettingChat: Bool = false {
-        didSet {
-            if oldValue == false && gettingChat == true {
-                #if os(iOS)
-                // Delay long enough for the pull to refresh animation to complete...
-                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
-                    self.getChat()
-                }
-                #endif
-            }
-        }
-    }
-    
-    @Published var gettingThread: Bool = false {
-        didSet {
-            if oldValue == false && gettingThread == true {
-                #if os(iOS)
-                // Delay long enough for the pull to refresh animation to complete...
-                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
-                    self.getThread()
-                }
-                #endif
-            }
-        }
-    }
-
-    func getChat() {
-        self.didGetChatStart = true
-        #if os(watchOS)
-        self.threads = []
-        self.gettingChat = true
-        #endif
-        #if os(OSX)
-        self.threads = []
-        self.gettingChat = true
-        #endif
-        service.getChat() { [weak self] result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let threads):
-                    self?.threads = threads
-                    self?.tagDelta = [Int: [String: Int]]()
-                    self?.tagRemovedDelta = [Int: [String: Int]]()
-                case .failure:
-                    self?.threads = []
-                    
-                }
-                DispatchQueue.main.async {
-                    self?.didGetChatFinish = true
-                    self?.gettingChat = false
-                }
-            }
-        }
-    }
-    
-    func getThread() {
-        self.didGetThreadStart = true
-        service.getThread(threadId: self.activeThreadId) { [weak self] result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let threads):
-                    let threadId = self?.activeThreadId ?? 0
-                    if let row = self?.threads.firstIndex(where: {$0.threadId == threadId}) {
-                        if threads[0].posts.count > 0 {
-                            self?.threads[row] = threads[0]
-                        }
-                    }
-                case .failure:
-                    print("failure to getThread")
-                }
-                DispatchQueue.main.async {
-                    self?.tagDelta.removeValue(forKey: self?.activeThreadId ?? 0)
-                    self?.tagRemovedDelta.removeValue(forKey: self?.activeThreadId ?? 0)
-                    self?.didGetThreadFinish = true
-                    self?.gettingThread = false
-                }
-            }
-        }
-    }
-    
-    // Tag post
-    @Published private(set) var tagResponse: TagReponse = TagReponse(status: "0", data: nil, message: "")
-    func tag(postId: Int, tag: String, untag: String) {
-        service.tag(postId: postId, tag: tag, untag: untag) { [weak self] result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let response):
-                    self?.tagResponse = response
-                case .failure:
-                    self?.tagResponse = TagReponse(status: "0", data: nil, message: "")
-                }
-            }
-        }
-    }
-    
-    // Submit post
-    @Published var submitPostSuccessMessage: String = ""
-    @Published var submitPostErrorMessage: String = ""
-    @Published private(set) var submitPostResponse: SubmitPostResponseContainer = SubmitPostResponseContainer(success: SubmitPostReponse(result: ""), fail: SubmitPostError(error: false, code: "ERR_NONE", message: "No error."))
-    func submitPost(postBody: String, postId: Int) {
-        self.didSubmitPost = true
-        service.submitPost(postBody: postBody, postId: postId) { [weak self] result in
-            DispatchQueue.main.async {
-                self?.submitPostSuccessMessage = ""
-                self?.submitPostErrorMessage = ""
-
-                switch result {
-                case .success(let response):
-                    self?.submitPostResponse = response
-                    if response.success.result == "success" {
-                        self?.submitPostSuccessMessage = "Post submitted successfully."
-                        self?.submitPostErrorMessage = ""
-                    } else {
-                        self?.submitPostSuccessMessage = ""
-                        self?.submitPostErrorMessage = response.fail.message
-                    }
-                case .failure:
-                    self?.submitPostResponse = SubmitPostResponseContainer(success: SubmitPostReponse(result: "failure"), fail: SubmitPostError(error: true, code: "ERR_SERVER", message: "Error posting."))
-                    self?.submitPostSuccessMessage = ""
-                    self?.submitPostErrorMessage = "Error posting.  Please try again."
-                }
-            }
-        }
-    }
-    
-    // Taggers / Lolers
-    @Published var raters: [Raters] = []
-    func getRaters(postId: Int, completionSuccess: @escaping ()->(), completionFail: @escaping ()->()) {
-        service.getRaters(postId: postId) { [weak self] result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let ratersResponse):
-                    self?.raters = ratersResponse.data
-                    completionSuccess()
-                case .failure:
-                    self?.raters = []
-                    completionFail()
-                }
-            }
-        }
-    }
-    
-    // Search
-    @Published private(set) var searchResults: [SearchChatPosts] = []
-    func search(terms: String, author: String, parentAuthor: String, completion: @escaping ()->()) {
-        service.search(terms: terms, author: author, parentAuthor: parentAuthor) { [weak self] result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let foundPosts):
-                    print("search results: \(foundPosts.count)")
-                    self?.searchResults = foundPosts
-                    completion()
-                case .failure:
-                    print("search failure")
-                    self?.searchResults = []
-                }
-            }
-        }
-    }
-
-    // Load any thread
-    @Published private(set) var searchedThreads: [ChatThread] = []
-    func getThreadByPost(postId: Int, completion: @escaping ()->()) {
-        print("ChatService.getThreadByPost")
-        service.getThreadByPost(postId: postId) { [weak self] result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let foundThreads):
-                    print("loadThreadByPost results: \(foundThreads.count)")
-                    self?.searchedThreads = foundThreads
-                    completion()
-                case .failure:
-                    print("loadThreadByPost failure")
-                    self?.searchedThreads = []
-                }
-            }
-        }
-    }
-    
-    #if os(iOS)
-    func loadPostTemplate() {
-        // Preload post template HTML/CSS
-        templateA = "<html><head><meta content='text/html; charset=utf-8' http-equiv='content-type'><meta content='initial-scale=1.0; maximum-scale=1.0; user-scalable=0;' name='viewport'><style>"
-        let templateA2 = "</style></head><body>"
-        templateB = "</body></html>"
-        if let filepath = Bundle.main.path(forResource: "Stylesheet", ofType: "css") {
-            do {
-                let postTemplate = try String(contentsOfFile: filepath)
-                let postTemplateStyled = postTemplate
-                    .replacingOccurrences(of: "<%= linkColorLight %>", with: UIColor.black.toHexString())
-                    .replacingOccurrences(of: "<%= linkColorDark %>", with: UIColor.systemTeal.toHexString())
-                    .replacingOccurrences(of: "<%= jtSpoilerDark %>", with: "#21252b")
-                    .replacingOccurrences(of: "<%= jtSpoilerLight %>", with: "#8e8e93") // systemGray4
-                    .replacingOccurrences(of: "<%= jtOliveDark %>", with: UIColor(Color("OliveText")).toHexString())
-                    .replacingOccurrences(of: "<%= jtOliveLight %>", with: "#808000")
-                    .replacingOccurrences(of: "<%= jtLimeLight %>", with: "#A2D900")
-                    .replacingOccurrences(of: "<%= jtLimeDark %>", with: "#BFFF00")
-                    .replacingOccurrences(of: "<%= jtPink %>", with: UIColor(Color("PinkText")).toHexString())
-                self.templateA = self.templateA + postTemplateStyled
-            } catch {
-                // contents could not be loaded
-            }
-        } else {
-            // Stylesheet.css not found!
-        }
-        templateA = templateA + templateA2
-    }
-    #endif
 }

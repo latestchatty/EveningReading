@@ -11,7 +11,7 @@ import Photos
 struct CopyPostView: View {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.presentationMode) var presentationMode
-    @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var chatService: ChatService
     
     @State private var postWebViewHeight: CGFloat = .zero
     
@@ -20,14 +20,14 @@ struct CopyPostView: View {
             Spacer().frame(width: 0, height: 0)
 
             // Compose Post Sheet
-            .sheet(isPresented: $chatStore.showingCopyPostSheet,
+            .sheet(isPresented: $chatService.showingCopyPostSheet,
                onDismiss: {
-                    chatStore.copyPostText = ""
+                    chatService.copyPostText = ""
                }) {
                ScrollView {
                    HStack {
                        Spacer()
-                       Button(action: { chatStore.showingCopyPostSheet = false }) {
+                       Button(action: { chatService.showingCopyPostSheet = false }) {
                            Rectangle()
                                .foregroundColor(Color(UIColor.systemFill))
                                .frame(width: 40, height: 5)
@@ -48,7 +48,7 @@ struct CopyPostView: View {
                    }
                    
                    HStack {
-                       PostWebView(viewModel: PostWebViewModel(body: chatStore.copyPostText, colorScheme: colorScheme), dynamicHeight: $postWebViewHeight, templateA: $chatStore.templateA, templateB: $chatStore.templateB)
+                       PostWebView(viewModel: PostWebViewModel(body: chatService.copyPostText, colorScheme: colorScheme), dynamicHeight: $postWebViewHeight, templateA: $chatService.templateA, templateB: $chatService.templateB)
                    }
                    .frame(height: postWebViewHeight)
                    .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))

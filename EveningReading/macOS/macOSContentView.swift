@@ -13,8 +13,8 @@ struct macOSWindowSize {
 }
 
 struct macOSContentView: View {
-    @EnvironmentObject var appSession: AppSession
-    @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var appService: AppService
+    @EnvironmentObject var chatService: ChatService
         
     @State private var showingChatView = false
     
@@ -45,21 +45,21 @@ struct macOSContentView: View {
                     
                     // Toolbar Buttons
                     ToolbarItemGroup(placement: .navigation) {
-                        if appSession.showingChatView {
+                        if appService.showingChatView {
                             Button(action: {
                                 // refresh
-                                chatStore.activeThreadId = 0
-                                chatStore.activePostId = 0
-                                chatStore.newPostParentId = 0
-                                chatStore.getChat()
+                                chatService.activeThreadId = 0
+                                chatService.activePostId = 0
+                                chatService.newPostParentId = 0
+                                chatService.getChat()
                             }, label: {
                                 Image(systemName: "arrow.counterclockwise")
                             })
-                            if appSession.isSignedIn {
+                            if appService.isSignedIn {
                                 Button(action: {
                                     // compose
-                                    chatStore.newPostParentId = 0
-                                    chatStore.showingNewPostSheet = true
+                                    chatService.newPostParentId = 0
+                                    chatService.showingNewPostSheet = true
                                 }, label: {
                                     Image(systemName: "square.and.pencil")
                                 })
@@ -68,16 +68,16 @@ struct macOSContentView: View {
                             Button(action: {
                                 // refresh
                                 DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(250)) {
-                                    chatStore.activeThreadId = 0
-                                    chatStore.activePostId = 0
-                                    chatStore.newPostParentId = 0
-                                    chatStore.getChat()
+                                    chatService.activeThreadId = 0
+                                    chatService.activePostId = 0
+                                    chatService.newPostParentId = 0
+                                    chatService.getChat()
                                 }
                             }, label: {
                                 Spacer().frame(width: 0)
                             })
                             .keyboardShortcut("r", modifiers: [.command])
-                        } else if appSession.showingInboxView {
+                        } else if appService.showingInboxView {
                             Button(action: {
                                 // refresh
                             }, label: {
@@ -96,15 +96,15 @@ struct macOSContentView: View {
                 }
                 
                 // Detail View
-                if appSession.showingChatView {
+                if appService.showingChatView {
                     macOSChatView()
-                } else if appSession.showingInboxView {
+                } else if appService.showingInboxView {
                     macOSInboxView()
-                } else if appSession.showingSearchView {
+                } else if appService.showingSearchView {
                     macOSSearchView()
-                } else if appSession.showingTagsView {
+                } else if appService.showingTagsView {
                     macOSTagsView()
-                } else if appSession.showingSettingsView {
+                } else if appService.showingSettingsView {
                     macOSSettingsView()
                 } else {
                     EmptyView()
@@ -115,7 +115,7 @@ struct macOSContentView: View {
         .frame(minWidth: macOSWindowSize().minWidth, minHeight: macOSWindowSize().minHeight)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear() {
-            appSession.showingChatView = true
+            appService.showingChatView = true
         }
     }
 }

@@ -1,5 +1,5 @@
 //
-//  AppSession.swift
+//  AppService.swift
 //  EveningReading
 //
 //  Created by Chris Hodge on 4/30/21.
@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 import Combine
 
-class AppSession : ObservableObject {
+class AppService : ObservableObject {
     // Init
     init() {
         loadDefaults()

@@ -9,8 +9,8 @@ import SwiftUI
 
 struct iPadContentView: View {
     @Environment(\.colorScheme) var colorScheme
-    @EnvironmentObject var appSession: AppSession
-    @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var appService: AppService
+    @EnvironmentObject var chatService: ChatService
     @EnvironmentObject var notifications: Notifications
     @EnvironmentObject var shackTags: ShackTags
     
@@ -31,8 +31,8 @@ struct iPadContentView: View {
                             }
                         }
                         iPadHomeButtons()
-                            .environmentObject(appSession)
-                            .environmentObject(chatStore)
+                            .environmentObject(appService)
+                            .environmentObject(chatService)
                         TrendingView()
                         iPadArticlesView()
                     }
@@ -50,8 +50,8 @@ struct iPadContentView: View {
         .navigationViewStyle(StackNavigationViewStyle())
         .accentColor(colorScheme == .dark ? Color.white : Color(UIColor.systemBlue))
         .onAppear() {
-            if !appSession.didRegisterForPush {
-                appSession.didRegisterForPush = true
+            if !appService.didRegisterForPush {
+                appService.didRegisterForPush = true
                 NotificationStore(service: .init()).registernew()
             }
         }

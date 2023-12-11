@@ -9,7 +9,7 @@ import SwiftUI
 
 struct macOSWhosTaggingView: View {
     @Environment(\.colorScheme) var colorScheme
-    @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var chatService: ChatService
     
     @Binding public var showingWhosTaggingView: Bool
     
@@ -17,7 +17,7 @@ struct macOSWhosTaggingView: View {
     var postId: Int = -1
     
     private func fetchRaters() {
-        chatStore.getRaters(postId: self.postId == -1 ? chatStore.activePostId : self.postId, completionSuccess: {
+        chatService.getRaters(postId: self.postId == -1 ? chatService.activePostId : self.postId, completionSuccess: {
             self.hideRaters = false
         },
         completionFail: {
@@ -43,7 +43,7 @@ struct macOSWhosTaggingView: View {
                             HStack {
                                 Button(action: {
                                     self.showingWhosTaggingView = false
-                                    self.chatStore.raters.removeAll()
+                                    self.chatService.raters.removeAll()
                                 }) {
                                     Image(systemName: "xmark")
                                 }
@@ -61,7 +61,7 @@ struct macOSWhosTaggingView: View {
                             
                             ScrollView {
                                 VStack {
-                                    if (chatStore.raters.filter{ $0.tag == String(PostTagKey.lol.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames.count > 0 {
+                                    if (chatService.raters.filter{ $0.tag == String(PostTagKey.lol.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames.count > 0 {
                                         VStack {
                                             HStack {
                                                 Text("lol")
@@ -74,11 +74,11 @@ struct macOSWhosTaggingView: View {
                                             
                                             Divider()
                                             
-                                            macOSTagCloudView(tags: (chatStore.raters.filter{ $0.tag == String(PostTagKey.lol.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames, tagColor: PostTagColor["lol"]!)
+                                            macOSTagCloudView(tags: (chatService.raters.filter{ $0.tag == String(PostTagKey.lol.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames, tagColor: PostTagColor["lol"]!)
                                         }.padding(.bottom, 20)
                                     }
                                     
-                                    if (chatStore.raters.filter{ $0.tag == String(PostTagKey.inf.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames.count > 0 {
+                                    if (chatService.raters.filter{ $0.tag == String(PostTagKey.inf.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames.count > 0 {
                                         VStack {
                                             HStack {
                                                 Text("inf")
@@ -91,11 +91,11 @@ struct macOSWhosTaggingView: View {
                                             
                                             Divider()
                                             
-                                            macOSTagCloudView(tags: (chatStore.raters.filter{ $0.tag == String(PostTagKey.inf.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames, tagColor: PostTagColor["inf"]!)
+                                            macOSTagCloudView(tags: (chatService.raters.filter{ $0.tag == String(PostTagKey.inf.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames, tagColor: PostTagColor["inf"]!)
                                         }.padding(.bottom, 20)
                                     }
                                     
-                                    if (chatStore.raters.filter{ $0.tag == String(PostTagKey.unf.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames.count > 0 {
+                                    if (chatService.raters.filter{ $0.tag == String(PostTagKey.unf.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames.count > 0 {
                                         VStack {
                                             HStack {
                                                 Text("unf")
@@ -108,11 +108,11 @@ struct macOSWhosTaggingView: View {
                                             
                                             Divider()
                                             
-                                            macOSTagCloudView(tags: (chatStore.raters.filter{ $0.tag == String(PostTagKey.unf.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames, tagColor: PostTagColor["unf"]!)
+                                            macOSTagCloudView(tags: (chatService.raters.filter{ $0.tag == String(PostTagKey.unf.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames, tagColor: PostTagColor["unf"]!)
                                         }.padding(.bottom, 20)
                                     }
                                     
-                                    if (chatStore.raters.filter{ $0.tag == String(PostTagKey.tag.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames.count > 0 {
+                                    if (chatService.raters.filter{ $0.tag == String(PostTagKey.tag.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames.count > 0 {
                                         VStack {
                                             HStack {
                                                 Text("tag")
@@ -125,11 +125,11 @@ struct macOSWhosTaggingView: View {
                                             
                                             Divider()
                                             
-                                            macOSTagCloudView(tags: (chatStore.raters.filter{ $0.tag == String(PostTagKey.tag.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames, tagColor: PostTagColor["tag"]!)
+                                            macOSTagCloudView(tags: (chatService.raters.filter{ $0.tag == String(PostTagKey.tag.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames, tagColor: PostTagColor["tag"]!)
                                         }.padding(.bottom, 20)
                                     }
                                     
-                                    if (chatStore.raters.filter{ $0.tag == String(PostTagKey.wtf.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames.count > 0 {
+                                    if (chatService.raters.filter{ $0.tag == String(PostTagKey.wtf.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames.count > 0 {
                                         VStack {
                                             HStack {
                                                 Text("wtf")
@@ -142,11 +142,11 @@ struct macOSWhosTaggingView: View {
                                             
                                             Divider()
                                             
-                                            macOSTagCloudView(tags: (chatStore.raters.filter{ $0.tag == String(PostTagKey.wtf.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames, tagColor: PostTagColor["wtf"]!)
+                                            macOSTagCloudView(tags: (chatService.raters.filter{ $0.tag == String(PostTagKey.wtf.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames, tagColor: PostTagColor["wtf"]!)
                                         }.padding(.bottom, 20)
                                     }
                                     
-                                    if (chatStore.raters.filter{ $0.tag == String(PostTagKey.wow.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames.count > 0 {
+                                    if (chatService.raters.filter{ $0.tag == String(PostTagKey.wow.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames.count > 0 {
                                         VStack {
                                             HStack {
                                                 Text("wow")
@@ -159,11 +159,11 @@ struct macOSWhosTaggingView: View {
                                             
                                             Divider()
                                             
-                                            macOSTagCloudView(tags: (chatStore.raters.filter{ $0.tag == String(PostTagKey.wow.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames, tagColor: PostTagColor["wow"]!)
+                                            macOSTagCloudView(tags: (chatService.raters.filter{ $0.tag == String(PostTagKey.wow.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames, tagColor: PostTagColor["wow"]!)
                                         }.padding(.bottom, 20)
                                     }
                                     
-                                    if (chatStore.raters.filter{ $0.tag == String(PostTagKey.aww.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames.count > 0 {
+                                    if (chatService.raters.filter{ $0.tag == String(PostTagKey.aww.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames.count > 0 {
                                         VStack {
                                             HStack {
                                                 Text("aww")
@@ -177,7 +177,7 @@ struct macOSWhosTaggingView: View {
                                             Divider()
                                             
                                             
-                                            macOSTagCloudView(tags: (chatStore.raters.filter{ $0.tag == String(PostTagKey.aww.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames, tagColor: PostTagColor["aww"]!)
+                                            macOSTagCloudView(tags: (chatService.raters.filter{ $0.tag == String(PostTagKey.aww.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames, tagColor: PostTagColor["aww"]!)
                                         }.padding(.bottom, 20)
                                     }
                                     

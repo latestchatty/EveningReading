@@ -9,8 +9,8 @@ import SwiftUI
 
 struct ChatView: View {
     @Environment(\.colorScheme) var colorScheme
-    @EnvironmentObject var appSession: AppSession
-    @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var appService: AppService
+    @EnvironmentObject var chatService: ChatService
 
     @State private var isGettingChat: Bool = false
     @State private var noInternet: Bool = false
@@ -23,16 +23,16 @@ struct ChatView: View {
     //@State private var isPushNotificationAlertShowing: Bool = false
     
     private func filteredThreads() -> [ChatThread] {
-        var threads = chatStore.threads        
+        var threads = chatService.threads        
         if searchTerms != "" {
-            threads = chatStore.threads.filter({ return
+            threads = chatService.threads.filter({ return
                 $0.posts.filter({ return $0.parentId == 0  })[0].body.lowercased().contains(searchTerms.lowercased()) &&
-            self.appSession.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) &&
-            !self.appSession.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
+            self.appService.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) &&
+            !self.appService.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
         } else {
-            threads = chatStore.threads.filter({ return
-            self.appSession.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) &&
-            !self.appSession.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
+            threads = chatService.threads.filter({ return
+            self.appService.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) &&
+            !self.appService.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
         }        
         return Array(threads)
     }
@@ -40,7 +40,7 @@ struct ChatView: View {
     var body: some View {
         ZStack {
             VStack {
-                RefreshableScrollView(height: 70, refreshing: self.$chatStore.gettingChat, scrollTarget: self.$chatStore.scrollTargetChat, scrollTargetTop: self.$chatStore.scrollTargetChatTop) {
+                RefreshableScrollView(height: 70, refreshing: self.$chatService.gettingChat, scrollTarget: self.$chatService.scrollTargetChat, scrollTargetTop: self.$chatService.scrollTargetChatTop) {
                     
                     // No Internet/Data
                     if self.noInternet {
@@ -74,9 +74,9 @@ struct ChatView: View {
                 }
             }
             
-            .overlay(NoticeView(show: $chatStore.showingFavoriteNotice, message: .constant("Added User!")))
+            .overlay(NoticeView(show: $chatService.showingFavoriteNotice, message: .constant("Added User!")))
             
-            .overlay(NoticeView(show: $chatStore.showingCopiedNotice, message: .constant("Copied!")))
+            .overlay(NoticeView(show: $chatService.showingCopiedNotice, message: .constant("Copied!")))
             
             if showingSearch {
                 VStack {
@@ -125,29 +125,29 @@ struct ChatView: View {
         // If refreshing thread after posting
         .overlay(LoadingView(show: self.$isGettingChat, title: .constant("")))
         
-        .onReceive(chatStore.$didSubmitNewThread) { value in
-            self.chatStore.scrollTargetChatTop = 9999999999991
-            chatStore.didGetChatStart = false
+        .onReceive(chatService.$didSubmitNewThread) { value in
+            self.chatService.scrollTargetChatTop = 9999999999991
+            chatService.didGetChatStart = false
             self.isGettingChat = true
         }
         
         // Fetching chat data
-        .onReceive(chatStore.$didGetChatStart) { value in
-            if value && self.chatStore.didSubmitPost {
-                self.chatStore.scrollTargetChatTop = 9999999999991
-                chatStore.didGetChatStart = false
+        .onReceive(chatService.$didGetChatStart) { value in
+            if value && self.chatService.didSubmitPost {
+                self.chatService.scrollTargetChatTop = 9999999999991
+                chatService.didGetChatStart = false
                 self.isGettingChat = true
-                self.chatStore.gettingChat = true
+                self.chatService.gettingChat = true
                 DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(15)) {
-                    chatStore.didGetChatFinish = true
+                    chatService.didGetChatFinish = true
                 }
             }
         }
         
         // Finished getting chat data
-        .onReceive(chatStore.$didGetChatFinish) { value in
+        .onReceive(chatService.$didGetChatFinish) { value in
             self.isGettingChat = false
-            if chatStore.threads.isEmpty {
+            if chatService.threads.isEmpty {
                 self.noInternet = true
             } else {
                 self.noInternet = false
@@ -155,12 +155,12 @@ struct ChatView: View {
         }
         
         // Disable while getting new data
-        .disabled(chatStore.gettingChat)
+        .disabled(chatService.gettingChat)
         
         // Reset active thread on iPhone
         .onAppear() {
             if UIDevice.current.userInterfaceIdiom == .phone {
-                chatStore.activeThreadId = 0
+                chatService.activeThreadId = 0
             }
         }
     }

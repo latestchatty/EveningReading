@@ -10,7 +10,7 @@ import SwiftUI
 struct macOSGuidelinesView: View {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.presentationMode) var presentationMode
-    @EnvironmentObject var appSession: AppSession
+    @EnvironmentObject var appService: AppService
     @Binding public var showingGuidelinesView: Bool
     @Binding public var guidelinesAccepted: Bool
     

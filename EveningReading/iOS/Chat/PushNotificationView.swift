@@ -10,9 +10,9 @@ import SwiftUI
 
 struct PushNotificationViewChat: View {
     @Environment(\.colorScheme) var colorScheme
-    @EnvironmentObject var appSession: AppSession
+    @EnvironmentObject var appService: AppService
     @EnvironmentObject var notifications: Notifications
-    @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var chatService: ChatService
 
     @State private var isAlertShowing: Bool = false
 
@@ -45,7 +45,7 @@ struct PushNotificationViewChat: View {
                         Rectangle()
                             .fill(Color(UIColor.systemGray2))
                             .frame(width: 1)                        
-                        NavigationLink(destination: ThreadDetailView(threadId: 0, postId: appSession.showingPostId, replyCount: -1, isSearchResult: true)) {
+                        NavigationLink(destination: ThreadDetailView(threadId: 0, postId: appService.showingPostId, replyCount: -1, isSearchResult: true)) {
                             Text("Yes")
                                 .foregroundColor(Color(UIColor.link))
                         }
@@ -66,9 +66,9 @@ struct PushNotificationViewChat: View {
         // Deep link to post from push notification
         .onReceive(notifications.$notificationData) { value in
             if let postId = value?.notification.request.content.userInfo["postid"] {
-                if String("\(postId)").isInt && appSession.showingPostId != Int(String("\(postId)")) ?? 0 {
+                if String("\(postId)").isInt && appService.showingPostId != Int(String("\(postId)")) ?? 0 {
                     print("prompting for postID \(postId)")
-                    appSession.showingPostId = Int(String("\(postId)")) ?? 0
+                    appService.showingPostId = Int(String("\(postId)")) ?? 0
                     self.isAlertShowing = true
                 }
             }

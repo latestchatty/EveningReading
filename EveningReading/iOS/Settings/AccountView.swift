@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AccountView: View {
-    @EnvironmentObject var appSession: AppSession
+    @EnvironmentObject var appService: AppService
 
     @StateObject var messageViewModel = MessageViewModel()
 
@@ -24,13 +24,13 @@ struct AccountView: View {
         HStack {
             // Sign in/out button
             Button(action: {
-                if self.appSession.isSignedIn {
+                if self.appService.isSignedIn {
                     self.showingSignOut = true
                 } else {
                     self.showingSignIn = true
                 }
             }) {
-                if self.appSession.isSignedIn {
+                if self.appService.isSignedIn {
                     Text("Sign Out As \(user())")
                         .foregroundColor(Color(UIColor.link))
                 } else {
@@ -46,10 +46,10 @@ struct AccountView: View {
             // Sign Out?
             .alert(isPresented: self.$showingSignOut) {
                 Alert(title: Text("Sign Out?"), message: Text(""), primaryButton: .destructive(Text("Yes")) {
-                    appSession.isSignedIn = false
+                    appService.isSignedIn = false
                     _ = KeychainWrapper.standard.removeObject(forKey: "Username")
                     _ = KeychainWrapper.standard.removeObject(forKey: "Password")
-                    appSession.clearNotifications()
+                    appService.clearNotifications()
                     messageViewModel.clearMessages()
                     UIApplication.shared.applicationIconBadgeNumber = 0
                 }, secondaryButton: .cancel() {

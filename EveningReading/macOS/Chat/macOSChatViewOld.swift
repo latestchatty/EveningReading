@@ -8,22 +8,22 @@
 import SwiftUI
 
 struct macOSChatViewOld: View {
-    @EnvironmentObject var appSession: AppSession
-    @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var appService: AppService
+    @EnvironmentObject var chatService: ChatService
     
     @State private var showingGuidelinesView = false
     @State private var guidelinesAccepted = false
     
     private func fetchChat() {
-        if chatStore.threads.count > 0
+        if chatService.threads.count > 0
         {
             return
         }
-        chatStore.getChat()
+        chatService.getChat()
     }
     
     private func filteredThreads() -> [ChatThread] {
-        let threads = chatStore.threads.filter({ return self.appSession.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !self.appSession.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
+        let threads = chatService.threads.filter({ return self.appService.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !self.appService.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
         return Array(threads)
     }
     
@@ -55,13 +55,13 @@ struct macOSChatViewOld: View {
                         VStack {
                             Spacer().frame(maxWidth: .infinity).frame(height: 30)
                         }.id(9999999999991)
-                        .onReceive(chatStore.$threads) { threads in
+                        .onReceive(chatService.$threads) { threads in
                             if threads.count < 1 {
                                 scrollProxy.scrollTo(9999999999991, anchor: .top)
                             }
                         }
                         /*
-                        .onReceive(chatStore.$activeThreadId) { thread in
+                        .onReceive(chatService.$activeThreadId) { thread in
                             if thread != 0 {
                                 scrollProxy.scrollTo(thread)
                             }

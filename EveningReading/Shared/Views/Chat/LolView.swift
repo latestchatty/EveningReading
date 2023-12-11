@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LolView: View {
-    @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var chatService: ChatService
     
     #if os(OSX)
     @State var showTagUsers: Bool = false
@@ -46,13 +46,13 @@ struct LolView: View {
     }
     
     func getTagDelta(tagType: String) -> Int {
-        let delta = (chatStore.tagDelta[postId]?[tagType] ?? 0)
+        let delta = (chatService.tagDelta[postId]?[tagType] ?? 0)
         return delta
     }
     
     func getRemovedTagDelta(tagType: String) -> Int {
-        let addedDelta = (chatStore.tagDelta[postId]?[tagType] ?? 0)
-        let removedDelta = (chatStore.tagRemovedDelta[postId]?[tagType] ?? 0)
+        let addedDelta = (chatService.tagDelta[postId]?[tagType] ?? 0)
+        let removedDelta = (chatService.tagRemovedDelta[postId]?[tagType] ?? 0)
         let total = lols.filter{$0.tag == tagType}.count
         if addedDelta > 0 {
             return 1

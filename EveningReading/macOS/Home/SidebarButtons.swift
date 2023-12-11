@@ -8,42 +8,42 @@
 import SwiftUI
 
 struct SidebarButtons: View {
-    @EnvironmentObject var appSession: AppSession
+    @EnvironmentObject var appService: AppService
     
     private func navigateTo(_ goToDestination: inout Bool) {
-        appSession.resetNavigation()
+        appService.resetNavigation()
         goToDestination = true
     }
     
     var body: some View {
         VStack (alignment: .leading, spacing: 10) {
-            SidebarButton(text: .constant("Chat"), imageName: .constant("text.bubble"), selected: $appSession.showingChatView)
+            SidebarButton(text: .constant("Chat"), imageName: .constant("text.bubble"), selected: $appService.showingChatView)
                 .onTapGesture(count: 1) {
-                    navigateTo(&appSession.showingChatView)
+                    navigateTo(&appService.showingChatView)
                 }
             
             /*
-            SidebarButton(text: .constant("Inbox"), imageName: .constant("envelope.open"), selected: $appSession.showingInboxView)
+            SidebarButton(text: .constant("Inbox"), imageName: .constant("envelope.open"), selected: $appService.showingInboxView)
                 .onTapGesture(count: 1) {
-                    navigateTo(&appSession.showingInboxView)
+                    navigateTo(&appService.showingInboxView)
                 }
             */
             
             /*
-            SidebarButton(text: .constant("Search"), imageName: .constant("magnifyingglass"), selected: $appSession.showingSearchView)
+            SidebarButton(text: .constant("Search"), imageName: .constant("magnifyingglass"), selected: $appService.showingSearchView)
                 .onTapGesture(count: 1) {
-                    navigateTo(&appSession.showingSearchView)
+                    navigateTo(&appService.showingSearchView)
                 }
             */
             
-            SidebarButton(text: .constant("Tags"), imageName: .constant("tag"), selected: $appSession.showingTagsView)
+            SidebarButton(text: .constant("Tags"), imageName: .constant("tag"), selected: $appService.showingTagsView)
                 .onTapGesture(count: 1) {
-                    navigateTo(&appSession.showingTagsView)
+                    navigateTo(&appService.showingTagsView)
                 }
             
-            SidebarButton(text: .constant("Settings"), imageName: .constant("gear"), selected: $appSession.showingSettingsView)
+            SidebarButton(text: .constant("Settings"), imageName: .constant("gear"), selected: $appService.showingSettingsView)
                 .onTapGesture(count: 1) {
-                    navigateTo(&appSession.showingSettingsView)
+                    navigateTo(&appService.showingSettingsView)
                 }
         }
     }

@@ -9,13 +9,13 @@ import SwiftUI
 
 struct NewMessageButton: View {
     @Environment(\.colorScheme) var colorScheme
-    @EnvironmentObject var appSession: AppSession
+    @EnvironmentObject var appService: AppService
     
     var isReply: Bool
     @Binding var showingNewMessageSheet: Bool
     
     var body: some View {
-        if appSession.isSignedIn {
+        if appService.isSignedIn {
             Button(action: {
                 DispatchQueue.main.async {
                     self.showingNewMessageSheet = true

@@ -16,8 +16,8 @@ struct EveningReadingApp: App {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.scenePhase) var phase
     
-    @StateObject var appSession = AppSession()
-    @StateObject var chatStore = ChatStore(service: .init())
+    @StateObject var appService = AppService()
+    @StateObject var chatService = ChatService(service: .init())
 
     #if os(iOS)
     @StateObject var notifications = Notifications.shared //Notifications()
@@ -34,24 +34,24 @@ struct EveningReadingApp: App {
             #if os(iOS)
             if UIDevice.current.userInterfaceIdiom == .pad {
                 iPadContentView()
-                    .environmentObject(appSession)
-                    .environmentObject(chatStore)
+                    .environmentObject(appService)
+                    .environmentObject(chatService)
                     .environmentObject(notifications)
                     .environmentObject(shackTags)
-                    .preferredColorScheme(appSession.isDarkMode ? .dark : .light)
+                    .preferredColorScheme(appService.isDarkMode ? .dark : .light)
             } else {
                 iPhoneContentView()
-                    .environmentObject(appSession)
-                    .environmentObject(chatStore)
+                    .environmentObject(appService)
+                    .environmentObject(chatService)
                     .environmentObject(notifications)
                     .environmentObject(shackTags)
-                    .preferredColorScheme(appSession.isDarkMode ? .dark : .light)
+                    .preferredColorScheme(appService.isDarkMode ? .dark : .light)
             }
             #else
                 macOSContentView()
-                    .environmentObject(appSession)
-                    .environmentObject(chatStore)
-                    .preferredColorScheme(appSession.isDarkMode ? .dark : .light)
+                    .environmentObject(appService)
+                    .environmentObject(chatService)
+                    .preferredColorScheme(appService.isDarkMode ? .dark : .light)
             #endif
         }
         /*

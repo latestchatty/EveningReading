@@ -9,8 +9,8 @@ import SwiftUI
 
 struct macOSComposePostView: View {
     @Environment(\.colorScheme) var colorScheme
-    @EnvironmentObject var appSession: AppSession
-    @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var appService: AppService
+    @EnvironmentObject var chatService: ChatService
     
     @State private var postBody = ""
     @State private var showingSubmitAlert = false
@@ -20,13 +20,13 @@ struct macOSComposePostView: View {
     var body: some View {
         VStack(spacing: 0) {
             Text("")
-                .sheet(isPresented: $chatStore.showingNewPostSheet) {
+                .sheet(isPresented: $chatService.showingNewPostSheet) {
                     ZStack {
                         VStack {}.frame(width: 800, height: 450)
                         VStack {
                             HStack {
                                 Button(action: {
-                                    chatStore.showingNewPostSheet = false
+                                    chatService.showingNewPostSheet = false
                                     postBody = ""
                                 }) {
                                     Image(systemName: "xmark")
@@ -35,13 +35,13 @@ struct macOSComposePostView: View {
                                 .padding()
                                 .keyboardShortcut(.cancelAction)
                                 
-                                Text(chatStore.newPostParentId != 0 ? "Replying to \(chatStore.newReplyAuthorName)" : "New Thread")
+                                Text(chatService.newPostParentId != 0 ? "Replying to \(chatService.newReplyAuthorName)" : "New Thread")
                                     .bold()
                                     .font(.body)
                                 Spacer()
                             }
                             
-                            ShackTagsTextView(text: $postBody, disabled: $chatStore.showingNewPostSpinner, textContext: context)
+                            ShackTagsTextView(text: $postBody, disabled: $chatService.showingNewPostSpinner, textContext: context)
                                 .border(Color(NSColor.systemGray))
                                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                                 .padding(EdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5))
@@ -178,14 +178,14 @@ struct macOSComposePostView: View {
                             .disabled(postBody.count < 5)
                             .alert(isPresented: self.$showingSubmitAlert) {
                                 Alert(title: Text("Submit Post?"), message: Text(""), primaryButton: .destructive(Text("Yes")) {
-                                    self.chatStore.submitPost(postBody: self.postBody, postId: chatStore.newPostParentId)
-                                    if chatStore.newPostParentId == 0 {
-                                        chatStore.activeThreadId = 0
-                                        chatStore.activePostId = 0
-                                        chatStore.postingNewThread = true
+                                    self.chatService.submitPost(postBody: self.postBody, postId: chatService.newPostParentId)
+                                    if chatService.newPostParentId == 0 {
+                                        chatService.activeThreadId = 0
+                                        chatService.activePostId = 0
+                                        chatService.postingNewThread = true
                                     }
-                                    chatStore.showingNewPostSheet = false
-                                    chatStore.showingNewPostSpinner = true
+                                    chatService.showingNewPostSheet = false
+                                    chatService.showingNewPostSpinner = true
                                     postBody = ""
                                 }, secondaryButton: .cancel() {
                                     

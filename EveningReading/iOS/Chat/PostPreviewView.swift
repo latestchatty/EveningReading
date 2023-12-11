@@ -9,8 +9,8 @@ import SwiftUI
 
 struct PostPreviewView: View {
     @Environment(\.colorScheme) var colorScheme
-    @EnvironmentObject var appSession: AppSession
-    @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var appService: AppService
+    @EnvironmentObject var chatService: ChatService
     
     var username: String
     var postId: Int
@@ -70,7 +70,7 @@ struct PostPreviewView: View {
             }
             
             // One line preview of post body, blue if it is the users post
-            Text(appSession.blockedAuthors.contains(self.postAuthor) ? "[blocked]" : self.postBody.getPreview)
+            Text(appService.blockedAuthors.contains(self.postAuthor) ? "[blocked]" : self.postBody.getPreview)
                 .fontWeight(postStrength != nil ? PostWeight[postStrength!] : .regular)
                 .lineLimit(1)
                 .truncationMode(.tail)
@@ -80,7 +80,7 @@ struct PostPreviewView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
          
             // Maybe show post author
-            if appSession.blockedAuthors.contains(self.postAuthor) && self.appSession.displayPostAuthor {
+            if appService.blockedAuthors.contains(self.postAuthor) && self.appService.displayPostAuthor {
                 Text("[blocked]")
                     .font(.footnote)
                     .bold()
@@ -89,7 +89,7 @@ struct PostPreviewView: View {
                     .truncationMode(.tail)
                     .fixedSize()
             }
-            else if self.appSession.displayPostAuthor {
+            else if self.appService.displayPostAuthor {
                 AuthorNameView(name: postAuthor, postId: postId, op: self.op)
             }
             

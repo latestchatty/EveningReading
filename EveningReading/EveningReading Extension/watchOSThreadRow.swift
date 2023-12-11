@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct watchOSThreadRow: View {
-    @EnvironmentObject var appSession: AppSession
-    @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var appService: AppService
+    @EnvironmentObject var chatService: ChatService
     
     @Binding var threadId: Int
     
@@ -31,7 +31,7 @@ struct watchOSThreadRow: View {
     @ObservedObject private var watchService = WatchService.shared
     
     private func getThreadData() {
-        if let thread = chatStore.threads.filter({ return $0.threadId == self.threadId }).first {
+        if let thread = chatService.threads.filter({ return $0.threadId == self.threadId }).first {
             setThreadData(thread)
         }
     }
@@ -66,7 +66,7 @@ struct watchOSThreadRow: View {
                     
                     // Thread details
                     HStack {
-                        AuthorNameView(name: appSession.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : self.rootPostAuthor, postId: self.threadId, navLink: true)
+                        AuthorNameView(name: appService.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : self.rootPostAuthor, postId: self.threadId, navLink: true)
                         ContributedView(contributed: self.contributed)
                         Spacer()
                         LolView(lols: self.rootPostLols, postId: self.threadId)
@@ -74,7 +74,7 @@ struct watchOSThreadRow: View {
                     }
                     // Thread body preview
                     HStack {
-                        Text(appSession.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : rootPostBodyPreview)
+                        Text(appService.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : rootPostBodyPreview)
                             .font(.footnote)
                             .lineLimit(3)
                             .onTapGesture(count: 1) {
@@ -83,7 +83,7 @@ struct watchOSThreadRow: View {
                             .onLongPressGesture {
                                 self.showingCollapseAlert.toggle()
                             }
-                        NavigationLink(destination: watchOSPostDetail(postId: .constant(self.threadId)).environmentObject(appSession).environmentObject(chatStore), isActive: self.$showingPost) {
+                        NavigationLink(destination: watchOSPostDetail(postId: .constant(self.threadId)).environmentObject(appService).environmentObject(chatService), isActive: self.$showingPost) {
                             EmptyView()
                         }.frame(width: 0, height: 0)
                         Spacer()
@@ -104,7 +104,7 @@ struct watchOSThreadRow: View {
         .alert(isPresented: self.$showingCollapseAlert) {
             Alert(title: Text("Hide Thread?"), message: Text(""), primaryButton: .cancel(), secondaryButton: Alert.Button.default(Text("OK"), action: {
                 self.isThreadCollapsed = true
-                self.appSession.collapsedThreads.append(threadId)
+                self.appService.collapsedThreads.append(threadId)
             }))
         }
         

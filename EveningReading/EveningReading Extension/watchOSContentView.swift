@@ -8,23 +8,23 @@
 import SwiftUI
 
 struct watchOSContentView: View {
-    @EnvironmentObject var appSession: AppSession
-    @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var appService: AppService
+    @EnvironmentObject var chatService: ChatService
     
     @State private var showingGuidelinesView = false
     
     @ObservedObject private var watchService = WatchService.shared
     
     private func getChat() {
-        if chatStore.threads.count > 0
+        if chatService.threads.count > 0
         {
             return
         }
-        chatStore.getChat()
+        chatService.getChat()
     }
     
     private func filteredThreads() -> [ChatThread] {
-        let threads = self.chatStore.threads.filter({ return self.appSession.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !self.appSession.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
+        let threads = self.chatService.threads.filter({ return self.appService.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !self.appService.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
         return Array(threads)
     }
     
@@ -48,7 +48,7 @@ struct watchOSContentView: View {
             // Thread list
             if filteredThreads().count > 0 {
                 Button(action: {
-                    chatStore.getChat()
+                    chatService.getChat()
                 }) {
                     HStack {
                         Text("Refresh")
@@ -61,8 +61,8 @@ struct watchOSContentView: View {
                 LazyVStack (alignment: .leading) {
                     ForEach(filteredThreads(), id: \.threadId) { thread in
                         watchOSThreadRow(threadId: .constant(thread.threadId))
-                            .environmentObject(appSession)
-                            .environmentObject(chatStore)
+                            .environmentObject(appService)
+                            .environmentObject(chatService)
                     }
                 }
             } else {

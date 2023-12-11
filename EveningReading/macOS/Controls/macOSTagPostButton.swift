@@ -10,9 +10,9 @@ import SwiftUI
 
 struct macOSTagPostButton: View {
     var postId: Int
-    @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var chatService: ChatService
     
-    // Copied straight from iOS implementation. Should probably move all this into the ChatStore directly?
+    // Copied straight from iOS implementation. Should probably move all this into the ChatService directly?
     private func tagPost(_ tag: String) {
         let defaults = UserDefaults.standard
         let user = defaults.object(forKey: "Username") as? String ?? ""
@@ -23,9 +23,9 @@ struct macOSTagPostButton: View {
         }
         
         // Find out if we are tagging or untagging then proceed
-        chatStore.getRaters(postId: postId, completionSuccess: {
+        chatService.getRaters(postId: postId, completionSuccess: {
                 // Check if user already tagged
-                for rater in chatStore.raters {
+                for rater in chatService.raters {
                     for username in rater.usernames {
                         if username == user {
                             if let userTagged = PostTagCode[rater.tag] {
@@ -37,31 +37,31 @@ struct macOSTagPostButton: View {
             
                 // Tag or untag
                 if (userTagsForPost[tag] ?? 0 < 1) {
-                    chatStore.tag(postId: self.postId, tag: tag, untag: "0")
-                    chatStore.taggingNoticeText = "Tagged!"
+                    chatService.tag(postId: self.postId, tag: tag, untag: "0")
+                    chatService.taggingNoticeText = "Tagged!"
                 } else {
-                    chatStore.tag(postId: self.postId, tag: tag, untag: "1")
-                    chatStore.taggingNoticeText = "Untagged!"
+                    chatService.tag(postId: self.postId, tag: tag, untag: "1")
+                    chatService.taggingNoticeText = "Untagged!"
                 }
                 
                 // Show notice
                 //DispatchQueue.main.async {
                 // Is asyncAfter necessary to work 100%?
                 DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(50)) {
-                    chatStore.didTagPost = true
-                    chatStore.showingTagNotice = true
+                    chatService.didTagPost = true
+                    chatService.showingTagNotice = true
                 }
             }, completionFail: {
                 if !(userTagsForPost[tag] ?? 0 > 0) {
-                    chatStore.tag(postId: self.postId, tag: tag, untag: "0")
-                    chatStore.taggingNoticeText = "Tagged!"
+                    chatService.tag(postId: self.postId, tag: tag, untag: "0")
+                    chatService.taggingNoticeText = "Tagged!"
                 } else {
-                    chatStore.tag(postId: self.postId, tag: tag, untag: "1")
-                    chatStore.taggingNoticeText = "Untagged!"
+                    chatService.tag(postId: self.postId, tag: tag, untag: "1")
+                    chatService.taggingNoticeText = "Untagged!"
                 }
                 DispatchQueue.main.async {
-                    chatStore.didTagPost = true
-                    chatStore.showingTagNotice = true
+                    chatService.didTagPost = true
+                    chatService.showingTagNotice = true
                 }
             }
         )

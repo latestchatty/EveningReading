@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct TrendingView: View {
-    @EnvironmentObject var appSession: AppSession
-    @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var appService: AppService
+    @EnvironmentObject var chatService: ChatService
     
     @State private var showPlaceholder = true
     @State private var selectedThreadId: Int? = 0
@@ -17,20 +17,20 @@ struct TrendingView: View {
     private var threadLimit = 6
 
     private func navigateTo(_ goToDestination: inout Bool) {
-        appSession.resetNavigation()
+        appService.resetNavigation()
         goToDestination = true
     }
     
     private func getChat() {
-        if chatStore.threads.count > 0
+        if chatService.threads.count > 0
         {
             return
         }
-        chatStore.getChat()
+        chatService.getChat()
     }
     
     private func filteredThreads() -> [ChatThread] {
-        let threads = self.chatStore.threads.filter({ return self.appSession.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !self.appSession.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)}).sorted(by: { $0.posts.count > $1.posts.count }).prefix(self.threadLimit)
+        let threads = self.chatService.threads.filter({ return self.appService.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !self.appService.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)}).sorted(by: { $0.posts.count > $1.posts.count }).prefix(self.threadLimit)
         if threads.count > 0 {
             return Array(threads.prefix(self.threadLimit))
         } else {

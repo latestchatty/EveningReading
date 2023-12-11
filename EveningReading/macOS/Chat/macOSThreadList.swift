@@ -8,23 +8,23 @@
 import SwiftUI
 
 struct macOSThreadList: View {
-    @EnvironmentObject var appSession: AppSession
-    @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var appService: AppService
+    @EnvironmentObject var chatService: ChatService
     
     private func filteredThreads() -> [ChatThread] {
-        let threads = chatStore.threads.filter({ return self.appSession.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !self.appSession.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId) && !self.appSession.badWords.contains(where: $0.posts.filter({ return $0.parentId == 0 })[0].body.lowercased().components(separatedBy: " ").contains)})
+        let threads = chatService.threads.filter({ return self.appService.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !self.appService.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId) && !self.appService.badWords.contains(where: $0.posts.filter({ return $0.parentId == 0 })[0].body.lowercased().components(separatedBy: " ").contains)})
         return Array(threads)
     }
     
     var body: some View {
         VStack {
-            if chatStore.gettingChat {
+            if chatService.gettingChat {
                 ProgressView()
                     .foregroundColor(Color.accentColor)
                     .progressViewStyle(LinearProgressViewStyle())
                     .padding()
                 Spacer()
-            } else if chatStore.postingNewThread {
+            } else if chatService.postingNewThread {
                 EmptyView()
             } else {
                 ForEach(filteredThreads(), id: \.threadId) { thread in

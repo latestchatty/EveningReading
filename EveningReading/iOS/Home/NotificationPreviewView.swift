@@ -9,7 +9,7 @@ import SwiftUI
 
 struct NotificationPreviewView: View {
     @Environment(\.colorScheme) var colorScheme
-    @EnvironmentObject var appSession: AppSession
+    @EnvironmentObject var appService: AppService
     var title: String
     var postBody: String
     var postId: Int

@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct macOSAccountView: View {
-    @EnvironmentObject var appSession: AppSession
-    @EnvironmentObject var chatStore: ChatStore
+    @EnvironmentObject var appService: AppService
+    @EnvironmentObject var chatService: ChatService
     
     @StateObject var messageViewModel = MessageViewModel()
     
@@ -23,16 +23,16 @@ struct macOSAccountView: View {
     }
     
     private func cancelSignIn() {
-        appSession.signInUsername = ""
-        appSession.signInPassword = ""
+        appService.signInUsername = ""
+        appService.signInPassword = ""
         self.showingSignIn = false
     }
 
     private func signIn() {
-        if self.appSession.signInUsername.count < 1 || self.appSession.signInPassword.count < 1 {
-            self.appSession.showingSignInWarning = true
+        if self.appService.signInUsername.count < 1 || self.appService.signInPassword.count < 1 {
+            self.appService.showingSignInWarning = true
         } else {
-            self.appSession.authenticate()
+            self.appService.authenticate()
         }
     }
     
@@ -41,7 +41,7 @@ struct macOSAccountView: View {
     }
     
     private func closeAlert() {
-        appSession.showingSignInWarning = false
+        appService.showingSignInWarning = false
     }
     
     var body: some View {
@@ -49,8 +49,8 @@ struct macOSAccountView: View {
             
             // Sign in/out button
             VStack (alignment: .center) {
-                if self.appSession.isSignedIn {
-                    Text("Signed In As: ") + Text("\(appSession.username)").foregroundColor(Color(NSColor.systemBlue))
+                if self.appService.isSignedIn {
+                    Text("Signed In As: ") + Text("\(appService.username)").foregroundColor(Color(NSColor.systemBlue))
                     Button(action: showSignOut) {
                         Text("Sign Out")
                             .frame(width: 200)
@@ -74,32 +74,32 @@ struct macOSAccountView: View {
                         Text("Sign In").bold().font(.title)
                             .padding(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0))
                         
-                        TextField("Username", text: $appSession.signInUsername)
+                        TextField("Username", text: $appService.signInUsername)
                         .padding()
                         .textContentType(.username)
                         .padding(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0))
-                        .disabled(appSession.showingSignInWarning)
+                        .disabled(appService.showingSignInWarning)
                         
-                        SecureField("Password", text: $appSession.signInPassword) {
+                        SecureField("Password", text: $appService.signInPassword) {
                         }
                         .padding()
                         .textContentType(.password)
                         .padding(.bottom, 10)
-                        .disabled(appSession.showingSignInWarning)
+                        .disabled(appService.showingSignInWarning)
                         
                         HStack {
                             Button(action: cancelSignIn) {
                                 Text("Cancel").foregroundColor(Color.primary).bold()
                             }
-                            .disabled(appSession.showingSignInWarning)
+                            .disabled(appService.showingSignInWarning)
                             Button(action: signIn) {
                                 Text("Sign In").foregroundColor(Color.primary).bold()
                             }
-                            .disabled(appSession.showingSignInWarning)
+                            .disabled(appService.showingSignInWarning)
                             .keyboardShortcut(.defaultAction)
                         }
                     }
-                    if appSession.showingSignInWarning {
+                    if appService.showingSignInWarning {
                         VStack {}
                         .frame(width: 240, height: 120)
                         .background(Color("macOSAlertBackground"))
@@ -122,12 +122,12 @@ struct macOSAccountView: View {
             // Sign Out
             .alert(isPresented: self.$showingSignOut) {
                 Alert(title: Text("Sign Out?"), message: Text(""), primaryButton: .destructive(Text("Yes")) {
-                    appSession.isSignedIn = false
-                    appSession.username = ""
-                    appSession.password = ""
-                    appSession.clearNotifications()
+                    appService.isSignedIn = false
+                    appService.username = ""
+                    appService.password = ""
+                    appService.clearNotifications()
                     messageViewModel.clearMessages()
-                    chatStore.newPostParentId = 0
+                    chatService.newPostParentId = 0
                 }, secondaryButton: .cancel() {
                     
                 })
@@ -135,7 +135,7 @@ struct macOSAccountView: View {
             
             // Did sign in
             .onReceive(timer) { _ in
-                if appSession.isSignedIn {
+                if appService.isSignedIn {
                     self.timer.upstream.connect().cancel()
                     self.showingSignIn = false
                 }

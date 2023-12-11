@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AuthorNameView: View {
     @Environment(\.colorScheme) var colorScheme
-    @EnvironmentObject var appSession: AppSession
+    @EnvironmentObject var appService: AppService
     
     @StateObject var messageViewModel = MessageViewModel()
     
@@ -40,14 +40,14 @@ struct AuthorNameView: View {
                 .font(.footnote)
                 .bold()
                 .foregroundColor(
-                    self.name == self.op ? Color(UIColor.systemGreen) : self.name == "Shacknews" ? Color(UIColor.systemBlue) : appSession.favoriteAuthors.contains(self.name) ? Color(UIColor.systemRed) : Color(UIColor.systemOrange)
+                    self.name == self.op ? Color(UIColor.systemGreen) : self.name == "Shacknews" ? Color(UIColor.systemBlue) : appService.favoriteAuthors.contains(self.name) ? Color(UIColor.systemRed) : Color(UIColor.systemOrange)
                 )
                 .lineLimit(1)
                 .truncationMode(.tail)
                 .fixedSize()
         #endif
         #if os(OSX)
-            Text("\(appSession.blockedAuthors.contains(self.name) ? "[blocked]" : self.name)")
+            Text("\(appService.blockedAuthors.contains(self.name) ? "[blocked]" : self.name)")
                 .font(self.bold ? .headline : .body)
                 .foregroundColor(
                     self.name == self.op ? Color(NSColor.systemGreen) : self.name == "Shacknews" ? Color(NSColor.systemBlue) : colorScheme == .dark ? Color(NSColor.systemOrange) : Color(NSColor.systemPurple)
@@ -71,9 +71,9 @@ struct AuthorNameView: View {
                     */
                     Button(action: {
                         // report user
-                        appSession.reportAuthorName = self.name
-                        appSession.showingReportUserSheet = true
-                        appSession.reportAuthorForPostId = self.postId
+                        appService.reportAuthorName = self.name
+                        appService.showingReportUserSheet = true
+                        appService.reportAuthorForPostId = self.postId
                     }) {
                         Text("Report User")
                         Image(systemName: "exclamationmark.circle")
@@ -89,7 +89,7 @@ struct AuthorNameView: View {
                 }
                 .alert(isPresented: self.$showingBlockUser) {
                     Alert(title: Text("Block \(self.name)?"), message: Text("For post " + String(self.postId)), primaryButton: .destructive(Text("Yes")) {
-                        appSession.blockedAuthors.append(self.name)
+                        appService.blockedAuthors.append(self.name)
                     }, secondaryButton: .cancel() {
                         
                     })
@@ -108,7 +108,7 @@ struct AuthorNameView: View {
                 }
                 .buttonStyle(PlainButtonStyle())
 
-                NavigationLink(destination: watchOSAuthorView(name: .constant(self.name), postId: .constant(self.postId)).environmentObject(appSession), isActive: self.$showingAuthor) {
+                NavigationLink(destination: watchOSAuthorView(name: .constant(self.name), postId: .constant(self.postId)).environmentObject(appService), isActive: self.$showingAuthor) {
                         EmptyView()
                 }.frame(width: 0, height: 0)
             } else {
@@ -128,7 +128,7 @@ struct AuthorNameView: View {
                     Alert(title: Text("Block \(self.name)"), message: Text("For post " + String(self.postId)),
                           primaryButton: .default (Text("OK")) {
                             // report user
-                            appSession.blockedAuthors.append(self.name)
+                            appService.blockedAuthors.append(self.name)
                           }, secondaryButton: .cancel()
                     )
                 }

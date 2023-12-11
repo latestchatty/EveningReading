@@ -8,30 +8,30 @@
 import SwiftUI
 
 struct PreferencesView: View {
-    @EnvironmentObject var appSession: AppSession
+    @EnvironmentObject var appService: AppService
     var body: some View {
         Group {
             #if os(iOS)
-            Toggle(isOn: self.$appSession.displayPostAuthor) {
+            Toggle(isOn: self.$appService.displayPostAuthor) {
                 Text("Display Authors")
             }
-            Toggle(isOn: self.$appSession.abbreviateThreads) {
+            Toggle(isOn: self.$appService.abbreviateThreads) {
                 Text("Abbreviate Threads")
             }
-            Toggle(isOn: self.$appSession.isDarkMode) {
+            Toggle(isOn: self.$appService.isDarkMode) {
                 Text("Dark Mode")
             }
-            Toggle(isOn: self.$appSession.threadNavigation) {
+            Toggle(isOn: self.$appService.threadNavigation) {
                 Text("Thread Navigation")
             }
-            Toggle(isOn: self.$appSession.useYoutubeApp) {
+            Toggle(isOn: self.$appService.useYoutubeApp) {
                 Text("Use YouTube App")
             }
-            Toggle(isOn: self.$appSession.showLinkCopyButton) {
+            Toggle(isOn: self.$appService.showLinkCopyButton) {
                 Text("Copy Link Button")
             }
             #endif
-            Toggle(isOn: self.$appSession.disableAnimation) {
+            Toggle(isOn: self.$appService.disableAnimation) {
                 Text("Disable Animation")
             }
         }

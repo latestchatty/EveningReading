@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TrendingCard: View {
     @Environment(\.colorScheme) var colorScheme
-    @EnvironmentObject var appSession: AppSession
+    @EnvironmentObject var appService: AppService
     @Binding var thread: ChatThread
     @State private var postPreview: String = ""
     @State private var postDate: String = ""
@@ -37,7 +37,7 @@ struct TrendingCard: View {
             .alert(isPresented: self.$showingHideAlert) {
                 Alert(title: Text("Hide thread?"), message: Text(""), primaryButton: .default(Text("Yes")) {
                     // collapse thread
-                    self.appSession.collapsedThreads.append(thread.threadId)
+                    self.appService.collapsedThreads.append(thread.threadId)
                 }, secondaryButton: .cancel() {
                     
                 })
