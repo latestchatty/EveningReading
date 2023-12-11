@@ -87,7 +87,7 @@ struct macOSTextPromptSheet<Label>: View where Label : View {
                 }
                 .padding()
                 .frame(minWidth: 800)
-                .overlay(LoadingView(show: self.$submitting, title: .constant("")))
+                .overlay(LoadingView(show: self.$submitting))
             }
     }
 }

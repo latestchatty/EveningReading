@@ -20,10 +20,8 @@ struct ChatView: View {
     @State private var resultsPadding: Double = 1
     @State private var favoriteContributed: [Int] = [0]
 
-    //@State private var isPushNotificationAlertShowing: Bool = false
-    
     private func filteredThreads() -> [ChatThread] {
-        var threads = chatService.threads        
+        var threads = chatService.threads
         if searchTerms != "" {
             threads = chatService.threads.filter({ return
                 $0.posts.filter({ return $0.parentId == 0  })[0].body.lowercased().contains(searchTerms.lowercased()) &&
@@ -123,7 +121,7 @@ struct ChatView: View {
             })
 
         // If refreshing thread after posting
-        .overlay(LoadingView(show: self.$isGettingChat, title: .constant("")))
+        .overlay(LoadingView(show: self.$isGettingChat))
         
         .onReceive(chatService.$didSubmitNewThread) { value in
             chatService.scrollTargetChatTop = 9999999999991

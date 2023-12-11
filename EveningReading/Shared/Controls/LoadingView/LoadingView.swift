@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LoadingView : View {
     @Binding public var show: Bool
-    @Binding public var title: String
+    public var title: String = ""
     
     private func getBlurForOS() -> BlurView {
         #if os(iOS)

@@ -124,10 +124,10 @@ struct macOSChatView: View {
                 }
             }
             .overlay(
-                LoadingView(show: $chatService.showingNewPostSpinner, title: .constant(""))
+                LoadingView(show: $chatService.showingNewPostSpinner)
             )
             .overlay(
-                LoadingView(show: $chatService.showingRefreshThreadSpinner, title: .constant(""))
+                LoadingView(show: $chatService.showingRefreshThreadSpinner)
             )
             .onAppear(perform: fetchChat)
             .onReceive(chatService.$showingNewPostSpinner) { value in

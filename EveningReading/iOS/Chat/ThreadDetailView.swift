@@ -375,7 +375,7 @@ struct ThreadDetailView: View {
             } else {
                 LazyVStack {
                     if self.postId > 0 || self.replyCount >= self.loadingLimit {
-                        LoadingView(show: .constant(true), title: .constant(""))
+                        LoadingView(show: .constant(true))
                     } else {
                         Text(" ")
                     }
@@ -465,7 +465,7 @@ struct ThreadDetailView: View {
         }
         
         // Loading and Alerts
-        .overlay(LoadingView(show: self.$isGettingThread, title: .constant("")))
+        .overlay(LoadingView(show: self.$isGettingThread))
         .overlay(NoticeView(show: $chatService.showingTagNotice, message: $chatService.taggingNoticeText))
         .overlay(NoticeView(show: $chatService.showingFavoriteNotice, message: .constant("Added User!")))
         .overlay(NoticeView(show: $chatService.showingCopiedNotice, message: .constant("Copied!")))

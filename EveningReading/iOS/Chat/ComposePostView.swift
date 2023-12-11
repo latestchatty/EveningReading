@@ -274,7 +274,7 @@ struct ComposePostView: View {
                         */
 
                         // Loading indicator
-                        LoadingView(show: self.$showingLoading, title: self.$loadingMessage)
+                        LoadingView(show: self.$showingLoading, title: self.loadingMessage)
                         
                         // Dim the text editor
                         if self.showingLoading || self.showingSubmitAlert {

@@ -182,7 +182,7 @@ struct WhosTaggingView: View {
                 }
             }
             .edgesIgnoringSafeArea(.all)
-            .overlay(LoadingView(show: self.$hideRaters, title: .constant("")))
+            .overlay(LoadingView(show: self.$hideRaters))
         }
     }
 }
