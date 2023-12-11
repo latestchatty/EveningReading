@@ -14,9 +14,6 @@ class ChatService: ObservableObject {
     private let service: ChatAPIService
     init(service: ChatAPIService) {
         self.service = service
-        #if os(iOS)
-        loadPostTemplate()
-        #endif
     }
 
     @Published var threads: [ChatThread] = []
@@ -421,40 +418,13 @@ class ChatService: ObservableObject {
             complete(false, postBody)
         }
     }
+    
     func getBase64Image(image: UIImage, complete: @escaping (String?) -> ()) {
         DispatchQueue.main.async {
             let imageData = image.pngData()
             let base64Image = imageData?.base64EncodedString(options: .lineLength64Characters)
             complete(base64Image)
         }
-    }
-    
-    func loadPostTemplate() {
-        // Preload post template HTML/CSS
-        templateA = "<html><head><meta content='text/html; charset=utf-8' http-equiv='content-type'><meta content='initial-scale=1.0; maximum-scale=1.0; user-scalable=0;' name='viewport'><style>"
-        let templateA2 = "</style></head><body>"
-        templateB = "</body></html>"
-        if let filepath = Bundle.main.path(forResource: "Stylesheet", ofType: "css") {
-            do {
-                let postTemplate = try String(contentsOfFile: filepath)
-                let postTemplateStyled = postTemplate
-                    .replacingOccurrences(of: "<%= linkColorLight %>", with: UIColor.black.toHexString())
-                    .replacingOccurrences(of: "<%= linkColorDark %>", with: UIColor.systemTeal.toHexString())
-                    .replacingOccurrences(of: "<%= jtSpoilerDark %>", with: "#21252b")
-                    .replacingOccurrences(of: "<%= jtSpoilerLight %>", with: "#8e8e93") // systemGray4
-                    .replacingOccurrences(of: "<%= jtOliveDark %>", with: UIColor(Color("OliveText")).toHexString())
-                    .replacingOccurrences(of: "<%= jtOliveLight %>", with: "#808000")
-                    .replacingOccurrences(of: "<%= jtLimeLight %>", with: "#A2D900")
-                    .replacingOccurrences(of: "<%= jtLimeDark %>", with: "#BFFF00")
-                    .replacingOccurrences(of: "<%= jtPink %>", with: UIColor(Color("PinkText")).toHexString())
-                self.templateA = self.templateA + postTemplateStyled
-            } catch {
-                // contents could not be loaded
-            }
-        } else {
-            // Stylesheet.css not found!
-        }
-        templateA = templateA + templateA2
     }
     #endif
 }

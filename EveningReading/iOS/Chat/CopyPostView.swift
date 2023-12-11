@@ -48,7 +48,7 @@ struct CopyPostView: View {
                    }
                    
                    HStack {
-                       PostWebView(viewModel: PostWebViewModel(body: chatService.copyPostText, colorScheme: colorScheme), dynamicHeight: $postWebViewHeight, templateA: $chatService.templateA, templateB: $chatService.templateB)
+                       PostWebView(viewModel: PostWebViewModel(author: "", body: chatService.copyPostText, colorScheme: colorScheme), dynamicHeight: $postWebViewHeight)
                    }
                    .frame(height: postWebViewHeight)
                    .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))

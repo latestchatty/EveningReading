@@ -11,11 +11,13 @@ import WebKit
 import Combine
 
 class PostWebViewModel: ObservableObject {
+    @Published var author: String
     @Published var body: String
     @Published var colorScheme: ColorScheme
     @Published var didContentSizeChange: Bool = false
 
-    init (body: String, colorScheme: ColorScheme) {
+    init (author: String, body: String, colorScheme: ColorScheme) {
+        self.author = author
         self.body = body
         self.colorScheme = colorScheme
     }
@@ -43,8 +45,6 @@ class PostWKWebView {
 struct PostWebView: UIViewRepresentable {
     @ObservedObject var viewModel: PostWebViewModel
     @Binding var dynamicHeight: CGFloat
-    @Binding var templateA: String
-    @Binding var templateB: String
 
     let webView = PostWKWebView.sharedInstance.webView
     
@@ -53,14 +53,39 @@ struct PostWebView: UIViewRepresentable {
         loadPostHtml()
         return self.webView
     }
-    
-    func getTemplate() -> String {
-        return self.templateA
-    }
-    
+        
     func loadPostHtml() {
         if self.viewModel.body != "" {
-            self.webView.loadHTMLString(getTemplate() + self.viewModel.body + self.templateB, baseURL: URL(string: "https://www.shacknews.com"))
+            
+            var preHtml = "<html><head><meta content='text/html; charset=utf-8' http-equiv='content-type'><meta content='initial-scale=1.0; maximum-scale=1.0; user-scalable=0;' name='viewport'><style>"
+            let postHtml = "</body></html>"
+            
+            if let filepath = Bundle.main.path(forResource: "Stylesheet", ofType: "css") {
+                do {
+                    let postTemplate = try String(contentsOfFile: filepath)
+                    let postTemplateStyled = postTemplate
+                        .replacingOccurrences(of: "<%= linkColorLight %>", with: UIColor.black.toHexString())
+                        .replacingOccurrences(of: "<%= linkColorDark %>", with: UIColor.systemTeal.toHexString())
+                        .replacingOccurrences(of: "<%= jtSpoilerDark %>", with: "#21252b")
+                        .replacingOccurrences(of: "<%= jtSpoilerLight %>", with: "#8e8e93")
+                        .replacingOccurrences(of: "<%= jtOliveDark %>", with: UIColor(Color("OliveText")).toHexString())
+                        .replacingOccurrences(of: "<%= jtOliveLight %>", with: "#808000")
+                        .replacingOccurrences(of: "<%= jtLimeLight %>", with: "#A2D900")
+                        .replacingOccurrences(of: "<%= jtLimeDark %>", with: "#BFFF00")
+                        .replacingOccurrences(of: "<%= jtPink %>", with: UIColor(Color("PinkText")).toHexString())
+                    preHtml += postTemplateStyled + "</style>"
+                } catch {
+                    preHtml += "</style>"
+                }
+            } else {
+                preHtml += "</style>"
+            }
+            
+            if self.viewModel.author != "" {
+                preHtml += "<div class='post_author'>" + self.viewModel.author + "</div><br>"
+            }
+            
+            self.webView.loadHTMLString(preHtml + self.viewModel.body + postHtml, baseURL: URL(string: "https://www.shacknews.com"))
         }
     }
     
@@ -76,7 +101,7 @@ struct PostWebView: UIViewRepresentable {
             self.viewModel = viewModel
             self.parent = parent
             
-            // if dynamic type font size changes...
+            // If dynamic type font size changes...
             super.init()
             NotificationCenter.default.addObserver(self,
               selector: #selector(contentSizeDidChange(_:)),
@@ -96,7 +121,6 @@ struct PostWebView: UIViewRepresentable {
             self.parent.webView.evaluateJavaScript("document.readyState", completionHandler: { (complete, error) in
                     if complete != nil {
                         self.parent.webView.evaluateJavaScript("document.body.scrollHeight", completionHandler: { (height, error) in
-                            //print("PostWebView Height - \(height as! CGFloat)")
                             self.parent.dynamicHeight = (height as! CGFloat)
                             webView.bounds.size.height = (height as! CGFloat)
                             
