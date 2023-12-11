@@ -57,7 +57,7 @@ struct TrendingView: View {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
                         ForEach(filteredThreads(), id: \.threadId) { thread in
-                            NavigationLink(destination: ThreadDetailView(threadId: .constant(thread.threadId), postId: .constant(0), replyCount: .constant(thread.posts.count - 1), isSearchResult: .constant(false)), tag: thread.threadId, selection: $selectedThreadId) { EmptyView() }
+                            NavigationLink(destination: ThreadDetailView(threadId: thread.threadId, postId: 0, replyCount: thread.posts.count - 1), tag: thread.threadId, selection: $selectedThreadId) { EmptyView() }
                             TrendingCard(thread: .constant(thread))
                             .conditionalModifier(thread.threadId, RedactedModifier())
                             .background(Color.clear)

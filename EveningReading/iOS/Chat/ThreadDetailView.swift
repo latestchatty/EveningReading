@@ -14,10 +14,10 @@ struct ThreadDetailView: View {
     @EnvironmentObject var appSessionStore: AppSessionStore
     @EnvironmentObject var chatStore: ChatStore
         
-    @Binding var threadId: Int
-    @Binding var postId: Int
-    @Binding var replyCount: Int
-    @Binding var isSearchResult: Bool
+    var threadId: Int = 0
+    var postId: Int = 0
+    var replyCount: Int = 0
+    var isSearchResult: Bool = false
     
     @State private var loadingLimit = 100
 

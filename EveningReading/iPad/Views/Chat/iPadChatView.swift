@@ -54,7 +54,7 @@ struct iPadChatView: View {
                 // Detail
                 VStack {
                     if chatStore.activeThreadId > 0 {
-                        ThreadDetailView(threadId: $chatStore.activeThreadId, postId: .constant(0), replyCount: .constant(-1), isSearchResult: .constant(false))
+                        ThreadDetailView(threadId: chatStore.activeThreadId, postId: 0, replyCount: -1, isSearchResult: false)
                             .environmentObject(appSessionStore)
                             .environmentObject(chatStore)
                     } else {

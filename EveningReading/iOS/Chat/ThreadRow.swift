@@ -63,7 +63,7 @@ struct ThreadRow: View {
         if !self.collapseThread {
             if UIDevice.current.userInterfaceIdiom == .phone {
                 // NavLink for iPhone
-                NavigationLink(destination: ThreadDetailView(threadId: self.$threadId, postId: .constant(0), replyCount: self.$replyCount, isSearchResult: .constant(false))) {
+                NavigationLink(destination: ThreadDetailView(threadId: self.threadId, postId: 0, replyCount: self.replyCount)) {
                     self.threadRowDetail
                 }.isDetailLink(false)
             } else {

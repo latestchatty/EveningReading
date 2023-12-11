@@ -40,7 +40,7 @@ struct SearchResultsView: View {
                 ScrollView {
                     LazyVStack(spacing: 0) {
                         ForEach(searchResults, id: \.id) { post in
-                            NavigationLink(destination: ThreadDetailView(threadId: .constant(post.threadId), postId: .constant(post.id), replyCount: .constant(-1), isSearchResult: .constant(true))) {
+                            NavigationLink(destination: ThreadDetailView(threadId: post.threadId, postId: post.id, replyCount: -1, isSearchResult: true)) {
                                 HStack {
                                     VStack (alignment: .leading) {
                                         
