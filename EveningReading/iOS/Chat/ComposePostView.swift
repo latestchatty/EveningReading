@@ -175,7 +175,7 @@ struct ComposePostView: View {
                             Button("Cancel") {
                                 clearComposeSheet()
                             }
-                            .foregroundColor(self.colorScheme == .dark ? Color(UIColor.white) : Color(UIColor.systemBlue))
+                            .foregroundColor(Color(UIColor.systemBlue))
                             
                             Spacer()
 
