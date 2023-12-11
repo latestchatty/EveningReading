@@ -29,7 +29,7 @@ struct TagTextView: View {
     var body: some View {
         if self.shown {
             VStack {
-                Spacer()
+                Spacer().frame(height: 20)
                 
                 LazyVGrid(columns: columns, spacing: 20) {
                     
@@ -79,7 +79,7 @@ struct TagTextView: View {
                 
                 Spacer()
             }
-            .frame(width: 290, height: 280)
+            .frame(width: 290, height: 300)
             .background(colorScheme == .dark ? Color(UIColor.systemGray4).opacity(0.9) : Color.white.opacity(0.9))
             .cornerRadius(12)
             .clipped()
