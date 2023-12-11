@@ -11,6 +11,7 @@ import SwiftUI
 class MessageViewModel: ObservableObject {
     @Published private(set) var messages: [Message] = []
     @Published var messageCount: MessageCount = MessageCount(total: 0, unread: 0)
+    @Published var markedMessages: [Int] = []
     @Published var fetchComplete: Bool = false
     @Published var scrollTarget: Int?
     @Published var scrollTargetTop: Int?
@@ -243,8 +244,9 @@ class MessageViewModel: ObservableObject {
         task.resume()
     }
     
-    public func markMessage(messageid: Int) {
-        markMessageViaAPI(messageid: messageid) { [weak self] result in
+    public func markMessage(messageId: Int) {
+        markedMessages.append(messageId)
+        markMessageViaAPI(messageId: messageId) { [weak self] result in
             DispatchQueue.main.async {
                 // TODO: Show something in the UI if success vs fail?
                 switch result {
@@ -259,7 +261,7 @@ class MessageViewModel: ObservableObject {
         }
     }
     
-    private func markMessageViaAPI(messageid: Int, handler: @escaping (Result<MarkMessageResponse, Error>) -> Void) {
+    private func markMessageViaAPI(messageId: Int, handler: @escaping (Result<MarkMessageResponse, Error>) -> Void) {
         let session: URLSession = .shared
         let decoder: JSONDecoder = .init()
 
@@ -271,7 +273,7 @@ class MessageViewModel: ObservableObject {
         components.queryItems = [
             URLQueryItem(name: "username", value: username),
             URLQueryItem(name: "password", value: password),
-            URLQueryItem(name: "messageId", value: String(messageid))
+            URLQueryItem(name: "messageId", value: String(messageId))
         ]
         
         guard

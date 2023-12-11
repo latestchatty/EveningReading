@@ -35,7 +35,7 @@ struct InboxView: View {
     
     func getBackgroundColor(_ message: Message) -> Binding<Color> {
         var chatBubbleColor = Color("ChatBubblePrimary")
-        if message.unread && !appSessionStore.markedMessages.contains(message.id) {
+        if message.unread && !messageViewModel.markedMessages.contains(message.id) {
             chatBubbleColor = Color("ChatBubblePrimaryUnread")
         }
         return Binding(get: {chatBubbleColor}, set: {chatBubbleColor = $0})
@@ -43,7 +43,7 @@ struct InboxView: View {
     
     func getForegroundColor(_ message: Message) -> Color {
         var chatBubbleTextColor = Color(UIColor.systemBlue)
-        if message.unread && !appSessionStore.markedMessages.contains(message.id) {
+        if message.unread && !messageViewModel.markedMessages.contains(message.id) {
             chatBubbleTextColor = Color(UIColor.systemYellow)
         }
         return chatBubbleTextColor
@@ -56,7 +56,7 @@ struct InboxView: View {
             RefreshableScrollView(height: 70, refreshing: $messageViewModel.gettingMessages, scrollTarget: $messageViewModel.scrollTarget, scrollTargetTop: $messageViewModel.scrollTargetTop) {
                 
                 // No messages
-                if (self.showNoMessages || !self.appSessionStore.isSignedIn || (messageViewModel.fetchComplete && messageViewModel.messages.count < 1)) && !self.showRedacted {
+                if (self.showNoMessages || !appSessionStore.isSignedIn || (messageViewModel.fetchComplete && messageViewModel.messages.count < 1)) && !self.showRedacted {
                     VStack {
                         HStack {
                             Spacer()
@@ -74,7 +74,7 @@ struct InboxView: View {
                 
                 // Messages
                 ForEach(allMessages(), id: \.id) { message in
-                    NavigationLink(destination: MessageDetailView(messageRecipient: message.from, messageSubject: message.subject, messageBody: message.body, messageId: message.id)) {
+                    NavigationLink(destination: MessageDetailView(messageRecipient: message.from, messageSubject: message.subject, messageBody: message.body, messageId: message.id).environmentObject(messageViewModel)) {
                     
                         VStack {
                            HStack {

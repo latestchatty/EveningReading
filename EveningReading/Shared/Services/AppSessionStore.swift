@@ -40,9 +40,6 @@ class AppSessionStore : ObservableObject {
     @Published var reportAuthorName = ""
     @Published var reportAuthorForPostId = 0
     
-    // Marked messages
-    @Published var markedMessages: [Int] = []
-    
     // Preferences
     @Published var displayPostAuthor: Bool = true {
         didSet {

@@ -10,9 +10,8 @@ import SwiftUI
 struct MessageDetailView: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var appSessionStore: AppSessionStore
+    @EnvironmentObject var messageViewModel: MessageViewModel
     
-    @StateObject var messageViewModel = MessageViewModel()
-
     public var messageRecipient: String
     public var messageSubject: String
     public var messageBody: String
@@ -25,8 +24,7 @@ struct MessageDetailView: View {
     
     func markMessage() {
         DispatchQueue.main.async {
-            appSessionStore.markedMessages.append(self.messageId)
-            messageViewModel.markMessage(messageid: self.messageId)
+            messageViewModel.markMessage(messageId: self.messageId)
         }
     }
     
