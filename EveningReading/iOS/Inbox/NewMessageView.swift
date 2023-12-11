@@ -37,12 +37,10 @@ struct NewMessageView: View {
     }
     
     private func clearNewMessageSheet() {
-        DispatchQueue.main.async {
-            self.messageRecipient = ""
-            self.messageSubjectText = ""
-            self.messageBodyText = ""
-            self.showingNewMessageSheet = false
-        }
+        self.messageRecipient = ""
+        self.messageSubjectText = ""
+        self.messageBodyText = ""
+        self.showingNewMessageSheet = false
     }
     
     var body: some View {
@@ -61,13 +59,8 @@ struct NewMessageView: View {
                     
                     // Send
                     Button("Send") {
-                        DispatchQueue.main.async {
-                            messageViewModel.submitMessage(recipient: self.messageRecipient, subject: self.messageSubjectText, body: self.messageBodyText)
-                            self.messageRecipient = ""
-                            self.messageSubjectText = ""
-                            self.messageBodyText = ""
-                            self.showingNewMessageSheet = false
-                        }
+                        messageViewModel.submitMessage(recipient: self.messageRecipient, subject: self.messageSubjectText, body: self.messageBodyText)
+                        clearNewMessageSheet()
                     }
                     .frame(width: 70, height: 30)
                     .foregroundColor(Color(UIColor.systemBlue))
