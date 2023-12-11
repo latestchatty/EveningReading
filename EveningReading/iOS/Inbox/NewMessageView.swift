@@ -70,6 +70,7 @@ struct NewMessageView: View {
                         }
                     }
                     .frame(width: 70, height: 30)
+                    .foregroundColor(Color(UIColor.systemBlue))
                     Spacer().frame(width: 10)
                 }
                 .padding(.top, 10)
