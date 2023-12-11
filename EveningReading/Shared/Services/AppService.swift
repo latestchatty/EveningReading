@@ -289,23 +289,24 @@ class AppService : ObservableObject {
         self.username = defaults.object(forKey: "Username") as? String ?? ""
         self.password = defaults.object(forKey: "Password") as? String ?? ""
         #endif
+            
+    /*
+    // Reset on startup
+    // ResetDarkMode
+    // ResetNotifications
+    let resetNotifications = defaults.object(forKey: "ResetNotifications") as? Bool ?? false
+    if !resetNotifications {
+        UserDefaults.standard.removeObject(forKey: "PushNotifications")
+        defaults.set(true, forKey: "ResetNotifications")
+    }
+    */
         
-/*
-// Reset on startup
-// ResetDarkMode
-// ResetNotifications
-let resetNotifications = defaults.object(forKey: "ResetNotifications") as? Bool ?? false
-if !resetNotifications {
-    UserDefaults.standard.removeObject(forKey: "PushNotifications")
-    defaults.set(true, forKey: "ResetNotifications")
-}
-*/
-        // Push Notifications
-        /*
-        if let data = defaults.data(forKey: "PushNotifications") {
-            self.pushNotifications = try! PropertyListDecoder().decode([PushNotification].self, from: data)
-        }
-        */
+    // Push Notifications
+    /*
+    if let data = defaults.data(forKey: "PushNotifications") {
+        self.pushNotifications = try! PropertyListDecoder().decode([PushNotification].self, from: data)
+    }
+    */
         
     }
     func loadWords() {
