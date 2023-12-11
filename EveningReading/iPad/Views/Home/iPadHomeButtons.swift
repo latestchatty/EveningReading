@@ -29,8 +29,7 @@ struct iPadHomeButtons: View {
             // Buttons
             iPadHomeButton(title: "Chat", imageName: "glyphicons-basic-238-chat-message", buttonBackground: Color("HomeButtonChat"))
                 .onTapGesture(count: 1) {
-                    chatService.activeThreadId = 0
-                    chatService.getChat()
+                    chatService.refreshChat()
                     navigateTo(&appService.showingChatView)
                 }
             

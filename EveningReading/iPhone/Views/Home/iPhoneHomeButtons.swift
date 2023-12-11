@@ -30,7 +30,7 @@ struct iPhoneHomeButtons: View {
             HStack(alignment: .top) {
                 iPhoneHomeButton(title: "Chat", imageName: "glyphicons-basic-238-chat-message", buttonBackground: Color("HomeButtonChat"))
                     .onTapGesture(count: 1) {
-                        chatService.getChat() // Refresh the chat
+                        chatService.getChat()
                         navigateTo(&appService.showingChatView)
                     }
                 Spacer()

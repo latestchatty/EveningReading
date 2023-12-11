@@ -93,6 +93,11 @@ class ChatService: ObservableObject {
             }
         }
     }
+    
+    func refreshChat() {
+        activeThreadId = 0
+        getChat()
+    }
 
     func getChat() {
         self.didGetChatStart = true
