@@ -53,7 +53,7 @@ struct TrendingCard: View {
                                     .aspectRatio(contentMode: .fit)
                                     .imageScale(.small)
                                     .frame(width: 20)
-                                    .foregroundColor(Color("DoubleQuote"))
+                                    //.foregroundColor(Color("DoubleQuote"))
                                 Spacer()
                             }
                             Spacer()
@@ -74,7 +74,7 @@ struct TrendingCard: View {
                                     .aspectRatio(contentMode: .fit)
                                     .imageScale(.small)
                                     .frame(width: 10)
-                                    .foregroundColor(Color("DoubleQuote"))
+                                    //.foregroundColor(Color("DoubleQuote"))
                             }
                         }
                     }
