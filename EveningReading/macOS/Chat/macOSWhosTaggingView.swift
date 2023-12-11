@@ -43,7 +43,7 @@ struct macOSWhosTaggingView: View {
                             HStack {
                                 Button(action: {
                                     self.showingWhosTaggingView = false
-                                    self.chatService.raters.removeAll()
+                                    chatService.raters.removeAll()
                                 }) {
                                     Image(systemName: "xmark")
                                 }

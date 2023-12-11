@@ -27,12 +27,12 @@ struct ChatView: View {
         if searchTerms != "" {
             threads = chatService.threads.filter({ return
                 $0.posts.filter({ return $0.parentId == 0  })[0].body.lowercased().contains(searchTerms.lowercased()) &&
-            self.appService.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) &&
-            !self.appService.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
+            appService.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) &&
+            !appService.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
         } else {
             threads = chatService.threads.filter({ return
-            self.appService.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) &&
-            !self.appService.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
+            appService.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) &&
+            !appService.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
         }        
         return Array(threads)
     }
@@ -126,18 +126,18 @@ struct ChatView: View {
         .overlay(LoadingView(show: self.$isGettingChat, title: .constant("")))
         
         .onReceive(chatService.$didSubmitNewThread) { value in
-            self.chatService.scrollTargetChatTop = 9999999999991
+            chatService.scrollTargetChatTop = 9999999999991
             chatService.didGetChatStart = false
             self.isGettingChat = true
         }
         
         // Fetching chat data
         .onReceive(chatService.$didGetChatStart) { value in
-            if value && self.chatService.didSubmitPost {
-                self.chatService.scrollTargetChatTop = 9999999999991
+            if value && chatService.didSubmitPost {
+                chatService.scrollTargetChatTop = 9999999999991
                 chatService.didGetChatStart = false
                 self.isGettingChat = true
-                self.chatService.gettingChat = true
+                chatService.gettingChat = true
                 DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(15)) {
                     chatService.didGetChatFinish = true
                 }

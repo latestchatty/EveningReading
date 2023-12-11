@@ -30,7 +30,7 @@ struct TrendingView: View {
     }
     
     private func filteredThreads() -> [ChatThread] {
-        let threads = self.chatService.threads.filter({ return self.appService.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !self.appService.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)}).sorted(by: { $0.posts.count > $1.posts.count }).prefix(self.threadLimit)
+        let threads = chatService.threads.filter({ return appService.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !appService.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)}).sorted(by: { $0.posts.count > $1.posts.count }).prefix(self.threadLimit)
         if threads.count > 0 {
             return Array(threads.prefix(self.threadLimit))
         } else {

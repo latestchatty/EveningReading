@@ -178,7 +178,7 @@ struct macOSComposePostView: View {
                             .disabled(postBody.count < 5)
                             .alert(isPresented: self.$showingSubmitAlert) {
                                 Alert(title: Text("Submit Post?"), message: Text(""), primaryButton: .destructive(Text("Yes")) {
-                                    self.chatService.submitPost(postBody: self.postBody, postId: chatService.newPostParentId)
+                                    chatService.submitPost(postBody: self.postBody, postId: chatService.newPostParentId)
                                     if chatService.newPostParentId == 0 {
                                         chatService.activeThreadId = 0
                                         chatService.activePostId = 0

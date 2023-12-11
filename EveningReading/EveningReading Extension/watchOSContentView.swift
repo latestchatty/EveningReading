@@ -24,7 +24,7 @@ struct watchOSContentView: View {
     }
     
     private func filteredThreads() -> [ChatThread] {
-        let threads = self.chatService.threads.filter({ return self.appService.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !self.appService.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
+        let threads = chatService.threads.filter({ return appService.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) && !appService.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
         return Array(threads)
     }
     

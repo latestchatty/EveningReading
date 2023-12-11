@@ -44,28 +44,28 @@ struct ComposePostView: View {
     private func submitPost() {
         self.loadingMessage = "Submitting"
         self.showingLoading = true
-        self.chatService.didSubmitPost = true
+        chatService.didSubmitPost = true
         
         // Hide keyboard
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
         
         if self.isRootPost {
-            self.chatService.didSubmitNewThread = true
+            chatService.didSubmitNewThread = true
             DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5)) {
-                self.chatService.didGetChatStart = true
+                chatService.didGetChatStart = true
             }
         } else {
-            self.chatService.didGetThreadStart = true
+            chatService.didGetThreadStart = true
         }
 
         // Let the loading indicator show for at least a short time
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(200)) {
-            self.chatService.submitPost(postBody: self.postBody, postId: self.postId)
+            chatService.submitPost(postBody: self.postBody, postId: self.postId)
             ShackTags.shared.taggedText = ""
         }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(8)) {
-            self.chatService.getThread()
+            chatService.getThread()
         }
     }
 
@@ -296,8 +296,8 @@ struct ComposePostView: View {
                         
                         // Some kind of posting error
                         AlertView(shown: self.$showingSubmitError, alertAction: .constant(.others), message: "Error Posting", cancelOnly: true, confirmAction: {
-                            self.chatService.submitPostSuccessMessage = ""
-                            self.chatService.submitPostErrorMessage = ""
+                            chatService.submitPostSuccessMessage = ""
+                            chatService.submitPostErrorMessage = ""
                         })
                     }
                     Spacer()                    
@@ -329,11 +329,11 @@ struct ComposePostView: View {
             }
             
             // Post Success
-            .onReceive(self.chatService.$submitPostSuccessMessage) { successMsg in
+            .onReceive(chatService.$submitPostSuccessMessage) { successMsg in
                 if successMsg != "" {
                     DispatchQueue.main.async {
-                        self.chatService.submitPostSuccessMessage = ""
-                        self.chatService.submitPostErrorMessage = ""
+                        chatService.submitPostSuccessMessage = ""
+                        chatService.submitPostErrorMessage = ""
                     }
                     DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(10)) {
                         self.postBody = ""
@@ -345,7 +345,7 @@ struct ComposePostView: View {
             }
             
             // Post Fail
-            .onReceive(self.chatService.$submitPostErrorMessage) { errorMsg in
+            .onReceive(chatService.$submitPostErrorMessage) { errorMsg in
                 if errorMsg != "" {
                     DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(10)) {
                         self.showingLoading = false
@@ -381,7 +381,7 @@ struct ComposePostView: View {
             }
             
             // Button style is different depending on context
-            if self.appService.isSignedIn {
+            if appService.isSignedIn {
                 Button(action: {
                     print("Reply tapped!")
                     DispatchQueue.main.async {

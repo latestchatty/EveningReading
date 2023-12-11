@@ -76,7 +76,7 @@ struct ThreadDetailView: View {
                         self.selectedPost = self.postId
                         if self.postId != self.threadId {
                             DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
-                                self.chatService.scrollTargetThread = self.postId
+                                chatService.scrollTargetThread = self.postId
                             }
                         }
                     }
@@ -146,8 +146,8 @@ struct ThreadDetailView: View {
             self.threadNavigationLocation = value.location
         }
         .onEnded { value in
-            self.appService.threadNavigationLocationX = self.threadNavigationLocation.x
-            self.appService.threadNavigationLocationY = self.threadNavigationLocation.y
+            appService.threadNavigationLocationX = self.threadNavigationLocation.x
+            appService.threadNavigationLocationY = self.threadNavigationLocation.y
         }
     }
 
@@ -169,7 +169,7 @@ struct ThreadDetailView: View {
                     }
                 }
             }
-            self.chatService.scrollTargetThread = self.selectedPost
+            chatService.scrollTargetThread = self.selectedPost
         }
     }
     
@@ -191,7 +191,7 @@ struct ThreadDetailView: View {
                     }
                 }
             }
-            self.chatService.scrollTargetThread = self.selectedPost
+            chatService.scrollTargetThread = self.selectedPost
         }
     }
     
@@ -349,7 +349,7 @@ struct ThreadDetailView: View {
                                         getChildren(parentId: siblingPost.id)
                                     }
                                     
-                                    self.chatService.scrollTargetThread = post.id
+                                    chatService.scrollTargetThread = post.id
                                     self.selectedPostRichText = RichTextBuilder.getRichText(postBody: post.body)
                                     if appService.disableAnimation {
                                         self.selectedPost = post.id
@@ -397,7 +397,7 @@ struct ThreadDetailView: View {
         
         // If refreshing thread after posting
         .onReceive(chatService.$didGetThreadStart) { value in
-            if value && self.chatService.didSubmitPost && chatService.activeThreadId == self.threadId {
+            if value && chatService.didSubmitPost && chatService.activeThreadId == self.threadId {
                 chatService.didGetThreadStart = false
                 self.selectedPost = 0
                 self.isGettingThread = true
@@ -413,9 +413,9 @@ struct ThreadDetailView: View {
         .onReceive(chatService.$didGetThreadFinish) { value in
             if value && chatService.activeThreadId == self.threadId && canRefresh {
                 self.canRefresh = false
-                self.chatService.didSubmitPost = false
-                self.chatService.didGetThreadStart = false
-                self.chatService.didGetThreadFinish = false
+                chatService.didSubmitPost = false
+                chatService.didGetThreadStart = false
+                chatService.didGetThreadFinish = false
                 self.selectedPost = 0
                 getThreadData()
                 self.postList = [ChatPosts]()
@@ -438,7 +438,7 @@ struct ThreadDetailView: View {
                 if UIDevice.current.userInterfaceIdiom == .phone {
                     getPostList(parentId: self.threadId)
                 }
-                self.threadNavigationLocation = CGPoint(x: self.appService.threadNavigationLocationX, y: self.appService.threadNavigationLocationY)
+                self.threadNavigationLocation = CGPoint(x: appService.threadNavigationLocationX, y: appService.threadNavigationLocationY)
                 print("getData end")
             }
             
@@ -457,9 +457,9 @@ struct ThreadDetailView: View {
         .onDisappear {
             self.postList = [ChatPosts]()
             self.postStrength = [Int: Double]()
-            self.chatService.didSubmitPost = false
-            self.chatService.didGetThreadStart = false
-            self.chatService.didGetThreadFinish = false
+            chatService.didSubmitPost = false
+            chatService.didGetThreadStart = false
+            chatService.didGetThreadFinish = false
             self.isGettingThread = false
             chatService.showingTagNotice = false
         }
@@ -474,7 +474,7 @@ struct ThreadDetailView: View {
         .overlay(
             GeometryReader { geometry in
                 VStack (alignment: .trailing) {
-                    if !self.appService.threadNavigation || self.postCount < 2 {
+                    if !appService.threadNavigation || self.postCount < 2 {
                         EmptyView()
                     }
                     else if self.isGettingThread {
