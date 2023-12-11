@@ -13,6 +13,7 @@ class AppService : ObservableObject {
     // Init
     init() {
         loadDefaults()
+        loadWords()
     }
     
     // Sheet fix for iOS 17
@@ -146,8 +147,8 @@ class AppService : ObservableObject {
     }
     
     // Language Filters
-    @Published var defaultBadWords: [String] = ["shit", "shitting", "shits", "fuck", "fucking", "fucker", "cunt", "dick", "ass", "asshole", "damn", "nigger", "bitch", "dumbass"]
-    @Published var badWords: [String] = ["shit", "shitting", "shits", "fuck", "fucking", "fucker", "cunt", "dick", "ass", "asshole", "damn", "nigger", "bitch", "dumbass"]
+    @Published var defaultBadWords: [String] = []
+    @Published var badWords: [String] = []
     
     // Collapsed
     @Published var collapsedThreads: [Int] = [0] {
@@ -306,6 +307,35 @@ if !resetNotifications {
         }
         */
         
+    }
+    func loadWords() {
+        let wordsFromFile: Words = loadWordsFromFile("Words.json")
+        for i in 0..<wordsFromFile.words.count {
+            defaultBadWords.append(wordsFromFile.words[i].word)
+        }
+        badWords = defaultBadWords
+    }
+    
+    func loadWordsFromFile<T: Decodable>(_ filename: String) -> T {
+        let data: Data
+        
+        guard let file = Bundle.main.url(forResource: filename, withExtension: nil)
+            else {
+                fatalError("Couldn't find \(filename) in main bundle.")
+        }
+        
+        do {
+            data = try Data(contentsOf: file)
+        } catch {
+            fatalError("Couldn't load \(filename) from main bundle:\n\(error)")
+        }
+        
+        do {
+            let decoder = JSONDecoder()
+            return try decoder.decode(T.self, from: data)
+        } catch {
+            fatalError("Couldn't parse \(filename) as \(T.self):\n\(error)")
+        }
     }
     
     func resetNavigation() {
