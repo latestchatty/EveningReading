@@ -70,7 +70,7 @@ struct iPhoneHomeButtons: View {
                 }.isDetailLink(false)
                 
                 // go to search
-                NavigationLink(destination: SearchView(populateTerms: .constant(""), populateAuthor: .constant(""), populateParent: .constant("")), isActive: $appSession.showingSearchView) {
+                NavigationLink(destination: SearchView(), isActive: $appSession.showingSearchView) {
                     EmptyView()
                 }.isDetailLink(false)
                 

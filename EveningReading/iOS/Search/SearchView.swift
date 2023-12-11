@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct SearchView: View {
-    @Binding public var populateTerms: String
-    @Binding public var populateAuthor: String
-    @Binding public var populateParent: String
+    public var populateTerms: String = ""
+    public var populateAuthor: String = ""
+    public var populateParent: String = ""
     @State var terms = ""
     @State var author = ""
     @State var parent = ""
