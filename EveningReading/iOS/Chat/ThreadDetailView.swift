@@ -159,7 +159,7 @@ struct ThreadDetailView: View {
             } else {
                 for i in 0..<self.postList.count {
                     if self.selectedPost == self.postList[i].id {
-                        impact(style: .soft)
+                        Haptic.impact(style: .soft)
                         if i + 1 < self.postList.count {
                             setSelectedPost(i + 1)
                         } else {
@@ -181,7 +181,7 @@ struct ThreadDetailView: View {
             } else {
                 for i in 0..<self.postList.count {
                     if self.selectedPost == self.postList[i].id {
-                        impact(style: .soft)
+                        Haptic.impact(style: .soft)
                         if i - 1 > -1 {
                             setSelectedPost(i - 1)
                         } else {
