@@ -8,6 +8,11 @@
 import Foundation
 import SwiftUI
 
+struct SystemColor: Hashable {
+    var text: String
+    var color: Color
+}
+
 public struct DarkModeViewModifier: ViewModifier {
     @AppStorage("isDarkMode") var isDarkMode: Bool = true
 
@@ -16,11 +21,6 @@ public struct DarkModeViewModifier: ViewModifier {
             .environment(\.colorScheme, isDarkMode ? .dark : .light)
             .preferredColorScheme(isDarkMode ? .dark : .light)
     }
-}
-
-struct SystemColor: Hashable {
-    var text: String
-    var color: Color
 }
 
 struct DarkModeColorView: View {
