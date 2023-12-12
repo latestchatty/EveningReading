@@ -48,7 +48,7 @@ struct PostExpandedView: View {
                 }
                 
                 // Author name
-                AuthorNameView(name: appService.blockedAuthors.contains(self.postAuthor) ? "[blocked]" : self.postAuthor, postId: self.postId, op: self.op)
+                AuthorNameView(name: appService.getAuthorName(name: self.postAuthor), postId: self.postId, op: self.op)
                 
                 Spacer()
                 

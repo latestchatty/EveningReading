@@ -92,7 +92,7 @@ struct macOSThreadPreview: View {
                 
                 // Root post body
                 HStack (alignment: .top) {
-                    Text(appService.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : self.rootPostBody)
+                    Text(appService.getPostBodyFor(name: self.rootPostAuthor, body: self.rootPostBody))
                         .font(.body)
                         .fixedSize(horizontal: false, vertical: true)
                         .lineLimit(3)

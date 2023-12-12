@@ -25,7 +25,7 @@ struct watchOSPostPreview: View {
                 self.showingPost.toggle()
             }) {
                 HStack {
-                    Text("\(appService.blockedAuthors.contains(author) ? "[blocked]" : self.replyText)")
+                    Text("\(appService.getPostBodyFor(name: author, body: self.replyText))")
                         .font(.footnote)
                         .lineLimit(3)
                         .truncationMode(.tail)

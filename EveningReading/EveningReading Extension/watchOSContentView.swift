@@ -30,11 +30,6 @@ struct watchOSContentView: View {
     
     var body: some View {
         ScrollView {
-            
-            /*
-            Text("Username = \($watchService.username.wrappedValue)")
-            */
-            
             // Guidelines on first run
             watchOSGuidelines(showingGuidelinesView: $showingGuidelinesView)
             .onAppear() {

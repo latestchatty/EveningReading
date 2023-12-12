@@ -430,4 +430,12 @@ class AppService : ObservableObject {
             }
         }.resume()
     }
+    
+    public func getAuthorName(name: String) -> String {
+        return blockedAuthors.contains(name) ? "[blocked]" : name
+    }
+    
+    public func getPostBodyFor(name: String, body: String) -> String {
+        return blockedAuthors.contains(name) ? "[blocked]" : body
+    }
 }

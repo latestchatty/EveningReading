@@ -238,7 +238,7 @@ struct ThreadDetailView: View {
                     VStack {
                         // Post details
                         HStack (alignment: .center) {
-                            AuthorNameView(name: appService.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : self.rootPostAuthor, postId: self.threadId)
+                            AuthorNameView(name: appService.getAuthorName(name: self.rootPostAuthor), postId: self.threadId)
 
                             //ContributedView(contributed: self.contributed)
 
