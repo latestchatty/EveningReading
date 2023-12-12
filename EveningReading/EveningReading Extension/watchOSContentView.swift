@@ -32,11 +32,10 @@ struct watchOSContentView: View {
         ScrollView {
             // Guidelines on first run
             watchOSGuidelines(showingGuidelinesView: $showingGuidelinesView)
+            .environmentObject(appService)
             .onAppear() {
                 DispatchQueue.main.async {
-                    let defaults = UserDefaults.standard
-                    let guidelinesAccepted = defaults.object(forKey: "GuidelinesAccepted") as? Bool ?? false
-                    self.showingGuidelinesView = !guidelinesAccepted
+                    self.showingGuidelinesView = !appService.didAcceptGuidelines()
                 }
             }
             

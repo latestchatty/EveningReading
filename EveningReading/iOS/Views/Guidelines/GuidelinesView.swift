@@ -14,8 +14,7 @@ struct GuidelinesView: View {
     @Binding public var showingGuidelinesView: Bool
     
     func acceptGuidelines() {
-        let defaults = UserDefaults.standard
-        defaults.set(true, forKey: "GuidelinesAccepted")
+        appService.acceptGuidelines()
         self.showingGuidelinesView = false
     }
     

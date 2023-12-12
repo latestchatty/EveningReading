@@ -30,10 +30,7 @@ struct macOSChatView: View {
                 Spacer().frame(width: 0, height: 0)
                 .onAppear() {
                     DispatchQueue.main.async {
-                        let defaults = UserDefaults.standard
-                        //defaults.removeObject(forKey: "GuidelinesAccepted")
-                        self.guidelinesAccepted = defaults.object(forKey: "GuidelinesAccepted") as? Bool ?? false
-                        self.showingGuidelinesView = !self.guidelinesAccepted
+                        self.showingGuidelinesView = !appService.didAcceptGuidelines()
                     }
                 }
                 .navigationTitle("Chat")
@@ -55,18 +52,18 @@ struct macOSChatView: View {
                     ScrollView {
                         ScrollViewReader { scrollProxy in
                             Spacer().frame(width: 1, height: 1)
-                            .id(999999991)
+                            .id(ScrollToTopId)
                             LazyVStack (spacing: 0) {
                                 macOSThreadList()
                             }
                             .onReceive(chatService.$didGetChatStart) { value in
                                 if value {
-                                    scrollProxy.scrollTo(999999991, anchor: .top)
+                                    scrollProxy.scrollTo(ScrollToTopId, anchor: .top)
                                     chatService.didGetChatStart = false
                                 }
                             }
                             Spacer().frame(width: 1, height: 12)
-                            .id(999999992)
+                            .id(ScrollToBottomId)
                         }
                     }
                     .frame(width: geometry.size.width * 0.35)
@@ -82,7 +79,7 @@ struct macOSChatView: View {
                         ScrollView {
                             ScrollViewReader { scrollProxy in
                                 Spacer().frame(width: 1, height: 1)
-                                .id(999999991)
+                                .id(ScrollToTopId)
                                 LazyVStack {
                                     if chatService.activeThreadId == 0 {
                                         if !chatService.postingNewThread {
@@ -97,14 +94,14 @@ struct macOSChatView: View {
                                     }
                                 }
                                 .onReceive(chatService.$activeThreadId) { value in
-                                    scrollProxy.scrollTo(999999991, anchor: .top)
+                                    scrollProxy.scrollTo(ScrollToTopId, anchor: .top)
                                 }
                                 .onReceive(chatService.$scrollTargetChat) { value in
                                     scrollProxy.scrollTo(value)
                                 }
                                 .onReceive(chatService.$shouldScrollThreadToTop) { value in
                                     if value {
-                                        scrollProxy.scrollTo(999999991, anchor: .top)
+                                        scrollProxy.scrollTo(ScrollToTopId, anchor: .top)
                                         chatService.shouldScrollThreadToTop = false
                                     }
                                 }

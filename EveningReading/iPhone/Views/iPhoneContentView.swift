@@ -24,9 +24,7 @@ struct iPhoneContentView: View {
                     GuidelinesView(showingGuidelinesView: $showingGuidelinesView)
                     .onAppear() {
                         DispatchQueue.main.async {
-                            let defaults = UserDefaults.standard
-                            let guidelinesAccepted = defaults.object(forKey: "GuidelinesAccepted") as? Bool ?? false
-                            self.showingGuidelinesView = !guidelinesAccepted
+                            self.showingGuidelinesView = !appService.didAcceptGuidelines()
                         }
                     }
                     iPhoneHomeButtons()

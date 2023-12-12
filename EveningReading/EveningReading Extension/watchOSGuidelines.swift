@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct watchOSGuidelines: View {
+    @EnvironmentObject var appService: AppService
     @Binding public var showingGuidelinesView: Bool
         
     func acceptGuidelines() {
-        let defaults = UserDefaults.standard
-        defaults.set(true, forKey: "GuidelinesAccepted")
+        appService.acceptGuidelines()
         self.showingGuidelinesView = false
     }
     
