@@ -327,7 +327,7 @@ class ChatService: ObservableObject {
     // Search
     @Published private(set) var searchResults: [SearchChatPosts] = []
     func search(terms: String, author: String, parentAuthor: String, completion: @escaping ()->()) {
-        service.search(terms: terms, author: author, parentAuthor: parentAuthor) { [weak self] result in
+        searchWithAPI(terms: terms, author: author, parentAuthor: parentAuthor) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let foundPosts):
@@ -340,6 +340,48 @@ class ChatService: ObservableObject {
                 }
             }
         }
+    }
+    
+    public func searchWithAPI(terms: String, author: String, parentAuthor: String, handler: @escaping (Result<[SearchChatPosts], Error>) -> Void) {
+        let session: URLSession = .shared
+        let decoder: JSONDecoder = .init()
+        
+        guard
+            var urlComponents = URLComponents(string: "https://winchatty.com/v2/search")
+            else { preconditionFailure("Can't create url components...") }
+        
+        urlComponents.queryItems = [
+            URLQueryItem(name: "limit", value: "35"),
+            URLQueryItem(name: "oldestFirst", value: "false")
+        ]
+        
+        if terms != "" {
+            urlComponents.queryItems?.append(URLQueryItem(name: "terms", value: terms))
+        }
+        if author != "" {
+            urlComponents.queryItems?.append(URLQueryItem(name: "author", value: author))
+        }
+        if parentAuthor != "" {
+            urlComponents.queryItems?.append(URLQueryItem(name: "parentAuthor", value: parentAuthor))
+        }
+        
+        guard
+            let url = urlComponents.url
+            else { preconditionFailure("Can't create url from url components...") }
+
+        session.dataTask(with: url) { data, _, error in
+            if let error = error {
+                handler(.failure(error))
+            } else {
+                do {
+                    let data = data ?? Data()
+                    let response = try decoder.decode(SearchChat.self, from: data)
+                    handler(.success(response.posts))
+                } catch {
+                    handler(.failure(error))
+                }
+            }
+        }.resume()
     }
 
     // Load any thread
@@ -567,47 +609,5 @@ class ChatAPIService {
             }
         })
         task.resume()
-    }
-    
-    public func search(terms: String, author: String, parentAuthor: String, handler: @escaping (Result<[SearchChatPosts], Error>) -> Void) {
-        guard
-            var urlComponents = URLComponents(string: "https://winchatty.com/v2/search")
-            else { preconditionFailure("Can't create url components...") }
-        
-        urlComponents.queryItems = [
-            URLQueryItem(name: "limit", value: "35"),
-            URLQueryItem(name: "oldestFirst", value: "false")
-        ]
-        
-        if terms != "" {
-            urlComponents.queryItems?.append(URLQueryItem(name: "terms", value: terms))
-        }
-        if author != "" {
-            urlComponents.queryItems?.append(URLQueryItem(name: "author", value: author))
-        }
-        if parentAuthor != "" {
-            urlComponents.queryItems?.append(URLQueryItem(name: "parentAuthor", value: parentAuthor))
-        }
-        
-        guard
-            let url = urlComponents.url
-            else { preconditionFailure("Can't create url from url components...") }
-
-        session.dataTask(with: url) { [weak self] data, _, error in
-            if let error = error {
-                handler(.failure(error))
-            } else {
-                do {
-                    print("search success begin")
-                    let data = data ?? Data()
-                    let response = try self?.decoder.decode(SearchChat.self, from: data)
-                    handler(.success(response?.posts ?? []))
-                    print("search success end")
-                } catch {
-                    print("search fail")
-                    handler(.failure(error))
-                }
-            }
-        }.resume()
     }
 }
