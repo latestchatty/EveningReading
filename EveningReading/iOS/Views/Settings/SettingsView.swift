@@ -25,13 +25,12 @@ struct SettingsView: View {
                 PreferencesView()
             }
             Section(header: Text("ACCOUNT")) {
-                AccountView()
-                if UIDevice.current.userInterfaceIdiom == .phone {
+                AccountView()                
+                if appService.isSignedIn && UIDevice.current.userInterfaceIdiom == .phone {
                     NavigationLink(destination: SyncWatchView()) {
                         HStack {
                             Text("Sync With Watch")
                             Spacer()
-                            Image("chevron.right")
                         }
                         .contentShape(Rectangle())
                     }.isDetailLink(false)
@@ -43,7 +42,6 @@ struct SettingsView: View {
                     HStack {
                         Text("Favorite Users")
                         Spacer()
-                        Image("chevron.right")
                     }
                     .contentShape(Rectangle())
                 }.isDetailLink(false)
