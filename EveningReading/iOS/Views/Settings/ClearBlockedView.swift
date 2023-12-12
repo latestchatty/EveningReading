@@ -14,7 +14,6 @@ struct ClearBlockedView: View {
     
     var body: some View {
         HStack {
-            Spacer()
             Button(action: {
                 self.showingClearBlockedAlert = true
             }) {

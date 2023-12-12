@@ -14,7 +14,6 @@ struct ClearHiddenView: View {
     
     var body: some View {
         HStack {
-            Spacer()
             Button(action: {
                 self.showingClearHiddenAlert = true
             }) {
