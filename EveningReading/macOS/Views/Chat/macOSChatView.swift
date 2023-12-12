@@ -46,7 +46,8 @@ struct macOSChatView: View {
                     macOSGuidelinesView(showingGuidelinesView: $showingGuidelinesView, guidelinesAccepted: self.$guidelinesAccepted)
                 }
                 
-                if self.guidelinesAccepted {
+                // Thread and posts etc...
+                if !self.showingGuidelinesView {
                     
                     // Thread List
                     ScrollView {
