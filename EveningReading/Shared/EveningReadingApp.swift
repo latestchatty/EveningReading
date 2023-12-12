@@ -20,7 +20,7 @@ struct EveningReadingApp: App {
     @StateObject var chatService = ChatService(service: .init())
 
     #if os(iOS)
-    @StateObject var notifications = Notifications.shared //Notifications()
+    @StateObject var notifications = PushNotifications.shared
     @UIApplicationDelegateAdaptor private var appDelegate: AppDelegate
     @StateObject var shackTags = ShackTags.shared
     #endif

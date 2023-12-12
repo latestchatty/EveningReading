@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LoadingPushNotificationView: View {
-    @EnvironmentObject var notifications: Notifications
+    @EnvironmentObject var notifications: PushNotifications
     
     var body: some View {
         if notifications.notificationData != nil {

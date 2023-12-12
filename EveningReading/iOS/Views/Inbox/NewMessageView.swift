@@ -10,7 +10,7 @@ import SwiftUI
 struct NewMessageView: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var appService: AppService
-    @EnvironmentObject var notifications: Notifications
+    @EnvironmentObject var notifications: PushNotifications
     
     @StateObject var messageViewModel = MessageViewModel()
     

@@ -11,7 +11,7 @@ import SwiftUI
 struct PushNotificationViewChat: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var appService: AppService
-    @EnvironmentObject var notifications: Notifications
+    @EnvironmentObject var notifications: PushNotifications
     @EnvironmentObject var chatService: ChatService
 
     @State private var isAlertShowing: Bool = false

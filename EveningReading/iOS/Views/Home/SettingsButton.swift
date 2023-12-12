@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SettingsButton: View {
     @EnvironmentObject var appService: AppService
-    @EnvironmentObject var notifications: Notifications
+    @EnvironmentObject var notifications: PushNotifications
     var hide: Bool = false
 
     private func navigateTo(_ goToDestination: inout Bool) {

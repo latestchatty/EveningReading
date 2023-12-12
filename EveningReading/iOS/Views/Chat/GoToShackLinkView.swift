@@ -10,7 +10,7 @@ import SwiftUI
 struct GoToShackLinkView: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var appService: AppService
-    @EnvironmentObject var notifications: Notifications
+    @EnvironmentObject var notifications: PushNotifications
     @EnvironmentObject var chatService: ChatService
     
     @State private var goToPostId: Int = 0

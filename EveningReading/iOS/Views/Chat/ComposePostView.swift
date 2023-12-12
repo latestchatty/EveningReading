@@ -14,7 +14,7 @@ struct ComposePostView: View {
     @EnvironmentObject var appService: AppService
     @EnvironmentObject var chatService: ChatService
     @EnvironmentObject var shackTags: ShackTags
-    @EnvironmentObject var notifications: Notifications
+    @EnvironmentObject var notifications: PushNotifications
     
     public var isRootPost: Bool = false
     public var postId: Int = 0

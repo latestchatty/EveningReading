@@ -11,7 +11,7 @@ struct iPhoneContentView: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var appService: AppService
     @EnvironmentObject var chatService: ChatService
-    @EnvironmentObject var notifications: Notifications
+    @EnvironmentObject var notifications: PushNotifications
     @EnvironmentObject var shackTags: ShackTags
     
     @State private var showingGuidelinesView = false
