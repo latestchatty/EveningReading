@@ -21,8 +21,8 @@ struct EveningReadingApp: App {
 
     #if os(iOS)
     @StateObject var notifications = PushNotifications.shared
-    @UIApplicationDelegateAdaptor private var appDelegate: AppDelegate
     @StateObject var shackTags = ShackTags.shared
+    @UIApplicationDelegateAdaptor private var appDelegate: AppDelegate
     #endif
     
     #if os(macOS)
