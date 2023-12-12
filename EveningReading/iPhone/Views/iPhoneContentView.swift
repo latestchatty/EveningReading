@@ -48,7 +48,7 @@ struct iPhoneContentView: View {
         .onAppear() {
             if !appService.didRegisterForPush {
                 appService.didRegisterForPush = true
-                NotificationStore(service: .init()).registernew()
+                RegisterPushService(service: .init()).registernew()
             }
         }
     }

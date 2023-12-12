@@ -181,7 +181,7 @@
 		838466E729D4F5D900228DDB /* FavoriteContributedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838466E629D4F5D900228DDB /* FavoriteContributedView.swift */; };
 		838466E929D634B300228DDB /* WatchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838466E829D634B300228DDB /* WatchService.swift */; };
 		838466EA29D6353900228DDB /* WatchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838466E829D634B300228DDB /* WatchService.swift */; };
-		83A85CE52650360E007EBAC3 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19EA264F24FC00556E69 /* NotificationService.swift */; };
+		83A85CE52650360E007EBAC3 /* PushNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19EA264F24FC00556E69 /* PushNotificationService.swift */; };
 		83A85CEB26515CBB007EBAC3 /* PushNotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A85CEA26515CBB007EBAC3 /* PushNotificationView.swift */; };
 		83A85CEF26551087007EBAC3 /* GoToShackLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A85CEE26551087007EBAC3 /* GoToShackLinkView.swift */; };
 		83A85CFF265B1C5E007EBAC3 /* BindingExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A85CFE265B1C5E007EBAC3 /* BindingExtensions.swift */; };
@@ -243,6 +243,7 @@
 		83AA19DA264BFBF100556E69 /* PostExpandedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19D9264BFBF100556E69 /* PostExpandedView.swift */; };
 		83AB388D266A60BC000A67B6 /* TagsWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AB388C266A60BC000A67B6 /* TagsWebView.swift */; };
 		83F98F4129F31A4100A828B5 /* macOSLinkViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F98F4029F31A4100A828B5 /* macOSLinkViewer.swift */; };
+		83FAB3322B28B20C00E0974F /* RegisterPushService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FAB3312B28B20C00E0974F /* RegisterPushService.swift */; };
 		83FE337027272DF8003FB55D /* WhosTaggingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FE336F27272DF8003FB55D /* WhosTaggingView.swift */; };
 		83FE337827272EE2003FB55D /* BlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FE337727272EE2003FB55D /* BlurView.swift */; };
 		83FE337B27272F46003FB55D /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FE337A27272F46003FB55D /* LoadingView.swift */; };
@@ -459,9 +460,10 @@
 		83AA19D7264B367100556E69 /* PostPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPreviewView.swift; sourceTree = "<group>"; };
 		83AA19D9264BFBF100556E69 /* PostExpandedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostExpandedView.swift; sourceTree = "<group>"; };
 		83AA19DD264C629600556E69 /* EveningReading.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EveningReading.entitlements; sourceTree = "<group>"; };
-		83AA19EA264F24FC00556E69 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		83AA19EA264F24FC00556E69 /* PushNotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationService.swift; sourceTree = "<group>"; };
 		83AB388C266A60BC000A67B6 /* TagsWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsWebView.swift; sourceTree = "<group>"; };
 		83F98F4029F31A4100A828B5 /* macOSLinkViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSLinkViewer.swift; sourceTree = "<group>"; };
+		83FAB3312B28B20C00E0974F /* RegisterPushService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterPushService.swift; sourceTree = "<group>"; };
 		83FE336F27272DF8003FB55D /* WhosTaggingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhosTaggingView.swift; sourceTree = "<group>"; };
 		83FE337727272EE2003FB55D /* BlurView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlurView.swift; sourceTree = "<group>"; };
 		83FE337A27272F46003FB55D /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
@@ -779,7 +781,8 @@
 			children = (
 				833980DE263CAB93005614E8 /* AppService.swift */,
 				83398105263F0D38005614E8 /* ChatService.swift */,
-				83AA19EA264F24FC00556E69 /* NotificationService.swift */,
+				83AA19EA264F24FC00556E69 /* PushNotificationService.swift */,
+				83FAB3312B28B20C00E0974F /* RegisterPushService.swift */,
 				838466E829D634B300228DDB /* WatchService.swift */,
 			);
 			path = Services;
@@ -1397,6 +1400,7 @@
 				831EB9CF2B24B9E700DA9433 /* RichTextModels.swift in Sources */,
 				83398140263F525F005614E8 /* iPadHomeButton.swift in Sources */,
 				833980D0263C914D005614E8 /* iPadContentView.swift in Sources */,
+				83FAB3322B28B20C00E0974F /* RegisterPushService.swift in Sources */,
 				83AA19712646DE7100556E69 /* TagPostView.swift in Sources */,
 				838466E729D4F5D900228DDB /* FavoriteContributedView.swift in Sources */,
 				83AA19C4264870BC00556E69 /* ThreadNavigation.swift in Sources */,
@@ -1429,7 +1433,7 @@
 				83AA19C2264862A000556E69 /* NewMessageButton.swift in Sources */,
 				833980FC263F0AF3005614E8 /* iPhoneArticlesView.swift in Sources */,
 				833980F5263F0958005614E8 /* TrendingView.swift in Sources */,
-				83A85CE52650360E007EBAC3 /* NotificationService.swift in Sources */,
+				83A85CE52650360E007EBAC3 /* PushNotificationService.swift in Sources */,
 				833981942640A232005614E8 /* LolView.swift in Sources */,
 				8339816F26405899005614E8 /* RefreshableScrollView.swift in Sources */,
 				83398124263F2E4E005614E8 /* SearchView.swift in Sources */,
