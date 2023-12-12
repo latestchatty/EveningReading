@@ -11,7 +11,7 @@ struct watchOSContentView: View {
     @EnvironmentObject var appService: AppService
     @EnvironmentObject var chatService: ChatService
     
-    @State private var showingGuidelinesView = false
+    @State private var showingGuidelinesView = true
     
     @ObservedObject private var watchService = WatchService.shared
     
@@ -30,41 +30,50 @@ struct watchOSContentView: View {
     
     var body: some View {
         ScrollView {
-            // Guidelines on first run
-            watchOSGuidelines(showingGuidelinesView: $showingGuidelinesView)
-            .environmentObject(appService)
-            .onAppear() {
-                DispatchQueue.main.async {
-                    self.showingGuidelinesView = !appService.didAcceptGuidelines()
-                }
-            }
-            
-            // Thread list
-            if filteredThreads().count > 0 {
-                Button(action: {
-                    chatService.getChat()
-                }) {
-                    HStack {
-                        Text("Refresh")
-                            .font(.footnote)
-                            .lineLimit(1)
-                            .truncationMode(.tail)
-                            .padding()
+            ScrollViewReader { scrollProxy in
+                
+                Spacer().frame(width: 0, height: 0).id(ScrollToTopId)
+                
+                // Guidelines on first run
+                watchOSGuidelines(showingGuidelinesView: $showingGuidelinesView)
+                    .environmentObject(appService)
+                    .onAppear() {
+                        DispatchQueue.main.async {
+                            self.showingGuidelinesView = !appService.didAcceptGuidelines()
+                        }
+                    }
+                    .onChange(of: showingGuidelinesView) { value in
+                        scrollProxy.scrollTo(ScrollToTopId, anchor: .top)
+                    }
+                
+                // Thread list
+                if !showingGuidelinesView {
+                    if filteredThreads().count > 0 {
+                        Button(action: {
+                            chatService.getChat()
+                        }) {
+                            HStack {
+                                Text("Refresh")
+                                    .font(.footnote)
+                                    .lineLimit(1)
+                                    .truncationMode(.tail)
+                                    .padding()
+                            }
+                        }
+                        LazyVStack (alignment: .leading) {
+                            ForEach(filteredThreads(), id: \.threadId) { thread in
+                                watchOSThreadRow(threadId: .constant(thread.threadId))
+                                    .environmentObject(appService)
+                                    .environmentObject(chatService)
+                            }
+                        }
+                    } else {
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle())
+                            .padding(.top, 10)
                     }
                 }
-                LazyVStack (alignment: .leading) {
-                    ForEach(filteredThreads(), id: \.threadId) { thread in
-                        watchOSThreadRow(threadId: .constant(thread.threadId))
-                            .environmentObject(appService)
-                            .environmentObject(chatService)
-                    }
-                }
-            } else {
-                ProgressView()
-                    .progressViewStyle(CircularProgressViewStyle())
-                    .padding(.top, 10)
             }
-            
         }
         .onAppear(perform: getChat)
     }

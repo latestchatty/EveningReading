@@ -17,8 +17,7 @@ struct watchOSGuidelines: View {
     }
     
     var body: some View {
-        Spacer().frame(width: 0, height: 0)
-        .fullScreenCover(isPresented: $showingGuidelinesView) {
+        if showingGuidelinesView {
             VStack {
                 Spacer().frame(width: 0, height: 10)
                 ScrollView {
