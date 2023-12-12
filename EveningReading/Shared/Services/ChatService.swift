@@ -96,6 +96,7 @@ class ChatService: ObservableObject {
         getChat()
     }
 
+    // Get the entire chat
     func getChat() {
         self.didGetChatStart = true
         #if os(watchOS)
@@ -158,9 +159,10 @@ class ChatService: ObservableObject {
         }.resume()
     }
     
+    // Get a thread
     func getThread() {
         self.didGetThreadStart = true
-        service.getThread(threadId: self.activeThreadId) { [weak self] result in
+        getThreadFromAPI(threadId: self.activeThreadId) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let threads):
@@ -181,6 +183,42 @@ class ChatService: ObservableObject {
                 }
             }
         }
+    }
+    
+    public func getThreadFromAPI(threadId: Int, handler: @escaping (Result<[ChatThread], Error>) -> Void) {
+        let decoder: JSONDecoder = .init()
+        let sessionConfig = URLSessionConfiguration.default
+        #if os(iOS)
+        sessionConfig.waitsForConnectivity = false
+        sessionConfig.timeoutIntervalForResource = 10.0
+        #endif
+        let shortSession = URLSession(configuration: sessionConfig)
+        
+        guard
+            var urlComponents = URLComponents(string: "https://winchatty.com/v2/getThread")
+            else { preconditionFailure("Can't create url components...") }
+
+        urlComponents.queryItems = [
+            URLQueryItem(name: "id", value: (String(threadId)))
+        ]
+
+        guard
+            let url = urlComponents.url
+            else { preconditionFailure("Can't create url from url components...") }
+
+        shortSession.dataTask(with: url) { data, _, error in
+            if let error = error {
+                handler(.failure(error))
+            } else {
+                do {
+                    let data = data ?? Data()
+                    let response = try decoder.decode(Chat.self, from: data)
+                    handler(.success(response.threads))
+                } catch {
+                    handler(.failure(error))
+                }
+            }
+        }.resume()
     }
     
     // Tag post
@@ -327,7 +365,7 @@ class ChatService: ObservableObject {
     // Search
     @Published private(set) var searchResults: [SearchChatPosts] = []
     func search(terms: String, author: String, parentAuthor: String, completion: @escaping ()->()) {
-        service.search(terms: terms, author: author, parentAuthor: parentAuthor) { [weak self] result in
+        searchWithAPI(terms: terms, author: author, parentAuthor: parentAuthor) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let foundPosts):
@@ -341,23 +379,90 @@ class ChatService: ObservableObject {
             }
         }
     }
+    
+    public func searchWithAPI(terms: String, author: String, parentAuthor: String, handler: @escaping (Result<[SearchChatPosts], Error>) -> Void) {
+        let session: URLSession = .shared
+        let decoder: JSONDecoder = .init()
+        
+        guard
+            var urlComponents = URLComponents(string: "https://winchatty.com/v2/search")
+            else { preconditionFailure("Can't create url components...") }
+        
+        urlComponents.queryItems = [
+            URLQueryItem(name: "limit", value: "35"),
+            URLQueryItem(name: "oldestFirst", value: "false")
+        ]
+        
+        if terms != "" {
+            urlComponents.queryItems?.append(URLQueryItem(name: "terms", value: terms))
+        }
+        if author != "" {
+            urlComponents.queryItems?.append(URLQueryItem(name: "author", value: author))
+        }
+        if parentAuthor != "" {
+            urlComponents.queryItems?.append(URLQueryItem(name: "parentAuthor", value: parentAuthor))
+        }
+        
+        guard
+            let url = urlComponents.url
+            else { preconditionFailure("Can't create url from url components...") }
+
+        session.dataTask(with: url) { data, _, error in
+            if let error = error {
+                handler(.failure(error))
+            } else {
+                do {
+                    let data = data ?? Data()
+                    let response = try decoder.decode(SearchChat.self, from: data)
+                    handler(.success(response.posts))
+                } catch {
+                    handler(.failure(error))
+                }
+            }
+        }.resume()
+    }
 
     // Load any thread
     @Published private(set) var searchedThreads: [ChatThread] = []
     func getThreadByPost(postId: Int, completion: @escaping ()->()) {
-        service.getThreadByPost(postId: postId) { [weak self] result in
+        getThreadByPostFromAPI(postId: postId) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let foundThreads):
-                    print("loadThreadByPost results: \(foundThreads.count)")
                     self?.searchedThreads = foundThreads
                     completion()
                 case .failure:
-                    print("loadThreadByPost failure")
                     self?.searchedThreads = []
                 }
             }
         }
+    }
+    
+    public func getThreadByPostFromAPI(postId: Int, handler: @escaping (Result<[ChatThread], Error>) -> Void) {
+        let session: URLSession = .shared
+        let decoder: JSONDecoder = .init()
+        
+        guard
+            let urlComponents = URLComponents(string: "https://winchatty.com/v2/getThread?id=\(postId)")
+            else { preconditionFailure("Can't create url components...") }
+
+        guard
+            let url = urlComponents.url
+            else { preconditionFailure("Can't create url from url components...") }
+
+        session.dataTask(with: url) { data, _, error in
+            if let error = error {
+                handler(.failure(error))
+            } else {
+                do {
+                    let data = data ?? Data()
+                    let response = try decoder.decode(Chat.self, from: data)
+                    handler(.success(response.threads))
+                } catch {
+                    handler(.failure(error))
+                }
+            }
+        }.resume()
     }
 
     #if os(iOS)
@@ -390,7 +495,7 @@ class ChatService: ObservableObject {
                 request.timeoutInterval = 60
 
                 URLSession.shared.dataTask(with: request) { data, response, error in
-                    if let error = error {
+                    if error != nil {
                         complete(false, postBody)
                         return
                     }
@@ -436,41 +541,6 @@ class ChatAPIService {
     init(session: URLSession = .shared, decoder: JSONDecoder = .init()) {
         self.session = session
         self.decoder = decoder
-    }
-    
-    public func getThread(threadId: Int, handler: @escaping (Result<[ChatThread], Error>) -> Void) {
-        let sessionConfig = URLSessionConfiguration.default
-        #if os(iOS)
-        sessionConfig.waitsForConnectivity = false
-        sessionConfig.timeoutIntervalForResource = 10.0
-        #endif
-        let shortSession = URLSession(configuration: sessionConfig)
-        
-        guard
-            var urlComponents = URLComponents(string: "https://winchatty.com/v2/getThread")
-            else { preconditionFailure("Can't create url components...") }
-
-        urlComponents.queryItems = [
-            URLQueryItem(name: "id", value: (String(threadId)))
-        ]
-
-        guard
-            let url = urlComponents.url
-            else { preconditionFailure("Can't create url from url components...") }
-
-        shortSession.dataTask(with: url) { [weak self] data, _, error in
-            if let error = error {
-                handler(.failure(error))
-            } else {
-                do {
-                    let data = data ?? Data()
-                    let response = try self?.decoder.decode(Chat.self, from: data)
-                    handler(.success(response?.threads ?? []))
-                } catch {
-                    handler(.failure(error))
-                }
-            }
-        }.resume()
     }
     
     public func submitPost(postBody: String, postId: Int, handler: @escaping (Result<SubmitPostResponseContainer, Error>) -> Void) {
@@ -542,71 +612,5 @@ class ChatAPIService {
             }
         })
         task.resume()
-    }
-    
-    public func search(terms: String, author: String, parentAuthor: String, handler: @escaping (Result<[SearchChatPosts], Error>) -> Void) {
-        guard
-            var urlComponents = URLComponents(string: "https://winchatty.com/v2/search")
-            else { preconditionFailure("Can't create url components...") }
-        
-        urlComponents.queryItems = [
-            URLQueryItem(name: "limit", value: "35"),
-            URLQueryItem(name: "oldestFirst", value: "false")
-        ]
-        
-        if terms != "" {
-            urlComponents.queryItems?.append(URLQueryItem(name: "terms", value: terms))
-        }
-        if author != "" {
-            urlComponents.queryItems?.append(URLQueryItem(name: "author", value: author))
-        }
-        if parentAuthor != "" {
-            urlComponents.queryItems?.append(URLQueryItem(name: "parentAuthor", value: parentAuthor))
-        }
-        
-        guard
-            let url = urlComponents.url
-            else { preconditionFailure("Can't create url from url components...") }
-
-        session.dataTask(with: url) { [weak self] data, _, error in
-            if let error = error {
-                handler(.failure(error))
-            } else {
-                do {
-                    print("search success begin")
-                    let data = data ?? Data()
-                    let response = try self?.decoder.decode(SearchChat.self, from: data)
-                    handler(.success(response?.posts ?? []))
-                    print("search success end")
-                } catch {
-                    print("search fail")
-                    handler(.failure(error))
-                }
-            }
-        }.resume()
-    }
-    
-    public func getThreadByPost(postId: Int, handler: @escaping (Result<[ChatThread], Error>) -> Void) {
-        guard
-            let urlComponents = URLComponents(string: "https://winchatty.com/v2/getThread?id=\(postId)")
-            else { preconditionFailure("Can't create url components...") }
-
-        guard
-            let url = urlComponents.url
-            else { preconditionFailure("Can't create url from url components...") }
-
-        session.dataTask(with: url) { [weak self] data, _, error in
-            if let error = error {
-                handler(.failure(error))
-            } else {
-                do {
-                    let data = data ?? Data()
-                    let response = try self?.decoder.decode(Chat.self, from: data)
-                    handler(.success(response?.threads ?? []))
-                } catch {
-                    handler(.failure(error))
-                }
-            }
-        }.resume()
     }
 }

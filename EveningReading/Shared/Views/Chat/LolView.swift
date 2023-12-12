@@ -33,8 +33,8 @@ struct LolView: View {
             }
         }
         
-        // if there are more than 3 types of tags as this tag has
-        // fewer than 2 then do not show this tag
+        // If there are more than 3 types of tags and this tag has
+        // fewer than 2 then do not show this tag to save space
         if let count = tagCounts[tagType] {
             if tagTypeCount > 4 && count < 2 {
                 return true
@@ -52,8 +52,8 @@ struct LolView: View {
     
     func getRemovedTagDelta(tagType: String) -> Int {
         let addedDelta = (chatService.tagDelta[postId]?[tagType] ?? 0)
-        let removedDelta = (chatService.tagRemovedDelta[postId]?[tagType] ?? 0)
-        let total = lols.filter{$0.tag == tagType}.count
+        //let removedDelta = (chatService.tagRemovedDelta[postId]?[tagType] ?? 0)
+        //let total = lols.filter{$0.tag == tagType}.count
         if addedDelta > 0 {
             return 1
         } else {
@@ -87,7 +87,7 @@ struct LolView: View {
                         }
                     }
                     ForEach(PostTags.allCases, id: \.self) { tag in
-                        if self.lols.filter{$0.tag == tag.rawValue}.count < 1 && getTagDelta(tagType: tag.rawValue) > 0 {
+                        if self.lols.filter({$0.tag == tag.rawValue}).count < 1 && getTagDelta(tagType: tag.rawValue) > 0 {
                             HStack {
                                 Text(tag.rawValue + " 1")
                                     .font(.caption2)
@@ -110,7 +110,7 @@ struct LolView: View {
                     }
                 }
                 ForEach(PostTags.allCases, id: \.self) { tag in
-                    if self.lols.filter{$0.tag == tag.rawValue}.count < 1 && getTagDelta(tagType: tag.rawValue) > 0 {
+                    if self.lols.filter({$0.tag == tag.rawValue}).count < 1 && getTagDelta(tagType: tag.rawValue) > 0 {
                         Text("A")
                             .lineLimit(1)
                             .fixedSize()

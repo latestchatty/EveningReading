@@ -9,7 +9,7 @@ import SwiftUI
 
 struct NoticeView : View {
     @Binding public var show: Bool
-    @Binding public var message: String
+    public var message: String
     @EnvironmentObject var chatService: ChatService
     
     var body: some View {
@@ -50,7 +50,6 @@ struct NoticeView : View {
             .background(BlurView(style: .systemUltraThinMaterial))
             .cornerRadius(20)
             .onAppear() {
-                print("Show Notice")
                 DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
                     withAnimation {
                         self.show = false

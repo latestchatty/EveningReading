@@ -116,7 +116,6 @@
 		8339814D263F6394005614E8 /* iPadArticlesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339814C263F6394005614E8 /* iPadArticlesView.swift */; };
 		83398150263F6427005614E8 /* ArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339814F263F6427005614E8 /* ArrayExtensions.swift */; };
 		83398151263F6427005614E8 /* ArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339814F263F6427005614E8 /* ArrayExtensions.swift */; };
-		83398155263F69E0005614E8 /* macOSChatViewOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83398153263F69E0005614E8 /* macOSChatViewOld.swift */; };
 		83398159263F6BB1005614E8 /* macOSInboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83398157263F6BB1005614E8 /* macOSInboxView.swift */; };
 		8339815D263F6FC4005614E8 /* macOSSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339815B263F6FC4005614E8 /* macOSSearchView.swift */; };
 		8339816026403F08005614E8 /* macOSTagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339815E26403F08005614E8 /* macOSTagsView.swift */; };
@@ -138,7 +137,6 @@
 		8339818F26409C94005614E8 /* AuthorNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339818E26409C94005614E8 /* AuthorNameView.swift */; };
 		8339819226409D77005614E8 /* ContributedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339819126409D77005614E8 /* ContributedView.swift */; };
 		833981942640A232005614E8 /* LolView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833981932640A232005614E8 /* LolView.swift */; };
-		8339819F26412A42005614E8 /* macOSThreadViewOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339819D264128B2005614E8 /* macOSThreadViewOld.swift */; };
 		833981A326412FAC005614E8 /* AuthorNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339818E26409C94005614E8 /* AuthorNameView.swift */; };
 		833981A4264189DC005614E8 /* ContributedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8339819126409D77005614E8 /* ContributedView.swift */; };
 		833981A526418DCD005614E8 /* LolView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833981932640A232005614E8 /* LolView.swift */; };
@@ -183,12 +181,9 @@
 		838466E729D4F5D900228DDB /* FavoriteContributedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838466E629D4F5D900228DDB /* FavoriteContributedView.swift */; };
 		838466E929D634B300228DDB /* WatchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838466E829D634B300228DDB /* WatchService.swift */; };
 		838466EA29D6353900228DDB /* WatchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838466E829D634B300228DDB /* WatchService.swift */; };
-		83A85CE52650360E007EBAC3 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19EA264F24FC00556E69 /* NotificationService.swift */; };
+		83A85CE52650360E007EBAC3 /* PushNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19EA264F24FC00556E69 /* PushNotificationService.swift */; };
 		83A85CEB26515CBB007EBAC3 /* PushNotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A85CEA26515CBB007EBAC3 /* PushNotificationView.swift */; };
 		83A85CEF26551087007EBAC3 /* GoToShackLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A85CEE26551087007EBAC3 /* GoToShackLinkView.swift */; };
-		83A85CF326556F60007EBAC3 /* NotificationPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A85CF226556F60007EBAC3 /* NotificationPreviewView.swift */; };
-		83A85CF5265570BD007EBAC3 /* NotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A85CF4265570BD007EBAC3 /* NotificationsView.swift */; };
-		83A85CF726558FB5007EBAC3 /* NotificationsClearView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A85CF626558FB5007EBAC3 /* NotificationsClearView.swift */; };
 		83A85CFF265B1C5E007EBAC3 /* BindingExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A85CFE265B1C5E007EBAC3 /* BindingExtensions.swift */; };
 		83A85D28265BBC98007EBAC3 /* GoToPostViewHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A85D27265BBC98007EBAC3 /* GoToPostViewHome.swift */; };
 		83A85D48265EC177007EBAC3 /* ShackTagsTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A85D47265EC177007EBAC3 /* ShackTagsTextView.swift */; };
@@ -248,6 +243,13 @@
 		83AA19DA264BFBF100556E69 /* PostExpandedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AA19D9264BFBF100556E69 /* PostExpandedView.swift */; };
 		83AB388D266A60BC000A67B6 /* TagsWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AB388C266A60BC000A67B6 /* TagsWebView.swift */; };
 		83F98F4129F31A4100A828B5 /* macOSLinkViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F98F4029F31A4100A828B5 /* macOSLinkViewer.swift */; };
+		83FAB3322B28B20C00E0974F /* RegisterPushService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FAB3312B28B20C00E0974F /* RegisterPushService.swift */; };
+		83FAB3352B28BE7000E0974F /* PostTagHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FAB3342B28BE7000E0974F /* PostTagHelper.swift */; };
+		83FAB3362B28BE8E00E0974F /* PostTagHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FAB3342B28BE7000E0974F /* PostTagHelper.swift */; };
+		83FAB3372B28BE9200E0974F /* PostTagHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FAB3342B28BE7000E0974F /* PostTagHelper.swift */; };
+		83FAB3392B28BF8300E0974F /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FAB3382B28BF8300E0974F /* Colors.swift */; };
+		83FAB33A2B28BF9800E0974F /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FAB3382B28BF8300E0974F /* Colors.swift */; };
+		83FAB33B2B28BF9900E0974F /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FAB3382B28BF8300E0974F /* Colors.swift */; };
 		83FE337027272DF8003FB55D /* WhosTaggingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FE336F27272DF8003FB55D /* WhosTaggingView.swift */; };
 		83FE337827272EE2003FB55D /* BlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FE337727272EE2003FB55D /* BlurView.swift */; };
 		83FE337B27272F46003FB55D /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FE337A27272F46003FB55D /* LoadingView.swift */; };
@@ -379,7 +381,6 @@
 		83398142263F526A005614E8 /* iPadHomeButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadHomeButtons.swift; sourceTree = "<group>"; };
 		8339814C263F6394005614E8 /* iPadArticlesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadArticlesView.swift; sourceTree = "<group>"; };
 		8339814F263F6427005614E8 /* ArrayExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayExtensions.swift; sourceTree = "<group>"; };
-		83398153263F69E0005614E8 /* macOSChatViewOld.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSChatViewOld.swift; sourceTree = "<group>"; };
 		83398157263F6BB1005614E8 /* macOSInboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSInboxView.swift; sourceTree = "<group>"; };
 		8339815B263F6FC4005614E8 /* macOSSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSSearchView.swift; sourceTree = "<group>"; };
 		8339815E26403F08005614E8 /* macOSTagsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSTagsView.swift; sourceTree = "<group>"; };
@@ -398,7 +399,6 @@
 		8339818E26409C94005614E8 /* AuthorNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorNameView.swift; sourceTree = "<group>"; };
 		8339819126409D77005614E8 /* ContributedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContributedView.swift; sourceTree = "<group>"; };
 		833981932640A232005614E8 /* LolView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LolView.swift; sourceTree = "<group>"; };
-		8339819D264128B2005614E8 /* macOSThreadViewOld.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSThreadViewOld.swift; sourceTree = "<group>"; };
 		833981AE2641AC58005614E8 /* watchOSThreadRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = watchOSThreadRow.swift; sourceTree = "<group>"; };
 		833981B82641B723005614E8 /* watchOSPostDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = watchOSPostDetail.swift; sourceTree = "<group>"; };
 		833981BC2641E188005614E8 /* watchOSAuthorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = watchOSAuthorView.swift; sourceTree = "<group>"; };
@@ -423,9 +423,6 @@
 		838466E829D634B300228DDB /* WatchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchService.swift; sourceTree = "<group>"; };
 		83A85CEA26515CBB007EBAC3 /* PushNotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationView.swift; sourceTree = "<group>"; };
 		83A85CEE26551087007EBAC3 /* GoToShackLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoToShackLinkView.swift; sourceTree = "<group>"; };
-		83A85CF226556F60007EBAC3 /* NotificationPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPreviewView.swift; sourceTree = "<group>"; };
-		83A85CF4265570BD007EBAC3 /* NotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsView.swift; sourceTree = "<group>"; };
-		83A85CF626558FB5007EBAC3 /* NotificationsClearView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsClearView.swift; sourceTree = "<group>"; };
 		83A85CFE265B1C5E007EBAC3 /* BindingExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BindingExtensions.swift; sourceTree = "<group>"; };
 		83A85D27265BBC98007EBAC3 /* GoToPostViewHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoToPostViewHome.swift; sourceTree = "<group>"; };
 		83A85D47265EC177007EBAC3 /* ShackTagsTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShackTagsTextView.swift; sourceTree = "<group>"; };
@@ -469,9 +466,12 @@
 		83AA19D7264B367100556E69 /* PostPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPreviewView.swift; sourceTree = "<group>"; };
 		83AA19D9264BFBF100556E69 /* PostExpandedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostExpandedView.swift; sourceTree = "<group>"; };
 		83AA19DD264C629600556E69 /* EveningReading.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EveningReading.entitlements; sourceTree = "<group>"; };
-		83AA19EA264F24FC00556E69 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		83AA19EA264F24FC00556E69 /* PushNotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationService.swift; sourceTree = "<group>"; };
 		83AB388C266A60BC000A67B6 /* TagsWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsWebView.swift; sourceTree = "<group>"; };
 		83F98F4029F31A4100A828B5 /* macOSLinkViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSLinkViewer.swift; sourceTree = "<group>"; };
+		83FAB3312B28B20C00E0974F /* RegisterPushService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterPushService.swift; sourceTree = "<group>"; };
+		83FAB3342B28BE7000E0974F /* PostTagHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTagHelper.swift; sourceTree = "<group>"; };
+		83FAB3382B28BF8300E0974F /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		83FE336F27272DF8003FB55D /* WhosTaggingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhosTaggingView.swift; sourceTree = "<group>"; };
 		83FE337727272EE2003FB55D /* BlurView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlurView.swift; sourceTree = "<group>"; };
 		83FE337A27272F46003FB55D /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
@@ -506,14 +506,14 @@
 		830BFB1F2B20E40600F62089 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				830BFB202B20E45500F62089 /* PushNotificationModels.swift */,
-				830BFB222B20E4A300F62089 /* ChatModels.swift */,
 				830BFB242B20E4F800F62089 /* ArticleModels.swift */,
 				830BFB262B20E53500F62089 /* AuthModels.swift */,
 				830BFB282B20E5A600F62089 /* MessageModels.swift */,
+				830BFB222B20E4A300F62089 /* ChatModels.swift */,
 				831EB9CE2B24B9E700DA9433 /* RichTextModels.swift */,
 				831EB9E12B2762CA00DA9433 /* WordModel.swift */,
 				831EB9E52B2773CD00DA9433 /* ShackTagModels.swift */,
+				830BFB202B20E45500F62089 /* PushNotificationModels.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -616,13 +616,7 @@
 		833817882639AC18007A8B28 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
-				8339813D263F47B6005614E8 /* Home */,
-				83AA19452646308C00556E69 /* Guidelines */,
-				833981992640C3D0005614E8 /* Chat */,
-				833980F8263F0A0F005614E8 /* Inbox */,
-				833980F9263F0A21005614E8 /* Search */,
-				833980FA263F0A29005614E8 /* Tags */,
-				83398130263F2F63005614E8 /* Settings */,
+				83FAB32F2B27D04A00E0974F /* Views */,
 				83AA195426464FA600556E69 /* Controls */,
 				83AA198C26470FB900556E69 /* Extensions */,
 				8339818A264070E9005614E8 /* Utilities */,
@@ -634,12 +628,7 @@
 		8338178F2639AC18007A8B28 /* macOS */ = {
 			isa = PBXGroup;
 			children = (
-				8339816226404032005614E8 /* Home */,
-				83398152263F69CE005614E8 /* Chat */,
-				83398156263F6BA3005614E8 /* Inbox */,
-				8339815A263F6FAD005614E8 /* Search */,
-				8339816126403F0D005614E8 /* Tags */,
-				833981662640438E005614E8 /* Settings */,
+				83FAB3302B27D12100E0974F /* Views */,
 				833685D12672A36800ACE618 /* Controls */,
 				83501CDD26D043D6008CFBB9 /* Extensions */,
 				833817802639AC17007A8B28 /* macOSContentView.swift */,
@@ -800,7 +789,8 @@
 			children = (
 				833980DE263CAB93005614E8 /* AppService.swift */,
 				83398105263F0D38005614E8 /* ChatService.swift */,
-				83AA19EA264F24FC00556E69 /* NotificationService.swift */,
+				83AA19EA264F24FC00556E69 /* PushNotificationService.swift */,
+				83FAB3312B28B20C00E0974F /* RegisterPushService.swift */,
 				838466E829D634B300228DDB /* WatchService.swift */,
 			);
 			path = Services;
@@ -841,9 +831,6 @@
 				833980F4263F0958005614E8 /* TrendingView.swift */,
 				83398109263F0F7A005614E8 /* TrendingCard.swift */,
 				833980F1263F08C1005614E8 /* SettingsButton.swift */,
-				83A85CF4265570BD007EBAC3 /* NotificationsView.swift */,
-				83A85CF226556F60007EBAC3 /* NotificationPreviewView.swift */,
-				83A85CF626558FB5007EBAC3 /* NotificationsClearView.swift */,
 				83A85D5426652F97007EBAC3 /* NewMessageBadgeView.swift */,
 				83A85D572666A1B2007EBAC3 /* LoadingPushNotificationView.swift */,
 			);
@@ -867,8 +854,6 @@
 				833685D626738A8A00ACE618 /* macOSThreadList.swift */,
 				833685D826738B5100ACE618 /* macOSThreadPreview.swift */,
 				833685DA2673982100ACE618 /* macOSThreadView.swift */,
-				83398153263F69E0005614E8 /* macOSChatViewOld.swift */,
-				8339819D264128B2005614E8 /* macOSThreadViewOld.swift */,
 				833685CD2672467800ACE618 /* macOSPostExpandedView.swift */,
 				833685D22672C18F00ACE618 /* macOSPostPreviewView.swift */,
 				833685C9267243B500ACE618 /* macOSTagPostView.swift */,
@@ -942,6 +927,8 @@
 				83AA19262645C43500556E69 /* PostDecorator.swift */,
 				834EFE6227284603004E7BA1 /* UserHelper.swift */,
 				831EB9CC2B23A60300DA9433 /* RedactedContentLoader.swift */,
+				83FAB3342B28BE7000E0974F /* PostTagHelper.swift */,
+				83FAB3382B28BF8300E0974F /* Colors.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1174,6 +1161,33 @@
 			path = LinkViewer;
 			sourceTree = "<group>";
 		};
+		83FAB32F2B27D04A00E0974F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8339813D263F47B6005614E8 /* Home */,
+				83AA19452646308C00556E69 /* Guidelines */,
+				833981992640C3D0005614E8 /* Chat */,
+				833980F8263F0A0F005614E8 /* Inbox */,
+				833980F9263F0A21005614E8 /* Search */,
+				833980FA263F0A29005614E8 /* Tags */,
+				83398130263F2F63005614E8 /* Settings */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		83FAB3302B27D12100E0974F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8339816226404032005614E8 /* Home */,
+				83398152263F69CE005614E8 /* Chat */,
+				83398156263F6BA3005614E8 /* Inbox */,
+				8339815A263F6FAD005614E8 /* Search */,
+				8339816126403F0D005614E8 /* Tags */,
+				833981662640438E005614E8 /* Settings */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		83FE337627272ECD003FB55D /* BlurView */ = {
 			isa = PBXGroup;
 			children = (
@@ -1396,6 +1410,7 @@
 				831EB9CF2B24B9E700DA9433 /* RichTextModels.swift in Sources */,
 				83398140263F525F005614E8 /* iPadHomeButton.swift in Sources */,
 				833980D0263C914D005614E8 /* iPadContentView.swift in Sources */,
+				83FAB3322B28B20C00E0974F /* RegisterPushService.swift in Sources */,
 				83AA19712646DE7100556E69 /* TagPostView.swift in Sources */,
 				838466E729D4F5D900228DDB /* FavoriteContributedView.swift in Sources */,
 				83AA19C4264870BC00556E69 /* ThreadNavigation.swift in Sources */,
@@ -1428,7 +1443,7 @@
 				83AA19C2264862A000556E69 /* NewMessageButton.swift in Sources */,
 				833980FC263F0AF3005614E8 /* iPhoneArticlesView.swift in Sources */,
 				833980F5263F0958005614E8 /* TrendingView.swift in Sources */,
-				83A85CE52650360E007EBAC3 /* NotificationService.swift in Sources */,
+				83A85CE52650360E007EBAC3 /* PushNotificationService.swift in Sources */,
 				833981942640A232005614E8 /* LolView.swift in Sources */,
 				8339816F26405899005614E8 /* RefreshableScrollView.swift in Sources */,
 				83398124263F2E4E005614E8 /* SearchView.swift in Sources */,
@@ -1444,7 +1459,7 @@
 				83398135263F324C005614E8 /* PreferencesView.swift in Sources */,
 				83AA1965264656BD00556E69 /* KeychainWrapperSubscript.swift in Sources */,
 				83A85CEB26515CBB007EBAC3 /* PushNotificationView.swift in Sources */,
-				83A85CF726558FB5007EBAC3 /* NotificationsClearView.swift in Sources */,
+				83FAB3392B28BF8300E0974F /* Colors.swift in Sources */,
 				8339811E263F288D005614E8 /* ArticleCard.swift in Sources */,
 				83398143263F526A005614E8 /* iPadHomeButtons.swift in Sources */,
 				834EFE6527284A85004E7BA1 /* UserHelper.swift in Sources */,
@@ -1458,19 +1473,18 @@
 				83AA19362645F4A700556E69 /* SignInView.swift in Sources */,
 				833EE9E326454DFB00345A1D /* WebAuthenticationPresenter.swift in Sources */,
 				833980EF263F0874005614E8 /* iPhoneHomeButtons.swift in Sources */,
+				83FAB3352B28BE7000E0974F /* PostTagHelper.swift in Sources */,
 				833EE9DD26454DF100345A1D /* SafariView.swift in Sources */,
 				83398150263F6427005614E8 /* ArrayExtensions.swift in Sources */,
 				8339817B264062BB005614E8 /* RoundedCornersView.swift in Sources */,
 				83AA19982647933300556E69 /* SearchResultsView.swift in Sources */,
 				831EB9C92B23A00000DA9433 /* ArticleViewModel.swift in Sources */,
-				83A85CF5265570BD007EBAC3 /* NotificationsView.swift in Sources */,
 				830292F12644C57F00B974B3 /* ReplyLineBuilder.swift in Sources */,
 				833817922639AC18007A8B28 /* EveningReadingApp.swift in Sources */,
 				83AA19D3264ADDFF00556E69 /* LinkViewer.swift in Sources */,
 				83AA19A9264831D300556E69 /* ClearHiddenView.swift in Sources */,
 				83AA19C92648952400556E69 /* PostContextView.swift in Sources */,
 				83A85D582666A1B2007EBAC3 /* LoadingPushNotificationView.swift in Sources */,
-				83A85CF326556F60007EBAC3 /* NotificationPreviewView.swift in Sources */,
 				833EE9DE26454DF100345A1D /* SafariView+View.swift in Sources */,
 				83398111263F1794005614E8 /* DateExtensions.swift in Sources */,
 				831EB9E22B2762CA00DA9433 /* WordModel.swift in Sources */,
@@ -1493,6 +1507,7 @@
 			files = (
 				833685D726738A8A00ACE618 /* macOSThreadList.swift in Sources */,
 				831EB9BD2B223C1000DA9433 /* ChatModels.swift in Sources */,
+				83FAB3362B28BE8E00E0974F /* PostTagHelper.swift in Sources */,
 				8339816C26404F59005614E8 /* SidebarButtons.swift in Sources */,
 				833817952639AC18007A8B28 /* macOSContentView.swift in Sources */,
 				83FE337E2727303E003FB55D /* macOSWhosTaggingView.swift in Sources */,
@@ -1518,7 +1533,6 @@
 				83A85D5626668940007EBAC3 /* PreferencesView.swift in Sources */,
 				831EB9D62B24DC2900DA9433 /* MessageViewModel.swift in Sources */,
 				83398112263F1794005614E8 /* DateExtensions.swift in Sources */,
-				8339819F26412A42005614E8 /* macOSThreadViewOld.swift in Sources */,
 				833685C826723E6400ACE618 /* macOSNoticeView.swift in Sources */,
 				8339816526404049005614E8 /* SidebarButton.swift in Sources */,
 				833981A526418DCD005614E8 /* LolView.swift in Sources */,
@@ -1548,9 +1562,9 @@
 				8339810F263F1028005614E8 /* StringExtensions.swift in Sources */,
 				834EFE69272AEAEF004E7BA1 /* macOSTextPromptSheet.swift in Sources */,
 				831EB9E32B2762CA00DA9433 /* WordModel.swift in Sources */,
+				83FAB33A2B28BF9800E0974F /* Colors.swift in Sources */,
 				831EB9BE2B223C1500DA9433 /* PushNotificationModels.swift in Sources */,
 				83FE337F272730A6003FB55D /* LoadingView.swift in Sources */,
-				83398155263F69E0005614E8 /* macOSChatViewOld.swift in Sources */,
 				833981A4264189DC005614E8 /* ContributedView.swift in Sources */,
 				83AA1966264656BD00556E69 /* KeychainWrapperSubscript.swift in Sources */,
 				83FE3380272730B6003FB55D /* BlurView.swift in Sources */,
@@ -1593,11 +1607,13 @@
 				833981B52641B426005614E8 /* Globals.swift in Sources */,
 				83AA194E2646353800556E69 /* RedactingView.swift in Sources */,
 				833981A72641A166005614E8 /* AuthorNameView.swift in Sources */,
+				83FAB3372B28BE9200E0974F /* PostTagHelper.swift in Sources */,
 				831EB9E42B2762CA00DA9433 /* WordModel.swift in Sources */,
 				833980B6263C41CF005614E8 /* NotificationView.swift in Sources */,
 				831EB9C32B223C8D00DA9433 /* ArticleModels.swift in Sources */,
 				833981BD2641E188005614E8 /* watchOSAuthorView.swift in Sources */,
 				83AA1961264656BD00556E69 /* KeychainItemAccessibility.swift in Sources */,
+				83FAB33B2B28BF9900E0974F /* Colors.swift in Sources */,
 				83AA1967264656BD00556E69 /* KeychainWrapperSubscript.swift in Sources */,
 				83092F3A29E0876C00E889BD /* ChatService.swift in Sources */,
 				833981B42641B2D7005614E8 /* LolView.swift in Sources */,
@@ -1745,7 +1761,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = EveningReading.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = U3SY428MXR;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
@@ -1755,7 +1771,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.02;
+				MARKETING_VERSION = 2.03;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrishodge.eveningreading;
 				PRODUCT_NAME = EveningReading;
 				SDKROOT = iphoneos;
@@ -1771,7 +1787,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = EveningReading.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = U3SY428MXR;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
@@ -1781,7 +1797,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.02;
+				MARKETING_VERSION = 2.03;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrishodge.eveningreading;
 				PRODUCT_NAME = EveningReading;
 				SDKROOT = iphoneos;
@@ -1854,11 +1870,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = U3SY428MXR;
 				IBSC_MODULE = EveningReading_Extension;
 				INFOPLIST_FILE = EveningReading/Info.plist;
-				MARKETING_VERSION = 2.02;
+				MARKETING_VERSION = 2.03;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrishodge.eveningreading.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -1876,11 +1892,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = U3SY428MXR;
 				IBSC_MODULE = EveningReading_Extension;
 				INFOPLIST_FILE = EveningReading/Info.plist;
-				MARKETING_VERSION = 2.02;
+				MARKETING_VERSION = 2.03;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrishodge.eveningreading.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -1896,7 +1912,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"EveningReading Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = U3SY428MXR;
 				ENABLE_PREVIEWS = YES;
@@ -1906,7 +1922,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.02;
+				MARKETING_VERSION = 2.03;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrishodge.eveningreading.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
@@ -1921,7 +1937,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"EveningReading Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = U3SY428MXR;
 				ENABLE_PREVIEWS = YES;
@@ -1931,7 +1947,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.02;
+				MARKETING_VERSION = 2.03;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrishodge.eveningreading.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;

@@ -90,7 +90,6 @@ struct LinkViewerSheet : View {
                         })
                     }
                     .onAppear {
-                        print("showing LinkViewer")
                         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
                             if let url = URL(string: self.getHyperlink()) {
                                 self.linkViewerStore.webView.load(URLRequest(url: url))
@@ -98,7 +97,6 @@ struct LinkViewerSheet : View {
                         }
                     }
                     .onDisappear {
-                        print("hiding LinkViewer")
                         self.linkViewerStore.webView.load(URLRequest(url: URL(string: "about:blank")!))
                     }
                     Spacer()

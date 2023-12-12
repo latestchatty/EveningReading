@@ -60,13 +60,9 @@ struct watchOSThreadRow: View {
             
             if !self.isThreadCollapsed {
                 VStack (alignment: .leading) {
-                    /*
-                    Text("user = \(watchService.plainTextUsername)")
-                    */
-                    
                     // Thread details
                     HStack {
-                        AuthorNameView(name: appService.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : self.rootPostAuthor, postId: self.threadId, navLink: true)
+                        AuthorNameView(name: self.rootPostAuthor, postId: self.threadId, navLink: true)
                         ContributedView(contributed: self.contributed)
                         Spacer()
                         LolView(lols: self.rootPostLols, postId: self.threadId)
@@ -74,7 +70,7 @@ struct watchOSThreadRow: View {
                     }
                     // Thread body preview
                     HStack {
-                        Text(appService.blockedAuthors.contains(self.rootPostAuthor) ? "[blocked]" : rootPostBodyPreview)
+                        Text(appService.getPostBodyFor(name: self.rootPostAuthor, body: self.rootPostBodyPreview))
                             .font(.footnote)
                             .lineLimit(3)
                             .onTapGesture(count: 1) {

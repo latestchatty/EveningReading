@@ -430,4 +430,23 @@ class AppService : ObservableObject {
             }
         }.resume()
     }
+    
+    public func getAuthorName(name: String) -> String {
+        return blockedAuthors.contains(name) ? "[blocked]" : name
+    }
+    
+    public func getPostBodyFor(name: String, body: String) -> String {
+        return blockedAuthors.contains(name) ? "[blocked]" : body
+    }
+    
+    public func acceptGuidelines() {
+        let defaults = UserDefaults.standard
+        defaults.set(true, forKey: "GuidelinesAccepted")
+    }
+    
+    public func didAcceptGuidelines() -> Bool {
+        let defaults = UserDefaults.standard
+        let guidelinesAccepted = defaults.object(forKey: "GuidelinesAccepted") as? Bool ?? false
+        return guidelinesAccepted
+    }
 }

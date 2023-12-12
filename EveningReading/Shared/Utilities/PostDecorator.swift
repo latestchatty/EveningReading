@@ -6,8 +6,17 @@
 //
 
 import Foundation
+import SwiftUI
 
 class PostDecorator {
+    // Post weights depend on the age of the post
+    let postWeight: [Double: Font.Weight] = [
+        0.95: .heavy,
+        0.90: .bold,
+        0.85: .semibold,
+        0.80: .medium,
+        0.75: .regular
+    ]
     
     // Make font weight/opacity based on how recent
     static func getPostStrength(thread: ChatThread) -> [Int: Double] {

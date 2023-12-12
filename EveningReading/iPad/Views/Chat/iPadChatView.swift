@@ -44,7 +44,7 @@ struct iPadChatView: View {
                         // Scroll to bottom / padding
                         VStack {
                             Spacer().frame(maxWidth: .infinity).frame(height: 30)
-                        }.id(9999999999993)
+                        }.id(ScrollToBottomId)
                     }
                 }
                 .frame(width: geometry.size.width * 0.35)
@@ -54,7 +54,7 @@ struct iPadChatView: View {
                 // Detail
                 VStack {
                     if chatService.activeThreadId > 0 {
-                        ThreadDetailView(threadId: chatService.activeThreadId, postId: 0, replyCount: -1, isSearchResult: false)
+                        ThreadDetailView(threadId: $chatService.activeThreadId, postId: 0, replyCount: -1, isSearchResult: false)
                             .environmentObject(appService)
                             .environmentObject(chatService)
                     } else {
@@ -73,7 +73,7 @@ struct iPadChatView: View {
         }
         
         // View settings
-        .background(Color("PrimaryBackground").frame(height: 2600).offset(y: -80))
+        .background(Color("PrimaryBackground").frame(height: BackgroundHeight).offset(y: BackgroundOffset))
         .edgesIgnoringSafeArea(.bottom)
         .navigationViewStyle(.stack)
         .navigationBarTitle("Chat", displayMode: .inline)

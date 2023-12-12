@@ -11,7 +11,7 @@ import SwiftUI
 struct iPadArticlesView: View {
     @StateObject var articleViewModel = ArticleViewModel()
     
-    private func fetchArticles() {
+    private func getArticles() {
         if articleViewModel.articles.count > 0
         {
             return
@@ -90,6 +90,6 @@ struct iPadArticlesView: View {
             .padding(.top, -60)
             
         }
-        .onAppear(perform: fetchArticles)
+        .onAppear(perform: getArticles)
     }
 }

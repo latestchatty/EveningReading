@@ -8,8 +8,12 @@
 import Foundation
 import SwiftUI
 
-public struct DarkModeViewModifier: ViewModifier {
+struct SystemColor: Hashable {
+    var text: String
+    var color: Color
+}
 
+public struct DarkModeViewModifier: ViewModifier {
     @AppStorage("isDarkMode") var isDarkMode: Bool = true
 
     public func body(content: Content) -> some View {
@@ -19,16 +23,11 @@ public struct DarkModeViewModifier: ViewModifier {
     }
 }
 
-struct SystemColor: Hashable {
-    var text: String
-    var color: Color
-}
-
-let backgroundColors: [SystemColor] = [.init(text: "Red", color: Color(UIColor.systemRed)), .init(text: "Orange", color: Color(UIColor.systemOrange)), .init(text: "Yellow", color: Color(UIColor.systemYellow)), .init(text: "Green", color: Color(UIColor.systemGreen)), .init(text: "Teal", color: Color(UIColor.systemTeal)), .init(text: "Blue", color: Color(UIColor.systemBlue)), .init(text: "Indigo", color: Color(UIColor.systemIndigo)), .init(text: "Purple", color: Color(UIColor.systemPurple)), .init(text: "Pink", color: Color(UIColor.systemPink)), .init(text: "Gray", color: Color(UIColor.systemGray)), .init(text: "Gray2", color: Color(UIColor.systemGray2)), .init(text: "Gray3", color: Color(UIColor.systemGray3)), .init(text: "Gray4", color: Color(UIColor.systemGray4)), .init(text: "Gray5", color: Color(UIColor.systemGray5)), .init(text: "Gray6", color: Color(UIColor.systemGray6))]
-
 struct DarkModeColorView: View {
     @AppStorage("isDarkMode") var isDarkMode: Bool = true
 
+    let backgroundColors: [SystemColor] = [.init(text: "Red", color: Color(UIColor.systemRed)), .init(text: "Orange", color: Color(UIColor.systemOrange)), .init(text: "Yellow", color: Color(UIColor.systemYellow)), .init(text: "Green", color: Color(UIColor.systemGreen)), .init(text: "Teal", color: Color(UIColor.systemTeal)), .init(text: "Blue", color: Color(UIColor.systemBlue)), .init(text: "Indigo", color: Color(UIColor.systemIndigo)), .init(text: "Purple", color: Color(UIColor.systemPurple)), .init(text: "Pink", color: Color(UIColor.systemPink)), .init(text: "Gray", color: Color(UIColor.systemGray)), .init(text: "Gray2", color: Color(UIColor.systemGray2)), .init(text: "Gray3", color: Color(UIColor.systemGray3)), .init(text: "Gray4", color: Color(UIColor.systemGray4)), .init(text: "Gray5", color: Color(UIColor.systemGray5)), .init(text: "Gray6", color: Color(UIColor.systemGray6))]
+    
     var body: some View {
         Form {
             Section(header: Text("Common Colors")) {

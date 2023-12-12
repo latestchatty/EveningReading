@@ -28,7 +28,7 @@ struct macOSTagPostButton: View {
                 for rater in chatService.raters {
                     for username in rater.usernames {
                         if username == user {
-                            if let userTagged = PostTagCode[rater.tag] {
+                            if let userTagged = PostTagHelper().postTagCode[rater.tag] {
                                 userTagsForPost[userTagged] = 1
                             }
                         }

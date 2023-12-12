@@ -20,13 +20,11 @@ struct ChatView: View {
     @State private var resultsPadding: Double = 1
     @State private var favoriteContributed: [Int] = [0]
 
-    //@State private var isPushNotificationAlertShowing: Bool = false
-    
     private func filteredThreads() -> [ChatThread] {
-        var threads = chatService.threads        
+        var threads = chatService.threads
         if searchTerms != "" {
             threads = chatService.threads.filter({ return
-                $0.posts.filter({ return $0.parentId == 0  })[0].body.lowercased().contains(searchTerms.lowercased()) &&
+                $0.posts.filter({ return $0.parentId == 0 })[0].body.lowercased().contains(searchTerms.lowercased()) &&
             appService.threadFilters.contains($0.posts.filter({ return $0.parentId == 0 })[0].category) &&
             !appService.collapsedThreads.contains($0.posts.filter({ return $0.parentId == 0 })[0].threadId)})
         } else {
@@ -57,7 +55,7 @@ struct ChatView: View {
                     // Scroll to top
                     VStack {
                         Spacer().frame(maxWidth: .infinity).frame(height: self.resultsPadding)
-                    }.id(9999999999991)
+                    }.id(ScrollToTopId)
                     
                     // All non-hidden threads
                     ForEach(filteredThreads(), id: \.threadId) { thread in
@@ -69,14 +67,14 @@ struct ChatView: View {
                     // Scroll to bottom / padding
                     VStack {
                         Spacer().frame(maxWidth: .infinity).frame(height: 30)
-                    }.id(9999999999993)
+                    }.id(ScrollToBottomId)
                     
                 }
             }
             
-            .overlay(NoticeView(show: $chatService.showingFavoriteNotice, message: .constant("Added User!")))
+            .overlay(NoticeView(show: $chatService.showingFavoriteNotice, message: "Added User!"))
             
-            .overlay(NoticeView(show: $chatService.showingCopiedNotice, message: .constant("Copied!")))
+            .overlay(NoticeView(show: $chatService.showingCopiedNotice, message: "Copied!"))
             
             if showingSearch {
                 VStack {
@@ -93,7 +91,7 @@ struct ChatView: View {
             
         }
         // View settings
-        .background(Color("PrimaryBackground").frame(height: 2600).offset(y: -80))
+        .background(Color("PrimaryBackground").frame(height: BackgroundHeight).offset(y: BackgroundOffset))
         .edgesIgnoringSafeArea(.bottom)
         .navigationViewStyle(StackNavigationViewStyle())
         .navigationBarTitle("Chat", displayMode: .inline)
@@ -123,10 +121,10 @@ struct ChatView: View {
             })
 
         // If refreshing thread after posting
-        .overlay(LoadingView(show: self.$isGettingChat, title: .constant("")))
+        .overlay(LoadingView(show: self.$isGettingChat))
         
         .onReceive(chatService.$didSubmitNewThread) { value in
-            chatService.scrollTargetChatTop = 9999999999991
+            chatService.scrollTargetChatTop = ScrollToTopId
             chatService.didGetChatStart = false
             self.isGettingChat = true
         }
@@ -134,7 +132,7 @@ struct ChatView: View {
         // Fetching chat data
         .onReceive(chatService.$didGetChatStart) { value in
             if value && chatService.didSubmitPost {
-                chatService.scrollTargetChatTop = 9999999999991
+                chatService.scrollTargetChatTop = ScrollToTopId
                 chatService.didGetChatStart = false
                 self.isGettingChat = true
                 chatService.gettingChat = true

@@ -11,8 +11,8 @@ struct iPhoneContentView: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var appService: AppService
     @EnvironmentObject var chatService: ChatService
-    @EnvironmentObject var notifications: Notifications
-    @EnvironmentObject var shackTags: ShackTags
+    @EnvironmentObject var pushNotificationsService: PushNotificationsService
+    @EnvironmentObject var shackTagService: ShackTagService
     
     @State private var showingGuidelinesView = false
     
@@ -24,9 +24,7 @@ struct iPhoneContentView: View {
                     GuidelinesView(showingGuidelinesView: $showingGuidelinesView)
                     .onAppear() {
                         DispatchQueue.main.async {
-                            let defaults = UserDefaults.standard
-                            let guidelinesAccepted = defaults.object(forKey: "GuidelinesAccepted") as? Bool ?? false
-                            self.showingGuidelinesView = !guidelinesAccepted
+                            self.showingGuidelinesView = !appService.didAcceptGuidelines()
                         }
                     }
                     iPhoneHomeButtons()
@@ -35,10 +33,10 @@ struct iPhoneContentView: View {
                     TrendingView()
                     iPhoneArticlesView()
                 }
-                .background(Color("PrimaryBackground").frame(height: 2600).offset(y: -80))
+                .background(Color("PrimaryBackground").frame(height: BackgroundHeight).offset(y: BackgroundOffset))
             }
             .edgesIgnoringSafeArea(.bottom)
-            .navigationBarTitle(notifications.notificationData != nil ? "" : "Evening Reading")
+            .navigationBarTitle(pushNotificationsService.notificationData != nil ? "" : "Evening Reading")
             .navigationBarHidden(false)
             .navigationBarBackButtonHidden(true)
             .navigationBarItems(trailing: SettingsButton())
@@ -50,7 +48,7 @@ struct iPhoneContentView: View {
         .onAppear() {
             if !appService.didRegisterForPush {
                 appService.didRegisterForPush = true
-                NotificationStore(service: .init()).registernew()
+                RegisterPushService().registernew()
             }
         }
     }

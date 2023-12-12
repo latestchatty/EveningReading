@@ -20,9 +20,9 @@ struct EveningReadingApp: App {
     @StateObject var chatService = ChatService(service: .init())
 
     #if os(iOS)
-    @StateObject var notifications = Notifications.shared //Notifications()
+    @StateObject var pushNotificationsService = PushNotificationsService.shared
+    @StateObject var shackTagsService = ShackTagService.shared
     @UIApplicationDelegateAdaptor private var appDelegate: AppDelegate
-    @StateObject var shackTags = ShackTags.shared
     #endif
     
     #if os(macOS)
@@ -36,15 +36,15 @@ struct EveningReadingApp: App {
                 iPadContentView()
                     .environmentObject(appService)
                     .environmentObject(chatService)
-                    .environmentObject(notifications)
-                    .environmentObject(shackTags)
+                    .environmentObject(pushNotificationsService)
+                    .environmentObject(shackTagsService)
                     .preferredColorScheme(appService.isDarkMode ? .dark : .light)
             } else {
                 iPhoneContentView()
                     .environmentObject(appService)
                     .environmentObject(chatService)
-                    .environmentObject(notifications)
-                    .environmentObject(shackTags)
+                    .environmentObject(pushNotificationsService)
+                    .environmentObject(shackTagsService)
                     .preferredColorScheme(appService.isDarkMode ? .dark : .light)
             }
             #else
@@ -83,8 +83,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         return true
     }
     
-   
-    // No callback in simulator, must use device to get valid push token
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         let tokenParts = deviceToken.map { data in String(format: "%02.2hhx", data) }
         let token = tokenParts.joined()
@@ -114,7 +112,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     
     func registerForPushNotifications() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { [weak self] granted, _ in
-            //print("Permission granted: \(granted)")
             guard granted else { return }
             self?.getNotificationSettings()
         }
@@ -122,7 +119,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     
     func getNotificationSettings() {
         UNUserNotificationCenter.current().getNotificationSettings { settings in
-            //print("Notification settings: \(settings)")
             guard settings.authorizationStatus == .authorized else { return }
             DispatchQueue.main.async {
               UIApplication.shared.registerForRemoteNotifications()

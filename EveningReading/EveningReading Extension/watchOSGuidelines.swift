@@ -8,17 +8,16 @@
 import SwiftUI
 
 struct watchOSGuidelines: View {
+    @EnvironmentObject var appService: AppService
     @Binding public var showingGuidelinesView: Bool
         
     func acceptGuidelines() {
-        let defaults = UserDefaults.standard
-        defaults.set(true, forKey: "GuidelinesAccepted")
+        appService.acceptGuidelines()
         self.showingGuidelinesView = false
     }
     
     var body: some View {
-        Spacer().frame(width: 0, height: 0)
-        .fullScreenCover(isPresented: $showingGuidelinesView) {
+        if showingGuidelinesView {
             VStack {
                 Spacer().frame(width: 0, height: 10)
                 ScrollView {

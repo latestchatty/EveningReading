@@ -47,7 +47,7 @@ struct AuthorNameView: View {
                 .fixedSize()
         #endif
         #if os(OSX)
-            Text("\(appService.blockedAuthors.contains(self.name) ? "[blocked]" : self.name)")
+        Text(appService.getAuthorName(name: self.name))
                 .font(self.bold ? .headline : .body)
                 .foregroundColor(
                     self.name == self.op ? Color(NSColor.systemGreen) : self.name == "Shacknews" ? Color(NSColor.systemBlue) : colorScheme == .dark ? Color(NSColor.systemOrange) : Color(NSColor.systemPurple)

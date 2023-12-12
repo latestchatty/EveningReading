@@ -8,12 +8,6 @@
 import Foundation
 import SwiftUI
 
-// https://developer.apple.com/design/human-interface-guidelines/ios/visual-design/typography#dynamic-type-sizes
-
-// https://gist.github.com/zacwest/916d31da5d03405809c4
-
-// https://stackoverflow.com/questions/58375481/how-to-set-a-custom-font-family-as-the-default-for-an-entire-app-in-swiftui
-
 extension Font {
     
     /// Create a font with the large title text style.

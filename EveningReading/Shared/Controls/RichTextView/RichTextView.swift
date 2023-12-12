@@ -108,18 +108,15 @@ struct LinkView: View {
     #if os(iOS)
     var body: some View {
         
-        // ... may cause performance issues
         LinkViewerSheet(hyperlinkUrl: self.$hyperlinkUrlStr, showingWebView: self.$showingLinkWebView)
-        // ...
     
         HStack(alignment: .bottom, spacing: 0) {
             Text(self.description)
                 .underline()
                 .foregroundColor(linkForeground)
-//                .foregroundColor(colorScheme == .dark ? Color(UIColor.systemTeal) : Color(UIColor.black))
+                //.foregroundColor(colorScheme == .dark ? Color(UIColor.systemTeal) : Color(UIColor.black))
                 .onTapGesture(count: 1) {
-                    print("Link tapped!")
-                    
+                    // Fixes an iOS 17 bug
                     if (colorScheme == .dark) {
                         linkForeground = Color(UIColor.systemTeal)
                     } else {
@@ -218,7 +215,7 @@ struct LinkView: View {
         }
         
         // If push notification tapped
-        .onReceive(Notifications.shared.$notificationData) { value in
+        .onReceive(PushNotificationsService.shared.$notificationData) { value in
             if value != nil {
                 self.showingSafariSheet = false
                 appService.showingSafariSheet = false
@@ -314,116 +311,116 @@ struct TextBlockView: View {
     
     func renderInlineText(_ text: [InlineText]) -> some View {
         return text.map {t in
-            var atomView: Text = Text(t.text)
+            var inlineTextView: Text = Text(t.text)
             
             #if os(macOS)
-            atomView = atomView.font(.body)
+            inlineTextView = inlineTextView.font(.body)
             #endif
             
             if t.attributes.contains(.bold) {
-                atomView = atomView.bold()
+                inlineTextView = inlineTextView.bold()
             }
             if t.attributes.contains(.italic) {
-                atomView = atomView.italic()
+                inlineTextView = inlineTextView.italic()
             }
             if t.attributes.contains(.heading) {
-                atomView = atomView.font(.headline)
+                inlineTextView = inlineTextView.font(.headline)
             }
             if t.attributes.contains(.blue) {
                 #if os(iOS)
-                atomView = atomView.foregroundColor(Color(UIColor.systemBlue))
+                inlineTextView = inlineTextView.foregroundColor(Color(UIColor.systemBlue))
                 #endif
                 #if os(OSX)
-                atomView = atomView.foregroundColor(Color(NSColor.systemBlue))
+                inlineTextView = inlineTextView.foregroundColor(Color(NSColor.systemBlue))
                 #endif
                 #if os(watchOS)
-                atomView = atomView.foregroundColor(Color.blue)
+                inlineTextView = inlineTextView.foregroundColor(Color.blue)
                 #endif
             }
             if t.attributes.contains(.green) {
                 #if os(iOS)
-                atomView = atomView.foregroundColor(Color(UIColor.systemGreen))
+                inlineTextView = inlineTextView.foregroundColor(Color(UIColor.systemGreen))
                 #endif
                 #if os(OSX)
-                atomView = atomView.foregroundColor(Color(NSColor.systemGreen))
+                inlineTextView = inlineTextView.foregroundColor(Color(NSColor.systemGreen))
                 #endif
                 #if os(watchOS)
-                atomView = atomView.foregroundColor(Color.green)
+                inlineTextView = inlineTextView.foregroundColor(Color.green)
                 #endif
             }
             if t.attributes.contains(.orange) {
                 #if os(iOS)
-                atomView = atomView.foregroundColor(Color(UIColor.systemOrange))
+                inlineTextView = inlineTextView.foregroundColor(Color(UIColor.systemOrange))
                 #endif
                 #if os(OSX)
-                atomView = atomView.foregroundColor(Color(NSColor.systemOrange))
+                inlineTextView = inlineTextView.foregroundColor(Color(NSColor.systemOrange))
                 #endif
                 #if os(watchOS)
-                atomView = atomView.foregroundColor(Color.orange)
+                inlineTextView = inlineTextView.foregroundColor(Color.orange)
                 #endif
             }
             if t.attributes.contains(.yellow) {
                 #if os(iOS)
-                atomView = atomView.foregroundColor(Color("YellowText"))
-                // atomView = atomView.foregroundColor(colorScheme == .dark ?  Color(UIColor.systemYellow) : Color("LightSchemeYellow"))
+                inlineTextView = inlineTextView.foregroundColor(Color("YellowText"))
+                // inlineTextView = inlineTextView.foregroundColor(colorScheme == .dark ?  Color(UIColor.systemYellow) : Color("LightSchemeYellow"))
                 #endif
                 #if os(OSX)
-                atomView = atomView.foregroundColor(Color(NSColor.systemYellow))
+                inlineTextView = inlineTextView.foregroundColor(Color(NSColor.systemYellow))
                 #endif
                 #if os(watchOS)
-                atomView = atomView.foregroundColor(Color.yellow)
+                inlineTextView = inlineTextView.foregroundColor(Color.yellow)
                 #endif
             }
             if t.attributes.contains(.red) {
                 #if os(iOS)
-                atomView = atomView.foregroundColor(Color(UIColor.systemRed))
+                inlineTextView = inlineTextView.foregroundColor(Color(UIColor.systemRed))
                 #endif
                 #if os(OSX)
-                atomView = atomView.foregroundColor(Color(NSColor.systemRed))
+                inlineTextView = inlineTextView.foregroundColor(Color(NSColor.systemRed))
                 #endif
                 #if os(watchOS)
-                atomView = atomView.foregroundColor(Color.red)
+                inlineTextView = inlineTextView.foregroundColor(Color.red)
                 #endif
             }
             if t.attributes.contains(.pink) {
-                atomView = atomView.foregroundColor(Color("PinkText"))
+                inlineTextView = inlineTextView.foregroundColor(Color("PinkText"))
             }
             if t.attributes.contains(.olive) {
-                atomView = atomView.foregroundColor(Color("OliveText"))
+                inlineTextView = inlineTextView.foregroundColor(Color("OliveText"))
             }
             if t.attributes.contains(.lime) {
-                atomView = atomView.foregroundColor(Color("LimeText"))
+                inlineTextView = inlineTextView.foregroundColor(Color("LimeText"))
             }
             if t.attributes.contains(.strike) {
-                atomView = atomView.strikethrough()
+                inlineTextView = inlineTextView.strikethrough()
             }
             if t.attributes.contains(.quote) {
                 #if os(watchOS)
-                atomView = atomView.font(.custom("Georgia", size: 17, relativeTo: .footnote))
+                inlineTextView = inlineTextView.font(.custom("Georgia", size: 17, relativeTo: .footnote))
                 #else
-                atomView = atomView.font(.custom("Georgia", size: 17, relativeTo: .body))
+                inlineTextView = inlineTextView.font(.custom("Georgia", size: 17, relativeTo: .body))
                 #endif
             }
             if t.attributes.contains(.sample) {
                 #if os(watchOS)
-                atomView = atomView.font(.custom("Georgia", size: 17, relativeTo: .footnote))
+                inlineTextView = inlineTextView.font(.custom("Georgia", size: 17, relativeTo: .footnote))
                 #else
-                atomView = atomView.font(.custom("San Francisco", size: 14, relativeTo: .body))
+                inlineTextView = inlineTextView.font(.custom("San Francisco", size: 14, relativeTo: .body))
                 #endif
             }
             if t.attributes.contains(.code) {
                 #if os(watchOS)
-                atomView = atomView.font(.custom("Georgia", size: 17, relativeTo: .footnote))
+                inlineTextView = inlineTextView.font(.custom("Georgia", size: 17, relativeTo: .footnote))
                 #else
-                atomView = atomView.font(.custom("Menlo Regular", size: 14, relativeTo: .body))
+                inlineTextView = inlineTextView.font(.custom("Menlo Regular", size: 14, relativeTo: .body))
                 #endif
             }
             #if os(watchOS)
             if !t.attributes.contains(.quote) && !t.attributes.contains(.sample) && !t.attributes.contains(.code) {
-                atomView = atomView.font(.footnote)
+                inlineTextView = inlineTextView.font(.footnote)
             }
             #endif
-            return atomView
+            return inlineTextView
         }.reduce(Text(""), +)
         #if os(OSX)
         .textSelection(.enabled)
