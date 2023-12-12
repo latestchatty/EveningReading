@@ -1,5 +1,5 @@
 //
-//  ShackGlobals.swift
+//  Globals.swift
 //  EveningReading
 //
 //  Created by Chris Hodge on 5/3/21.

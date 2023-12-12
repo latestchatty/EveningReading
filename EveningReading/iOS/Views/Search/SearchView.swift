@@ -106,7 +106,7 @@ struct SearchView: View {
         }
         .frame(maxWidth: .infinity)
         .padding()
-        .background(Color("PrimaryBackground").frame(height: BackgroundHeight).offset(y: -80))
+        .background(Color("PrimaryBackground").frame(height: BackgroundHeight).offset(y: BackgroundOffset))
         .edgesIgnoringSafeArea(.bottom)
         .navigationViewStyle(StackNavigationViewStyle())
         .navigationBarTitle("Search", displayMode: .inline)

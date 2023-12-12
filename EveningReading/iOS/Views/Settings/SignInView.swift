@@ -78,7 +78,7 @@ struct SignInView: View {
                 
             }
             .padding()
-            .background(Color("SignInBackground").frame(height: BackgroundHeight).offset(y: -80))
+            .background(Color("SignInBackground").frame(height: BackgroundHeight).offset(y: BackgroundOffset))
             .disabled(appService.isAuthenticating)
             .overlay(AuthenticatingView(isVisible: $appService.isAuthenticating))
             .onReceive(timer) { _ in

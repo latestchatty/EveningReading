@@ -138,7 +138,7 @@ struct InboxView: View {
         }
         .onAppear(perform: getMessages)
         .frame(maxWidth: .infinity)
-        .background(Color("PrimaryBackground").frame(height: BackgroundHeight).offset(y: -80))
+        .background(Color("PrimaryBackground").frame(height: BackgroundHeight).offset(y: BackgroundOffset))
         .edgesIgnoringSafeArea(.bottom)
         .navigationBarTitle("Inbox", displayMode: .inline)
         .navigationBarItems(leading: Spacer().frame(width: 16, height: 16), trailing: NewMessageButton(isReply: false, showingNewMessageSheet: self.$showingNewMessageSheet))
