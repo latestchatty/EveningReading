@@ -1,5 +1,5 @@
 # Evening Reading
-Evening Reading
+Evening Reading is a social media application that allows users to discuss a variety of topics, tag posts, upload images and send messages.
 
 ## Configuration
 
