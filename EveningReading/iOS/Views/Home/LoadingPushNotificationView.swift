@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct LoadingPushNotificationView: View {
-    @EnvironmentObject var notifications: PushNotifications
+    @EnvironmentObject var pushNotificationsService: PushNotificationsService
     
     var body: some View {
-        if notifications.notificationData != nil {
+        if pushNotificationsService.notificationData != nil {
             ZStack {
                 Color("PrimaryBackground").frame(width: BackgroundWidth, height: BackgroundHeight).offset(y: BackgroundOffset)
                 LoadingView(show: .constant(true))

@@ -13,8 +13,8 @@ struct ComposePostView: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var appService: AppService
     @EnvironmentObject var chatService: ChatService
-    @EnvironmentObject var shackTags: ShackTags
-    @EnvironmentObject var notifications: PushNotifications
+    @EnvironmentObject var shackTagService: ShackTagService
+    @EnvironmentObject var pushNotificationsService: PushNotificationsService
     
     public var isRootPost: Bool = false
     public var postId: Int = 0
@@ -61,7 +61,7 @@ struct ComposePostView: View {
         // Let the loading indicator show for at least a short time
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(200)) {
             chatService.submitPost(postBody: self.postBody, postId: self.postId)
-            ShackTags.shared.taggedText = ""
+            ShackTagService.shared.taggedText = ""
         }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(8)) {
@@ -127,7 +127,7 @@ struct ComposePostView: View {
             chatService.submitPostSuccessMessage = ""
             chatService.submitPostErrorMessage = ""
             self.postBody = ""
-            ShackTags.shared.taggedText = ""
+            ShackTagService.shared.taggedText = ""
             self.showingLoading = false
             self.uploadImageFail = false
             self.showingComposeSheet = false
@@ -355,21 +355,21 @@ struct ComposePostView: View {
             }
 
             // Tag some text
-            .onReceive(self.shackTags.$doTagText) { value in
+            .onReceive(shackTagService.$doTagText) { value in
                 if value {
                     self.showingTagMenu = true
                 }
             }
             
             // If shack tags were added
-            .onReceive(ShackTags.shared.$taggedText) { value in
+            .onReceive(ShackTagService.shared.$taggedText) { value in
                 if value != "" {
                     self.postBody = value
                 }
             }
                 
             // If push notification tapped
-            .onReceive(notifications.$notificationData) { value in
+            .onReceive(pushNotificationsService.$notificationData) { value in
                 if value != nil {
                     clearComposeSheet()
                 }

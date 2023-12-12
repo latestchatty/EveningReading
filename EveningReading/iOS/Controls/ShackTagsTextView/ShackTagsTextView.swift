@@ -8,8 +8,8 @@
 import Foundation
 import SwiftUI
 
-class ShackTags: NSObject, ObservableObject {
-    static let shared = ShackTags()
+class ShackTagService: NSObject, ObservableObject {
+    static let shared = ShackTagService()
     
     override init() {
         self.doTagText = false
@@ -45,9 +45,9 @@ struct ShackTagsTextView: UIViewRepresentable {
     func updateUIView(_ uiView: UITextView, context: Context) {
         uiView.text = text
         uiView.font = UIFont.preferredFont(forTextStyle: textStyle)
-        if (ShackTags.shared.textEditorCurrentRange != nil) {
-            uiView.selectedTextRange = ShackTags.shared.textEditorCurrentRange
-            ShackTags.shared.textEditorCurrentRange = nil
+        if (ShackTagService.shared.textEditorCurrentRange != nil) {
+            uiView.selectedTextRange = ShackTagService.shared.textEditorCurrentRange
+            ShackTagService.shared.textEditorCurrentRange = nil
         }
     }
     
@@ -68,7 +68,7 @@ struct ShackTagsTextView: UIViewRepresentable {
         func textViewDidChange(_ textView: UITextView) {
             self.text.wrappedValue = textView.text
             let newRange: UITextRange? = textView.selectedTextRange
-            ShackTags.shared.textEditorCurrentRange = newRange
+            ShackTagService.shared.textEditorCurrentRange = newRange
         }
     }
 }
@@ -105,18 +105,18 @@ class TagMenuItemTextView: UITextView {
     @objc func tagText() {
         if (self.selectedRange.location != NSNotFound ) {
             // Show TagTextView
-            ShackTags.shared.doTagText = true
+            ShackTagService.shared.doTagText = true
             
             // Replace selected text with tagged text
-            ShackTags.shared.tagAction = {
-                if ShackTags.shared.tagWith != "" {
+            ShackTagService.shared.tagAction = {
+                if ShackTagService.shared.tagWith != "" {
                     if let textRange = self.selectedTextRange {
                         if let selectedText = self.text(in: textRange) {
                             // Split tag
-                            let halfLength = ShackTags.shared.tagWith.count / 2
-                            let index = ShackTags.shared.tagWith.index(ShackTags.shared.tagWith.startIndex, offsetBy: halfLength)
-                            ShackTags.shared.tagWith.insert(";", at: index)
-                            let result = ShackTags.shared.tagWith.split(separator: ";")
+                            let halfLength = ShackTagService.shared.tagWith.count / 2
+                            let index = ShackTagService.shared.tagWith.index(ShackTagService.shared.tagWith.startIndex, offsetBy: halfLength)
+                            ShackTagService.shared.tagWith.insert(";", at: index)
+                            let result = ShackTagService.shared.tagWith.split(separator: ";")
                             let tagBegin = result[0]
                             let tagEnd = result[1]
                             
@@ -131,7 +131,7 @@ class TagMenuItemTextView: UITextView {
                                 self.text.replaceSubrange(range, with: taggedText)
                                  
                                 // Store the tagged text
-                                ShackTags.shared.taggedText = self.text
+                                ShackTagService.shared.taggedText = self.text
                                 
                                 // Update the currently selected text
                                 if let positionStart = self.position(from: self.beginningOfDocument, offset: selectedLocation), let positionEnd = self.position(from: self.beginningOfDocument, offset: selectedLocation + selectedLength + 4) {

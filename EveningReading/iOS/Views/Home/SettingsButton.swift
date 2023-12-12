@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SettingsButton: View {
     @EnvironmentObject var appService: AppService
-    @EnvironmentObject var notifications: PushNotifications
+    @EnvironmentObject var pushNotificationsService: PushNotificationsService
     var hide: Bool = false
 
     private func navigateTo(_ goToDestination: inout Bool) {
@@ -18,7 +18,7 @@ struct SettingsButton: View {
     }
     
     var body: some View {
-        if notifications.notificationData != nil {
+        if pushNotificationsService.notificationData != nil {
             EmptyView()
         } else {
             HStack {

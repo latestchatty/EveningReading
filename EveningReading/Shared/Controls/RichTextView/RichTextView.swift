@@ -218,7 +218,7 @@ struct LinkView: View {
         }
         
         // If push notification tapped
-        .onReceive(PushNotifications.shared.$notificationData) { value in
+        .onReceive(PushNotificationsService.shared.$notificationData) { value in
             if value != nil {
                 self.showingSafariSheet = false
                 appService.showingSafariSheet = false

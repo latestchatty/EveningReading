@@ -20,7 +20,7 @@ struct TagTextView: View {
     ]
     
     func tagAndHide() {
-        ShackTags.shared.tagAction()
+        ShackTagService.shared.tagAction()
         withAnimation(.easeOut(duration: 0.1)) {
             shown.toggle()
         }
@@ -35,7 +35,7 @@ struct TagTextView: View {
                     
                     ForEach(shackTagViewModel.tagColors, id: \.self) { shacktag in
                         Button(action: {
-                            ShackTags.shared.tagWith = shacktag.tag
+                            ShackTagService.shared.tagWith = shacktag.tag
                             tagAndHide()
                         }) {
                             Text(shacktag.label)
@@ -48,7 +48,7 @@ struct TagTextView: View {
                     
                     ForEach(shackTagViewModel.tagFormats, id: \.self) { shacktag in
                         Button(action: {
-                            ShackTags.shared.tagWith = shacktag.tag
+                            ShackTagService.shared.tagWith = shacktag.tag
                             tagAndHide()
                         }) {
                             Text(shacktag.label)

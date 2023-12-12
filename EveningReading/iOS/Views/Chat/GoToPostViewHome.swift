@@ -10,7 +10,7 @@ import SwiftUI
 struct GoToPostViewHome: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var appService: AppService
-    @EnvironmentObject var notifications: PushNotifications
+    @EnvironmentObject var pushNotificationsService: PushNotificationsService
     @EnvironmentObject var chatService: ChatService
     
     @State private var goToPostId: Int = 0
@@ -33,7 +33,7 @@ struct GoToPostViewHome: View {
             }.isDetailLink(false).hidden().allowsHitTesting(false)
             
             // Deep link to post from push notification
-            .onReceive(notifications.$notificationData) { value in
+            .onReceive(pushNotificationsService.$notificationData) { value in
                 if let postId = value?.notification.request.content.userInfo["postid"], let body = value?.notification.request.content.body, let title = value?.notification.request.content.title {
                     if String("\(postId)").isInt && appService.showingPostId != Int(String("\(postId)")) ?? 0 {
                         appService.showingPostId = Int(String("\(postId)")) ?? 0
@@ -48,7 +48,7 @@ struct GoToPostViewHome: View {
                             }
                         }
                         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(2000)) {
-                            notifications.notificationData = nil
+                            pushNotificationsService.notificationData = nil
                         }
                     }
                 }

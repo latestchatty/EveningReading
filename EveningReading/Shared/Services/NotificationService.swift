@@ -157,8 +157,8 @@ class NotificationStore: ObservableObject {
 }
 
 #if os(iOS)
-class PushNotifications: NSObject, ObservableObject, UNUserNotificationCenterDelegate {
-    static let shared = PushNotifications()
+class PushNotificationsService: NSObject, ObservableObject, UNUserNotificationCenterDelegate {
+    static let shared = PushNotificationsService()
     
     @Published var notificationData: UNNotificationResponse?
     @Published var notificationLink: String = ""
@@ -173,7 +173,7 @@ class PushNotifications: NSObject, ObservableObject, UNUserNotificationCenterDel
     }
 }
 
-extension PushNotifications {
+extension PushNotificationsService {
     public func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         completionHandler([.banner, .sound, .badge])
     }
@@ -184,11 +184,14 @@ extension PushNotifications {
         let userInfo = response.notification.request.content.userInfo
         if let aps = userInfo["aps"] as? [String: AnyObject] {
             // Do what you want with the notification
-            PushNotifications.shared.notificationLink = aps.description
+            PushNotificationsService.shared.notificationLink = aps.description
         }
         completionHandler()
     }
 
-    public func userNotificationCenter(_ center: UNUserNotificationCenter, openSettingsFor notification: UNNotification?) { }
+    public func userNotificationCenter(_ center: UNUserNotificationCenter, openSettingsFor notification: UNNotification?)
+    {
+        // ...
+    }
 }
 #endif

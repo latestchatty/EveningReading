@@ -11,8 +11,8 @@ struct iPadContentView: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var appService: AppService
     @EnvironmentObject var chatService: ChatService
-    @EnvironmentObject var notifications: PushNotifications
-    @EnvironmentObject var shackTags: ShackTags
+    @EnvironmentObject var pushNotificationsService: PushNotificationsService
+    @EnvironmentObject var shackTags: ShackTagService
     
     @State private var showingGuidelinesView = false
     
@@ -38,7 +38,7 @@ struct iPadContentView: View {
                 }
             }
             .edgesIgnoringSafeArea(.bottom)
-            .navigationBarTitle(notifications.notificationData != nil ? "" : "Evening Reading")
+            .navigationBarTitle(pushNotificationsService.notificationData != nil ? "" : "Evening Reading")
             .navigationBarHidden(false)
             .navigationBarBackButtonHidden(true)
             .navigationBarItems(trailing: SettingsButton())

@@ -20,8 +20,8 @@ struct EveningReadingApp: App {
     @StateObject var chatService = ChatService(service: .init())
 
     #if os(iOS)
-    @StateObject var notifications = PushNotifications.shared
-    @StateObject var shackTags = ShackTags.shared
+    @StateObject var pushNotificationsService = PushNotificationsService.shared
+    @StateObject var shackTagsService = ShackTagService.shared
     @UIApplicationDelegateAdaptor private var appDelegate: AppDelegate
     #endif
     
@@ -36,15 +36,15 @@ struct EveningReadingApp: App {
                 iPadContentView()
                     .environmentObject(appService)
                     .environmentObject(chatService)
-                    .environmentObject(notifications)
-                    .environmentObject(shackTags)
+                    .environmentObject(pushNotificationsService)
+                    .environmentObject(shackTagsService)
                     .preferredColorScheme(appService.isDarkMode ? .dark : .light)
             } else {
                 iPhoneContentView()
                     .environmentObject(appService)
                     .environmentObject(chatService)
-                    .environmentObject(notifications)
-                    .environmentObject(shackTags)
+                    .environmentObject(pushNotificationsService)
+                    .environmentObject(shackTagsService)
                     .preferredColorScheme(appService.isDarkMode ? .dark : .light)
             }
             #else

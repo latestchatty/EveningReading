@@ -10,7 +10,7 @@ import SwiftUI
 struct NewMessageView: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var appService: AppService
-    @EnvironmentObject var notifications: PushNotifications
+    @EnvironmentObject var pushNotificationsService: PushNotificationsService
     
     @StateObject var messageViewModel = MessageViewModel()
     
@@ -126,7 +126,7 @@ struct NewMessageView: View {
         }
         
         // If push notification tapped
-        .onReceive(notifications.$notificationData) { value in
+        .onReceive(pushNotificationsService.$notificationData) { value in
             if value != nil {
                 clearNewMessageSheet()
             }

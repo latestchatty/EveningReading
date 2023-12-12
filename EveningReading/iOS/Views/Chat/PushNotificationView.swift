@@ -11,7 +11,7 @@ import SwiftUI
 struct PushNotificationViewChat: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var appService: AppService
-    @EnvironmentObject var notifications: PushNotifications
+    @EnvironmentObject var pushNotificationsService: PushNotificationsService
     @EnvironmentObject var chatService: ChatService
 
     @State private var isAlertShowing: Bool = false
@@ -64,7 +64,7 @@ struct PushNotificationViewChat: View {
             }
         }
         // Deep link to post from push notification
-        .onReceive(notifications.$notificationData) { value in
+        .onReceive(pushNotificationsService.$notificationData) { value in
             if let postId = value?.notification.request.content.userInfo["postid"] {
                 if String("\(postId)").isInt && appService.showingPostId != Int(String("\(postId)")) ?? 0 {
                     print("prompting for postID \(postId)")
