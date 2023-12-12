@@ -244,6 +244,9 @@
 		83AB388D266A60BC000A67B6 /* TagsWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AB388C266A60BC000A67B6 /* TagsWebView.swift */; };
 		83F98F4129F31A4100A828B5 /* macOSLinkViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F98F4029F31A4100A828B5 /* macOSLinkViewer.swift */; };
 		83FAB3322B28B20C00E0974F /* RegisterPushService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FAB3312B28B20C00E0974F /* RegisterPushService.swift */; };
+		83FAB3352B28BE7000E0974F /* PostTagHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FAB3342B28BE7000E0974F /* PostTagHelper.swift */; };
+		83FAB3362B28BE8E00E0974F /* PostTagHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FAB3342B28BE7000E0974F /* PostTagHelper.swift */; };
+		83FAB3372B28BE9200E0974F /* PostTagHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FAB3342B28BE7000E0974F /* PostTagHelper.swift */; };
 		83FE337027272DF8003FB55D /* WhosTaggingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FE336F27272DF8003FB55D /* WhosTaggingView.swift */; };
 		83FE337827272EE2003FB55D /* BlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FE337727272EE2003FB55D /* BlurView.swift */; };
 		83FE337B27272F46003FB55D /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FE337A27272F46003FB55D /* LoadingView.swift */; };
@@ -464,6 +467,7 @@
 		83AB388C266A60BC000A67B6 /* TagsWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsWebView.swift; sourceTree = "<group>"; };
 		83F98F4029F31A4100A828B5 /* macOSLinkViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSLinkViewer.swift; sourceTree = "<group>"; };
 		83FAB3312B28B20C00E0974F /* RegisterPushService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterPushService.swift; sourceTree = "<group>"; };
+		83FAB3342B28BE7000E0974F /* PostTagHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTagHelper.swift; sourceTree = "<group>"; };
 		83FE336F27272DF8003FB55D /* WhosTaggingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhosTaggingView.swift; sourceTree = "<group>"; };
 		83FE337727272EE2003FB55D /* BlurView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlurView.swift; sourceTree = "<group>"; };
 		83FE337A27272F46003FB55D /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
@@ -919,6 +923,7 @@
 				83AA19262645C43500556E69 /* PostDecorator.swift */,
 				834EFE6227284603004E7BA1 /* UserHelper.swift */,
 				831EB9CC2B23A60300DA9433 /* RedactedContentLoader.swift */,
+				83FAB3342B28BE7000E0974F /* PostTagHelper.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1462,6 +1467,7 @@
 				83AA19362645F4A700556E69 /* SignInView.swift in Sources */,
 				833EE9E326454DFB00345A1D /* WebAuthenticationPresenter.swift in Sources */,
 				833980EF263F0874005614E8 /* iPhoneHomeButtons.swift in Sources */,
+				83FAB3352B28BE7000E0974F /* PostTagHelper.swift in Sources */,
 				833EE9DD26454DF100345A1D /* SafariView.swift in Sources */,
 				83398150263F6427005614E8 /* ArrayExtensions.swift in Sources */,
 				8339817B264062BB005614E8 /* RoundedCornersView.swift in Sources */,
@@ -1495,6 +1501,7 @@
 			files = (
 				833685D726738A8A00ACE618 /* macOSThreadList.swift in Sources */,
 				831EB9BD2B223C1000DA9433 /* ChatModels.swift in Sources */,
+				83FAB3362B28BE8E00E0974F /* PostTagHelper.swift in Sources */,
 				8339816C26404F59005614E8 /* SidebarButtons.swift in Sources */,
 				833817952639AC18007A8B28 /* macOSContentView.swift in Sources */,
 				83FE337E2727303E003FB55D /* macOSWhosTaggingView.swift in Sources */,
@@ -1593,6 +1600,7 @@
 				833981B52641B426005614E8 /* Globals.swift in Sources */,
 				83AA194E2646353800556E69 /* RedactingView.swift in Sources */,
 				833981A72641A166005614E8 /* AuthorNameView.swift in Sources */,
+				83FAB3372B28BE9200E0974F /* PostTagHelper.swift in Sources */,
 				831EB9E42B2762CA00DA9433 /* WordModel.swift in Sources */,
 				833980B6263C41CF005614E8 /* NotificationView.swift in Sources */,
 				831EB9C32B223C8D00DA9433 /* ArticleModels.swift in Sources */,

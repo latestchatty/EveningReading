@@ -71,7 +71,7 @@ struct PostPreviewView: View {
             
             // One line preview of post body, blue if it is the users post
             Text(appService.blockedAuthors.contains(self.postAuthor) ? "[blocked]" : self.postBody.getPreview)
-                .fontWeight(postStrength != nil ? PostWeight[postStrength!] : .regular)
+                .fontWeight(postStrength != nil ? PostDecorator().postWeight[postStrength!] : .regular)
                 .lineLimit(1)
                 .truncationMode(.tail)
                 .font(.callout)

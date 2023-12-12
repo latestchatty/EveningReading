@@ -50,7 +50,7 @@ struct macOSPostPreviewView: View {
         // Post preview line
         Text(appService.getPostBodyFor(name: self.postAuthor, body: postText.getPreview))
             .font(.body)
-            .fontWeight(postStrength != nil ? PostWeight[postStrength!] : .regular)
+            .fontWeight(postStrength != nil ? PostDecorator().postWeight[postStrength!] : .regular)
             .opacity(postStrength != nil ? postStrength! : 0.75)
             .foregroundColor(appService.username.lowercased() == self.postAuthor.lowercased() ? Color(NSColor.systemTeal) : Color.primary)
             .lineLimit(1)

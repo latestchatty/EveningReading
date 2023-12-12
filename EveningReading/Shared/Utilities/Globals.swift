@@ -34,15 +34,6 @@ let PostTagColor: [String: Color] = [
     "wow": Color(UIColor.systemGray),
     "aww": Color(UIColor.systemTeal)
 ]
-enum PostTags: String, CaseIterable {
-    case aww = "aww"
-    case inf = "inf"
-    case lol = "lol"
-    case tag = "tag"
-    case unf = "unf"
-    case wow = "wow"
-    case wtf = "wtf"
-}
 #endif
 
 #if os(OSX)
@@ -64,15 +55,6 @@ let PostTagColor: [String: Color] = [
     "wow": Color(NSColor.systemGray),
     "aww": Color(NSColor.systemTeal)
 ]
-enum PostTags: String, CaseIterable {
-    case aww = "aww"
-    case inf = "inf"
-    case lol = "lol"
-    case tag = "tag"
-    case unf = "unf"
-    case wow = "wow"
-    case wtf = "wtf"
-}
 #endif
 
 #if os(watchOS)
@@ -95,41 +77,3 @@ let PostTagColor: [String: Color] = [
     "aww": Color.purple
 ]
 #endif
-
-enum PostTag: String, CaseIterable {
-    case lol = "lol"
-    case inf = "inf"
-    case unf = "unf"
-    case tag = "tag"
-    case wtf = "wtf"
-    case wow = "wow"
-    case aww = "aww"
-}
-
-enum PostTagKey: Int, CaseIterable {
-    case lol = 1
-    case wtf = 2
-    case unf = 3
-    case inf = 4
-    case tag = 5
-    case wow = 6
-    case aww = 7
-}
-
-let PostTagCode: [String: String] = [
-    "1": "lol",
-    "2": "wtf",
-    "4": "inf",
-    "3": "unf",
-    "5": "tag",
-    "6": "wow",
-    "7": "aww"
-]
-
-let PostWeight: [Double: Font.Weight] = [
-    0.95: .heavy,
-    0.90: .bold,
-    0.85: .semibold,
-    0.80: .medium,
-    0.75: .regular
-]
