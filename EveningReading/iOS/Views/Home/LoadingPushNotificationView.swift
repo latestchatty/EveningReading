@@ -13,7 +13,7 @@ struct LoadingPushNotificationView: View {
     var body: some View {
         if notifications.notificationData != nil {
             ZStack {
-                Color("PrimaryBackground").frame(width: 2600, height: 2600).offset(y: -80)
+                Color("PrimaryBackground").frame(width: BackgroundWidth, height: BackgroundHeight).offset(y: BackgroundOffset)
                 LoadingView(show: .constant(true))
                     .padding(.bottom, 30)
             }

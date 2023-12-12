@@ -14,7 +14,7 @@ struct macOSChatView: View {
     @State private var showingGuidelinesView = false
     @State private var guidelinesAccepted = false
     
-    private func fetchChat() {
+    private func getChat() {
         if chatService.threads.count > 0
         {
             return
@@ -126,7 +126,7 @@ struct macOSChatView: View {
             .overlay(
                 LoadingView(show: $chatService.showingRefreshThreadSpinner)
             )
-            .onAppear(perform: fetchChat)
+            .onAppear(perform: getChat)
             .onReceive(chatService.$showingNewPostSpinner) { value in
                 if value {
                     chatService.newReplyAuthorName = ""
@@ -136,9 +136,6 @@ struct macOSChatView: View {
                             chatService.getChat()
                         } else {
                             chatService.getThread()
-                            //chatService.hideReplies = true
-                            //chatService.shouldScrollThreadToTop = true
-                            //chatService.hideReplies = false
                         }
                         chatService.newPostParentId = 0
                         chatService.postingNewThread = false

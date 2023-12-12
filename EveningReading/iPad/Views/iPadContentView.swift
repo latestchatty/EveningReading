@@ -34,7 +34,7 @@ struct iPadContentView: View {
                         TrendingView()
                         iPadArticlesView()
                     }
-                    .background(Color("PrimaryBackground").frame(height: 2600).offset(y: -80))
+                    .background(Color("PrimaryBackground").frame(height: BackgroundHeight).offset(y: BackgroundOffset))
                 }
             }
             .edgesIgnoringSafeArea(.bottom)

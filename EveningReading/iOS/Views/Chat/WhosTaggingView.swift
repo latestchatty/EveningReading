@@ -15,7 +15,7 @@ struct WhosTaggingView: View {
     
     @State private var hideRaters: Bool = true
     
-    private func fetchRaters() {
+    private func getRaters() {
         chatService.getRaters(postId: chatService.activePostId, completionSuccess: {
                 self.hideRaters = false
             },
@@ -47,7 +47,7 @@ struct WhosTaggingView: View {
                     }
                     .padding(.top, 10)
                     .padding(.bottom, 20)
-                    .onAppear(perform: fetchRaters)
+                    .onAppear(perform: getRaters)
                     .onDisappear(perform: onSheetClosed)
 
                     Text("Who's Tagging?")
@@ -55,7 +55,7 @@ struct WhosTaggingView: View {
                         .font(.body)
                         .foregroundColor(Color(UIColor.label))
                         .padding(.horizontal, 20)
-                        .padding(.bottom, self.hideRaters ? 2600 : 1e-10)
+                        .padding(.bottom, self.hideRaters ? BackgroundHeight : 1e-10)
                 
                     VStack {
                         if (chatService.raters.filter{ $0.tag == String(PostTagKey.lol.rawValue) }.first ?? Raters(thread_id: "0", user_ids: [], usernames: [], tag: "")).usernames.count > 0 {

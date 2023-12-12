@@ -29,7 +29,7 @@ struct TagsView: View {
         }
 
         // View settings
-        .background(Color("PrimaryBackground").frame(height: 2600).offset(y: -80))
+        .background(Color("PrimaryBackground").frame(height: BackgroundHeight).offset(y: -80))
         .edgesIgnoringSafeArea(.bottom)
         .navigationViewStyle(StackNavigationViewStyle())
         .navigationBarTitle("Tags", displayMode: .inline)

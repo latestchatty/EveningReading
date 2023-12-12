@@ -126,7 +126,7 @@ struct GuidelinesView: View {
                     }
                 }.padding().background(Color("AcceptButton")).cornerRadius(4.0).padding(10)
             }
-            .background(appService.isDarkMode ? Color("PrimaryBackgroundDarkMode").frame(height: 2600).offset(y: -80) : Color.clear.frame(height: 2600).offset(y: -80))
+            .background(appService.isDarkMode ? Color("PrimaryBackgroundDarkMode").frame(height: BackgroundHeight).offset(y: BackgroundOffset) : Color.clear.frame(height: BackgroundHeight).offset(y: BackgroundOffset))
         }
     }
 }

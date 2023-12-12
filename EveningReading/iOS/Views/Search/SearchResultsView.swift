@@ -96,7 +96,7 @@ struct SearchResultsView: View {
         .overlay(LoadingView(show: self.$showingLoading))
         .disabled(self.showingLoading)
         .onAppear(perform: search)
-        .background(Color("PrimaryBackground").frame(height: 2600).offset(y: -80))
+        .background(Color("PrimaryBackground").frame(height: BackgroundHeight).offset(y: -80))
         .edgesIgnoringSafeArea(.bottom)
         .navigationViewStyle(StackNavigationViewStyle())
         .navigationBarTitle("Results", displayMode: .inline)

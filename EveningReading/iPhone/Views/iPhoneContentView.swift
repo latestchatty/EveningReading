@@ -33,7 +33,7 @@ struct iPhoneContentView: View {
                     TrendingView()
                     iPhoneArticlesView()
                 }
-                .background(Color("PrimaryBackground").frame(height: 2600).offset(y: -80))
+                .background(Color("PrimaryBackground").frame(height: BackgroundHeight).offset(y: BackgroundOffset))
             }
             .edgesIgnoringSafeArea(.bottom)
             .navigationBarTitle(notifications.notificationData != nil ? "" : "Evening Reading")

@@ -16,7 +16,7 @@ struct macOSWhosTaggingView: View {
     @State private var hideRaters: Bool = true
     var postId: Int = -1
     
-    private func fetchRaters() {
+    private func getRaters() {
         chatService.getRaters(postId: self.postId == -1 ? chatService.activePostId : self.postId, completionSuccess: {
             self.hideRaters = false
         },
@@ -56,7 +56,7 @@ struct macOSWhosTaggingView: View {
                                     .font(.body)
                                 Spacer()
                             }
-                            .onAppear(perform: fetchRaters)
+                            .onAppear(perform: getRaters)
                             .onDisappear(perform: onSheetClosed)
                             
                             ScrollView {

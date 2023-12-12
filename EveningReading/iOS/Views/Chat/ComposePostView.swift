@@ -302,7 +302,7 @@ struct ComposePostView: View {
                     }
                     Spacer()                    
                 }
-                .background(appService.isDarkMode ? Color("PrimaryBackgroundDarkMode").frame(height: 2600).offset(y: -80) : Color.clear.frame(height: 2600).offset(y: -80))
+                .background(appService.isDarkMode ? Color("PrimaryBackgroundDarkMode").frame(height: BackgroundHeight).offset(y: BackgroundOffset) : Color.clear.frame(height: BackgroundHeight).offset(y: BackgroundOffset))
                 .interactiveDismissDisabled()
             }
             // End Compose Post Sheet
