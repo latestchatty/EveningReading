@@ -41,7 +41,7 @@ struct GoToShackLinkView: View {
             })
             
             // Push ThreadDetailView
-            NavigationLink(destination: ThreadDetailView(threadId: 0, postId: self.goToPostId, replyCount: -1, isSearchResult: true), isActive: self.$showingPost) {
+            NavigationLink(destination: ThreadDetailView(threadId: .constant(0), postId: self.goToPostId, replyCount: -1, isSearchResult: true), isActive: self.$showingPost) {
                 EmptyView()
             }.isDetailLink(false).hidden().allowsHitTesting(false)
             

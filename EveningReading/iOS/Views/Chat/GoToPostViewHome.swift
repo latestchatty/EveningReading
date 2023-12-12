@@ -28,7 +28,7 @@ struct GoToPostViewHome: View {
             }.hidden().disabled(true).allowsHitTesting(false)
             
             // Push ThreadDetailView
-            NavigationLink(destination: ThreadDetailView(threadId: 0, postId: appService.showingPostId, replyCount: -1, isSearchResult: true), isActive: $appService.showingPushNotificationThread) {
+            NavigationLink(destination: ThreadDetailView(threadId: .constant(0), postId: appService.showingPostId, replyCount: -1, isSearchResult: true), isActive: $appService.showingPushNotificationThread) {
                             EmptyView()
             }.isDetailLink(false).hidden().allowsHitTesting(false)
             

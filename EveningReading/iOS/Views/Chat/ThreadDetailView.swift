@@ -14,7 +14,7 @@ struct ThreadDetailView: View {
     @EnvironmentObject var appService: AppService
     @EnvironmentObject var chatService: ChatService
         
-    var threadId: Int = 0
+    @Binding var threadId: Int
     var postId: Int = 0
     var replyCount: Int = 0
     var isSearchResult: Bool = false

@@ -45,7 +45,7 @@ struct PushNotificationViewChat: View {
                         Rectangle()
                             .fill(Color(UIColor.systemGray2))
                             .frame(width: 1)                        
-                        NavigationLink(destination: ThreadDetailView(threadId: 0, postId: appService.showingPostId, replyCount: -1, isSearchResult: true)) {
+                        NavigationLink(destination: ThreadDetailView(threadId: .constant(0), postId: appService.showingPostId, replyCount: -1, isSearchResult: true)) {
                             Text("Yes")
                                 .foregroundColor(Color(UIColor.link))
                         }
