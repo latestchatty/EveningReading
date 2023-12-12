@@ -44,7 +44,6 @@ struct PostPreviewView: View {
                                 .font(.custom("replylines", size: 25, relativeTo: .callout))
                                 .foregroundColor(Color.red)
                         )
-                        // String("B")
                 }
             }
             
