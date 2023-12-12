@@ -35,7 +35,6 @@ struct iPadChatView: View {
                                 .environmentObject(appService)
                                 .environmentObject(chatService)
                                 .onTapGesture(count: 1) {
-                                    print(String(thread.threadId))
                                     selectThreadById(threadId: thread.threadId)
                                 }
                                 .padding(.bottom, -20)
