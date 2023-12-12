@@ -432,14 +432,12 @@ struct ThreadDetailView: View {
         // Fetch data and settings on load
         .onAppear(perform: {
             func getData() -> Void {
-                print("getData begin")
                 getUserData()
                 getThreadData()
                 if UIDevice.current.userInterfaceIdiom == .phone {
                     getPostList(parentId: self.threadId)
                 }
                 self.threadNavigationLocation = CGPoint(x: appService.threadNavigationLocationX, y: appService.threadNavigationLocationY)
-                print("getData end")
             }
             
             if self.postId > 0 || self.replyCount >= self.loadingLimit {

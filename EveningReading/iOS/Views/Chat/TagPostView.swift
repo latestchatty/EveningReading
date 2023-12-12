@@ -54,12 +54,10 @@ struct TagPostView: View {
                 
                 // Show notice
                 DispatchQueue.main.async {
-                    print("Should show Tagged! toast?")
                     chatService.didTagPost = true
                     chatService.showingTagNotice = true
                 }
             }, completionFail: {
-                print("getRaters completionFail")
                 if !(userTagsForPost[tag] ?? 0 > 0) {
                     chatService.tag(postId: self.postId, tag: tag, untag: "0")
                     chatService.taggingNoticeText = "Tagged!"
@@ -72,7 +70,6 @@ struct TagPostView: View {
                     chatService.tagRemovedDelta[self.postId, default: [:]][tag] = 1
                 }
                 DispatchQueue.main.async {
-                    print("Should show Tagged! toast?")
                     chatService.didTagPost = true
                     chatService.showingTagNotice = true
                 }

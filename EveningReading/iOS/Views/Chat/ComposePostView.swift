@@ -383,7 +383,6 @@ struct ComposePostView: View {
             // Button style is different depending on context
             if appService.isSignedIn {
                 Button(action: {
-                    print("Reply tapped!")
                     DispatchQueue.main.async {
                         self.showingComposeSheet = true
                         appService.showingComposeSheet = true

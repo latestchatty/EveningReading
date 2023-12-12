@@ -168,7 +168,6 @@ struct macOSComposePostView: View {
                             */
                             
                             Button(action: {
-                                //print("log: text is \(postBody)")
                                 showingSubmitAlert = true
                             }) {
                                 Text("Submit")

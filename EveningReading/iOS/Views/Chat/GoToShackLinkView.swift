@@ -30,11 +30,8 @@ struct GoToShackLinkView: View {
             
             // Deep link to specific shack post
             .onChange(of: appService.showingShackLink, perform: { value in
-                print(".onReceive(appService.$showingShackLink)")
                 if value {
-                    print("going to try to show link")
                     if appService.shackLinkPostId != "" {
-                        print("showing link")
                         appService.showingShackLink = false
                         self.goToPostId = Int(appService.shackLinkPostId) ?? 0
                         appService.showingPostId = Int(appService.shackLinkPostId) ?? 0

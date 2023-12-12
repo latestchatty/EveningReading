@@ -116,8 +116,7 @@ struct LinkView: View {
                 .foregroundColor(linkForeground)
                 //.foregroundColor(colorScheme == .dark ? Color(UIColor.systemTeal) : Color(UIColor.black))
                 .onTapGesture(count: 1) {
-                    print("Link tapped!")
-                    
+                    // Fixes an iOS 17 bug
                     if (colorScheme == .dark) {
                         linkForeground = Color(UIColor.systemTeal)
                     } else {

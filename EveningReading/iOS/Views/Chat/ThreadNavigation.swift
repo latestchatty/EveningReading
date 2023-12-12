@@ -20,7 +20,7 @@ struct ThreadNavigationView: View {
                 Rectangle()
                     .fill(Color(UIColor.label))
                     .frame(width: 1, height: 20)
-                ThreadNavigationButton(icon: Binding.constant("arrow.down"), action: { print("arrow.down")
+                ThreadNavigationButton(icon: Binding.constant("arrow.down"), action: { 
                     nextAction()
                 })
             }
