@@ -84,8 +84,8 @@ struct SignInView: View {
             .onReceive(timer) { _ in
                 if appService.isSignedIn {
                     self.timer.upstream.connect().cancel()
-                    RegisterPushService(service: .init()).register()
-                    RegisterPushService(service: .init()).registernew()
+                    RegisterPushService().register()
+                    RegisterPushService().registernew()
                     DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(50)) {
                         presentationMode.wrappedValue.dismiss()
                     }
