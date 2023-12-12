@@ -12,7 +12,7 @@ struct iPhoneContentView: View {
     @EnvironmentObject var appService: AppService
     @EnvironmentObject var chatService: ChatService
     @EnvironmentObject var pushNotificationsService: PushNotificationsService
-    @EnvironmentObject var shackTags: ShackTagService
+    @EnvironmentObject var shackTagService: ShackTagService
     
     @State private var showingGuidelinesView = false
     

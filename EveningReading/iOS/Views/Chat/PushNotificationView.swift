@@ -67,7 +67,6 @@ struct PushNotificationViewChat: View {
         .onReceive(pushNotificationsService.$notificationData) { value in
             if let postId = value?.notification.request.content.userInfo["postid"] {
                 if String("\(postId)").isInt && appService.showingPostId != Int(String("\(postId)")) ?? 0 {
-                    print("prompting for postID \(postId)")
                     appService.showingPostId = Int(String("\(postId)")) ?? 0
                     self.isAlertShowing = true
                 }
